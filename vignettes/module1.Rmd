@@ -1,0 +1,19 @@
+---
+title: "module1"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{module1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(asta)
+```
