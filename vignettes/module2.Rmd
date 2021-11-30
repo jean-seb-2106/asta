@@ -14,6 +14,109 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+
+```{r setup, warning=FALSE, message=FALSE}
 library(asta)
+library(sampling)
+library(dplyr)
+```
+
+
+1. fonction d'importation -----
+```{r}
+file_grandile_m2 <- function (input_data){
+  data_grandile_m2 <- readRDS(file = system.file(input_data, package = "asta"))
+  data_grandile_m2
+}
+
+# (file_grandile_m2("Grandile.RDS"))
+# (file_grandile_m2("Grandile_apur.RDS"))
+# (file_grandile_m2("Grandile_brut.RDS"))
+# (file_grandile_m2("Grandile_redress.RDS"))
+```
+
+2. Fonction de tirage aleatoire simple -----
+```{r}
+
+tirage_sas_m2 <- function(input_data, taille_sas) {
+  echantillon_sas <-
+    input_data[sample(1:nrow(input_data), taille_sas), ]
+  echantillon_sas
+}
+
+# tirage_sas_m2(file_grandile_m2("Grandile.RDS"), 12)
+```
+
+3. Fonction de tirage stratifie -----
+```{r}
+tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
+  tab <- file_grandile_m2(input_data) %>%   select(.data[[var_strat]])
+  
+  v <- table(tab)
+  
+  x <- v / nrow(file_grandile_m2(input_data))
+  
+  y <- x * taille_strat
+  y
+  base_echantillon_strat <-
+    file_grandile_m2(input_data) %>% arrange(
+      var_strat
+      
+    )
+  y
+  s = strata(
+    base_echantillon_strat,
+    stratanames = 
+      var_strat,
+    size = y,
+    method = "srswor"
+  )
+  echantillon_strat <- getdata(base_echantillon_strat,s)
+  
+}
+
+# tirage_strat_m2("Grandile.RDS", 400, "DIPL")
+
+```
+
+
+4. Fonction de tirage a 2 degres -----
+```{r}
+tirage_degres_m2 <-
+  function(input_data,
+           taille_UP,
+           taille_tot,
+           var_degres) {
+    
+    
+    UP <- file_grandile_m2(input_data) %>% group_by(.data[[var_degres]]) %>%
+      summarise(Effectifs = n()) %>% select(.data[[var_degres]])
+    
+    sond1 <- UP[sample(1:nrow(UP), taille_UP),] %>% mutate(ECH = "1")  %>%  
+      right_join(file_grandile_m2(input_data), by = var_degres) %>%
+      filter(ECH == "1")
+    
+    sond2 <- tirage_strat_m2(input_data, taille_tot, var_degres)
+    sond2
+  }
+
+
+# tirage_degres_m2("Grandile.RDS", 3, 500, "DIPL")
+
+```
+
+5. Fonction de tirage en grappe -----
+```{r}
+tirage_grappe_m2 <- function (input_data, taille_grappe, var_grappe){
+  
+  UP <- file_grandile_m2(input_data) %>% group_by(.data[[var_grappe]]) %>%
+    summarise(Effectifs = n()) %>% select(.data[[var_grappe]])
+  
+  sond1 <- UP[sample(1:nrow(UP), taille_grappe),] %>% mutate(ECH = "1")  %>%  
+    right_join(file_grandile_m2(input_data), by = var_grappe) %>%
+    filter(ECH == "1")
+  
+}
+
+# tirage_grappe_m2("Grandile.RDS", 2, "DIPL")
 ```
