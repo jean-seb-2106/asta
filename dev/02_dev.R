@@ -44,7 +44,7 @@ usethis::use_test( "app" )
 # Documentation
 
 ## Vignette ----
-usethis::use_vignette("asta")
+usethis::use_vignette("module1")
 devtools::build_vignettes()
 
 ## Code Coverage----
