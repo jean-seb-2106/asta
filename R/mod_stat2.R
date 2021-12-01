@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom shinipsum random_text random_ggplot  
 mod_stat2_ui <- function(id){
   ns <- NS(id)
  
@@ -156,7 +157,7 @@ tabPanel(
                  valueBox(
                    subtitle = "Cefil 2021" ,
                    value = 150, width = NULL, color= "aqua") ,
-                 plotOutput(outputId = "plotsas1")
+                 plotOutput(outputId = ns("plotsas1"))
                  
           ),
           column(4,
@@ -164,7 +165,7 @@ tabPanel(
                  infoBox(title = "mon info box2",
                          subtitle = "Cefil 2021"
                  ),
-                 plotOutput(outputId = "plotsas2")
+                 plotOutput(outputId = ns("plotsas2"))
           )),
           
           hr(),
@@ -235,6 +236,39 @@ mod_stat2_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    
+    output$text_definitions <- renderText(
+      {
+        random_text(nwords = 1500)
+        
+      }
+      
+    )
+    
+    # output$tab1 <- renderDT({
+    #   
+    #   random_DT(ncol = 8, nrow = 15)
+    #   
+    # })
+    
+    output$plotsas1 <- renderPlot(
+      
+      {
+        random_ggplot("boxplot")
+      }
+    )
+    
+    output$plotsas2 <- renderPlot(
+      
+      {
+        random_ggplot("boxplot")
+      }
+    )
+    
+    
+    
+    
+    
   })
 }
     
