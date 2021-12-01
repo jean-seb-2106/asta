@@ -10,16 +10,13 @@ Description: Appli attaches.
 License: MIT + file LICENSE
 Imports: 
     config (>= 0.3.1),
-    dplyr,
-    ggplot2,
+    dashboardthemes,
+    DT,
     golem (>= 0.3.1),
-    sampling,
-    shiny (>= 1.7.1)
-Suggests: 
-    knitr,
-    rmarkdown
-VignetteBuilder: 
-    knitr
+    shinipsum,
+    shiny (>= 1.7.1),
+    shinydashboard,
+    shinythemes
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

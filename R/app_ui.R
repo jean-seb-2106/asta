@@ -3,16 +3,33 @@
 #' @param request Internal parameter for `{shiny}`. 
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import dashboardthemes
+#' @import shinythemes
+#' @import shinydashboard
 #' @noRd
 app_ui <- function(request) {
-  tagList(
+
     # Leave this function for adding external resources
-    golem_add_external_resources(),
+    # golem_add_external_resources(),
     # Your application UI logic 
-    fluidPage(
-      h1("asta")
+    navbarPage(
+      
+      shinyDashboardThemes(theme = "grey_light"),
+      
+      title = "ASTA",
+      
+      
+      mod_stat1_ui("stat1_ui_1"),
+      
+      mod_stat2_ui("stat2_ui_1")
+      
+      
+      
+      
+      
+      
     )
-  )
+  
 }
 
 #' Add external Resources to the Application
@@ -28,7 +45,7 @@ golem_add_external_resources <- function(){
   add_resource_path(
     'www', app_sys('app/www')
   )
- 
+  
   tags$head(
     favicon(),
     bundle_resources(
