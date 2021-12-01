@@ -2,7 +2,10 @@ Package: asta
 Title: ASTA
 Version: 0.0.0.9000
 Authors@R: 
-    person("Jean", "Sebban", , "jean.sebban@insee.fr", role = c("cre", "aut"))
+    person(given = "Jean",
+           family = "Sebban",
+           role = c("cre", "aut"),
+           email = "jean.sebban@insee.fr")
 Description: Appli attaches.
 License: MIT + file LICENSE
 Imports: 
