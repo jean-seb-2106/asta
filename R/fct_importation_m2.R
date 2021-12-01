@@ -1,6 +1,6 @@
 #' importation_m2 
 #'
-#' @description A fct function that imports a file located into 'inst'
+#' @description A fct function that imports a file located in 'inst'
 #'
 #' @return a dataframe
 #'
