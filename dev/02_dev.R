@@ -16,6 +16,7 @@
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
 usethis::use_package( "thinkr" )
+attachment::att_amend_desc()
 
 ## Add modules ----
 ## Create a module infrastructure in R/
@@ -24,7 +25,14 @@ golem::add_module( name = "name_of_module2" ) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
-golem::add_fct( "helpers" ) 
+golem::add_fct( "importation_m2" ) 
+golem::add_fct( "tirage_sas_m2" ) 
+golem::add_fct( "tirage_strat_m2" )
+golem::add_fct( "tirage_degres_m2" )
+golem::add_fct( "boxplot_tirage_m2" )
+golem::add_fct( "data_apur_m2" )
+golem::add_fct( "plot_apur_m2" )
+
 golem::add_utils( "helpers" )
 
 ## External resources
