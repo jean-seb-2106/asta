@@ -7,6 +7,8 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+#' @importFrom shinipsum random_DT
+#' @importFrom DT renderDT
 mod_stat1_ui <- function(id){
   ns <- NS(id)
 
@@ -177,9 +179,9 @@ mod_stat1_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    output$tab1 <- DT::renderDT({
+    output$tab1 <- renderDT({
       
-      shinipsum::random_DT(ncol = 10,nrow = 5418)
+      random_DT(ncol = 10,nrow = 5418)
       
     })
     
