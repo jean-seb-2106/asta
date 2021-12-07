@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList
-#' @importFrom shinipsum random_text random_ggplot  
+#' @importFrom shinipsum random_text random_ggplot
 mod_stat2_ui <- function(id){
   ns <- NS(id)
  
