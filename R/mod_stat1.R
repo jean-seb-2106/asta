@@ -113,7 +113,6 @@ tabPanel(
                 h2("Statistiques univariées sur une variable qualitative"),
                 br(),
                 br(),
-                br(),
                 fluidRow(
                   
                         column(4,
