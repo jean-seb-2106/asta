@@ -34,7 +34,7 @@ tabPanel(
         collapsed = FALSE,
         
         sidebarMenu(
-          id = "tabs", #à quoi sert l'identifiant du menu ???
+          id = "tabs", 
           menuItem(
             "Donnees",
             menuSubItem("Visualisation de la base", tabName = "subitem1"),
@@ -52,8 +52,8 @@ tabPanel(
           menuItem(
             "Statistique bivariee",
             icon = icon("th"),
-            menuSubItem("Quali-Quali", tabName = "subitem5"),
-            menuSubItem("Quanti-Quanti", tabName = "subitem6"),
+            menuSubItem("Quanti-Quanti", tabName = "subitem5"),
+            menuSubItem("Quali-Quali", tabName = "subitem6"),
             menuSubItem("Quali-Quanti", tabName = "subitem7"),
             selected = FALSE
           ),
@@ -105,23 +105,25 @@ tabPanel(
         
         #Statistique univariée quali---------
         
-        #tabItem()
+        #tabItem("subitem3")
         mod_stat1_uni_quali_ui(ns("stat1_uni_quali")),
                 
-             
         
         #Stat univariée quanti----
         
+        #tabitem("subitem4")
         mod_stat1_uni_quanti_ui(ns("stat1_uni_quanti")),
         
-        #Statistique bivariée
+        #Statistique bivariée--------
         
-        tabItem(tabName = "subitem5",
-                h2("subitem5")),
-        tabItem(tabName = "subitem6",
-                h2("subitem6")),
-        tabItem(tabName = "subitem7",
-                h2("subitem7")),
+        #tabitem("subitem5")
+        mod_stat1_bi_quantiquanti_ui(ns("stat1_bi_quantiquanti")),
+        
+        #tabitem("subitem6")
+        mod_stat1_bi_qualiquali_ui(ns("stat1_bi_qualiquali")),
+        
+        #tabitem("subitem7")
+        mod_stat1_bi_quantiquali_ui(ns("stat1_bi_quantiquali")),
         
         #Statistique inférentielle
         
@@ -172,14 +174,19 @@ mod_stat1_server <- function(id){
     })
     
     #Stat univariée quali-------
-    
     mod_stat1_uni_quali_server("stat1_uni_quali")
     
-    
     #Stat univariée quanti-----
-    
     mod_stat1_uni_quanti_server("stat1_uni_quanti")
     
+    #Stat bivariée quanti-quanti----------
+    mod_stat1_bi_quantiquanti_server("stat1_bi_quantiquanti")
+    
+    #Stat bivariée quali-quali------
+    mod_stat1_bi_qualiquali_server("stat1_bi_qualiquali")
+    
+    #Stat bivariée quanti-quali------
+    mod_stat1_bi_quantiquali_server("stat1_bi_quantiquali")
     
   })
 }
