@@ -21,14 +21,14 @@ tabPanel(
   dashboardPage(
     
     
-    #Header---------
+    #dashboardHeader---------
     dashboardHeader(
       title = "Statistiques descriptives et inferentielles",
       titleWidth = 450,
       disable = FALSE
     ),
     
-    #Sidebar--------
+    #dashboardSidebar--------
     dashboardSidebar(
       fluidRow(
         collapsed = FALSE,
@@ -88,13 +88,13 @@ tabPanel(
       )
     ),
     
-    #Body--------
+    #dashboardBody--------
     dashboardBody(
       
       
       tabItems(
         
-        #Les données
+        #Les données--------
         
         tabItem(tabName = "subitem1",
                 h2("Le fichier Grandile"),

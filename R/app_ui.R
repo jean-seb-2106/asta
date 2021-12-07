@@ -18,9 +18,10 @@ app_ui <- function(request) {
       
       title = "ASTA",
       
-      
+      #TabPanel Stat1
       mod_stat1_ui("stat1_ui_1"),
       
+      #TabPanel Stat2
       mod_stat2_ui("stat2_ui_1")
       
       
