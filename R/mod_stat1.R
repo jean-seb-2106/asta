@@ -8,7 +8,7 @@
 #'
 #' @importFrom shiny NS tagList 
 #' @importFrom shinipsum random_DT
-#' @importFrom DT renderDT
+#' @importFrom DT renderDT DTOutput
 mod_stat1_ui <- function(id){
   ns <- NS(id)
 
@@ -38,7 +38,7 @@ tabPanel(
             "Donnees",
             menuSubItem("Visualisation de la base", tabName = "subitem1"),
             menuSubItem("Dictionnaire des variables", tabName = "subitem2"),
-            icon = icon("dashboard"),
+            icon = icon("th"),
             selected = FALSE
           ),
           menuItem(
