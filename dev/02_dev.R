@@ -21,6 +21,8 @@ attachment::att_amend_desc()
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module( name = "stat1" ) # Name of the module
+golem::add_module( name = "stat1_uni_quali" ) # Name of the module
+golem::add_module( name = "stat1_uni_quanti" ) # Name of the module
 golem::add_module( name = "stat2" ) # Name of the module
 
 ## Add helper functions ----
