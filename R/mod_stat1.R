@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-#' @importFrom shinipsum random_DT
+#' @importFrom shinipsum random_DT random_ggplot random_table
 #' @importFrom DT renderDT DTOutput
 mod_stat1_ui <- function(id){
   ns <- NS(id)
@@ -102,7 +102,7 @@ tabPanel(
         
         tabItem(tabName = "subitem1",
                 h2("Le fichier Grandile"),
-                DT::DTOutput(ns('tab1'))),
+                DT::DTOutput(ns('dt1'))),
         
         tabItem(tabName = "subitem2",
                 h2("Dictionnaire des variables")),
@@ -110,7 +110,43 @@ tabPanel(
         #Statistique univariée
         
         tabItem(tabName = "subitem3",
-                h2("subitem3")),
+                h2("Statistiques univariées sur une variable qualitative"),
+                br(),
+                br(),
+                br(),
+                fluidRow(
+                  
+                        column(4,
+                               
+                               wellPanel(
+                                 
+                                 selectInput(
+                                    ns("select1"),
+                                    "Choisissez une variable :",
+                                    choices = LETTERS),
+                                 checkboxGroupInput(
+                                   ns("check1"),
+                                   "Choisissez un graphique :",
+                                   choices = c("a","b")),
+                                 actionButton("go1",label = "Cliquez pour afficher")
+                                 
+                               )
+                               
+                               
+                                ),
+                         
+                         column(4,
+                                
+                                tableOutput(ns("tab1"))
+                                
+                                
+                                ),
+                         column(4,
+                                
+                                plotOutput(ns("plot1"))
+                                
+                                
+                                ))),
         
         tabItem(tabName = "subitem4",
                 h2("subitem4")),
@@ -179,9 +215,21 @@ mod_stat1_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    output$tab1 <- renderDT({
+    output$dt1 <- renderDT({
       
       random_DT(ncol = 10,nrow = 5418)
+      
+    })
+    
+    output$tab1 <- renderTable({
+      
+      shinipsum::random_table(nrow = 8,ncol = 4)
+      
+    })
+    
+    output$plot1 <- renderPlot({
+      
+      random_ggplot()
       
     })
     
