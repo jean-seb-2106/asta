@@ -76,15 +76,10 @@ tabPanel(
         br(),
         br(),
         br(),
-        br(),
-        br(),
-        br(),
-        br(),
-        br(),
         fluidRow(
           href = 'https://www.cefil.fr/',
           tags$img(
-            src = 'logo_cefil.jpg',
+            src = 'logo_cefil_new.jpg',
             title = "CEFIL",
             height = '105'
           ) ,
@@ -215,7 +210,7 @@ tabPanel(
                            #subtitle = "Source : Cefil 2020",
                            icon = icon("line-chart"),
                            #fill = TRUE,
-                           color="light-blue",
+                           color="aqua",
                            width=3
                          ),
                          #Troisième Quartile
@@ -225,7 +220,7 @@ tabPanel(
                            #subtitle = "Source : Cefil 2020",
                            icon = icon("line-chart"),
                            #fill = TRUE,
-                           color="light-blue",
+                           color="aqua",
                            width=3
                          ),
                   
@@ -239,7 +234,7 @@ tabPanel(
                       #subtitle = "Source : Cefil 2020",
                       icon = icon("line-chart"),
                       #fill = TRUE,
-                      color="light-blue",
+                      color="aqua",
                       width=3
                     ),
                     #Ecart inter-quartile
@@ -249,7 +244,7 @@ tabPanel(
                       #subtitle = "Source : Cefil 2020",
                       icon = icon("line-chart"),
                       #fill = TRUE,
-                      color="light-blue",
+                      color="aqua",
                       width=3
                     ),
                     #Ecart-type
@@ -259,7 +254,7 @@ tabPanel(
                       #subtitle = "Source : Cefil 2020",
                       icon = icon("line-chart"),
                       #fill = TRUE,
-                      color="light-blue",
+                      color="aqua",
                       width=3
                     ),
                     #Coefficient de variation
@@ -269,7 +264,7 @@ tabPanel(
                       #subtitle = "Source : Cefil 2020",
                       icon = icon("line-chart"),
                       #fill = TRUE,
-                      color="light-blue",
+                      color="aqua",
                       width=3
                     ))
                          
