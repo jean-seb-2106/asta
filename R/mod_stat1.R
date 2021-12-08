@@ -61,7 +61,7 @@ tabPanel(
             "Statistique inferentielle",
             icon = icon("th"),
             menuSubItem("Estimations", tabName = "subitem8"),
-            menuSubItem("Tirage de l'echantillon", tabName = "subitem9"),
+            menuSubItem("Simulations", tabName = "subitem9"),
             menuSubItem("Intervalles de confiance", tabName = "subitem10"),
             menuSubItem("Tests statistiques", tabName = "subitem11"),
             # tabName = "inferentielle",
@@ -121,14 +121,10 @@ tabPanel(
         
         #Statistique inférentielle---------
         
-        tabItem(tabName = "subitem8",
-                h2("subitem8")),
-        tabItem(tabName = "subitem9",
-                h2("subitem9")),
-        tabItem(tabName = "subitem10",
-                h2("subitem10")),
-        tabItem(tabName = "subitem11",
-                h2("subitem11"))
+        mod_stat1_inf_estimations_ui(ns("stat1_inf_estimations")),
+        mod_stat1_inf_simulations_ui(ns("stat1_inf_simulations")),
+        mod_stat1_inf_intervalles_ui(ns("stat1_inf_intervalles")),
+        mod_stat1_inf_tests_ui(ns("stat1_inf_tests"))
         
         
         
@@ -181,6 +177,18 @@ mod_stat1_server <- function(id){
     
     #Stat bivariée quanti-quali------
     mod_stat1_bi_quantiquali_server("stat1_bi_quantiquali")
+    
+    #Stat inférentielle estimations ponctuelles--------
+    mod_stat1_inf_estimations_server("stat1_inf_estimations")
+    
+    #Stat inférentielle simulation de tirages------
+    mod_stat1_inf_simulations_server("stat1_inf_simulations")
+    
+    #Stat inférentielle : intervalles de confiance-----
+    mod_stat1_inf_intervalles_server("stat1_inf_intervalles")
+    
+    #Stat inférentielle : tests statistiques-----
+    mod_stat1_inf_tests_server("stat1_inf_tests")
     
   })
 }

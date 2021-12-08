@@ -26,6 +26,10 @@ golem::add_module( name = "stat1_uni_quanti" ) # Name of the module
 golem::add_module( name = "stat1_bi_quantiquanti" ) # Name of the module
 golem::add_module( name = "stat1_bi_qualiquali" ) # Name of the module
 golem::add_module( name = "stat1_bi_quantiquali" ) # Name of the module
+golem::add_module( name = "stat1_inf_estimations" ) # Name of the module
+golem::add_module( name = "stat1_inf_simulations" ) # Name of the module
+golem::add_module( name = "stat1_inf_intervalles" ) # Name of the module
+golem::add_module( name = "stat1_inf_tests" ) # Name of the module
 golem::add_module( name = "stat2" ) # Name of the module
 
 ## Add helper functions ----
