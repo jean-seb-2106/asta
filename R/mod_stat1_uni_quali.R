@@ -38,19 +38,23 @@ mod_stat1_uni_quali_ui <- function(id){
            
     ),
     
-    column(4,
-           
-           tableOutput(ns("tab1"))
-           
-           
-    ),
-    column(4,
+    column(8,
            
            plotOutput(ns("plot1"))
            
            
     )
-  )
+  ),
+  fluidRow(
+    
+    column(4,),
+    column(8,
+           
+           tableOutput(ns("tab1"))
+           
+           )
+    )
+  
   
   )
   
@@ -66,7 +70,7 @@ mod_stat1_uni_quali_server <- function(id){
     
     output$tab1 <- renderTable({
       
-      random_table(nrow = 8,ncol = 4)
+      random_table(nrow = 8,ncol = 12)
       
     })
     
