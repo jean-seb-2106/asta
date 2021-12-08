@@ -95,37 +95,31 @@ tabPanel(
       tabItems(
         
         #Les données--------
-        
         tabItem(tabName = "subitem1",
                 h2("Le fichier Grandile"),
                 DT::DTOutput(ns('dt1'))),
-        
+
         tabItem(tabName = "subitem2",
                 h2("Dictionnaire des variables")),
         
         #Statistique univariée quali---------
-        
         #tabItem("subitem3")
         mod_stat1_uni_quali_ui(ns("stat1_uni_quali")),
                 
         
         #Stat univariée quanti----
-        
         #tabitem("subitem4")
         mod_stat1_uni_quanti_ui(ns("stat1_uni_quanti")),
         
         #Statistique bivariée--------
-        
         #tabitem("subitem5")
         mod_stat1_bi_quantiquanti_ui(ns("stat1_bi_quantiquanti")),
-        
         #tabitem("subitem6")
         mod_stat1_bi_qualiquali_ui(ns("stat1_bi_qualiquali")),
-        
         #tabitem("subitem7")
         mod_stat1_bi_quantiquali_ui(ns("stat1_bi_quantiquali")),
         
-        #Statistique inférentielle
+        #Statistique inférentielle---------
         
         tabItem(tabName = "subitem8",
                 h2("subitem8")),

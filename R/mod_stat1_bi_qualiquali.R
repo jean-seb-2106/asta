@@ -12,7 +12,14 @@ mod_stat1_bi_qualiquali_ui <- function(id){
   
   
   tabItem(tabName = "subitem6",
-          h2("subitem6"))
+          h2("subitem6"),
+          
+          
+          
+          
+          
+          
+          )
   
   
 }
