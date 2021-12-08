@@ -45,7 +45,7 @@ mod_stat1_bi_quantiquali_ui <- function(id){
                             title = "Variance",
                             value = textOutput(ns("var")),
                             # subtitle = "Source : Grandile",
-                            icon = icon("line-chart"),
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=4
@@ -54,7 +54,7 @@ mod_stat1_bi_quantiquali_ui <- function(id){
                             title = "Variance Intra",
                             value = textOutput(ns("intra")),
                             # subtitle = "Source : Grandile",
-                            icon = icon("line-chart"),
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=4
@@ -63,7 +63,7 @@ mod_stat1_bi_quantiquali_ui <- function(id){
                             title = "Variance Inter",
                             value = textOutput(ns("inter")),
                             # subtitle = "Source : Grandile",
-                            icon = icon("line-chart"),
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=4
@@ -80,7 +80,7 @@ mod_stat1_bi_quantiquali_ui <- function(id){
                             title = "Rapport de corr\u00e9lation",
                             value = textOutput(ns("eta2")),
                             # subtitle = "Source : Grandile",
-                            icon = icon("line-chart"),
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=6

@@ -42,100 +42,104 @@ mod_stat1_uni_quanti_ui <- function(id){
                    
             )),
           
+          fluidRow(column(4,),
+                   column(8,
+                          h3("Indicateurs de tendance centrale"),
+                          infoBox(
+                            title = "Moyenne",
+                            value = textOutput(ns("moyenne")),
+                            #subtitle = "Moyenne",
+                            icon = icon("chart-line"),
+                            # fill = TRUE,
+                            color="red",
+                            width=3
+                          ),
+                          
+                          infoBox(
+                            title = "Médiane",
+                            value = textOutput(ns("mediane")),
+                            #subtitle = "Source : Cefil 2020",
+                            icon = icon("chart-line"),
+                            #fill = TRUE,
+                            color="green",
+                            width=3
+                          ),
+                          
+                          #Premier Quartile
+                          infoBox(
+                            title = "Premier Quartile",
+                            value = textOutput(ns("q1")),
+                            #subtitle = "Source : Cefil 2020",
+                            icon = icon("chart-line"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=3
+                          ),
+                          
+                          #Premier Quartile
+                          infoBox(
+                            title = "Troisième quartile",
+                            value = textOutput(ns("q3")),
+                            #subtitle = "Source : Cefil 2020",
+                            icon = icon("chart-line"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=3
+                          )
+                          
+                          )),
+          fluidRow(column(4,),
+                   column(8,
+                          h3("Indicateurs de dispersion"),
+                          
+                          infoBox(
+                            title = "Etendue",
+                            value = textOutput(ns("etendue")),
+                            #subtitle = "Source : Cefil 2020",
+                            icon = icon("chart-line"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=3
+                          ),
+                          #Ecart inter-quartile
+                          infoBox(
+                            title = "Ecart Interquartile",
+                            value = textOutput(ns("iiq")),
+                            #subtitle = "Source : Cefil 2020",
+                            icon = icon("chart-line"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=3
+                          ),
+                          #Ecart-type
+                          infoBox(
+                            title = "Ecart-type",
+                            value = textOutput(ns("sd")),
+                            #subtitle = "Source : Cefil 2020",
+                            icon = icon("chart-line"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=3
+                          ),
+                          #Coefficient de variation
+                          # infoBox(
+                          #   title = "Coefficient de variation",
+                          #   value = textOutput(ns("cv")),
+                          #   #subtitle = "Source : Cefil 2020",
+                          #   icon = icon("line-chart"),
+                          #   #fill = TRUE,
+                          #   color="aqua",
+                          #   width=3
+                          # )
+                          valueBox(
+                            subtitle = "Coefficient de variation" ,
+                            value = textOutput(ns("cv")), 
+                            width = 3, 
+                            color= "aqua")
+                          
+                          ))
           
           
-          fluidRow(
-            
-            h3("Indicateurs de tendance centrale et de position"),
-            
-            infoBox(
-              title = "Moyenne",
-              value = textOutput(ns("moyenne")),
-              #subtitle = "Moyenne",
-              icon = icon("line-chart"),
-              # fill = TRUE,
-              color="red",
-              width=3
-            ),
-            
-            infoBox(
-              title = "Médiane",
-              value = textOutput(ns("mediane")),
-              #subtitle = "Source : Cefil 2020",
-              icon = icon("line-chart"),
-              #fill = TRUE,
-              color="green",
-              width=3
-            ),
-            
-            #Premier Quartile
-            infoBox(
-              title = "Premier Quartile",
-              value = textOutput(ns("q1")),
-              #subtitle = "Source : Cefil 2020",
-              icon = icon("line-chart"),
-              #fill = TRUE,
-              color="aqua",
-              width=3
-            ),
-            #Troisième Quartile
-            infoBox(
-              title = "Troisième quartile",
-              value = textOutput(ns("q3")),
-              #subtitle = "Source : Cefil 2020",
-              icon = icon("line-chart"),
-              #fill = TRUE,
-              color="aqua",
-              width=3
-            ),
-            
-            h3("Indicateurs de dispersion"),
-            
-            fluidRow(
-              #Etendue
-              infoBox(
-                title = "Etendue",
-                value = textOutput(ns("etendue")),
-                #subtitle = "Source : Cefil 2020",
-                icon = icon("line-chart"),
-                #fill = TRUE,
-                color="aqua",
-                width=3
-              ),
-              #Ecart inter-quartile
-              infoBox(
-                title = "Ecart Interquartile",
-                value = textOutput(ns("iiq")),
-                #subtitle = "Source : Cefil 2020",
-                icon = icon("line-chart"),
-                #fill = TRUE,
-                color="aqua",
-                width=3
-              ),
-              #Ecart-type
-              infoBox(
-                title = "Ecart-type",
-                value = textOutput(ns("sd")),
-                #subtitle = "Source : Cefil 2020",
-                icon = icon("line-chart"),
-                #fill = TRUE,
-                color="aqua",
-                width=3
-              ),
-              #Coefficient de variation
-              infoBox(
-                title = "Coefficient de variation",
-                value = textOutput(ns("cv")),
-                #subtitle = "Source : Cefil 2020",
-                icon = icon("line-chart"),
-                #fill = TRUE,
-                color="aqua",
-                width=3
-              ))
-            
-            
-            
-          )
           
   )
   
