@@ -37,7 +37,7 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
                    column(8,
                                      
                                      infoBox(
-                                       title = "Coefficient de corr\u00e9lation lin\u00e9aire",
+                                       title = "Coeff de corr\u00e9lation lin\u00e9aire",
                                        value = textOutput(ns("cor")),
                                        # subtitle = "Source : Grandile",
                                        icon = icon("line-chart"),
