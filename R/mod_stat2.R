@@ -151,7 +151,9 @@ tabPanel(
                  
                  valueBox(
                    subtitle = "Cefil 2021" ,
-                   value = 150, width = NULL, color= "aqua") ,
+                   value = 150, 
+                   width = NULL, 
+                   color= "aqua") ,
                  plotOutput(outputId = ns("plotsas1"))
                  
           ),

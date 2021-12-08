@@ -118,6 +118,29 @@ mod_stat1_bi_quantiquali_server <- function(id){
       
     })
     
+    output$var <- renderText({
+      
+      "10"
+      
+    })
+    
+    output$intra <- renderText({
+      
+      "10"
+      
+    })
+    
+    output$inter <- renderText({
+      
+      "10"
+      
+    })
+    
+    output$eta2 <- renderText({
+      
+      "10"
+      
+    })
     
   })
 }

@@ -83,6 +83,18 @@ mod_stat1_bi_qualiquali_server <- function(id){
       
     })
     
+    output$chi2 <- renderText({
+      
+      "10"
+      
+    })
+    
+    
+    output$vcramer <- renderText({
+      
+      "10"
+      
+    })
     
   })
 }

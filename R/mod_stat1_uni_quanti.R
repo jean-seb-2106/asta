@@ -44,44 +44,44 @@ mod_stat1_uni_quanti_ui <- function(id){
           
           fluidRow(column(4,),
                    column(8,
-                          h3("Indicateurs de tendance centrale"),
-                          infoBox(
-                            title = "Moyenne",
+                          h3("Indicateurs de tendance centrale et de position"),
+                          valueBox(
+                            subtitle = "Moyenne",
                             value = textOutput(ns("moyenne")),
                             #subtitle = "Moyenne",
-                            icon = icon("chart-line"),
+                            # icon = icon("chart-line"),
                             # fill = TRUE,
-                            color="red",
+                            color="aqua",
                             width=3
                           ),
                           
-                          infoBox(
-                            title = "Médiane",
+                          valueBox(
+                            subtitle = "Médiane",
                             value = textOutput(ns("mediane")),
                             #subtitle = "Source : Cefil 2020",
-                            icon = icon("chart-line"),
-                            #fill = TRUE,
-                            color="green",
-                            width=3
-                          ),
-                          
-                          #Premier Quartile
-                          infoBox(
-                            title = "Premier Quartile",
-                            value = textOutput(ns("q1")),
-                            #subtitle = "Source : Cefil 2020",
-                            icon = icon("chart-line"),
+                            # icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=3
                           ),
                           
                           #Premier Quartile
-                          infoBox(
-                            title = "Troisième quartile",
+                          valueBox(
+                            subtitle = "Premier Quartile",
+                            value = textOutput(ns("q1")),
+                            #subtitle = "Source : Cefil 2020",
+                            # icon = icon("chart-line"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=3
+                          ),
+                          
+                          #Premier Quartile
+                          valueBox(
+                            subtitle = "Troisième quartile",
                             value = textOutput(ns("q3")),
                             #subtitle = "Source : Cefil 2020",
-                            icon = icon("chart-line"),
+                            # icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=3
@@ -92,50 +92,50 @@ mod_stat1_uni_quanti_ui <- function(id){
                    column(8,
                           h3("Indicateurs de dispersion"),
                           
-                          infoBox(
-                            title = "Etendue",
+                          valueBox(
+                            subtitle = "Etendue",
                             value = textOutput(ns("etendue")),
                             #subtitle = "Source : Cefil 2020",
-                            icon = icon("chart-line"),
+                            # icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=3
                           ),
                           #Ecart inter-quartile
-                          infoBox(
-                            title = "Ecart Interquartile",
+                          valueBox(
+                            subtitle = "Ecart Interquartile",
                             value = textOutput(ns("iiq")),
                             #subtitle = "Source : Cefil 2020",
-                            icon = icon("chart-line"),
+                            # icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=3
                           ),
                           #Ecart-type
-                          infoBox(
-                            title = "Ecart-type",
+                          valueBox(
+                            subtitle = "Ecart-type",
                             value = textOutput(ns("sd")),
                             #subtitle = "Source : Cefil 2020",
-                            icon = icon("chart-line"),
+                            # icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=3
                           ),
-                          #Coefficient de variation
-                          # infoBox(
-                          #   title = "Coefficient de variation",
-                          #   value = textOutput(ns("cv")),
-                          #   #subtitle = "Source : Cefil 2020",
-                          #   icon = icon("line-chart"),
-                          #   #fill = TRUE,
-                          #   color="aqua",
-                          #   width=3
-                          # )
+                          
+                          # Coefficient de variation
                           valueBox(
-                            subtitle = "Coefficient de variation" ,
-                            value = textOutput(ns("cv")), 
-                            width = 3, 
-                            color= "aqua")
+                            subtitle = "Coefficient de variation",
+                            value = textOutput(ns("cv")),
+                            #subtitle = "Source : Cefil 2020",
+                            # icon = icon("credit-card"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=3
+                          )
+                          
+                         
+                          
+                          # valueBoxOutput("valuebox1")
                           
                           ))
           
@@ -197,16 +197,26 @@ mod_stat1_uni_quanti_server <- function(id){
     })
     
     output$sd <- renderText({
-      
+
       "10"
-      
+
     })
     
+    # output$valuebox1 <- renderValueBox({
+    #   
+    #   valueBox(value = 10,
+    #            subtitle = "Coefficient de variation"
+    #     
+    #   )
+    #   
+    # })
+    
     output$cv <- renderText({
-      
+
       paste("10","%")
-      
+
     })
+    
     
     
   })

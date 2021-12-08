@@ -49,7 +49,7 @@ mod_stat1_uni_quali_ui <- function(id){
     
     column(4,),
     column(8,
-           
+           h3("Tris à plat"),
            tableOutput(ns("tab1"))
            
            )
