@@ -130,16 +130,16 @@ tabPanel(
         mod_stat2_sond_grappes_ui(ns("stat2_sond_grappes")),
         
         
-        tabItem(tabName = "subiteme",
-                h2("base des repondants")),
-        tabItem(tabName = "subitemf",
-                h2("controles univaries")),
-        tabItem(tabName = "subitemg",
-                h2("controles coherence interne")),
-        tabItem(tabName = "subitemh",
-                h2("controles vraissemblance")),
-        tabItem(tabName = "subitemi",
-                h2("controles agreges")),
+        mod_stat2_pond_base_ui(ns("stat2_pond_base")),
+        
+        mod_stat2_pond_univ_ui(ns("stat2_pond_univ")),
+        
+        mod_stat2_pond_coher_ui(ns("stat2_pond_coher")),
+        
+        mod_stat2_pond_vraiss_ui(ns("stat2_pond_vraiss")),
+        
+        mod_stat2_pond_agreg_ui(ns("stat2_pond_agreg")),
+        
         tabItem(tabName = "subitemj",
                 h2("analyse de la non reponse")),
         tabItem(tabName = "subitemk",
@@ -199,6 +199,16 @@ mod_stat2_server <- function(id){
     mod_stat2_sond_2deg_server("stat2_sond_2deg")
     
     mod_stat2_sond_grappes_server("stat2_sond_grappes")
+    
+    mod_stat2_pond_base_server("stat2_pond_base")
+    
+    mod_stat2_pond_univ_server("stat2_pond_univ")
+    
+    mod_stat2_pond_coher_server("stat2_pond_coher")
+    
+    mod_stat2_pond_vraiss_server("stat2_pond_vraiss")
+    
+    mod_stat2_pond_agreg_server("stat2_pond_agreg")
     
   })
 }

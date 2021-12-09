@@ -39,6 +39,11 @@ golem::add_module( name = "stat2_sond_sas" ) # Name of the module
 golem::add_module( name = "stat2_sond_saf" ) # Name of the module
 golem::add_module( name = "stat2_sond_2deg" ) # Name of the module
 golem::add_module( name = "stat2_sond_grappes" ) # Name of the module
+golem::add_module( name = "stat2_pond_base" ) # Name of the module
+golem::add_module( name = "stat2_pond_univ" ) # Name of the module
+golem::add_module( name = "stat2_pond_coher" ) # Name of the module
+golem::add_module( name = "stat2_pond_vraiss" ) # Name of the module
+golem::add_module( name = "stat2_pond_agreg" ) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
