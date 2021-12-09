@@ -11,7 +11,80 @@ mod_stat1_inf_intervalles_ui <- function(id){
   ns <- NS(id)
   
   tabItem(tabName = "subitem10",
-          h2("Intervalles de confiance"))
+          h2("Intervalles de confiance"),
+          tags$br(),
+          
+          fluidRow(
+            
+            column(4,
+                   wellPanel(
+                     
+                     
+                     selectInput(ns("select1"),
+                                 "Quel indicateur voulez-vous estimer ?",
+                                 choices = LETTERS),
+                     checkboxGroupInput(ns("check1"),
+                                 "Choisissez un niveau de confiance :",
+                                 choices = c("90 %","95 %","99 %")
+                                ),
+                     actionButton(ns("go1"), 
+                                  "Calculez l'intervalle de confiance" )
+                   )
+                   
+                   
+            ),
+            
+            
+            column(4,
+                   
+                  
+                          infoBox(
+                            title = "Intervalle de confiance",
+                            value = textOutput(ns("borneinf")),
+                            subtitle = "Borne inférieure",
+                            icon = icon("line-chart"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=12
+                          ),
+                          infoBox(
+                            title = "Valeur estimée",
+                            value = textOutput(ns("estime")),
+                            subtitle = "l'estimateur utilisé est la moyenne empirique",
+                            icon = icon("line-chart"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=12
+                          ),
+                          infoBox(
+                            title = "Intervalle de confiance",
+                            value = textOutput(ns("bornesup")),
+                            subtitle = "Borne supérieure",
+                            icon = icon("line-chart"),
+                            #fill = TRUE,
+                            color="aqua",
+                            width=12
+                          )
+            ),
+            
+            
+            column(4,
+                   infoBox(
+                     title = "Vraie Valeur",
+                     value = textOutput(ns("vraie")),
+                     # subtitle = "Source : Grandile",
+                     icon = icon("line-chart"),
+                     #fill = TRUE,
+                     color="aqua",
+                     width=12
+                   )
+                   
+            )
+            
+            
+          )
+          
+          )
   
   
 }
@@ -23,6 +96,31 @@ mod_stat1_inf_intervalles_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    output$vraie <- renderText({
+      
+      "10"
+      
+    })
+    
+    output$estime <- renderText({
+      
+      "10"
+      
+    })
+    
+    output$borneinf <- renderText({
+      
+      "10"
+      
+    })
+    
+    output$bornesup <- renderText({
+      
+      "10"
+      
+    })
+    
+    
   })
 }
     

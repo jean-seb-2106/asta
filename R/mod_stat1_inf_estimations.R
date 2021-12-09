@@ -81,6 +81,18 @@ mod_stat1_inf_estimations_server <- function(id){
       
     })
     
+    output$vraie <- renderText({
+      
+      "10"
+      
+    })
+    
+    output$estime <- renderText({
+      
+      "10"
+      
+    })
+    
     
   })
 }

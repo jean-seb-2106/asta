@@ -96,7 +96,7 @@ tabPanel(
         
         #Les données--------
         tabItem(tabName = "subitem1",
-                h2("Le fichier Grandile"),
+                h2("Visualisation du fichier"),
                 DT::DTOutput(ns('dt1'))),
 
         tabItem(tabName = "subitem2",
