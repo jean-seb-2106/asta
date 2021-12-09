@@ -120,72 +120,16 @@ tabPanel(
           textOutput(outputId = ns("text_definitions"))
         ),
         
+        #tabItem("subitema")
+        mod_stat2_sond_sas_ui(ns("stat2_sond_sas")), 
         
-        tabItem(
-          tabName = "subitema",
-          h2("Sondage Aleatoire Simple"),
-          fluidRow(
-            column(4,
-                           
-                wellPanel(
-                             
-                     sliderInput("TailleEch", 
-                                 "Choisissez la taille de l'échantillon",
-                                 min=10,
-                                 max=5418,
-                                 value=15),
-                     selectInput("NomVar1",
-                                 "Choisissez un caractère :", 
-                                 choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
-                     selectInput("NomVar2",
-                                 "Choisissez un caractère :", 
-                                 choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
-                     actionButton("go",
-                                  label="Lancer le tirage et les calculs")
-                           ),
-                           wellPanel("texte texte texte texte"),
-                           wellPanel("texte texte texte")
-          ),
-          column(4,
-                 
-                 
-                 valueBox(
-                   subtitle = "Cefil 2021" ,
-                   value = 150, 
-                   width = NULL, 
-                   color= "aqua") ,
-                 plotOutput(outputId = ns("plotsas1"))
-                 
-          ),
-          column(4,
-                 
-                 infoBox(title = "mon info box2",
-                         subtitle = "Cefil 2021"
-                 ),
-                 plotOutput(outputId = ns("plotsas2"))
-          )),
-          
-          hr(),
-          fluidRow(
-            wellPanel(
-              h2("fluidrow")
-            )
-          )
-        ), 
+        mod_stat2_sond_saf_ui(ns("stat2_sond_saf")),
+        
+        mod_stat2_sond_2deg_ui(ns("stat2_sond_2deg")),
+        
+        mod_stat2_sond_grappes_ui(ns("stat2_sond_grappes")),
         
         
-        
-        
-        
-        
-        
-        
-        tabItem(tabName = "subitemb",
-                h2("subitem7")),
-        tabItem(tabName = "subitemc",
-                h2("subitem8")),
-        tabItem(tabName = "subitemd",
-                h2("subitem9")),
         tabItem(tabName = "subiteme",
                 h2("base des repondants")),
         tabItem(tabName = "subitemf",
@@ -248,23 +192,13 @@ mod_stat2_server <- function(id){
     #   
     # })
     
-    output$plotsas1 <- renderPlot(
-      
-      {
-        random_ggplot("boxplot")
-      }
-    )
+    mod_stat2_sond_sas_server("stat2_sond_sas")
     
-    output$plotsas2 <- renderPlot(
-      
-      {
-        random_ggplot("boxplot")
-      }
-    )
+    mod_stat2_sond_saf_server("stat2_sond_saf")
     
+    mod_stat2_sond_2deg_server("stat2_sond_2deg")
     
-    
-    
+    mod_stat2_sond_grappes_server("stat2_sond_grappes")
     
   })
 }

@@ -20,6 +20,8 @@ attachment::att_amend_desc()
 
 ## Add modules ----
 ## Create a module infrastructure in R/
+
+#Stat 1 et les sous-modules
 golem::add_module( name = "stat1" ) # Name of the module
 golem::add_module( name = "stat1_uni_quali" ) # Name of the module
 golem::add_module( name = "stat1_uni_quanti" ) # Name of the module
@@ -30,7 +32,13 @@ golem::add_module( name = "stat1_inf_estimations" ) # Name of the module
 golem::add_module( name = "stat1_inf_simulations" ) # Name of the module
 golem::add_module( name = "stat1_inf_intervalles" ) # Name of the module
 golem::add_module( name = "stat1_inf_tests" ) # Name of the module
+
+#Stat2 et les sous-modules
 golem::add_module( name = "stat2" ) # Name of the module
+golem::add_module( name = "stat2_sond_sas" ) # Name of the module
+golem::add_module( name = "stat2_sond_saf" ) # Name of the module
+golem::add_module( name = "stat2_sond_2deg" ) # Name of the module
+golem::add_module( name = "stat2_sond_grappes" ) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
