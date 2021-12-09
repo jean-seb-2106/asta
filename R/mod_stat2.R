@@ -140,12 +140,11 @@ tabPanel(
         
         mod_stat2_pond_agreg_ui(ns("stat2_pond_agreg")),
         
-        tabItem(tabName = "subitemj",
-                h2("analyse de la non reponse")),
-        tabItem(tabName = "subitemk",
-                h2("etude correlation non reponse")),
-        tabItem(tabName = "subiteml",
-                h2("redressement et impact"))
+        mod_stat2_redress_na_ui(ns("stat2_redress_na")),
+        
+        mod_stat2_redress_corrna_ui(ns("stat2_redress_corrna")),
+        
+        mod_stat2_redress_impact_ui(ns("stat2_redress_impact"))
         
       )
       
@@ -209,6 +208,12 @@ mod_stat2_server <- function(id){
     mod_stat2_pond_vraiss_server("stat2_pond_vraiss")
     
     mod_stat2_pond_agreg_server("stat2_pond_agreg")
+    
+    mod_stat2_redress_na_server("stat2_redress_na")
+    
+    mod_stat2_redress_corrna_server("stat2_redress_corrna")
+    
+    mod_stat2_redress_impact_server("stat2_redress_impact")
     
   })
 }

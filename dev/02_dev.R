@@ -44,6 +44,9 @@ golem::add_module( name = "stat2_pond_univ" ) # Name of the module
 golem::add_module( name = "stat2_pond_coher" ) # Name of the module
 golem::add_module( name = "stat2_pond_vraiss" ) # Name of the module
 golem::add_module( name = "stat2_pond_agreg" ) # Name of the module
+golem::add_module( name = "stat2_redress_na" ) # Name of the module
+golem::add_module( name = "stat2_redress_corrna" ) # Name of the module
+golem::add_module( name = "stat2_redress_impact" ) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
