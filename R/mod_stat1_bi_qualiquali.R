@@ -28,7 +28,7 @@ mod_stat1_bi_qualiquali_ui <- function(id){
                           
           ),
           column(8,
-                 
+                 h3("Tableau croisé en structure"),
                  tableOutput(ns("tab1"))        
                  
           )
@@ -37,7 +37,7 @@ mod_stat1_bi_qualiquali_ui <- function(id){
           br(),
           fluidRow(column(4,),
                    column(8,
-                          
+                          h3("Indicateur d'intensit\u00e9 de la corr\u00e9lation"),
                           infoBox(
                             title = "Chi-2",
                             value = textOutput(ns("chi2")),

@@ -26,7 +26,7 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
                           
                           ),
                    column(8,
-                                   
+                          h3("Graphique"),        
                            plotlyOutput(ns("plotly1"))        
                                    
                                    )
@@ -35,7 +35,7 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
           br(),
           fluidRow(column(4,),
                    column(8,
-                                     
+                          h3("Indicateur d'intensit\u00e9 de la corr\u00e9lation"),
                                      infoBox(
                                        title = "Coeff de corr\u00e9lation lin\u00e9aire",
                                        value = textOutput(ns("cor")),

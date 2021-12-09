@@ -36,7 +36,7 @@ mod_stat1_uni_quanti_ui <- function(id){
                    )
             ),
             column(8,
-                   
+                   h3("Graphique"),
                    plotlyOutput(ns("plotly1"))
                    
                    

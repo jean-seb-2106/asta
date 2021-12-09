@@ -39,7 +39,7 @@ mod_stat1_uni_quali_ui <- function(id){
     ),
     
     column(8,
-           
+           h3("Graphique"),
            plotOutput(ns("plot1"))
            
            
