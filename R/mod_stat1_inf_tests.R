@@ -27,7 +27,7 @@ mod_stat1_inf_tests_ui <- function(id){
                                         choices = c("90 %","95 %","99 %")
                      ),
                      actionButton(ns("go1"), 
-                                  "Calculez l'intervalle de confiance" )
+                                  "Lancez le test" )
                    )
                    
                    
