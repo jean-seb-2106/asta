@@ -15,16 +15,49 @@
 
 ## Dependencies ----
 ## Add one line by package you want to add as dependency
-usethis::use_package( "thinkr" )
+# usethis::use_package( "thinkr" )
+attachment::att_amend_desc()
 
 ## Add modules ----
 ## Create a module infrastructure in R/
-golem::add_module( name = "name_of_module1" ) # Name of the module
-golem::add_module( name = "name_of_module2" ) # Name of the module
+
+#Stat 1 et les sous-modules
+golem::add_module( name = "stat1" ) # Name of the module
+golem::add_module( name = "stat1_uni_quali" ) # Name of the module
+golem::add_module( name = "stat1_uni_quanti" ) # Name of the module
+golem::add_module( name = "stat1_bi_quantiquanti" ) # Name of the module
+golem::add_module( name = "stat1_bi_qualiquali" ) # Name of the module
+golem::add_module( name = "stat1_bi_quantiquali" ) # Name of the module
+golem::add_module( name = "stat1_inf_estimations" ) # Name of the module
+golem::add_module( name = "stat1_inf_simulations" ) # Name of the module
+golem::add_module( name = "stat1_inf_intervalles" ) # Name of the module
+golem::add_module( name = "stat1_inf_tests" ) # Name of the module
+
+#Stat2 et les sous-modules
+golem::add_module( name = "stat2" ) # Name of the module
+golem::add_module( name = "stat2_sond_sas" ) # Name of the module
+golem::add_module( name = "stat2_sond_saf" ) # Name of the module
+golem::add_module( name = "stat2_sond_2deg" ) # Name of the module
+golem::add_module( name = "stat2_sond_grappes" ) # Name of the module
+golem::add_module( name = "stat2_pond_base" ) # Name of the module
+golem::add_module( name = "stat2_pond_univ" ) # Name of the module
+golem::add_module( name = "stat2_pond_coher" ) # Name of the module
+golem::add_module( name = "stat2_pond_vraiss" ) # Name of the module
+golem::add_module( name = "stat2_pond_agreg" ) # Name of the module
+golem::add_module( name = "stat2_redress_na" ) # Name of the module
+golem::add_module( name = "stat2_redress_corrna" ) # Name of the module
+golem::add_module( name = "stat2_redress_impact" ) # Name of the module
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
-golem::add_fct( "helpers" ) 
+golem::add_fct( "importation_m2" ) 
+golem::add_fct( "tirage_sas_m2" ) 
+golem::add_fct( "tirage_strat_m2" )
+golem::add_fct( "tirage_degres_m2" )
+golem::add_fct( "boxplot_tirage_m2" )
+golem::add_fct( "data_apur_m2" )
+golem::add_fct( "plot_apur_m2" )
+
 golem::add_utils( "helpers" )
 
 ## External resources
@@ -35,7 +68,7 @@ golem::add_css_file( "custom" )
 
 ## Add internal datasets ----
 ## If you have data in your package
-usethis::use_data_raw( name = "my_dataset", open = FALSE ) 
+usethis::use_data_raw( name = "grandile", open = FALSE ) 
 
 ## Tests ----
 ## Add one line by test you want to create
@@ -44,7 +77,7 @@ usethis::use_test( "app" )
 # Documentation
 
 ## Vignette ----
-usethis::use_vignette("asta")
+usethis::use_vignette("module2")
 devtools::build_vignettes()
 
 ## Code Coverage----

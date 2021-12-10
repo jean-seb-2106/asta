@@ -1,17 +1,31 @@
 Package: asta
 Title: ASTA
 Version: 0.0.0.9000
-Authors@R: person('Jean', 'Sebban', email = 'jean.sebban@insee.fr', role = c('cre', 'aut'))
+Authors@R: 
+    person(given = "Jean",
+           family = "Sebban",
+           role = c("cre", "aut"),
+           email = "jean.sebban@insee.fr")
 Description: Appli attaches.
 License: MIT + file LICENSE
+Depends: 
+    R (>= 2.10)
 Imports: 
     config (>= 0.3.1),
+    dashboardthemes,
+    dplyr,
+    DT,
+    ggplot2,
     golem (>= 0.3.1),
-    shiny (>= 1.7.1)
+    plotly,
+    sampling,
+    shinipsum,
+    shiny (>= 1.7.1),
+    shinydashboard,
+    shinythemes
+Suggests: 
+    knitr,
+    rmarkdown
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
-Suggests: 
-    rmarkdown,
-    knitr
-VignetteBuilder: knitr
+RoxygenNote: 7.1.2

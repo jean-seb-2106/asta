@@ -5,3 +5,5 @@ dev_history.R
 ^dev$
 $run_dev.*
 ^LICENSE\.md$
+.gitlab-ci.yml
+module2.Rmd
