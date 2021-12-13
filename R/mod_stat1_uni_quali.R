@@ -24,7 +24,7 @@ mod_stat1_uni_quali_ui <- function(id){
              selectInput(
                ns("select1"),
                "Choisissez une variable :",
-               choices = c("LIB_PCS")),
+               choices = c("LIB_PCS","LIB_DIPL","LIB_ACT","LIB_PAUVRE")),
              checkboxGroupInput(
                ns("check1"),
                "Choisissez un graphique :",
@@ -63,7 +63,7 @@ mod_stat1_uni_quali_ui <- function(id){
 #' stat1_uni_quali Server Functions
 #'
 #' @noRd 
-mod_stat1_uni_quali_server <- function(id){
+mod_stat1_uni_quali_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
@@ -71,7 +71,7 @@ mod_stat1_uni_quali_server <- function(id){
     
     observeEvent(input$go1,{
       
-      local$dt <- grandile
+      local$dt <- global$dt
       
     })
     
@@ -79,7 +79,7 @@ mod_stat1_uni_quali_server <- function(id){
      
       
      a <- tri_plat(local$dt,input$select1)  
-     DT::datatable(a)
+     a %>% DT::datatable(class = "row-border")
         
       
     })

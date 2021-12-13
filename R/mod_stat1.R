@@ -8,7 +8,7 @@
 #'
 #' @importFrom shiny NS tagList 
 #' @importFrom shinipsum random_DT random_ggplot random_table random_ggplotly
-#' @importFrom DT renderDT DTOutput
+#' @importFrom DT renderDT DTOutput datatable
 #' @importFrom plotly plotlyOutput renderPlotly
 mod_stat1_ui <- function(id){
   ns <- NS(id)
@@ -151,20 +151,22 @@ tabPanel(
 #' stat1 Server Functions
 #'
 #' @noRd 
-mod_stat1_server <- function(id){
+mod_stat1_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    global <- reactiveValues(dt = grandile)
+    
     #les données----
     
     output$dt1 <- renderDT({
       
-      random_DT(ncol = 10,nrow = 5418)
+     global$dt %>% DT::datatable(class = "display")
       
     })
     
     #Stat univariée quali-------
-    mod_stat1_uni_quali_server("stat1_uni_quali")
+    mod_stat1_uni_quali_server("stat1_uni_quali",global=global)
     
     #Stat univariée quanti-----
     mod_stat1_uni_quanti_server("stat1_uni_quanti")
