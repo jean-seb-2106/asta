@@ -19,6 +19,10 @@ library(asta)
 library(questionr)
 library(dplyr)
 library(kableExtra)
+library(DT)
+library(ggplot2)
+library(plotly)
+library(rAmCharts)
 ```
 
 # Statistique descriptive univariée
@@ -33,20 +37,34 @@ library(kableExtra)
 a <- tri_plat(grandile,"LIB_PCS") 
 
 #Fonction pour mettre en forme le tableau
-
-
-a %>% DT::datatable(class = "cell-border compact hover order-colum")
-
-# n <- nrow(a)
-# a  %>%  kableExtra::kable() %>% row_spec(n,bold=TRUE)
-
-# d <-  freq(Grandile[,input$NomVar],total=TRUE,valid=FALSE,digits = 2)
-#     Libelles <- rownames(d)
-#     d <- d %>% cbind(Libelles) %>% 
-#       select(Libelles,n,`%`) %>% 
-#       rename(Effectifs = n,`Part (en %)` = `%`) 
-#     d
+a %>% DT::datatable(class = "cell-border hover order-colum")
 
 
 ```
+
+
+```{r}
+
+# Préparation table pour un amBarPlot 
+a <- freq(grandile$PCS,valid = FALSE) 
+b <-rownames(a)
+c <- cbind(a,b) %>% as.data.frame() %>% rename(label = b,value = n) %>% select(label,value)
+
+
+#Prépation pour un amPie
+a <- freq(grandile$LIB_PCS,valid = FALSE) 
+b <-rownames(a)
+c <- cbind(a,b) %>% as.data.frame() %>% rename(label = b,value = n) %>% select(label,value)
+
+rAmCharts::amBarplot(x = "PCS",y = "Effectifs",data = c,legend=TRUE)
+rAmCharts::amPie(c,show_values = TRUE)
+
+#Graphique
+a <- grandile %>% ggplot(aes(x = PCS)) + 
+  geom_bar(aes(col = LIB_PCS)) 
+
+a %>% ggplotly
+
+```
+
 
