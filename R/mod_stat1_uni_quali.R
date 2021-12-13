@@ -24,7 +24,7 @@ mod_stat1_uni_quali_ui <- function(id){
              selectInput(
                ns("select1"),
                "Choisissez une variable :",
-               choices = LETTERS),
+               choices = c("LIB_PCS")),
              checkboxGroupInput(
                ns("check1"),
                "Choisissez un graphique :",
@@ -50,7 +50,7 @@ mod_stat1_uni_quali_ui <- function(id){
     column(4,),
     column(8,
            h3("Tris à plat"),
-           tableOutput(ns("tab1"))
+           DTOutput(ns("tab1"))
            
            )
     )
@@ -67,10 +67,20 @@ mod_stat1_uni_quali_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    local <- reactiveValues(dt = NULL)
     
-    output$tab1 <- renderTable({
+    observeEvent(input$go1,{
       
-      random_table(nrow = 8,ncol = 12)
+      local$dt <- grandile
+      
+    })
+    
+    output$tab1 <- renderDT({
+     
+      
+     a <- tri_plat(local$dt,input$select1)  
+     DT::datatable(a)
+        
       
     })
     

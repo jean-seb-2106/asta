@@ -16,4 +16,37 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(asta)
+library(questionr)
+library(dplyr)
+library(kableExtra)
 ```
+
+# Statistique descriptive univariée
+
+## Sur une qualitative
+
+```{r}
+#Fonction pour faire apparaître un tri à plat
+
+
+#Exemple
+a <- tri_plat(grandile,"LIB_PCS") 
+
+#Fonction pour mettre en forme le tableau
+
+
+a %>% DT::datatable(class = "cell-border compact hover order-colum")
+
+# n <- nrow(a)
+# a  %>%  kableExtra::kable() %>% row_spec(n,bold=TRUE)
+
+# d <-  freq(Grandile[,input$NomVar],total=TRUE,valid=FALSE,digits = 2)
+#     Libelles <- rownames(d)
+#     d <- d %>% cbind(Libelles) %>% 
+#       select(Libelles,n,`%`) %>% 
+#       rename(Effectifs = n,`Part (en %)` = `%`) 
+#     d
+
+
+```
+

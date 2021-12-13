@@ -18,6 +18,7 @@ Imports:
     ggplot2,
     golem (>= 0.3.1),
     plotly,
+    questionr,
     sampling,
     shinipsum,
     shiny (>= 1.7.1),

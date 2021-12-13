@@ -57,6 +57,7 @@ golem::add_fct( "tirage_degres_m2" )
 golem::add_fct( "boxplot_tirage_m2" )
 golem::add_fct( "data_apur_m2" )
 golem::add_fct( "plot_apur_m2" )
+golem::add_fct("tri_plat")
 
 golem::add_utils( "helpers" )
 
