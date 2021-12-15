@@ -1,1 +1,1 @@
-globalVariables( c("ECH", "numero"))
+globalVariables( c("ECH", "numero","grandile","%",":="))

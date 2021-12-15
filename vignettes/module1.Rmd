@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup,warning=FALSE,echo=FALSE,include=FALSE}
 library(asta)
 library(questionr)
 library(dplyr)
@@ -25,9 +25,47 @@ library(plotly)
 library(rAmCharts)
 ```
 
+# Les données
+
 # Statistique descriptive univariée
 
 ## Sur une qualitative
+
+### Les graphiques
+
+#### Les graphiques avec rAmCharts
+
+
+Il n'est pas possible d'introduire un rAmCharts dans un shiny.
+L'erreur suivante apparaît : impossible de trouver la fonction "controlShinyPlot"...
+
+```{r}
+#Préparation de la fonction pour un amPie
+a <- freq(grandile$LIB_PCS,valid = FALSE) 
+b <-rownames(a)
+c <- cbind(a,b) %>% as.data.frame() %>% 
+  rename(label = b,value = n) %>% 
+  select(label,value)
+
+rAmCharts::amPie(c,show_values = TRUE)
+
+rambarplot_quali(grandile,"LIB_PCS")
+
+
+
+
+```
+
+Les graphiques avec GGPLOT2
+
+```{r}
+
+#Exemple
+graphggplotly_diagbarre(grandile,var = "PCS")
+```
+
+
+### Les tris à plat
 
 ```{r}
 #Fonction pour faire apparaître un tri à plat
@@ -42,29 +80,4 @@ a %>% DT::datatable(class = "cell-border hover order-colum")
 
 ```
 
-
-```{r}
-
-# Préparation table pour un amBarPlot 
-a <- freq(grandile$PCS,valid = FALSE) 
-b <-rownames(a)
-c <- cbind(a,b) %>% as.data.frame() %>% rename(label = b,value = n) %>% select(label,value)
-
-
-#Prépation pour un amPie
-a <- freq(grandile$LIB_PCS,valid = FALSE) 
-b <-rownames(a)
-c <- cbind(a,b) %>% as.data.frame() %>% rename(label = b,value = n) %>% select(label,value)
-
-rAmCharts::amBarplot(x = "PCS",y = "Effectifs",data = c,legend=TRUE)
-rAmCharts::amPie(c,show_values = TRUE)
-
-#Graphique
-a <- grandile %>% ggplot(aes(x = PCS)) + 
-  geom_bar(aes(col = LIB_PCS)) 
-
-a %>% ggplotly
-
-```
-
-
+# Statistique descriptive bivariée

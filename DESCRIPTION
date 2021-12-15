@@ -19,6 +19,7 @@ Imports:
     golem (>= 0.3.1),
     plotly,
     questionr,
+    rAmCharts,
     sampling,
     shinipsum,
     shiny (>= 1.7.1),

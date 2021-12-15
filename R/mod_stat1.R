@@ -161,7 +161,7 @@ mod_stat1_server <- function(id,global){
     
     output$dt1 <- renderDT({
       
-     global$dt %>% DT::datatable(class = "display")
+     global$dt[,1:11] %>% DT::datatable(class = "display")
       
     })
     
