@@ -169,7 +169,7 @@ mod_stat1_server <- function(id,global){
     mod_stat1_uni_quali_server("stat1_uni_quali",global=global)
     
     #Stat univariée quanti-----
-    mod_stat1_uni_quanti_server("stat1_uni_quanti")
+    mod_stat1_uni_quanti_server("stat1_uni_quanti",global=global)
     
     #Stat bivariée quanti-quanti----------
     mod_stat1_bi_quantiquanti_server("stat1_bi_quantiquanti")

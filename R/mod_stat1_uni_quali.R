@@ -26,7 +26,8 @@ mod_stat1_uni_quali_ui <- function(id){
              selectInput(
                ns("select1"),
                "Choisissez une variable :",
-               choices = c("PCS" = "LIB_PCS",
+               choices = c("MODCOHA" = "LIB_MODCOHA",
+                 "PCS" = "LIB_PCS",
                            "DIPL"="LIB_DIPL",
                            "ACT"="LIB_ACT",
                            "PAUVRE"="LIB_PAUVRE")),

@@ -22,15 +22,15 @@ mod_stat1_uni_quanti_ui <- function(id){
                    
                    wellPanel(
                      
-                     selectInput(ns("select2"),
+                     selectInput(ns("select1"),
                                  "Choisissez une variable :",
-                                 choices = LETTERS),
+                                 choices = c("REV_DISPONIBLE","PATRIMOINE")),
                      sliderInput(ns("slider1"),
                                  "Choisissez le nombre de classes : ",
                                  min = 1,
                                  max = 30,
                                  value = 10),
-                     actionButton(ns("go2"),"Cliquez pour afficher")
+                     actionButton(ns("go1"),"Cliquez pour afficher")
                      
                      
                    )
@@ -51,7 +51,7 @@ mod_stat1_uni_quanti_ui <- function(id){
                             #subtitle = "Moyenne",
                             # icon = icon("chart-line"),
                             # fill = TRUE,
-                            color="aqua",
+                            color="red",
                             width=3
                           ),
                           
@@ -61,7 +61,7 @@ mod_stat1_uni_quanti_ui <- function(id){
                             #subtitle = "Source : Cefil 2020",
                             # icon = icon("chart-line"),
                             #fill = TRUE,
-                            color="aqua",
+                            color="green",
                             width=3
                           ),
                           
@@ -149,14 +149,26 @@ mod_stat1_uni_quanti_ui <- function(id){
 #' stat1_uni_quanti Server Functions
 #'
 #' @noRd 
-mod_stat1_uni_quanti_server <- function(id){
+mod_stat1_uni_quanti_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    local <- reactiveValues(dt = NULL,var = NULL,class=NULL)
+    
+    observeEvent(input$go1,{
+      
+      local$dt <- global$dt
+      local$var <- input$select1
+      local$class <- input$slider1
+      
+    })
     
     output$plotly1 <- renderPlotly({
-      
-      random_ggplotly()
+     
+      validate(need(expr = !is.null(local$dt),
+                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique"))
+       
+     graphggplotly_histo(local$dt,local$var,local$class)
       
     })
     

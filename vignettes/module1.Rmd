@@ -81,3 +81,14 @@ a %>% DT::datatable(class = "cell-border hover order-colum")
 ```
 
 # Statistique descriptive bivariée
+
+## Graphique
+
+```{r}
+
+graphggplotly_histo(grandile,"REV_DISPONIBLE",10)
+
+
+```
+
+

@@ -60,6 +60,7 @@ golem::add_fct( "plot_apur_m2" )
 golem::add_fct("tri_plat")
 golem::add_fct("graphggplotly_diagbarre")
 golem::add_fct("rambarplot_quali")
+golem::add_fct("graphggplotly_histo")
 
 
 golem::add_utils( "helpers" )
