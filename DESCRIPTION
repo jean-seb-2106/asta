@@ -24,10 +24,12 @@ Imports:
     shinipsum,
     shiny (>= 1.7.1),
     shinydashboard,
-    shinythemes
+    shinythemes,
+    stats
 Suggests: 
     kableExtra,
     knitr,
+    purrr,
     rmarkdown
 Encoding: UTF-8
 LazyData: true

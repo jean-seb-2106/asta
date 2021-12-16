@@ -23,6 +23,7 @@ library(DT)
 library(ggplot2)
 library(plotly)
 library(rAmCharts)
+library(purrr)
 ```
 
 # Les données
@@ -91,4 +92,22 @@ graphggplotly_histo(grandile,"REV_DISPONIBLE",10)
 
 ```
 
+```{r}
+
+
+
+moy <- mean(grandile$AGE)
+median <- median(grandile$AGE)
+q1 <- quantile(grandile$AGE,0.25)
+q3 <- quantile(grandile$AGE,0.75)
+
+indic_centrale_age <- data.frame(moy,median,q1,q3)
+indic_centrale_age %>% map_chr(format_box,digits=3)
+
+format_box(mean(grandile$PATRIMOINE))
+
+moy <- mean(grandile$AGE)
+format_box(moy)
+
+```
 
