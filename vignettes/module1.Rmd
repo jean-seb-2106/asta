@@ -14,6 +14,100 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup,warning=FALSE,echo=FALSE,include=FALSE}
 library(asta)
+library(questionr)
+library(dplyr)
+library(kableExtra)
+library(DT)
+library(ggplot2)
+library(plotly)
+library(rAmCharts)
+library(purrr)
 ```
+
+# Les données
+
+# Statistique descriptive univariée
+
+## Sur une qualitative
+
+### Les graphiques
+
+#### Les graphiques avec rAmCharts
+
+
+Il n'est pas possible d'introduire un rAmCharts dans un shiny.
+L'erreur suivante apparaît : impossible de trouver la fonction "controlShinyPlot"...
+
+```{r}
+#Préparation de la fonction pour un amPie
+a <- freq(grandile$LIB_PCS,valid = FALSE) 
+b <-rownames(a)
+c <- cbind(a,b) %>% as.data.frame() %>% 
+  rename(label = b,value = n) %>% 
+  select(label,value)
+
+rAmCharts::amPie(c,show_values = TRUE)
+
+rambarplot_quali(grandile,"LIB_PCS")
+
+
+
+
+```
+
+Les graphiques avec GGPLOT2
+
+```{r}
+
+#Exemple
+graphggplotly_diagbarre(grandile,var = "PCS")
+```
+
+
+### Les tris à plat
+
+```{r}
+#Fonction pour faire apparaître un tri à plat
+
+
+#Exemple
+a <- tri_plat(grandile,"LIB_PCS") 
+
+#Fonction pour mettre en forme le tableau
+a %>% DT::datatable(class = "cell-border hover order-colum")
+
+
+```
+
+# Statistique descriptive bivariée
+
+## Graphique
+
+```{r}
+
+graphggplotly_histo(grandile,"REV_DISPONIBLE",10)
+
+
+```
+
+```{r}
+
+
+
+moy <- mean(grandile$AGE)
+median <- median(grandile$AGE)
+q1 <- quantile(grandile$AGE,0.25)
+q3 <- quantile(grandile$AGE,0.75)
+
+indic_centrale_age <- data.frame(moy,median,q1,q3)
+indic_centrale_age %>% map_chr(format_box,digits=3)
+
+format_box(mean(grandile$PATRIMOINE))
+
+moy <- mean(grandile$AGE)
+format_box(moy)
+
+```
+

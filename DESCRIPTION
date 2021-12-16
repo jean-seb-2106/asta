@@ -18,13 +18,18 @@ Imports:
     ggplot2,
     golem (>= 0.3.1),
     plotly,
+    questionr,
+    rAmCharts,
     sampling,
     shinipsum,
     shiny (>= 1.7.1),
     shinydashboard,
-    shinythemes
+    shinythemes,
+    stats
 Suggests: 
+    kableExtra,
     knitr,
+    purrr,
     rmarkdown
 Encoding: UTF-8
 LazyData: true

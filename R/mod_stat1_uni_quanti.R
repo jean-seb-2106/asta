@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom stats median sd quantile 
 mod_stat1_uni_quanti_ui <- function(id){
   ns <- NS(id)
 
@@ -22,15 +23,15 @@ mod_stat1_uni_quanti_ui <- function(id){
                    
                    wellPanel(
                      
-                     selectInput(ns("select2"),
+                     selectInput(ns("select1"),
                                  "Choisissez une variable :",
-                                 choices = LETTERS),
+                                 choices = c("AGE","REV_DISPONIBLE","PATRIMOINE")),
                      sliderInput(ns("slider1"),
                                  "Choisissez le nombre de classes : ",
                                  min = 1,
                                  max = 30,
                                  value = 10),
-                     actionButton(ns("go2"),"Cliquez pour afficher")
+                     actionButton(ns("go1"),"Cliquez pour afficher")
                      
                      
                    )
@@ -51,17 +52,7 @@ mod_stat1_uni_quanti_ui <- function(id){
                             #subtitle = "Moyenne",
                             # icon = icon("chart-line"),
                             # fill = TRUE,
-                            color="aqua",
-                            width=3
-                          ),
-                          
-                          valueBox(
-                            subtitle = "Médiane",
-                            value = textOutput(ns("mediane")),
-                            #subtitle = "Source : Cefil 2020",
-                            # icon = icon("chart-line"),
-                            #fill = TRUE,
-                            color="aqua",
+                            color="red",
                             width=3
                           ),
                           
@@ -76,7 +67,17 @@ mod_stat1_uni_quanti_ui <- function(id){
                             width=3
                           ),
                           
-                          #Premier Quartile
+                          valueBox(
+                            subtitle = "Médiane",
+                            value = textOutput(ns("mediane")),
+                            #subtitle = "Source : Cefil 2020",
+                            # icon = icon("chart-line"),
+                            #fill = TRUE,
+                            color="green",
+                            width=3
+                          ),
+                          
+                          #Troisième Quartile
                           valueBox(
                             subtitle = "Troisième quartile",
                             value = textOutput(ns("q3")),
@@ -149,56 +150,97 @@ mod_stat1_uni_quanti_ui <- function(id){
 #' stat1_uni_quanti Server Functions
 #'
 #' @noRd 
-mod_stat1_uni_quanti_server <- function(id){
+mod_stat1_uni_quanti_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    local <- reactiveValues(dt = NULL,
+                            var = NULL,
+                            class=NULL,
+                            mean=NULL,
+                            sd=NULL,
+                            q1 = NULL,
+                            q3 = NULL)
     
-    output$plotly1 <- renderPlotly({
+    observeEvent(input$go1,{
       
-      random_ggplotly()
+      local$dt <- global$dt
+      local$var <- input$select1
+      local$class <- input$slider1
       
     })
     
+    output$plotly1 <- renderPlotly({
+     
+      validate(need(expr = !is.null(local$dt),
+                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique"))
+       
+     graphggplotly_histo(local$dt,local$var,local$class)
+      
+    })
+   
     output$moyenne <- renderText({
-      
-      "10"
-      
+    
+    req(local$dt) 
+        
+    local$mean <- mean(local$dt[,local$var],na.rm = TRUE)
+    format_box(local$mean)  
+    
     })
     
     output$mediane <- renderText({
       
-      "10"
+      req(local$dt) 
+      
+      a <- median(local$dt[,local$var],na.rm = TRUE)
+      format_box(a)  
       
     })
     
     output$q1 <- renderText({
       
-      "10"
+      req(local$dt) 
+      
+      local$q1 <- quantile(local$dt[,local$var],na.rm = TRUE,probs = 0.25)
+      format_box(local$q1) 
       
     })
     
     output$q3 <- renderText({
       
-      "10"
+      req(local$dt) 
+      
+      local$q3 <- quantile(local$dt[,local$var],na.rm = TRUE,probs = 0.75)
+      format_box(local$q3)  
       
     })
     
     output$etendue <- renderText({
       
-      "10"
+      req(local$dt) 
+      
+      a <- min(local$dt[,local$var],na.rm = TRUE)
+      b <- max(local$dt[,local$var],na.rm = TRUE)
+      c <- b - a
+      format_box(c) 
       
     })
     
     output$iiq <- renderText({
       
-      "10"
+      req(local$dt) 
+      
+      a <- local$q3 - local$q1
+      format_box(a) 
       
     })
     
     output$sd <- renderText({
 
-      "10"
+      req(local$dt) 
+      
+      local$sd <- sd(local$dt[,local$var],na.rm = TRUE)
+      format_box(local$sd) 
 
     })
     
@@ -212,8 +254,11 @@ mod_stat1_uni_quanti_server <- function(id){
     # })
     
     output$cv <- renderText({
-
-      paste("10","%")
+      
+      req(local$dt) 
+      
+    a <- (local$sd/local$mean)*100
+    format_box(a)
 
     })
     
