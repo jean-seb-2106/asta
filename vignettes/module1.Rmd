@@ -60,7 +60,6 @@ rambarplot_quali(grandile,"LIB_PCS")
 Les graphiques avec GGPLOT2
 
 ```{r}
-
 #Exemple
 graphggplotly_diagbarre(grandile,var = "PCS")
 ```
@@ -69,9 +68,6 @@ graphggplotly_diagbarre(grandile,var = "PCS")
 ### Les tris à plat
 
 ```{r}
-#Fonction pour faire apparaître un tri à plat
-
-
 #Exemple
 a <- tri_plat(grandile,"LIB_PCS") 
 
@@ -81,28 +77,26 @@ a %>% DT::datatable(class = "cell-border hover order-colum")
 
 ```
 
-# Statistique descriptive bivariée
+## Sur une quantitative
 
 ## Graphique
 
 ```{r}
-
 graphggplotly_histo(grandile,"REV_DISPONIBLE",10)
 
 
 ```
 
+## Indicateurs statistiques
+
 ```{r}
-
-
-
 moy <- mean(grandile$AGE)
 median <- median(grandile$AGE)
 q1 <- quantile(grandile$AGE,0.25)
 q3 <- quantile(grandile$AGE,0.75)
 
 indic_centrale_age <- data.frame(moy,median,q1,q3)
-indic_centrale_age %>% map_chr(format_box,digits=3)
+indic_centrale_age %>% map_chr(format_box)
 
 format_box(mean(grandile$PATRIMOINE))
 
@@ -110,4 +104,18 @@ moy <- mean(grandile$AGE)
 format_box(moy)
 
 ```
+
+
+
+# Statistique descriptive bivariée
+
+## Entre deux variables quantitatives
+
+## Entre deux variables qualitatives
+
+## Entre une variable quantitative et une variable qualitative
+
+
+# Statistique inférentielle
+
 
