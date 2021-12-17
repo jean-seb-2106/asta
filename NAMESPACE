@@ -3,6 +3,7 @@
 export(format_box)
 export(graphggplotly_diagbarre)
 export(graphggplotly_histo)
+export(graphggplotly_nuage)
 export(rambarplot_quali)
 export(run_app)
 export(tri_plat)

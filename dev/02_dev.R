@@ -62,6 +62,12 @@ golem::add_fct("graphggplotly_diagbarre")
 golem::add_fct("rambarplot_quali")
 golem::add_fct("graphggplotly_histo")
 golem::add_fct("format_box")
+golem::add_fct("graphggplotly_nuage")
+golem::add_fct("")
+golem::add_fct("")
+golem::add_fct("")
+golem::add_fct("")
+golem::add_fct("")
 
 
 golem::add_utils( "helpers" )
