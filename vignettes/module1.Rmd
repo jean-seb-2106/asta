@@ -111,14 +111,56 @@ format_box(moy)
 
 ## Entre deux variables quantitatives
 
+### Graphique
+
 ```{r}
-ggplot(grandile,aes(x = AGE,y = REV_DISPONIBLE)) + geom_point(alpha=0.2,size=1,color=input$Coul2) + geom_smooth(method="lm")
+graphggplotly_nuage(grandile,"REV_DISPONIBLE","PATRIMOINE")
+
+
+```
+
+### Indicateur
+
+```{r}
+
+a <- cor(grandile[,"REV_DISPONIBLE"],grandile[,"PATRIMOINE"])
+
+format_box(a)
 ```
 
 
 ## Entre deux variables qualitatives
 
 ## Entre une variable quantitative et une variable qualitative
+
+### Graphique
+
+```{r}
+graphggplotly_qualiquanti(grandile,"PCS","REV_DISPONIBLE")
+```
+
+```{r}
+
+
+tab <- tab_moyenne(grandile,"PCS","AGE")
+
+#Fonction pour calculer la variation inter-groupe sur la quanti
+inter <- sum(tab$Contrib_inter)
+format_box(inter)
+
+#Fonction pour calculer la variation intra-groupe sur la quanti
+intra <- sum(tab$Contrib_intra)
+format_box(intra)
+
+#Variance sur la quanti
+var <- var(grandile[,"AGE"])
+format_box(var)
+
+#Rapport de corrélation
+eta2 <- (inter/var)*100
+paste(format_box(eta2),"%")
+
+```
 
 
 # Statistique inférentielle

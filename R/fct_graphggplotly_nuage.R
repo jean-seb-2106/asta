@@ -6,6 +6,7 @@
 #' @param data un dataframe 
 #' @param var1  une variable quantitative
 #' @param var2  une variable quantitative
+#' @importFrom stats cor
 #'
 #' @return un graphique ggplotly
 #' @export

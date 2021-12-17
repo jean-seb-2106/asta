@@ -18,9 +18,18 @@ mod_stat1_bi_quantiquali_ui <- function(id){
           fluidRow(column(4,
                           
                           wellPanel(
-                            selectInput(ns("select1"),label = "Choisissez une variable :",choices = LETTERS),
-                            selectInput(ns("select2"),label = "Choisissez une variable :",choices = LETTERS),
-                            actionButton(ns("go1"),label = "Cliquez pour afficher")
+                            selectInput(ns("select1"),
+                                        label = "Choisissez une variable qualitative :",
+                                        choices = c("MODCOHA",
+                                                    "PCS",
+                                                    "DIPL",
+                                                    "ACT",
+                                                "PAUVRE")),
+                            selectInput(ns("select2"),
+                                        label = "Choisissez une variable quantitative :",
+                                        choices = c("AGE","REV_DISPONIBLE","PATRIMOINE")),
+                            actionButton(ns("go1"),
+                                         label = "Cliquez pour afficher")
                             
                             
                           )
@@ -107,14 +116,29 @@ mod_stat1_bi_quantiquali_ui <- function(id){
 #' stat1_bi_quantiquali Server Functions
 #'
 #' @noRd 
-mod_stat1_bi_quantiquali_server <- function(id){
+mod_stat1_bi_quantiquali_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    
+    local <- reactiveValues(dt = NULL,
+                            varquali = NULL,
+                            varquanti=NULL)
+    
+    observeEvent(input$go1,{
+      
+      local$dt <- global$dt
+      local$varquali <- input$select1
+      local$varquanti <- input$select2
+      
+    })
  
     output$plotly1 <- renderPlotly({
       
       
-      shinipsum::random_ggplotly()
+      graphggplotly_qualiquanti(local$dt,
+                                local$varquali,
+                                local$varquanti)
       
     })
     

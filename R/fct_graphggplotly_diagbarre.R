@@ -18,6 +18,7 @@ graphggplotly_diagbarre <- function(data,var){
   b <- grandile %>% ggplot(aes(x = .data[[var]])) + 
     # geom_bar(aes(col = .data[[a]]),show.legend = FALSE) +
     geom_bar() +
+    # scale_color_hue() +
     ylab(label = "Effectifs")
   b %>% ggplotly
 }
