@@ -4,7 +4,7 @@
 #'
 #' @return a dataframe, result of a cluster sampling with 2 samplings
 #'
-#' @noRd
+#' @export
 #' @example tirage_grappe_m2("Grandile.RDS", 2, "DIPL")
 tirage_degres_m2 <-
   function(input_data,

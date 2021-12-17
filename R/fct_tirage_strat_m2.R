@@ -5,7 +5,7 @@
 #' @return a dataframe, result of a stratified sampling without replacement
 #' @import dplyr
 #' @import sampling
-#' @noRd
+#' @export
 #' @example tirage_strat_m2("Grandile.RDS", 400, "DIPL")
 tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
   tab <- file_grandile_m2(input_data) %>%   select(.data[[var_strat]])
