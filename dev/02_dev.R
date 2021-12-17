@@ -90,7 +90,8 @@ usethis::use_test( "app" )
 
 ## Vignette ----
 usethis::use_vignette("module2")
-devtools::build_vignettes()
+usethis::use_vignette("module1")
+devtools::build_vignettes("module1")
 
 ## Code Coverage----
 ## Set the code coverage service ("codecov" or "coveralls")

@@ -123,17 +123,26 @@ mod_stat1_bi_quantiquali_server <- function(id,global){
     
     local <- reactiveValues(dt = NULL,
                             varquali = NULL,
-                            varquanti=NULL)
+                            varquanti=NULL,
+                            tabmoy = NULL,
+                            inter = NULL,
+                            var = NULL)
     
     observeEvent(input$go1,{
       
       local$dt <- global$dt
       local$varquali <- input$select1
       local$varquanti <- input$select2
+      local$tabmoy <- tab_moyenne(global$dt,input$select1,input$select2)
+      local$inter <- local$tabmoy[,"Contrib_inter"]
+      local$var <- var(global$dt[,input$select2])
       
     })
  
     output$plotly1 <- renderPlotly({
+      
+      validate(need(expr = !is.null(local$dt),
+                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique"))
       
       
       graphggplotly_qualiquanti(local$dt,
@@ -143,27 +152,30 @@ mod_stat1_bi_quantiquali_server <- function(id,global){
     })
     
     output$var <- renderText({
-      
-      "10"
+      req(local$dt)
+      var <- local$var
+      format_box(var)
       
     })
     
     output$intra <- renderText({
-      
-      "10"
+      req(local$dt)
+      intra <-sum(local$tabmoy[,"Contrib_intra"])
+      format_box(intra)
       
     })
     
     output$inter <- renderText({
-      
-      "10"
+      req(local$dt)
+      inter <-sum(local$inter)
+      format_box(inter)
       
     })
     
     output$eta2 <- renderText({
-      
-      "10"
-      
+      req(local$dt)
+      eta2 <- (sum(local$inter)/local$var)*100
+      paste(format_box(eta2),"%")
     })
     
   })
