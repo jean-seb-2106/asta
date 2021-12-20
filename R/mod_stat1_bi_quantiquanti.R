@@ -19,10 +19,12 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
                           wellPanel(
                             selectInput(ns("select1"),
                                         label = "Choisissez une variable :",
-                                        choices = c("AGE","REV_DISPONIBLE","PATRIMOINE")),
+                                        choices = c("AGE","REV_DISPONIBLE","PATRIMOINE"),
+                                        selected = "REV_DISPONIBLE"),
                             selectInput(ns("select2"),
                                         label = "Choisissez une variable :",
-                                        choices = c("AGE","REV_DISPONIBLE","PATRIMOINE")),
+                                        choices = c("AGE","REV_DISPONIBLE","PATRIMOINE"),
+                                        selected = "PATRIMOINE"),
                             actionButton(ns("go1"),
                                          label = "Cliquez pour afficher")
                             

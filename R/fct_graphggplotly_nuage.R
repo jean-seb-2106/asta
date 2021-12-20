@@ -17,6 +17,7 @@ graphggplotly_nuage <- function(data,var1,var2){
   
   a <- data %>% ggplot(aes(x = .data[[var1]],y = .data[[var2]])) + 
     geom_point(alpha=0.2,size=1,color="darkblue") + 
+    theme_minimal() +
     geom_smooth(method="lm",color="red")
   
   

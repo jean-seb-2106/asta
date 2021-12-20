@@ -24,6 +24,7 @@ library(ggplot2)
 library(plotly)
 library(rAmCharts)
 library(purrr)
+library(tidyr)
 ```
 
 # Les données
@@ -57,7 +58,7 @@ rambarplot_quali(grandile,"LIB_PCS")
 
 ```
 
-Les graphiques avec GGPLOT2
+#### Les graphiques avec GGPLOT2
 
 ```{r}
 #Exemple
@@ -130,6 +131,27 @@ format_box(a)
 
 
 ## Entre deux variables qualitatives
+
+### Tableau croisé
+
+```{r}
+#Exemple
+t1 <- tableau_croise(grandile,"PCS","DIPL",ligne=TRUE)
+# a$Var1 <- c(unique(data[,varquali1]),"Ensemble")
+DT::datatable(t1,class = "compact",rownames = FALSE)
+```
+
+
+### Indicateurs
+
+```{r}
+t1 <- table(grandile[,"PCS"],grandile[,"DIPL"])
+chi2 <- as.numeric(chisq.test(t1)[1])
+vcramer <- cramer.v(t1)
+format_box(chi2)
+format_box(vcramer)
+```
+
 
 ## Entre une variable quantitative et une variable qualitative
 

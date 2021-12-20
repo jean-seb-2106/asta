@@ -65,7 +65,7 @@ golem::add_fct("format_box")
 golem::add_fct("graphggplotly_nuage")
 golem::add_fct("graphggplotly_qualiquanti")
 golem::add_fct("tab_moyenne")
-golem::add_fct("")
+golem::add_fct("tableau_croise")
 golem::add_fct("")
 golem::add_fct("")
 
