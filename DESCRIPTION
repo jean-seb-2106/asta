@@ -16,6 +16,7 @@ Imports:
     dplyr,
     DT,
     ggplot2,
+    ggthemes,
     golem (>= 0.3.1),
     plotly,
     questionr,

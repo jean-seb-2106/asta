@@ -16,7 +16,7 @@ app_ui <- function(request) {
       
       shinyDashboardThemes(theme = "grey_light"),
       
-      title = "ASTA",
+      title = "ASTA", 
       
       #TabPanel Stat1
       mod_stat1_ui("stat1_ui_1"),

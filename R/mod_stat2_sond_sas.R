@@ -62,7 +62,7 @@ mod_stat2_sond_sas_ui <- function(id){
                value = textOutput(ns("meansasmere")),
                icon = icon("line-chart"),
                #fill = TRUE,
-               color="blue",
+               color="light-blue",
                width = NULL
              ),
              infoBox(
@@ -70,7 +70,7 @@ mod_stat2_sond_sas_ui <- function(id){
                value = textOutput(ns("sdsasmere")),
                icon = icon("line-chart"),
                #fill = TRUE,
-               color="blue",
+               color="light-blue",
                width = NULL
              ),
              plotOutput(outputId = ns("plotsas2"))
