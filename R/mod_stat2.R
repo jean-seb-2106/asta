@@ -198,9 +198,9 @@ mod_stat2_server <- function(id,global){
     
     mod_stat2_sond_sas_server("stat2_sond_sas", global=global)
     
-    mod_stat2_sond_saf_server("stat2_sond_saf")
+    mod_stat2_sond_saf_server("stat2_sond_saf", global=global)
     
-    mod_stat2_sond_2deg_server("stat2_sond_2deg")
+    mod_stat2_sond_2deg_server("stat2_sond_2deg", global=global)
     
     mod_stat2_sond_grappes_server("stat2_sond_grappes")
     

@@ -8,16 +8,16 @@
 #' @export
 #' @example tirage_strat_m2("Grandile.RDS", 400, "DIPL")
 tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
-  tab <- file_grandile_m2(input_data) %>%   select(.data[[var_strat]])
+  tab <- input_data %>%   select(var_strat)
   
   v <- table(tab)
   
-  x <- v / nrow(file_grandile_m2(input_data))
+  x <- v / nrow(input_data)
   
   y <- x * taille_strat
   
   base_echantillon_strat <-
-    file_grandile_m2(input_data) %>% arrange(var_strat)
+    input_data %>% arrange(var_strat)
   
   s = strata(
     base_echantillon_strat,
