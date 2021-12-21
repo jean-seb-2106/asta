@@ -24,6 +24,7 @@ library(ggplot2)
 library(plotly)
 library(rAmCharts)
 library(purrr)
+library(tidyr)
 ```
 
 # Les données
@@ -57,10 +58,9 @@ rambarplot_quali(grandile,"LIB_PCS")
 
 ```
 
-Les graphiques avec GGPLOT2
+#### Les graphiques avec GGPLOT2
 
 ```{r}
-
 #Exemple
 graphggplotly_diagbarre(grandile,var = "PCS")
 ```
@@ -69,9 +69,6 @@ graphggplotly_diagbarre(grandile,var = "PCS")
 ### Les tris à plat
 
 ```{r}
-#Fonction pour faire apparaître un tri à plat
-
-
 #Exemple
 a <- tri_plat(grandile,"LIB_PCS") 
 
@@ -81,28 +78,26 @@ a %>% DT::datatable(class = "cell-border hover order-colum")
 
 ```
 
-# Statistique descriptive bivariée
+## Sur une quantitative
 
 ## Graphique
 
 ```{r}
-
 graphggplotly_histo(grandile,"REV_DISPONIBLE",10)
 
 
 ```
 
+## Indicateurs statistiques
+
 ```{r}
-
-
-
 moy <- mean(grandile$AGE)
 median <- median(grandile$AGE)
 q1 <- quantile(grandile$AGE,0.25)
 q3 <- quantile(grandile$AGE,0.75)
 
 indic_centrale_age <- data.frame(moy,median,q1,q3)
-indic_centrale_age %>% map_chr(format_box,digits=3)
+indic_centrale_age %>% map_chr(format_box)
 
 format_box(mean(grandile$PATRIMOINE))
 
@@ -110,4 +105,84 @@ moy <- mean(grandile$AGE)
 format_box(moy)
 
 ```
+
+
+
+# Statistique descriptive bivariée
+
+## Entre deux variables quantitatives
+
+### Graphique
+
+```{r}
+graphggplotly_nuage(grandile,"REV_DISPONIBLE","PATRIMOINE")
+
+
+```
+
+### Indicateur
+
+```{r}
+
+a <- cor(grandile[,"REV_DISPONIBLE"],grandile[,"PATRIMOINE"])
+
+format_box(a)
+```
+
+
+## Entre deux variables qualitatives
+
+### Tableau croisé
+
+```{r}
+#Exemple
+t1 <- tableau_croise(grandile,"PCS","DIPL",ligne=TRUE)
+# a$Var1 <- c(unique(data[,varquali1]),"Ensemble")
+DT::datatable(t1,class = "compact",rownames = FALSE)
+```
+
+
+### Indicateurs
+
+```{r}
+t1 <- table(grandile[,"PCS"],grandile[,"DIPL"])
+chi2 <- as.numeric(chisq.test(t1)[1])
+vcramer <- cramer.v(t1)
+format_box(chi2)
+format_box(vcramer)
+```
+
+
+## Entre une variable quantitative et une variable qualitative
+
+### Graphique
+
+```{r}
+graphggplotly_qualiquanti(grandile,"PCS","REV_DISPONIBLE")
+```
+
+```{r}
+tab <- tab_moyenne(grandile,"PCS","AGE")
+
+#Fonction pour calculer la variation inter-groupe sur la quanti
+inter <- sum(tab$Contrib_inter)
+format_box(inter)
+
+#Fonction pour calculer la variation intra-groupe sur la quanti
+intra <- sum(tab$Contrib_intra)
+format_box(intra)
+
+#Variance sur la quanti
+var <- var(grandile[,"AGE"])
+format_box(var)
+
+#Rapport de corrélation
+eta2 <- (inter/var)*100
+paste(format_box(eta2),"%")
+
+```
+
+
+# Statistique inférentielle
+
 

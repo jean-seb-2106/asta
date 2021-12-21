@@ -17,9 +17,16 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
           fluidRow(column(4,
                           
                           wellPanel(
-                            selectInput(ns("select1"),label = "Choisissez une variable :",choices = LETTERS),
-                            selectInput(ns("select2"),label = "Choisissez une variable :",choices = LETTERS),
-                            actionButton(ns("go1"),label = "Cliquez pour afficher")
+                            selectInput(ns("select1"),
+                                        label = "Choisissez une variable :",
+                                        choices = c("AGE","REV_DISPONIBLE","PATRIMOINE"),
+                                        selected = "REV_DISPONIBLE"),
+                            selectInput(ns("select2"),
+                                        label = "Choisissez une variable :",
+                                        choices = c("AGE","REV_DISPONIBLE","PATRIMOINE"),
+                                        selected = "PATRIMOINE"),
+                            actionButton(ns("go1"),
+                                         label = "Cliquez pour afficher")
                             
                             
                             )
@@ -56,22 +63,39 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
 #' stat1_bi_quantiquanti Server Functions
 #'
 #' @noRd 
-mod_stat1_bi_quantiquanti_server <- function(id){
+mod_stat1_bi_quantiquanti_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+ 
+    local <- reactiveValues(dt = NULL,
+                            var1 = NULL,
+                            var2=NULL)
     
+    observeEvent(input$go1,{
+      
+      local$dt <- global$dt
+      local$var1 <- input$select1
+      local$var2 <- input$select2
+      
+    })  
+       
  output$plotly1 <- renderPlotly({
    
+   validate(need(expr = !is.null(local$dt),
+                 message = "Choisissez les variables dans le menu déroulant et cliquez pour afficher le graphique"))
    
-   shinipsum::random_ggplotly()
+   
+   graphggplotly_nuage(local$dt,local$var1,local$var2)
    
  })
     
 
  output$cor <- renderText({
    
-   "10"
+   req(local$dt)
+   a <- cor(grandile[,local$var1],grandile[,local$var2])
+   format_box(a)
    
  })
  

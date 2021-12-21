@@ -62,6 +62,12 @@ golem::add_fct("graphggplotly_diagbarre")
 golem::add_fct("rambarplot_quali")
 golem::add_fct("graphggplotly_histo")
 golem::add_fct("format_box")
+golem::add_fct("graphggplotly_nuage")
+golem::add_fct("graphggplotly_qualiquanti")
+golem::add_fct("tab_moyenne")
+golem::add_fct("tableau_croise")
+golem::add_fct("")
+golem::add_fct("")
 
 
 golem::add_utils( "helpers" )
@@ -84,7 +90,8 @@ usethis::use_test( "app" )
 
 ## Vignette ----
 usethis::use_vignette("module2")
-devtools::build_vignettes()
+usethis::use_vignette("module1")
+devtools::build_vignettes("module1")
 
 ## Code Coverage----
 ## Set the code coverage service ("codecov" or "coveralls")

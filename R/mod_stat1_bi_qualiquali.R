@@ -19,8 +19,23 @@ mod_stat1_bi_qualiquali_ui <- function(id){
           fluidRow(column(4,
                           
                           wellPanel(
-                            selectInput(ns("select1"),label = "Choisissez une variable :",choices = LETTERS),
-                            selectInput(ns("select2"),label = "Choisissez une variable :",choices = LETTERS),
+                            selectInput(ns("select1"),
+                                        label = "Choisissez une variable :",
+                                        choices =c("MODCOHA",
+                                                   "PCS",
+                                                    "DIPL",
+                                                    "ACT",
+                                                    "PAUVRE"),
+                                        selected = "PCS"),
+                            selectInput(ns("select2"),
+                                        label = "Choisissez une variable :",
+                                        choices = c("MODCOHA",
+                                                    "PCS",
+                                                    "DIPL",
+                                                    "ACT",
+                                                    "PAUVRE"),
+                                        selected = "DIPL"),
+                            checkboxInput(ns("check1"),label = "Afficher le tableau en profil ligne"),
                             actionButton(ns("go1"),label = "Cliquez pour afficher")
                             
                             
@@ -28,8 +43,8 @@ mod_stat1_bi_qualiquali_ui <- function(id){
                           
           ),
           column(8,
-                 h3("Tableau croisé en structure"),
-                 tableOutput(ns("tab1"))        
+                 h3("Tableau crois\u00e9 en structure"),
+                 DTOutput(ns("tab1"))        
                  
           )
           ),
@@ -72,27 +87,46 @@ mod_stat1_bi_qualiquali_ui <- function(id){
 #' stat1_bi_qualiquali Server Functions
 #'
 #' @noRd 
-mod_stat1_bi_qualiquali_server <- function(id){
+mod_stat1_bi_qualiquali_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    output$tab1 <- renderTable({
+    
+    local <- reactiveValues(
+      dt=NULL)
+    
+    observeEvent(input$go1,{
+      local$dt <- global$dt
+      local$varquali1 <- input$select1
+      local$varquali2 <- input$select2
+      local$colonne <- input$check1
+      local$table <- table(global$dt[,input$select1],global$dt[,input$select2])
       
-      shinipsum::random_table(nrow = 10,ncol = 10)
+    })
+    
+    output$tab1 <- renderDT({
       
+      validate(need(expr = !is.null(local$dt),
+                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le tableau"))
+      t <- tableau_croise(local$dt,local$varquali1,local$varquali2,ligne=local$colonne)
+     datatable(t,class = "compact",rownames = FALSE)
       
     })
     
     output$chi2 <- renderText({
       
-      "10"
+      req(local$dt)
+      chi2 <- as.numeric(chisq.test(local$table)[1])
+      format_box(chi2)
       
     })
     
     
     output$vcramer <- renderText({
       
-      "10"
+      req(local$dt)
+      vcramer <- cramer.v(local$table)
+      format_box(vcramer)
       
     })
     
