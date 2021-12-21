@@ -24,12 +24,12 @@ library(dplyr)
 
 1. fonction d'importation -----
 ```{r}
-file_grandile_m2 <- function (input_data) {
-  data_grandile_m2 <-
-    readRDS(file = system.file(input_data, package = "asta"))
-  data_grandile_m2
-}
-
+# file_grandile_m2 <- function (input_data) {
+#   data_grandile_m2 <-
+#     readRDS(file = system.file(input_data, package = "asta"))
+#   data_grandile_m2
+# }
+# 
 # (file_grandile_m2("Grandile.RDS"))
 # (file_grandile_m2("Grandile_apur.RDS"))
 # (file_grandile_m2("Grandile_brut.RDS"))
@@ -45,22 +45,22 @@ tirage_sas_m2 <- function(input_data, taille_sas) {
   echantillon_sas
 }
 
-# tirage_sas_m2(file_grandile_m2("Grandile.RDS"), 12)
+ tirage_sas_m2(grandile, 12)
 ```
 
 3. Fonction de tirage stratifie -----
 ```{r}
 tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
-  tab <- file_grandile_m2(input_data) %>%   select(.data[[var_strat]])
+  tab <- input_data %>%   select(.data[[var_strat]])
   
   v <- table(tab)
   
-  x <- v / nrow(file_grandile_m2(input_data))
+  x <- v / nrow(input_data)
   
   y <- x * taille_strat
   
   base_echantillon_strat <-
-    file_grandile_m2(input_data) %>% arrange(var_strat)
+    input_data %>% arrange(var_strat)
   
   s = strata(
     base_echantillon_strat,
@@ -73,7 +73,7 @@ tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
   
 }
 
-# tirage_strat_m2("Grandile.RDS", 400, "DIPL")
+tirage_strat_m2(grandile, 400, "DIPL")
 
 ```
 

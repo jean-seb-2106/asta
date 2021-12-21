@@ -18,48 +18,63 @@ mod_stat2_sond_sas_ui <- function(id){
              
              wellPanel(
                
-               sliderInput("TailleEch", 
+               sliderInput(ns("TailleEch"), 
                            "Choisissez la taille de l'échantillon",
                            min=10,
                            max=5418,
                            value=15),
-               selectInput("NomVar1",
+               selectInput(ns("NomVar1"),
                            "Choisissez un caractère :", 
                            choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
-               selectInput("NomVar2",
-                           "Choisissez un caractère :", 
-                           choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
-               actionButton("go",
+               actionButton(ns("go"),
                             label="Lancer le tirage et les calculs")
              ),
-             wellPanel("texte texte texte texte"),
-             wellPanel("texte texte texte")
+             wellPanel("La fonction utilisée en R est la fonction",span("sample", style="color:blue"),   "présente dans R de base")
       ),
       column(4,
              
              
-             valueBox(
-               subtitle = "Cefil 2021" ,
-               value = 150, 
-               width = NULL, 
-               color= "aqua") ,
+             infoBox(
+               title = tags$p("Moyenne dans l'échantillon", style = "font-size : 80%;"),
+               value = textOutput(ns("meansas")),
+               icon = icon("line-chart"),
+               #fill = TRUE,
+               color="blue",
+               width = NULL
+             ) ,
+             infoBox(
+               title = tags$p("Ecart-Type dans l'échantillon", style = "font-size : 80%;"),
+               value = textOutput(ns("sdsas")),
+               icon = icon("line-chart"),
+               #fill = TRUE,
+               color="blue",
+               width = NULL
+             ) ,
+             
+             
              plotOutput(outputId = ns("plotsas1"))
              
       ),
       column(4,
              
-             infoBox(title = "mon info box2",
-                     subtitle = "Cefil 2021"
+             infoBox(
+               title = tags$p("Moyenne dans la Pop. mère", style = "font-size : 80%;"),
+               value = textOutput(ns("meansasmere")),
+               icon = icon("line-chart"),
+               #fill = TRUE,
+               color="light-blue",
+               width = NULL
+             ),
+             infoBox(
+               title = tags$p("Ecart-Type dans la Pop. mère", style = "font-size : 80%;"),
+               value = textOutput(ns("sdsasmere")),
+               icon = icon("line-chart"),
+               #fill = TRUE,
+               color="light-blue",
+               width = NULL
              ),
              plotOutput(outputId = ns("plotsas2"))
-      )),
-    
-    hr(),
-    fluidRow(
-      wellPanel(
-        h2("fluidrow")
-      )
-    )
+      ))
   )
   
   
@@ -68,23 +83,70 @@ mod_stat2_sond_sas_ui <- function(id){
 #' stat2_sond_sas Server Functions
 #'
 #' @noRd 
-mod_stat2_sond_sas_server <- function(id){
-  moduleServer( id, function(input, output, session){
+mod_stat2_sond_sas_server <- function(id, global) {
+  moduleServer(id, function(input, output, session) {
     ns <- session$ns
- 
-    output$plotsas1 <- renderPlot(
-      
-      {
-        random_ggplot("boxplot")
-      }
-    )
     
-    output$plotsas2 <- renderPlot(
+    local <- reactiveValues(dt = NULL, var = NULL)
+    
+    
+    observeEvent(input$go, {
+      local$dt <- global$data
+      local$ech <- tirage_sas_m2(global$data, input$TailleEch)
+      local$var <- input$NomVar1
+      local$taille <- input$TailleEch
       
-      {
-        random_ggplot("boxplot")
-      }
-    )
+      
+      
+    })
+    
+    output$plotsas1 <- renderPlot({
+      validate(
+        need(expr = !is.null(local$ech),
+             message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
+      )
+      
+      boxplot_tirage_m2(local$ech, local$var)
+    })
+    
+    output$plotsas2 <- renderPlot({
+      validate(
+        need(expr = !is.null(local$dt),
+             message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
+      )
+      
+      boxplot_tirage_m2(local$dt, local$var)
+    })
+    
+    output$meansas <- renderText({
+      req(local$dt)
+      
+      
+      local$meansas <- mean(local$ech[, local$var], na.rm = TRUE)
+      paste0(format_box(local$meansas), " €")
+    })
+    
+    output$sdsas <- renderText({
+      req(local$dt)
+      
+      
+      local$sdsas <- sd(local$ech[, local$var], na.rm = TRUE)
+      paste0(format_box(local$sdsas), " €")
+    })
+    
+    output$meansasmere <- renderText({
+      req(local$dt)
+      
+      local$mean <- mean(local$dt[, local$var], na.rm = TRUE)
+      paste0(format_box(local$mean), " €")
+    })
+    
+    output$sdsasmere <- renderText({
+      req(local$dt)
+      
+      local$sd <- sd(local$dt[, local$var], na.rm = TRUE)
+      paste0(format_box(local$sd), " €")
+    })
     
     
     

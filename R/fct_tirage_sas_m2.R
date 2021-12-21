@@ -4,7 +4,7 @@
 #'
 #' @return a dataframe, result of a simple random sampling
 #'
-#' @noRd
+#' @export
 #' @example tirage_sas_m2(file_grandile_m2("Grandile.RDS"), 12)
 tirage_sas_m2 <- function(input_data, taille_sas) {
   echantillon_sas <-
