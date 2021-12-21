@@ -43,13 +43,13 @@ tabPanel(
           menuItem(
             "Sondages",
             icon = icon("th"),
-            menuSubItem("sondage aleatoire simple", 
+            menuSubItem("Sondage Aléatoire Simple", 
                         tabName = "subitema"),
-            menuSubItem("sondage aleatoire stratifie", 
+            menuSubItem("Sondage aléatoire Stratifié", 
                         tabName = "subitemb"),
-            menuSubItem("sondage a 2 degres", 
+            menuSubItem("Sondage à 2 degrés", 
                         tabName = "subitemc"),
-            menuSubItem("sondage en grappes", 
+            menuSubItem("Sondage en grappes", 
                         tabName = "subitemd"),
             selected = FALSE
           ),
@@ -190,11 +190,6 @@ mod_stat2_server <- function(id,global){
  
     global <- reactiveValues(data = grandile)
     
-    # output$tab1 <- renderDT({
-    #   
-    #   random_DT(ncol = 8, nrow = 15)
-    #   
-    # })
     
     mod_stat2_sond_sas_server("stat2_sond_sas", global=global)
     
@@ -202,7 +197,7 @@ mod_stat2_server <- function(id,global){
     
     mod_stat2_sond_2deg_server("stat2_sond_2deg", global=global)
     
-    mod_stat2_sond_grappes_server("stat2_sond_grappes")
+    mod_stat2_sond_grappes_server("stat2_sond_grappes", global=global)
     
     mod_stat2_pond_base_server("stat2_pond_base")
     
