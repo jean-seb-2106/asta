@@ -172,13 +172,13 @@ mod_stat1_server <- function(id,global){
     mod_stat1_uni_quanti_server("stat1_uni_quanti",global=global)
     
     #Stat bivariée quanti-quanti----------
-    mod_stat1_bi_quantiquanti_server("stat1_bi_quantiquanti")
+    mod_stat1_bi_quantiquanti_server("stat1_bi_quantiquanti",global=global)
     
     #Stat bivariée quali-quali------
-    mod_stat1_bi_qualiquali_server("stat1_bi_qualiquali")
+    mod_stat1_bi_qualiquali_server("stat1_bi_qualiquali",global=global)
     
     #Stat bivariée quanti-quali------
-    mod_stat1_bi_quantiquali_server("stat1_bi_quantiquali")
+    mod_stat1_bi_quantiquali_server("stat1_bi_quantiquali",global=global)
     
     #Stat inférentielle estimations ponctuelles--------
     mod_stat1_inf_estimations_server("stat1_inf_estimations")

@@ -26,7 +26,8 @@ Imports:
     shiny (>= 1.7.1),
     shinydashboard,
     shinythemes,
-    stats
+    stats,
+    tidyr
 Suggests: 
     kableExtra,
     knitr,
@@ -34,4 +35,5 @@ Suggests:
     rmarkdown
 Encoding: UTF-8
 LazyData: true
+VignetteBuilder: knitr
 RoxygenNote: 7.1.2
