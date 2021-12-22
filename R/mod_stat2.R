@@ -58,9 +58,9 @@ tabPanel(
           menuItem(
             "Ponderation",
             icon = icon("th"),
-            menuSubItem("base des repondants", 
+            menuSubItem("Base des répondants", 
                         tabName = "subiteme"),
-            menuSubItem("controles univaries", 
+            menuSubItem("Contrôles univariés", 
                         tabName = "subitemf"),
             menuSubItem("controle coherence interne",
                         tabName = "subitemg"),
@@ -199,9 +199,9 @@ mod_stat2_server <- function(id,global){
     
     mod_stat2_sond_grappes_server("stat2_sond_grappes", global=global)
     
-    mod_stat2_pond_base_server("stat2_pond_base")
+    mod_stat2_pond_base_server("stat2_pond_base", global=global)
     
-    mod_stat2_pond_univ_server("stat2_pond_univ")
+    mod_stat2_pond_univ_server("stat2_pond_univ", global=global)
     
     mod_stat2_pond_coher_server("stat2_pond_coher")
     
