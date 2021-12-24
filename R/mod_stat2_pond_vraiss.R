@@ -16,7 +16,7 @@ mod_stat2_pond_vraiss_ui <- function(id){
             column(4,
                    
                    wellPanel(
-                     
+                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
                                  "Choisissez la variable à contrôler",
                                  choices = c("Superficie par pièce"="SUPERF_PAR_PIECE", "Superficie par personne"="SUPERF_PAR_PERSONNE")),

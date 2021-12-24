@@ -16,7 +16,7 @@ mod_stat2_pond_agreg_ui <- function(id){
             column(4,
                    
                    wellPanel(
-                     
+                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varfiltre"), 
                                  "Choisissez un filtre",
                                  choices = c("appartement","maison")),

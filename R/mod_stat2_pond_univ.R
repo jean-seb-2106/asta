@@ -16,7 +16,7 @@ mod_stat2_pond_univ_ui <- function(id){
             column(4,
                    
                    wellPanel(
-                     
+                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
                                  "Choisissez une variable à contrôler",
                                  choices = c("Superficie du jardin"="SUPERF_JARDIN", "Superficie du logement"="SUPERF_LOG")),

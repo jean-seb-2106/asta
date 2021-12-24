@@ -17,7 +17,7 @@ mod_stat2_sond_sas_ui <- function(id){
       column(4,
              
              wellPanel(
-               
+               tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                sliderInput(ns("TailleEch"), 
                            "Choisissez la taille de l'échantillon",
                            min=10,

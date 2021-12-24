@@ -17,7 +17,7 @@ mod_stat2_sond_grappes_ui <- function(id){
                    
                    wellPanel(
                      
-                    
+                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("NomVar1"),
                                  "Choisissez une variable pour la selection des UP :", 
                                  choices=c("PCS"="PCS","Diplome"="DIPL","activite"="ACT")),

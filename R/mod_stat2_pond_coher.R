@@ -17,6 +17,7 @@ mod_stat2_pond_coher_ui <- function(id){
                    
                    
                    wellPanel(
+                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                       tags$p("Choix des variables à croiser", style = "font-size : 110%;"),
                      selectInput(ns("Varcontrole1"), 
                                  "Variable 1",
