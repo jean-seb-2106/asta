@@ -43,13 +43,13 @@ tabPanel(
           menuItem(
             "Sondages",
             icon = icon("th"),
-            menuSubItem("sondage aleatoire simple", 
+            menuSubItem("Sondage Aléatoire Simple", 
                         tabName = "subitema"),
-            menuSubItem("sondage aleatoire stratifie", 
+            menuSubItem("Sondage aléatoire Stratifié", 
                         tabName = "subitemb"),
-            menuSubItem("sondage a 2 degres", 
+            menuSubItem("Sondage à 2 degrés", 
                         tabName = "subitemc"),
-            menuSubItem("sondage en grappes", 
+            menuSubItem("Sondage en grappes", 
                         tabName = "subitemd"),
             selected = FALSE
           ),
@@ -58,15 +58,15 @@ tabPanel(
           menuItem(
             "Ponderation",
             icon = icon("th"),
-            menuSubItem("base des repondants", 
+            menuSubItem("Base des répondants", 
                         tabName = "subiteme"),
-            menuSubItem("controles univaries", 
+            menuSubItem("Contrôles univariés", 
                         tabName = "subitemf"),
-            menuSubItem("controle coherence interne",
+            menuSubItem("Contrôle de cohérence interne",
                         tabName = "subitemg"),
-            menuSubItem("controle vraissemblance", 
+            menuSubItem("Controles de vraissemblance", 
                         tabName = "subitemh"),
-            menuSubItem("controles agreges", 
+            menuSubItem("Contrôles agrégés", 
                         tabName = "subitemi"),
             selected = FALSE
           ),
@@ -75,22 +75,25 @@ tabPanel(
           menuItem(
             "Redressement",
             icon = icon("th"),
-            menuSubItem("analyse de la non reponse", 
+            menuSubItem("Analyse de la non reponse", 
                         tabName = "subitemj"),
-            menuSubItem("etude correlation non reponse", 
+            menuSubItem("Etude corrélation non reponse", 
                         tabName = "subitemk"),
-            menuSubItem("redressement et impact", 
+            menuSubItem("Redressement et impact", 
                         tabName = "subiteml"),
             selected = FALSE
           )
           
           
         )
+      ),
+      fluidRow(
+        br(),br(),
+      HTML('<center> <img src="logo_cefil.jpg" width ="80" > </center>')
+      
+      
+      
       )
-      
-      
-      
-      
       
     ),
     dashboardBody(
@@ -190,11 +193,6 @@ mod_stat2_server <- function(id,global){
  
     global <- reactiveValues(data = grandile)
     
-    # output$tab1 <- renderDT({
-    #   
-    #   random_DT(ncol = 8, nrow = 15)
-    #   
-    # })
     
     mod_stat2_sond_sas_server("stat2_sond_sas", global=global)
     
@@ -202,17 +200,17 @@ mod_stat2_server <- function(id,global){
     
     mod_stat2_sond_2deg_server("stat2_sond_2deg", global=global)
     
-    mod_stat2_sond_grappes_server("stat2_sond_grappes")
+    mod_stat2_sond_grappes_server("stat2_sond_grappes", global=global)
     
-    mod_stat2_pond_base_server("stat2_pond_base")
+    mod_stat2_pond_base_server("stat2_pond_base", global=global)
     
-    mod_stat2_pond_univ_server("stat2_pond_univ")
+    mod_stat2_pond_univ_server("stat2_pond_univ", global=global)
     
-    mod_stat2_pond_coher_server("stat2_pond_coher")
+    mod_stat2_pond_coher_server("stat2_pond_coher", global=global)
     
-    mod_stat2_pond_vraiss_server("stat2_pond_vraiss")
+    mod_stat2_pond_vraiss_server("stat2_pond_vraiss", global=global)
     
-    mod_stat2_pond_agreg_server("stat2_pond_agreg")
+    mod_stat2_pond_agreg_server("stat2_pond_agreg", global=global)
     
     mod_stat2_redress_na_server("stat2_redress_na")
     

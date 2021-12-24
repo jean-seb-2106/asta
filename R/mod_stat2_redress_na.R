@@ -11,7 +11,82 @@ mod_stat2_redress_na_ui <- function(id){
   ns <- NS(id)
   
   tabItem(tabName = "subitemj",
-          h2("analyse de la non reponse"))
+          h2("Analyse de la non réponse"),
+          fluidRow(
+            column(4,
+                   
+                   wellPanel(
+                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                     selectInput(ns("Varcontrole"), 
+                                 "Choisissez une variable à étudier",
+                                 choices = c("Superficie du jardin"="SUPERF_JARDIN", "Superficie du logement"="SUPERF_LOG")),
+                     
+                     actionButton(inputId=ns("go"),"Mettre à jour les résultats"))
+                   ),
+            
+            column(8,
+                   
+                   fluidRow(
+            column(6,
+                   
+                   
+                   infoBox(
+                     title = "Nb ind.  échantillonnés",
+                     value = textOutput(ns("indech")),
+                     subtitle = "Source : Cefil 2021",
+                     icon = icon("buromobelexperte"),
+                     #fill = TRUE,
+                     color="light-blue",
+                     width = NULL
+                   ) ,
+                   infoBox(
+                     title = "Taux sondage global",
+                     value = textOutput(ns("tauxsond")),
+                     subtitle = "Source : Cefil 2021",
+                     icon = icon("buromobelexperte"),
+                     #fill = TRUE,
+                     color="light-blue",
+                     width = NULL
+                   ) 
+                   
+            ),
+            column(6,
+                   
+                   infoBox(
+                     title = "Nb ind.  répondants",
+                     value = textOutput(ns("indrep")),
+                     subtitle = "Source : Cefil 2021",
+                     icon = icon("registered"),
+                     #fill = TRUE,
+                     color="light-blue",
+                     width = NULL
+                   ),
+                   infoBox(
+                     title = "Taux réponse global",
+                     value = textOutput(ns("tauxrep")),
+                     subtitle = "Source : Cefil 2021",
+                     icon = icon("registered"),
+                     #fill = TRUE,
+                     color="light-blue",
+                     width = NULL
+                   )
+            )),
+            fluidRow(
+            
+            
+            column(width=12,
+                   
+                  wellPanel(
+                    tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                    
+                    plotOutput(ns("nuageapur")),br(),
+                    tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+                    
+                  )  )
+            )
+  )
+  )
+  )
   
 }
     

@@ -16,7 +16,7 @@ mod_stat2_sond_saf_ui <- function(id){
     column(4,
            
            wellPanel(
-             
+             tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
              sliderInput(ns("TailleEch"), 
                          "Choisissez la taille de l'échantillon",
                          min=100,
@@ -64,7 +64,7 @@ mod_stat2_sond_saf_ui <- function(id){
              value = textOutput(ns("meansafmere")),
              icon = icon("line-chart"),
              #fill = TRUE,
-             color="blue",
+             color="light-blue",
              width = NULL
            ),
            infoBox(
@@ -72,7 +72,7 @@ mod_stat2_sond_saf_ui <- function(id){
              value = textOutput(ns("sdsafmere")),
              icon = icon("line-chart"),
              #fill = TRUE,
-             color="blue",
+             color="light-blue",
              width = NULL
            ),
            plotOutput(outputId = ns("plotsaf2"))

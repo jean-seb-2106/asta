@@ -17,7 +17,7 @@ mod_stat2_sond_sas_ui <- function(id){
       column(4,
              
              wellPanel(
-               
+               tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                sliderInput(ns("TailleEch"), 
                            "Choisissez la taille de l'échantillon",
                            min=10,
@@ -52,14 +52,14 @@ mod_stat2_sond_sas_ui <- function(id){
              ) ,
              
              
-             plotOutput(outputId = ns("plotsas1"))
+             plotOutput(outputId = ns("plotsas"))
              
       ),
       column(4,
              
              infoBox(
                title = tags$p("Moyenne dans la Pop. mère", style = "font-size : 80%;"),
-               value = textOutput(ns("meansasmere")),
+               value = textOutput(ns("meanmere")),
                icon = icon("line-chart"),
                #fill = TRUE,
                color="light-blue",
@@ -67,13 +67,13 @@ mod_stat2_sond_sas_ui <- function(id){
              ),
              infoBox(
                title = tags$p("Ecart-Type dans la Pop. mère", style = "font-size : 80%;"),
-               value = textOutput(ns("sdsasmere")),
+               value = textOutput(ns("sdmere")),
                icon = icon("line-chart"),
                #fill = TRUE,
                color="light-blue",
                width = NULL
              ),
-             plotOutput(outputId = ns("plotsas2"))
+             plotOutput(outputId = ns("plotmere"))
       ))
   )
   
@@ -100,7 +100,7 @@ mod_stat2_sond_sas_server <- function(id, global) {
       
     })
     
-    output$plotsas1 <- renderPlot({
+    output$plotsas <- renderPlot({
       validate(
         need(expr = !is.null(local$ech),
              message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
@@ -109,7 +109,7 @@ mod_stat2_sond_sas_server <- function(id, global) {
       boxplot_tirage_m2(local$ech, local$var)
     })
     
-    output$plotsas2 <- renderPlot({
+    output$plotmere <- renderPlot({
       validate(
         need(expr = !is.null(local$dt),
              message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
@@ -134,14 +134,14 @@ mod_stat2_sond_sas_server <- function(id, global) {
       paste0(format_box(local$sdsas), " €")
     })
     
-    output$meansasmere <- renderText({
+    output$meanmere <- renderText({
       req(local$dt)
       
       local$mean <- mean(local$dt[, local$var], na.rm = TRUE)
       paste0(format_box(local$mean), " €")
     })
     
-    output$sdsasmere <- renderText({
+    output$sdmere <- renderText({
       req(local$dt)
       
       local$sd <- sd(local$dt[, local$var], na.rm = TRUE)
