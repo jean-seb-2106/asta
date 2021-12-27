@@ -6,6 +6,11 @@
 \usage{
 data_apur_m2(input_data, var_apur)
 }
+\arguments{
+\item{input_data}{un data fram}
+
+\item{var_apur}{une variable quantitative}
+}
 \value{
 a clean data frame
 }

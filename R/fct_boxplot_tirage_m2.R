@@ -1,6 +1,8 @@
 #' boxplot_tirage_m2 
 #'
 #' @description A fct function that builds box plot 
+#' @param data un dataframe
+#' @param var_plot une variable quantitative
 #'
 #' @return a graph
 #' @import ggplot2

@@ -6,6 +6,11 @@
 \usage{
 tirage_sas_m2(input_data, taille_sas)
 }
+\arguments{
+\item{input_data}{un dataframe}
+
+\item{taille_sas}{un nombre d'unités échantillonné}
+}
 \value{
 a dataframe, result of a simple random sampling
 }

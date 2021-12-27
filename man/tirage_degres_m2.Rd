@@ -6,6 +6,15 @@
 \usage{
 tirage_degres_m2(input_data, taille_UP, taille_tot, var_degres)
 }
+\arguments{
+\item{input_data}{un dataframe}
+
+\item{taille_UP}{un nombre d'unités primaires}
+
+\item{taille_tot}{un nombre d'unités échantillonnées total}
+
+\item{var_degres}{une variable de stratification}
+}
 \value{
 a dataframe, result of a cluster sampling with 2 samplings
 }

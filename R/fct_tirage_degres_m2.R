@@ -1,6 +1,10 @@
 #' tirage_degres_m2 
 #'
 #' @description A fct function that does a cluster sampling with 2 sample random sampling
+#' @param input_data un dataframe
+#' @param taille_UP un nombre d'unités primaires
+#' @param taille_tot un nombre d'unités échantillonnées total
+#' @param var_degres une variable de stratification
 #'
 #' @return a dataframe, result of a cluster sampling with 2 samplings
 #'

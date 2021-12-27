@@ -7,17 +7,17 @@
 tirage_grappe_m2(input_data, taille_grappe, var_grappe)
 }
 \arguments{
-\item{input_data}{}
+\item{input_data}{un dataframe}
 
-\item{taille_grappe}{}
+\item{taille_grappe}{la taille de la grappe}
 
-\item{var_grappe}{}
+\item{var_grappe}{une variable de stratification}
 }
 \value{
 un echantillon
 }
 \description{
-Tirage_grappe_m2
+Une fonction de tirage en grappe
 }
 \examples{
 tirage_grappe_m2(grandile, 4, "DIPL")

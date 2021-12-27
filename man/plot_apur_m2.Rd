@@ -6,6 +6,11 @@
 \usage{
 plot_apur_m2(input_data, var_apur)
 }
+\arguments{
+\item{input_data}{un dataframe}
+
+\item{var_apur}{une variable quantitative}
+}
 \value{
 a graph
 }
