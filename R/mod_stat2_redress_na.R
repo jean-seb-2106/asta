@@ -32,7 +32,7 @@ mod_stat2_redress_na_ui <- function(id){
                    
                    infoBox(
                      title = "Nb ind.  échantillonnés",
-                     value = textOutput(ns("indech")),
+                     value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("buromobelexperte"),
                      #fill = TRUE,
@@ -41,7 +41,7 @@ mod_stat2_redress_na_ui <- function(id){
                    ) ,
                    infoBox(
                      title = "Taux sondage global",
-                     value = textOutput(ns("tauxsond")),
+                     value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("buromobelexperte"),
                      #fill = TRUE,
@@ -54,7 +54,7 @@ mod_stat2_redress_na_ui <- function(id){
                    
                    infoBox(
                      title = "Nb ind.  répondants",
-                     value = textOutput(ns("indrep")),
+                     value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("registered"),
                      #fill = TRUE,
@@ -63,7 +63,7 @@ mod_stat2_redress_na_ui <- function(id){
                    ),
                    infoBox(
                      title = "Taux réponse global",
-                     value = textOutput(ns("tauxrep")),
+                     value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("registered"),
                      #fill = TRUE,
@@ -93,10 +93,18 @@ mod_stat2_redress_na_ui <- function(id){
 #' stat2_redress_na Server Functions
 #'
 #' @noRd 
-mod_stat2_redress_na_server <- function(id){
+mod_stat2_redress_na_server <- function(id, global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    output$nuageapur <- renderPlot(
+      
+      {
+        shinipsum::random_ggplot()
+        
+      }
+    )
+    
   })
 }
     
