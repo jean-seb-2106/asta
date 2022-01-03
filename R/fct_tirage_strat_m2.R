@@ -1,6 +1,9 @@
 #' tirage_strat_m2 
 #'
 #' @description A fct function that does a stratified random sampling without replacement
+#' @param input_data un dataframe
+#' @param taille_strat un nombre de strates
+#' @param var_strat une variable de stratification
 #'
 #' @return a dataframe, result of a stratified sampling without replacement
 #' @import dplyr

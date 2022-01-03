@@ -1,6 +1,8 @@
 #' plot_apur_m2 
 #'
 #' @description A fct function that builds a plot with geompoints
+#' @param input_data un dataframe
+#' @param var_apur une variable quantitative
 #'
 #' @return a graph
 #' @import ggplot2

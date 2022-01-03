@@ -32,7 +32,7 @@ mod_stat2_redress_corrna_ui <- function(id){
                             
                             infoBox(
                               title = "Nb ind.  échantillonnés",
-                              value = textOutput(ns("indech")),
+                              value = "10",
                               subtitle = "Source : Cefil 2021",
                               icon = icon("line-chart"),
                               #fill = TRUE,
@@ -45,7 +45,7 @@ mod_stat2_redress_corrna_ui <- function(id){
                             
                             infoBox(
                               title = "Nb ind.  répondants",
-                              value = textOutput(ns("indrep")),
+                              value = "10",
                               subtitle = "Source : Cefil 2021",
                               icon = icon("line-chart"),
                               #fill = TRUE,
@@ -75,9 +75,17 @@ mod_stat2_redress_corrna_ui <- function(id){
 #' stat2_redress_corrna Server Functions
 #'
 #' @noRd 
-mod_stat2_redress_corrna_server <- function(id){
+mod_stat2_redress_corrna_server <- function(id, global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    output$nuageapur <- renderPlot(
+      
+      {
+        shinipsum::random_ggplot()
+        
+      }
+    )
  
   })
 }

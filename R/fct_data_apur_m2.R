@@ -1,7 +1,9 @@
 #' data_apur_m2 
 #'
 #' @description A fct function that cleans database from extreme values
-#'
+#' @param input_data un data fram
+#' @param var_apur une variable quantitative
+#' 
 #' @return a clean data frame
 #' @import dplyr
 #' @export

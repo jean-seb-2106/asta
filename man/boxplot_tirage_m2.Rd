@@ -6,6 +6,11 @@
 \usage{
 boxplot_tirage_m2(data, var_plot)
 }
+\arguments{
+\item{data}{un dataframe}
+
+\item{var_plot}{une variable quantitative}
+}
 \value{
 a graph
 }

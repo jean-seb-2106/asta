@@ -6,6 +6,13 @@
 \usage{
 tirage_strat_m2(input_data, taille_strat, var_strat)
 }
+\arguments{
+\item{input_data}{un dataframe}
+
+\item{taille_strat}{un nombre de strates}
+
+\item{var_strat}{une variable de stratification}
+}
 \value{
 a dataframe, result of a stratified sampling without replacement
 }

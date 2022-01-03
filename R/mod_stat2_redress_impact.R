@@ -25,7 +25,7 @@ mod_stat2_redress_impact_ui <- function(id){
                    
                    infoBox(
                      title = "Moyenne des poids",
-                     value = textOutput("poidsmoyen"),
+                     value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("registered"),
                      #fill = TRUE,
@@ -34,7 +34,7 @@ mod_stat2_redress_impact_ui <- function(id){
                    ),
                    infoBox(
                      title = "Ecart type des poids",
-                     value = textOutput("poidssd"),
+                     value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("registered"),
                      #fill = TRUE,
@@ -51,7 +51,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             
                             infoBox(
                               title = "Rev. Disp. moyen",
-                              value = textOutput(ns("meanred")),
+                              value = "10",
                               subtitle = "Redressé",
                               icon = icon("euro-sign"),
                               #fill = TRUE,
@@ -60,7 +60,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             ) ,
                             infoBox(
                               title = "Rev. Disp. moyen",
-                              value = textOutput(ns("meannonred")),
+                              value = "10",
                               subtitle = "Non redressé",
                               icon = icon("euro-sign"),
                               #fill = TRUE,
@@ -69,7 +69,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             ) ,
                             infoBox(
                               title = "Rev. Disp. moyen",
-                              value = textOutput(ns("meanmere")),
+                              value = "10",
                               subtitle = "Population mère",
                               icon = icon("euro-sign"),
                               #fill = TRUE,
@@ -82,7 +82,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             
                             infoBox(
                               title = "Patrimoine moyen",
-                              value = textOutput(ns("meanred_pat")),
+                              value = "10",
                               subtitle = "Redressé",
                               icon = icon("home"),
                               #fill = TRUE,
@@ -91,7 +91,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             ),
                             infoBox(
                               title = "Patrimoine moyen",
-                              value = textOutput(ns("meannonred_pat")),
+                              value = "10",
                               subtitle = "Non redressé",
                               icon = icon("home"),
                               #fill = TRUE,
@@ -100,7 +100,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             ),
                             infoBox(
                               title = "Patrimoine moyen",
-                              value = textOutput(ns("meanmere_pat")),
+                              value = "10",
                               subtitle = "Population mère",
                               icon = icon("home"),
                               #fill = TRUE,
@@ -116,7 +116,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             wellPanel(
                               tags$p("Tableau", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                               
-                              plotOutput(ns("nuageapur")),br(),
+                              DTOutput(ns("tab1")),br(),
                               tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
                               
                             )  )
@@ -130,12 +130,30 @@ mod_stat2_redress_impact_ui <- function(id){
 #' stat2_redress_impact Server Functions
 #'
 #' @noRd 
-mod_stat2_redress_impact_server <- function(id){
+mod_stat2_redress_impact_server <- function(id, global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    global <- reactiveValues(dt_apur = grandile_apur)
+    
+    local <- reactiveValues(
+      dt=NULL)
+    
+    observeEvent(input$go,{
+      local$dt <- global$dt_apur
+      
+    })
+    
+   output$tab1 <- renderDT({
+      
+      validate(need(expr = !is.null(local$dt),
+                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le tableau"))
+      
+     shinipsum::random_DT(ncol = 4, nrow = 10)
+    
   })
-}
+  }
+)}
     
 ## To be copied in the UI
 # mod_stat2_redress_impact_ui("stat2_redress_impact")

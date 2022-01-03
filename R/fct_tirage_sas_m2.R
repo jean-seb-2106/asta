@@ -1,6 +1,8 @@
 #' tirage_sas_m2 
 #'
 #' @description A fct function that does a simple random sampling (sas)
+#' @param input_data un dataframe
+#' @param taille_sas un nombre d'unités échantillonné
 #'
 #' @return a dataframe, result of a simple random sampling
 #'

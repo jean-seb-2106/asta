@@ -212,11 +212,11 @@ mod_stat2_server <- function(id,global){
     
     mod_stat2_pond_agreg_server("stat2_pond_agreg", global=global)
     
-    mod_stat2_redress_na_server("stat2_redress_na")
+    mod_stat2_redress_na_server("stat2_redress_na", global=global)
     
-    mod_stat2_redress_corrna_server("stat2_redress_corrna")
+    mod_stat2_redress_corrna_server("stat2_redress_corrna", global=global)
     
-    mod_stat2_redress_impact_server("stat2_redress_impact")
+    mod_stat2_redress_impact_server("stat2_redress_impact", global=global)
     
   })
 }

@@ -1,8 +1,9 @@
 #' Tirage_grappe_m2
 #'
-#' @param input_data 
-#' @param taille_grappe 
-#' @param var_grappe 
+#' @description Une fonction de tirage en grappe
+#' @param input_data un dataframe
+#' @param taille_grappe la taille de la grappe
+#' @param var_grappe une variable de stratification
 #' @import dplyr
 #'
 #' @return un echantillon
