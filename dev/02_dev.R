@@ -21,6 +21,9 @@ attachment::att_amend_desc()
 ## Add modules ----
 ## Create a module infrastructure in R/
 
+#Module pour le sommaire (la page d'accueil)
+golem::add_module( name = "sommaire" )
+
 #Stat 1 et les sous-modules
 golem::add_module( name = "stat1" ) # Name of the module
 golem::add_module( name = "stat1_uni_quali" ) # Name of the module

@@ -18,6 +18,9 @@ app_ui <- function(request) {
       
       title = "ASTA", 
       
+      #TabPanel Sommaire
+      mod_sommaire_ui("sommaire_ui"),
+      
       #TabPanel Stat1
       mod_stat1_ui("stat1_ui_1"),
       
