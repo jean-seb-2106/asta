@@ -36,21 +36,21 @@ tabPanel(
         sidebarMenu(
           id = "tabs", 
           menuItem(
-            "Donnees",
-            menuSubItem("Visualisation de la base", tabName = "subitem1"),
+            "Donn\u00e9es",
+            menuSubItem("Visualisation de la base", tabName = ns("subitem1")),
             menuSubItem("Dictionnaire des variables", tabName = "subitem2"),
             icon = icon("th"),
             selected = FALSE
           ),
           menuItem(
-            "Statistique univariee",
+            "Statistique univari\u00e9e",
             icon = icon("th"),
             menuSubItem("Caractere qualitatif", tabName = "subitem3"),
             menuSubItem("Caractere quantitatif", tabName = "subitem4"),
             selected = FALSE
           ),
           menuItem(
-            "Statistique bivariee",
+            "Statistique bivari\u00e9e",
             icon = icon("th"),
             menuSubItem("Quanti-Quanti", tabName = "subitem5"),
             menuSubItem("Quali-Quali", tabName = "subitem6"),
@@ -58,7 +58,7 @@ tabPanel(
             selected = FALSE
           ),
           menuItem(
-            "Statistique inferentielle",
+            "Statistique inf\u00e9rentielle",
             icon = icon("th"),
             menuSubItem("Estimations", tabName = "subitem8"),
             menuSubItem("Simulations", tabName = "subitem9"),
@@ -95,7 +95,7 @@ tabPanel(
       tabItems(
         
         #Les données--------
-        tabItem(tabName = "subitem1",
+        tabItem(tabName = ns("subitem1"),
                 h2("Visualisation du fichier"),
                 DT::DTOutput(ns('dt1'))),
 

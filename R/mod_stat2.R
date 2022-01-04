@@ -26,14 +26,15 @@ tabPanel(
     
     dashboardSidebar(
       
-      collapsed = FALSE,
+      
       fluidRow(
+        collapsed = FALSE,
         sidebarMenu(
           id = "tabs", # à quoi sert cet identifiant ??
           
           
           menuItem(
-            "Definitions",
+            "D\u00e9finitions",
             tabName = "definitions",
             icon = icon("th"),
             selected = FALSE

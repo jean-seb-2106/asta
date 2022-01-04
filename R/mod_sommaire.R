@@ -20,7 +20,10 @@ mod_sommaire_ui <- function(id){
     h2("Stat 3 : Analyse exploratoire de donn\u00e9es (en construction)"),
     h2("Stat 4 : Econom\u00e9trie (en construction)"),
     h2("Stat 5 : S\u00e9ries temporelles (en construction)"),
-    h2("Stat 6 : Secret statistique et Big Data (en construction)")
+    h2("Stat 6 : Secret statistique et Big Data (en construction)"),
+    
+    HTML('<center> <img src="logo_cefil_new.jpg" width ="80" > </center>')
+    
   )
   
 }
