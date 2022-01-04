@@ -25,12 +25,19 @@ app_ui <- function(request) {
       mod_stat1_ui("stat1_ui_1"),
       
       #TabPanel Stat2
-      mod_stat2_ui("stat2_ui_1")
+      mod_stat2_ui("stat2_ui_1"),
       
+      #TabPanel Stat3
+      mod_stat3_ui("stat3_ui"),
       
+      #TabPanel Stat4
+      mod_stat4_ui("stat4_ui"),
       
+      #TabPanel Stat5
+      mod_stat5_ui("stat5_ui"),
       
-      
+      #TabPanel Stat6
+      mod_stat6_ui("stat6_ui")
       
     )
   

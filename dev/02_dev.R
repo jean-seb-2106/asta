@@ -51,6 +51,18 @@ golem::add_module( name = "stat2_redress_na" ) # Name of the module
 golem::add_module( name = "stat2_redress_corrna" ) # Name of the module
 golem::add_module( name = "stat2_redress_impact" ) # Name of the module
 
+#Stat3
+golem::add_module( name = "stat3" )
+
+#Stat4
+golem::add_module( name = "stat4" )
+
+#Stat5
+golem::add_module( name = "stat5" )
+
+#Stat6
+golem::add_module( name = "stat6" )
+
 ## Add helper functions ----
 ## Creates fct_* and utils_*
 golem::add_fct( "importation_m2" ) 

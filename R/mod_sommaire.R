@@ -13,12 +13,14 @@ mod_sommaire_ui <- function(id){
   tabPanel(
     title = "Sommaire",
     
-    h1("Stat 1 : Statistiques descriptives et inf\u00e9rentielles"),
-    h1("Stat 2 : Enqu\u00eates et sondages"),
-    h1("Stat 3 : Analyse exploratoire de donn\u00e9es"),
-    h1("Stat 4 : Econom\u00e9trie"),
-    h1("Stat 5 : S\u00e9ries temporelles"),
-    h1("Stat 6 : Secret statistique et Big Data")
+    h1("Programme du parcours statistique des attach\u00e9s"),
+    tags$br(),
+    h2("Stat 1 : Statistiques descriptives et inf\u00e9rentielles"),
+    h2("Stat 2 : Enqu\u00eates et sondages"),
+    h2("Stat 3 : Analyse exploratoire de donn\u00e9es (en construction)"),
+    h2("Stat 4 : Econom\u00e9trie (en construction)"),
+    h2("Stat 5 : S\u00e9ries temporelles (en construction)"),
+    h2("Stat 6 : Secret statistique et Big Data (en construction)")
   )
   
 }
