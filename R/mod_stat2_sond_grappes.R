@@ -17,34 +17,34 @@ mod_stat2_sond_grappes_ui <- function(id){
                    
                    wellPanel(
                      
-                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                     tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("NomVar1"),
                                  "Choisissez une variable pour la selection des UP :", 
                                  choices=c("PCS"="PCS","Diplome"="DIPL","activite"="ACT")),
-                     numericInput(ns("UP"), label = "Choisissez le nombre d'UP à échantillonner", min = 1, max = 4, value = 1),
+                     numericInput(ns("UP"), label = "Choisissez le nombre d'UP \u00e0 \u00e9chantillonner", min = 1, max = 4, value = 1),
                      selectInput(ns("NomVar2"),
-                                 "Choisissez un caractère :", 
+                                 "Choisissez un caract\u00e8re :", 
                                  choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
                      actionButton(ns("go"),
                                   label="Lancer le tirage et les calculs")
                    ),
-                   wellPanel("La fonction utilisée en R est la fonction",span("sample", style="color:blue"),   "de R base pour la sélection des unités primaires"
+                   wellPanel("La fonction utilis\u00e9e en R est la fonction",span("sample", style="color:blue"),   "de R base pour la s\u00e9lection des unit\u00e9s primaires"
             )),
             column(4,
                    
                    
                    infoBox(
-                     title = tags$p("Moyenne dans l'échantillon", style = "font-size : 80%;"),
+                     title = tags$p("Moyenne dans l'\u00e9chantillon", style = "font-size : 80%;"),
                      value = textOutput(ns("meangrappe")),
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="blue",
                      width = NULL
                    ) ,
                    infoBox(
-                     title = tags$p("Ecart-Type dans l'échantillon", style = "font-size : 80%;"),
+                     title = tags$p("Ecart-Type dans l'\u00e9chantillon", style = "font-size : 80%;"),
                      value = textOutput(ns("sdgrappe")),
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="blue",
                      width = NULL
@@ -57,17 +57,17 @@ mod_stat2_sond_grappes_ui <- function(id){
             column(4,
                    
                    infoBox(
-                     title = tags$p("Moyenne dans la Pop. mère", style = "font-size : 80%;"),
+                     title = tags$p("Moyenne dans la Pop. m\u00e8re", style = "font-size : 80%;"),
                      value = textOutput(ns("meanmere")),
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="light-blue",
                      width = NULL
                    ),
                    infoBox(
-                     title = tags$p("Ecart-Type dans la Pop. mère", style = "font-size : 80%;"),
+                     title = tags$p("Ecart-Type dans la Pop. m\u00e8re", style = "font-size : 80%;"),
                      value = textOutput(ns("sdmere")),
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="light-blue",
                      width = NULL
@@ -101,7 +101,7 @@ mod_stat2_sond_grappes_server <- function(id, global){
     output$plotgrappe <- renderPlot({
       validate(
         need(expr = !is.null(local$ech),
-             message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
+             message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
       
       boxplot_tirage_m2(local$ech, local$var)
@@ -110,7 +110,7 @@ mod_stat2_sond_grappes_server <- function(id, global){
     output$plotmere <- renderPlot({
       validate(
         need(expr = !is.null(local$dt),
-             message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
+             message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
       
       boxplot_tirage_m2(local$dt, local$var)
@@ -121,7 +121,7 @@ mod_stat2_sond_grappes_server <- function(id, global){
       
       
       local$meangrappe <- mean(local$ech[, local$var], na.rm = TRUE)
-      paste0(format_box(local$meangrappe), " €")
+      paste0(format_box(local$meangrappe), " \u20ac")
     })
     
     output$sdgrappe <- renderText({
@@ -129,21 +129,21 @@ mod_stat2_sond_grappes_server <- function(id, global){
       
       
       local$sdgrappe <- sd(local$ech[, local$var], na.rm = TRUE)
-      paste0(format_box(local$sdgrappe), " €")
+      paste0(format_box(local$sdgrappe), " \u20ac")
     })
     
     output$meanmere <- renderText({
       req(local$dt)
       
       local$mean <- mean(local$dt[, local$var], na.rm = TRUE)
-      paste0(format_box(local$mean), " €")
+      paste0(format_box(local$mean), " \u20ac")
     })
     
     output$sdmere <- renderText({
       req(local$dt)
       
       local$sd <- sd(local$dt[, local$var], na.rm = TRUE)
-      paste0(format_box(local$sd), " €")
+      paste0(format_box(local$sd), " \u20ac")
     })
     
     

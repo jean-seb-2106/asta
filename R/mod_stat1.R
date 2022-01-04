@@ -23,7 +23,7 @@ tabPanel(
     
     #dashboardHeader---------
     dashboardHeader(
-      title = "Statistiques descriptives et inferentielles",
+      title = "Statistiques descriptives et inf\u00e9rentielles",
       titleWidth = 450,
       disable = FALSE
     ),

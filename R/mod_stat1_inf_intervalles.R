@@ -41,17 +41,17 @@ mod_stat1_inf_intervalles_ui <- function(id){
                           infoBox(
                             title = "Intervalle de confiance",
                             value = textOutput(ns("borneinf")),
-                            subtitle = "Borne inférieure",
-                            icon = icon("line-chart"),
+                            subtitle = "Borne inf\u00e9rieure",
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=12
                           ),
                           infoBox(
-                            title = "Valeur estimée",
+                            title = "Valeur estim\u00e9e",
                             value = textOutput(ns("estime")),
-                            subtitle = "l'estimateur utilisé est la moyenne empirique",
-                            icon = icon("line-chart"),
+                            subtitle = "l'estimateur utilis\u00e9 est la moyenne empirique",
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=12
@@ -59,8 +59,8 @@ mod_stat1_inf_intervalles_ui <- function(id){
                           infoBox(
                             title = "Intervalle de confiance",
                             value = textOutput(ns("bornesup")),
-                            subtitle = "Borne supérieure",
-                            icon = icon("line-chart"),
+                            subtitle = "Borne sup\u00e9rieure",
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=12
@@ -73,7 +73,7 @@ mod_stat1_inf_intervalles_ui <- function(id){
                      title = "Vraie Valeur",
                      value = textOutput(ns("vraie")),
                      # subtitle = "Source : Grandile",
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="aqua",
                      width=12

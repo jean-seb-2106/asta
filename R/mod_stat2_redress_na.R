@@ -11,17 +11,17 @@ mod_stat2_redress_na_ui <- function(id){
   ns <- NS(id)
   
   tabItem(tabName = "subitemj",
-          h2("Analyse de la non réponse"),
+          h2("Analyse de la non r\u00e9ponse"),
           fluidRow(
             column(4,
                    
                    wellPanel(
-                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                     tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
-                                 "Choisissez une variable à étudier",
+                                 "Choisissez une variable \u00e0 \u00e9tudier",
                                  choices = c("Superficie du jardin"="SUPERF_JARDIN", "Superficie du logement"="SUPERF_LOG")),
                      
-                     actionButton(inputId=ns("go"),"Mettre à jour les résultats"))
+                     actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats"))
                    ),
             
             column(8,
@@ -31,7 +31,7 @@ mod_stat2_redress_na_ui <- function(id){
                    
                    
                    infoBox(
-                     title = "Nb ind.  échantillonnés",
+                     title = "Nb ind.  \u00e9chantillonn\u00e9s",
                      value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("buromobelexperte"),
@@ -53,7 +53,7 @@ mod_stat2_redress_na_ui <- function(id){
             column(6,
                    
                    infoBox(
-                     title = "Nb ind.  répondants",
+                     title = "Nb ind.  r\u00e9pondants",
                      value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("registered"),
@@ -62,7 +62,7 @@ mod_stat2_redress_na_ui <- function(id){
                      width = NULL
                    ),
                    infoBox(
-                     title = "Taux réponse global",
+                     title = "Taux r\u00e9ponse global",
                      value = "10",
                      subtitle = "Source : Cefil 2021",
                      icon = icon("registered"),

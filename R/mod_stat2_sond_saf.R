@@ -11,14 +11,14 @@ mod_stat2_sond_saf_ui <- function(id){
   ns <- NS(id)
   
   tabItem(tabName = "subitemb",
-          h2("Sondage aléatoire Stratifié"),
+          h2("Sondage al\u00e9atoire Stratifi\u00e9"),
   fluidRow(
     column(4,
            
            wellPanel(
-             tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+             tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
              sliderInput(ns("TailleEch"), 
-                         "Choisissez la taille de l'échantillon",
+                         "Choisissez la taille de l'\u00e9chantillon",
                          min=100,
                          max=2500,
                          value=150),
@@ -26,28 +26,28 @@ mod_stat2_sond_saf_ui <- function(id){
                          "Choisissez une variable de stratification :", 
                          choices=c("Diplome"="DIPL","Pauvre"="PAUVRE")),
              selectInput(ns("NomVar2"),
-                         "Choisissez un caractère :", 
+                         "Choisissez un caract\u00e8re :", 
                          choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
              actionButton(ns("go"),
                           label="Lancer le tirage et les calculs")
            ),
-           wellPanel("La fonction utilisée en R est la fonction",span("strata", style="color:blue"),   "du package SAMPLING")
+           wellPanel("La fonction utilis\u00e9e en R est la fonction",span("strata", style="color:blue"),   "du package SAMPLING")
     ),
     column(4,
            
            
            infoBox(
-             title = tags$p("Moyenne dans l'échantillon", style = "font-size : 80%;"),
+             title = tags$p("Moyenne dans l'\u00e9chantillon", style = "font-size : 80%;"),
              value = textOutput(ns("meansaf")),
-             icon = icon("line-chart"),
+             icon = icon("chart-line"),
              #fill = TRUE,
              color="blue",
              width = NULL
            ) ,
            infoBox(
-             title = tags$p("Ecart-Type dans l'échantillon", style = "font-size : 80%;"),
+             title = tags$p("Ecart-Type dans l'\u00e9chantillon", style = "font-size : 80%;"),
              value = textOutput(ns("sdsaf")),
-             icon = icon("line-chart"),
+             icon = icon("chart-line"),
              #fill = TRUE,
              color="blue",
              width = NULL
@@ -60,17 +60,17 @@ mod_stat2_sond_saf_ui <- function(id){
     column(4,
            
            infoBox(
-             title = tags$p("Moyenne dans la Pop. mère", style = "font-size : 80%;"),
+             title = tags$p("Moyenne dans la Pop. m\u00e8re", style = "font-size : 80%;"),
              value = textOutput(ns("meansafmere")),
-             icon = icon("line-chart"),
+             icon = icon("chart-line"),
              #fill = TRUE,
              color="light-blue",
              width = NULL
            ),
            infoBox(
-             title = tags$p("Ecart-Type dans la Pop. mère", style = "font-size : 80%;"),
+             title = tags$p("Ecart-Type dans la Pop. m\u00e8re", style = "font-size : 80%;"),
              value = textOutput(ns("sdsafmere")),
-             icon = icon("line-chart"),
+             icon = icon("chart-line"),
              #fill = TRUE,
              color="light-blue",
              width = NULL
@@ -106,7 +106,7 @@ mod_stat2_sond_saf_server <- function(id, global){
     output$plotsaf1 <- renderPlot({
       validate(
         need(expr = !is.null(local$ech),
-             message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
+             message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
 
       boxplot_tirage_m2(local$ech, local$var)
@@ -115,7 +115,7 @@ mod_stat2_sond_saf_server <- function(id, global){
     output$plotsaf2 <- renderPlot({
       validate(
         need(expr = !is.null(local$dt),
-             message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
+             message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
 
       boxplot_tirage_m2(local$dt, local$var)
@@ -126,7 +126,7 @@ mod_stat2_sond_saf_server <- function(id, global){
 
 
       local$meansaf <- mean(local$ech[, local$var], na.rm = TRUE)
-      paste0(format_box(local$meansaf), " €")
+      paste0(format_box(local$meansaf), " \u20ac")
     })
 
     output$sdsaf <- renderText({
@@ -134,21 +134,21 @@ mod_stat2_sond_saf_server <- function(id, global){
 
 
       local$sdsaf <- sd(local$ech[, local$var], na.rm = TRUE)
-      paste0(format_box(local$sdsaf), " €")
+      paste0(format_box(local$sdsaf), " \u20ac")
     })
 
     output$meansafmere <- renderText({
       req(local$dt)
 
       local$mean <- mean(local$dt[, local$var], na.rm = TRUE)
-      paste0(format_box(local$mean), " €")
+      paste0(format_box(local$mean), " \u20ac")
     })
 
     output$sdsafmere <- renderText({
       req(local$dt)
 
       local$sd <- sd(local$dt[, local$var], na.rm = TRUE)
-      paste0(format_box(local$sd), " €")
+      paste0(format_box(local$sd), " \u20ac")
     })
     
     

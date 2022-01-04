@@ -16,12 +16,12 @@ mod_stat2_redress_impact_ui <- function(id){
             column(4,
                    
                    wellPanel(
-                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                     tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
-                                 "Choisissez une variable à étudier",
+                                 "Choisissez une variable \u00e0 \u00e9tudier",
                                  choices = c("Superficie du jardin"="SUPERF_JARDIN", "Superficie du logement"="SUPERF_LOG")),
                      
-                     actionButton(inputId=ns("go"),"Mettre à jour les résultats")),
+                     actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
                    
                    infoBox(
                      title = "Moyenne des poids",
@@ -52,7 +52,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             infoBox(
                               title = "Rev. Disp. moyen",
                               value = "10",
-                              subtitle = "Redressé",
+                              subtitle = "Redress\u00e9",
                               icon = icon("euro-sign"),
                               #fill = TRUE,
                               color="light-blue",
@@ -61,7 +61,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             infoBox(
                               title = "Rev. Disp. moyen",
                               value = "10",
-                              subtitle = "Non redressé",
+                              subtitle = "Non redress\u00e9",
                               icon = icon("euro-sign"),
                               #fill = TRUE,
                               color="light-blue",
@@ -70,7 +70,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             infoBox(
                               title = "Rev. Disp. moyen",
                               value = "10",
-                              subtitle = "Population mère",
+                              subtitle = "Population m\u00e8re",
                               icon = icon("euro-sign"),
                               #fill = TRUE,
                               color="light-blue",
@@ -83,7 +83,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             infoBox(
                               title = "Patrimoine moyen",
                               value = "10",
-                              subtitle = "Redressé",
+                              subtitle = "Redress\u00e9",
                               icon = icon("home"),
                               #fill = TRUE,
                               color="light-blue",
@@ -92,7 +92,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             infoBox(
                               title = "Patrimoine moyen",
                               value = "10",
-                              subtitle = "Non redressé",
+                              subtitle = "Non redress\u00e9",
                               icon = icon("home"),
                               #fill = TRUE,
                               color="light-blue",
@@ -101,7 +101,7 @@ mod_stat2_redress_impact_ui <- function(id){
                             infoBox(
                               title = "Patrimoine moyen",
                               value = "10",
-                              subtitle = "Population mère",
+                              subtitle = "Population m\u00e8re",
                               icon = icon("home"),
                               #fill = TRUE,
                               color="light-blue",
@@ -147,7 +147,7 @@ mod_stat2_redress_impact_server <- function(id, global){
    output$tab1 <- renderDT({
       
       validate(need(expr = !is.null(local$dt),
-                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le tableau"))
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
       
      shinipsum::random_DT(ncol = 4, nrow = 10)
     

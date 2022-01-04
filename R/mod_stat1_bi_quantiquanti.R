@@ -47,7 +47,7 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
                                        title = "Coeff de corr\u00e9lation lin\u00e9aire",
                                        value = textOutput(ns("cor")),
                                        # subtitle = "Source : Grandile",
-                                       icon = icon("line-chart"),
+                                       icon = icon("chart-line"),
                                        #fill = TRUE,
                                        color="aqua",
                                        width=6
@@ -83,7 +83,7 @@ mod_stat1_bi_quantiquanti_server <- function(id,global){
  output$plotly1 <- renderPlotly({
    
    validate(need(expr = !is.null(local$dt),
-                 message = "Choisissez les variables dans le menu déroulant et cliquez pour afficher le graphique"))
+                 message = "Choisissez les variables dans le menu d\u00e9roulant et cliquez pour afficher le graphique"))
    
    
    graphggplotly_nuage(local$dt,local$var1,local$var2)

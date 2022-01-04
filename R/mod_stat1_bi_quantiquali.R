@@ -48,7 +48,7 @@ mod_stat1_bi_quantiquali_ui <- function(id){
           fluidRow(column(4,),
                    column(8,
                           
-                          h3("Formule de décomposition de la variance"),
+                          h3("Formule de d\u00e9composition de la variance"),
                           
                           infoBox(
                             title = "Variance",
@@ -142,7 +142,7 @@ mod_stat1_bi_quantiquali_server <- function(id,global){
     output$plotly1 <- renderPlotly({
       
       validate(need(expr = !is.null(local$dt),
-                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique"))
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique"))
       
       
       graphggplotly_qualiquanti(local$dt,

@@ -57,7 +57,7 @@ mod_stat1_bi_qualiquali_ui <- function(id){
                             title = "Chi-2",
                             value = textOutput(ns("chi2")),
                             # subtitle = "Source : Grandile",
-                            icon = icon("line-chart"),
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=6
@@ -66,7 +66,7 @@ mod_stat1_bi_qualiquali_ui <- function(id){
                             title = "V de Cramer",
                             value = textOutput(ns("vcramer")),
                             # subtitle = "Source : Grandile",
-                            icon = icon("line-chart"),
+                            icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=6
@@ -107,7 +107,7 @@ mod_stat1_bi_qualiquali_server <- function(id,global){
     output$tab1 <- renderDT({
       
       validate(need(expr = !is.null(local$dt),
-                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le tableau"))
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
       t <- tableau_croise(local$dt,local$varquali1,local$varquali2,ligne=local$colonne)
      datatable(t,class = "compact",rownames = FALSE)
       

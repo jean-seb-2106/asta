@@ -13,7 +13,7 @@ mod_stat1_uni_quanti_ui <- function(id){
 
   
   tabItem(tabName = "subitem4",
-          h2("Statistiques univariées sur une variable quantitative"),
+          h2("Statistiques univari\u00e9es sur une variable quantitative"),
           br(),
           br(),
           
@@ -68,7 +68,7 @@ mod_stat1_uni_quanti_ui <- function(id){
                           ),
                           
                           valueBox(
-                            subtitle = "Médiane",
+                            subtitle = "M\u00e9diane",
                             value = textOutput(ns("mediane")),
                             #subtitle = "Source : Cefil 2020",
                             # icon = icon("chart-line"),
@@ -79,7 +79,7 @@ mod_stat1_uni_quanti_ui <- function(id){
                           
                           #Troisième Quartile
                           valueBox(
-                            subtitle = "Troisième quartile",
+                            subtitle = "Troisi\u00e8me quartile",
                             value = textOutput(ns("q3")),
                             #subtitle = "Source : Cefil 2020",
                             # icon = icon("chart-line"),
@@ -173,7 +173,7 @@ mod_stat1_uni_quanti_server <- function(id,global){
     output$plotly1 <- renderPlotly({
      
       validate(need(expr = !is.null(local$dt),
-                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique"))
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique"))
        
      graphggplotly_histo(local$dt,local$var,local$class)
       

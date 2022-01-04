@@ -11,24 +11,24 @@ mod_stat2_pond_agreg_ui <- function(id){
   ns <- NS(id)
   
   tabItem(tabName = "subitemi",
-          h2("Contrôles agrégés"),
+          h2("Contr\u00f4les agr\u00e9g\u00e9s"),
           fluidRow(
             column(4,
                    
                    wellPanel(
-                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                     tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varfiltre"), 
                                  "Choisissez un filtre",
                                  choices = c("appartement","maison")),
                      
                      selectInput(ns("Varcontrole"), 
-                                 "Choisissez la variable à contrôler",
+                                 "Choisissez la variable \u00e0 contr\u00f4ler",
                                  choices = c("Superficie du logement"="SUPERF_LOG", "Superficie du jardin"="SUPERF_JARDIN")),
                      
-                     actionButton(inputId=ns("go"),"Mettre à jour les résultats")),
+                     actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
                    
-                   wellPanel(span("Le contrôle agrégé  :", style="color:blue"), 
-                             " il se fait sur un agrégat, c'est-à-dire une variable construite à partir des réponses de plusieurs unités enquêtées. Il vise a repérer les valeurs aberrantes ou atypiques d'une unité par rapport aux autres.")
+                   wellPanel(span("Le contr\u00f4le agr\u00e9g\u00e9  :", style="color:blue"), 
+                             " il se fait sur un agr\u00e9gat, c'est-\u00e0-dire une variable construite \u00e0 partir des r\u00e9ponses de plusieurs unit\u00e9s enqut\u00e9es. Il vise \u00e0 rep\u00e9rer les valeurs aberrantes ou atypiques d'une unit\u00e9 par rapport aux autres.")
                              ),
         
           column(8,
@@ -74,7 +74,7 @@ mod_stat2_pond_agreg_server <- function(id, global){
     output$tab1 <- renderTable({
       
       validate(need(expr = !is.null(local$dt),
-                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le tableau"))
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
      
       t <- local$dt %>% filter(TYPE_LOG == local$filtre ) %>% 
         mutate(NBPIECES == as.character(NBPIECES)) %>% 
@@ -86,7 +86,7 @@ mod_stat2_pond_agreg_server <- function(id, global){
       {
         validate(
           need(expr = !is.null(local$dt),
-               message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
+               message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
         )
         
         grandile_apur2 <- local$dt %>% filter(SUPERF_JARDIN>0)

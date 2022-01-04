@@ -185,4 +185,15 @@ paste(format_box(eta2),"%")
 
 # Statistique inférentielle
 
+## Estimations
+
+
+
+## Simulations
+
+## Intervalles de confiance
+
+## Tests statistiques
+
+
 

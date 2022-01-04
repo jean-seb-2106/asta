@@ -11,23 +11,23 @@ mod_stat2_pond_univ_ui <- function(id){
   ns <- NS(id)
   
   tabItem(tabName = "subitemf",
-          h2("Controles univariés"),
+          h2("Controles univari\u00e9s"),
           fluidRow(
             column(4,
                    
                    wellPanel(
-                     tags$p("Paramètres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                     tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
-                                 "Choisissez une variable à contrôler",
+                                 "Choisissez une variable \u00e0 contr\u00f4ler",
                                  choices = c("Superficie du jardin"="SUPERF_JARDIN", "Superficie du logement"="SUPERF_LOG")),
-                     numericInput(ns("MinApur1"), "Eliminez les valeurs inférieures à :", value=0),
+                     numericInput(ns("MinApur1"), "Eliminez les valeurs inf\u00e9rieures \u00e0 :", value=0),
                      
-                     numericInput(ns("MaxApur1"), "Eliminez les valeurs supérieures à ", value=50000),
+                     numericInput(ns("MaxApur1"), "Eliminez les valeurs sup\u00e9rieures \u00e0 ", value=50000),
                      tags$br(),
-                     actionButton(inputId=ns("go"),"Mettre à jour les résultats")),
+                     actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
                    
-                   wellPanel(span("Le contrôle univarié :", style="color:blue"),
-                             " il se fait variable  par  variable. Il vise à s'assurer que les modalités prises par chaque variable sont valides")
+                   wellPanel(span("Le contr\u00f4le univari\u00e9 :", style="color:blue"),
+                             " il se fait variable  par  variable. Il vise \u00e0 s'assurer que les modalit\u00e9s prises par chaque variable sont valides")
             ),
             column(4,
                    
@@ -35,7 +35,7 @@ mod_stat2_pond_univ_ui <- function(id){
                    infoBox(
                      title = tags$p("Moyenne", style = "font-size : 80%;"),
                      value = textOutput(ns("mean")),
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="blue",
                      width = NULL
@@ -43,7 +43,7 @@ mod_stat2_pond_univ_ui <- function(id){
                    infoBox(
                      title = tags$p("Ecart-Type", style = "font-size : 80%;"),
                      value = textOutput(ns("sd")),
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="blue",
                      width = NULL
@@ -55,7 +55,7 @@ mod_stat2_pond_univ_ui <- function(id){
                    infoBox(
                      title = tags$p("Minimum", style = "font-size : 80%;"),
                      value = textOutput(ns("min")),
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="light-blue",
                      width = NULL
@@ -63,7 +63,7 @@ mod_stat2_pond_univ_ui <- function(id){
                    infoBox(
                      title = tags$p("Maximum", style = "font-size : 80%;"),
                      value = textOutput(ns("max")),
-                     icon = icon("line-chart"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="light-blue",
                      width = NULL
@@ -150,7 +150,7 @@ mod_stat2_pond_univ_server <- function(id, global){
       {
         validate(
           need(expr = !is.null(local$dt),
-               message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique")
+               message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
         )
         
         plot_apur_m2(input_data = local$dt, var_apur = local$var)

@@ -22,11 +22,11 @@ mod_stat1_inf_estimations_ui <- function(id){
                                         "Quel indicateur voulez-vous estimer ?",
                                         choices = LETTERS),
                             sliderInput(ns("slide1"),
-                                        "Choisissez la taille de l'échantillon :",
+                                        "Choisissez la taille de l'\u00e9chantillon :",
                                         min = 1,
                                         max = 5418,
                                         value = 1000),
-                            actionButton(ns("go1"), "Cliquez pour tirer un échantillion et estimer l'indicateur" )
+                            actionButton(ns("go1"), "Cliquez pour tirer un \u00e9chantillion et estimer l'indicateur" )
                           )
                           
                           
@@ -45,16 +45,16 @@ mod_stat1_inf_estimations_ui <- function(id){
                                                 title = "Vraie Valeur",
                                                 value = textOutput(ns("vraie")),
                                                 # subtitle = "Source : Grandile",
-                                                icon = icon("line-chart"),
+                                                icon = icon("chart-line"),
                                                 #fill = TRUE,
                                                 color="aqua",
                                                 width=12
                                               ),
                                               infoBox(
-                                                title = "Valeur estimée",
+                                                title = "Valeur estim\u00e9e",
                                                 value = textOutput(ns("estime")),
-                                                subtitle = "l'estimateur utilisé est la moyenne empirique",
-                                                icon = icon("line-chart"),
+                                                subtitle = "l'estimateur utilis\u00e9 est la moyenne empirique",
+                                                icon = icon("chart-line"),
                                                 #fill = TRUE,
                                                 color="aqua",
                                                 width=12

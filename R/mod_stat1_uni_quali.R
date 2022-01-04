@@ -13,7 +13,7 @@ mod_stat1_uni_quali_ui <- function(id){
   ns <- NS(id)
 
   tabItem(tabName = "subitem3",
-          h2("Statistiques univariées sur une variable qualitative"),
+          h2("Statistiques univari\u00e9es sur une variable qualitative"),
           br(),
           br(),
   
@@ -25,7 +25,7 @@ mod_stat1_uni_quali_ui <- function(id){
              
              selectInput(
                ns("select1"),
-               "Choisissez une variable :",
+               "Choisissez une variable \u003A",
                choices = c("MODCOHA" = "LIB_MODCOHA",
                  "PCS" = "LIB_PCS",
                            "DIPL"="LIB_DIPL",
@@ -33,7 +33,7 @@ mod_stat1_uni_quali_ui <- function(id){
                            "PAUVRE"="LIB_PAUVRE")),
              checkboxGroupInput(
                ns("check1"),
-               "Choisissez un graphique :",
+               "Choisissez un graphique \u003A",
                choices = c("Diagramme en barre","Diagramme circulaire")),
              actionButton(
                ns("go1"),
@@ -55,7 +55,7 @@ mod_stat1_uni_quali_ui <- function(id){
     
     column(4,),
     column(8,
-           h3("Tris à plat"),
+           h3("Tris \u00e0 plat"),
            DTOutput(ns("tab1"))
            
            )
@@ -84,7 +84,7 @@ mod_stat1_uni_quali_server <- function(id,global){
     
     output$tab1 <- renderDT({
       validate(need(expr = !is.null(local$dt),
-                    message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le tableau"))
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
       
      a <- tri_plat(local$dt,local$var)  
      a %>% DT::datatable(class = "row-border")
@@ -102,7 +102,7 @@ mod_stat1_uni_quali_server <- function(id,global){
     output$plot1 <- renderPlotly({
     
     validate(need(expr = !is.null(local$dt),
-                  message = "Choisissez une variable dans le menu déroulant et cliquez pour afficher le graphique"))    
+                  message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique"))    
   graphggplotly_diagbarre(local$dt,local$var)
       
     })

@@ -37,10 +37,10 @@ mod_stat1_inf_tests_ui <- function(id){
             column(4,
                    
                    infoBox(
-                     title = "Valeur estimée",
+                     title = "Valeur estim\u00e9e",
                      value = textOutput(ns("estime")),
-                     subtitle = "l'estimateur utilisé est la moyenne empirique",
-                     icon = icon("line-chart"),
+                     subtitle = "l'estimateur utilis\u00e9 est la moyenne empirique",
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="aqua",
                      width=12
@@ -49,18 +49,18 @@ mod_stat1_inf_tests_ui <- function(id){
                    infoBox(
                      title = "P-VALUE",
                      value = textOutput(ns("pvalue")),
-                     # subtitle = "Borne inférieure",
-                     icon = icon("line-chart"),
+                     # subtitle = "Borne inf\u00e9rieure",
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="aqua",
                      width=12
                    ),
                    
                    infoBox(
-                     title = "Résultat du test",
+                     title = "R\u00e9sultat du test",
                      value = textOutput(ns("resultat")),
-                     # subtitle = "Borne supérieure",
-                     icon = icon("line-chart"),
+                     # subtitle = "Borne sup\u00e9rieure",
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="aqua",
                      width=12
