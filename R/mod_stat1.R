@@ -37,20 +37,20 @@ tabPanel(
           id = "tabs", 
           menuItem(
             "Donnees",
-            menuSubItem("Visualisation de la base", tabName = "subitem1"),
-            menuSubItem("Dictionnaire des variables", tabName = "subitem2"),
+            menuSubItem("Visualisation", tabName = "subitem1"),
+            menuSubItem("Description", tabName = "subitem2"),
             icon = icon("th"),
             selected = FALSE
           ),
           menuItem(
-            "Statistique univariee",
+            "Statistique univari\u00e9e",
             icon = icon("th"),
-            menuSubItem("Caractere qualitatif", tabName = "subitem3"),
-            menuSubItem("Caractere quantitatif", tabName = "subitem4"),
+            menuSubItem("Caract\u00e8re qualitatif", tabName = "subitem3"),
+            menuSubItem("Caract\u00e8re quantitatif", tabName = "subitem4"),
             selected = FALSE
           ),
           menuItem(
-            "Statistique bivariee",
+            "Statistique bivari\u00e8e",
             icon = icon("th"),
             menuSubItem("Quanti-Quanti", tabName = "subitem5"),
             menuSubItem("Quali-Quali", tabName = "subitem6"),
@@ -58,7 +58,7 @@ tabPanel(
             selected = FALSE
           ),
           menuItem(
-            "Statistique inferentielle",
+            "Statistique inf\u00e8rentielle",
             icon = icon("th"),
             menuSubItem("Estimations", tabName = "subitem8"),
             menuSubItem("Simulations", tabName = "subitem9"),
@@ -97,10 +97,63 @@ tabPanel(
         #Les données--------
         tabItem(tabName = "subitem1",
                 h2("Visualisation du fichier"),
+                tags$br(), 
                 DT::DTOutput(ns('dt1'))),
 
         tabItem(tabName = "subitem2",
-                h2("Dictionnaire des variables")),
+                h2("Description des donn\u00e9es"),
+                tags$br(), 
+                fluidRow(
+                  column(6,
+                         wellPanel(
+                           tags$p("Dictionnaire des variables", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                         
+                         tags$br(),  
+                         h4("IDENT : Identifiant du m\u00e9nage"),
+                         h4("MODCOHA : Mode de cohabitation dans le logement"),
+                         h4("NBPERS : Nombre de personnes dans le logement"),
+                         h4("NBPIECES : Nombre de pi\u00e8ces du logement"),
+                         h4("AGE : Âge de la personne de r\u00e9f\u00e9rence"),
+                         h4("DIPL : Niveau d'\u00e9tude de la personne de r\u00e9f\u00e9rence"),
+                         h4("PCS : Cat\u00e9gorie socio-professionnelle de la personne de r\u00e9f\u00e9rence"),
+                         h4("ACT : Secteur d'activit\u00e9 de la personne de r\u00e9f\u00e9rence"),
+                         h4("PATRIMOINE : Patrimoine du m\u00e9nage (en \u20ac)"),
+                         h4("REV_DISPONIBLE : Revenu disponible du m\u00e9nage (en \u20ac)"),
+                         h4("PAUVRE : Le m\u00e9nage est-il pauvre ?")
+                         )
+                         
+                         
+                         ),
+                  column(6,
+                         
+                         wellPanel(
+                           
+                           tags$p("Modalit\u00e9s des caract\u00e8res qualitatifs", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                           tags$br(), 
+                         selectInput(
+                           ns("select1"),
+                           "Choisissez un caract\u00e8re :", 
+                           choices=c("MODCOHA"="LIB_MODCOHA",
+                                     "DIPL"="LIB_DIPL",
+                                     "PCS"="LIB_PCS",
+                                     "ACT" = "LIB_ACT",
+                                     "PAUVRE" = "LIB_PAUVRE"),
+                           selected = "LIB_PCS"
+                           ),
+                         
+                         tableOutput(ns("tab1")
+                                     
+                                     )
+                         
+                         )
+                         
+                         
+                         )
+                  )
+                
+                
+                
+                ),
         
         #Statistique univariée quali---------
         #tabItem("subitem3")
@@ -162,6 +215,13 @@ mod_stat1_server <- function(id,global){
     output$dt1 <- renderDT({
       
      global$dt[,1:11] %>% DT::datatable(class = "display")
+      
+    })
+    
+    #Dictionnaire des variables
+    output$tab1 <- renderTable({
+      t <- grandile %>% arrange(.data[[input$select1]])
+      unique(t[,input$select1]) %>% as.data.frame()
       
     })
     
