@@ -32,10 +32,11 @@ mod_stat1_uni_quali_ui <- function(id){
                            "DIPL"="LIB_DIPL",
                            "ACT"="LIB_ACT",
                            "PAUVRE"="LIB_PAUVRE")),
-             checkboxGroupInput(
-               ns("check1"),
-               "Choisissez un graphique \u003A",
-               choices = c("Diagramme en barre","Diagramme circulaire")),
+             tags$br(),
+             # checkboxGroupInput(
+             #   ns("check1"),
+             #   "Choisissez un graphique \u003A",
+             #   choices = c("Diagramme en barre","Diagramme circulaire")),
              actionButton(
                ns("go1"),
                label = "Cliquez pour afficher")
@@ -46,19 +47,21 @@ mod_stat1_uni_quali_ui <- function(id){
     ),
     
     column(8,
-           h3("Graphique"),
+           wellPanel(
+             tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
            plotlyOutput(ns("plot1"))
            # amChartsOutput(ns("plot1"))
-           
+           )
     )
   ),
   fluidRow(
     
     column(4,),
     column(8,
-           h3("Tris \u00e0 plat"),
+           wellPanel(
+             tags$p("Tableau statistique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
            DTOutput(ns("tab1"))
-           
+           )
            )
     )
   

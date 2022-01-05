@@ -38,9 +38,11 @@ mod_stat1_bi_quantiquali_ui <- function(id){
           ),
           
           column(8,
-                 h3("Graphique"),
+                 wellPanel(
+                   tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                 # h3("Graphique"),
                  plotlyOutput(ns("plotly1"))        
-                 
+                 )
           )
           ),
           br(),
@@ -49,7 +51,8 @@ mod_stat1_bi_quantiquali_ui <- function(id){
           fluidRow(column(4,),
                    column(8,
                           
-                          h3("Formule de d\u00e9composition de la variance"),
+                          tags$p("Formule de d\u00e9composition de la variance", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                          # h3("Formule de d\u00e9composition de la variance"),
                           
                           infoBox(
                             title = "Variance",
@@ -85,7 +88,8 @@ mod_stat1_bi_quantiquali_ui <- function(id){
           fluidRow(column(4,),
                    column(8,
                           
-                          h3("Indicateur d'intensit\u00e9 de la corr\u00e9lation"),
+                          tags$p("Indicateur d'intensit\u00e9 de la corr\u00e9lation", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                          # h3("Indicateur d'intensit\u00e9 de la corr\u00e9lation"),
                           infoBox(
                             title = "Rapport de corr\u00e9lation",
                             value = textOutput(ns("eta2")),

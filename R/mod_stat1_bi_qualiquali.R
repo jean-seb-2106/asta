@@ -44,16 +44,19 @@ mod_stat1_bi_qualiquali_ui <- function(id){
                           
           ),
           column(8,
-                 h3("Tableau crois\u00e9 en structure"),
+                 wellPanel(
+                 # h3("Tableau crois\u00e9 en structure"),
+                   tags$p("Tableau crois\u00e9 en structure", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),  
                  DTOutput(ns("tab1"))        
-                 
+                 )
           )
           ),
           br(),
           br(),
           fluidRow(column(4,),
                    column(8,
-                          h3("Indicateur d'intensit\u00e9 de la corr\u00e9lation"),
+                          # h3("Indicateur d'intensit\u00e9 de la corr\u00e9lation"),
+                          tags$p("Indicateur d'intensit\u00e9 de la corr\u00e9lation", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                           infoBox(
                             title = "Chi-2",
                             value = textOutput(ns("chi2")),
