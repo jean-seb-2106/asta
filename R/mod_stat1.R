@@ -50,7 +50,7 @@ tabPanel(
             selected = FALSE
           ),
           menuItem(
-            "Statistique bivari\u00e8e",
+            "Statistique bivari\u00e9e",
             icon = icon("th"),
             menuSubItem("Quanti-Quanti", tabName = "subitem5"),
             menuSubItem("Quali-Quali", tabName = "subitem6"),
@@ -58,7 +58,7 @@ tabPanel(
             selected = FALSE
           ),
           menuItem(
-            "Statistique inf\u00e8rentielle",
+            "Statistique inf\u00e9rentielle",
             icon = icon("th"),
             menuSubItem("Estimations", tabName = "subitem8"),
             menuSubItem("Simulations", tabName = "subitem9"),
@@ -241,7 +241,7 @@ mod_stat1_server <- function(id,global){
     mod_stat1_bi_quantiquali_server("stat1_bi_quantiquali",global=global)
     
     #Stat inférentielle estimations ponctuelles--------
-    mod_stat1_inf_estimations_server("stat1_inf_estimations")
+    mod_stat1_inf_estimations_server("stat1_inf_estimations",global=global)
     
     #Stat inférentielle simulation de tirages------
     mod_stat1_inf_simulations_server("stat1_inf_simulations")
