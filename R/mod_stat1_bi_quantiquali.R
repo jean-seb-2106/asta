@@ -18,6 +18,7 @@ mod_stat1_bi_quantiquali_ui <- function(id){
           fluidRow(column(4,
                           
                           wellPanel(
+                            tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                             selectInput(ns("select1"),
                                         label = "Choisissez une variable qualitative :",
                                         choices = c("MODCOHA",

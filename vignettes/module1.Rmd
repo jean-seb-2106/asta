@@ -54,8 +54,6 @@ rAmCharts::amPie(c,show_values = TRUE)
 rambarplot_quali(grandile,"LIB_PCS")
 
 
-
-
 ```
 
 #### Les graphiques avec GGPLOT2
