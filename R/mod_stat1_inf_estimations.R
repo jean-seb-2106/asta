@@ -20,7 +20,7 @@ mod_stat1_inf_estimations_ui <- function(id){
                             tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                             selectInput(ns("select1"),
                                         "Quel indicateur voulez-vous estimer ?",
-                                        choices = c("Taux de pauvret\u00e9 (en %)","Moyenne d'\u00e2ge","Moyenne des revenus disponibles (en €)","Moyenne du patrimoine (en €)")),
+                                        choices = c("Taux de pauvret\u00e9 (en %)"="PAUVRE","Moyenne d'\u00e2ge"="AGE","Moyenne des revenus disponibles (en €)"="REV_DISPONIBLE","Moyenne du patrimoine (en €)"="PATRIMOINE")),
                             sliderInput(ns("slide1"),
                                         "Choisissez la taille de l'\u00e9chantillon :",
                                         min = 1,
@@ -81,12 +81,14 @@ mod_stat1_inf_estimations_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    local <- reactiveValues(dt = NULL,taille_echant = NULL)
+    local <- reactiveValues(dt = NULL,echant = NULL,taille_echant = NULL,select=NULL)
     
     observeEvent(input$go1,{
       
       local$dt <- global$dt
       local$taille_echant <- input$slide1
+      local$echant <- local$dt %>% sample_n(local$taille_echant)
+      local$select <- input$select1
       
     })
     
@@ -95,20 +97,38 @@ mod_stat1_inf_estimations_server <- function(id,global){
       validate(need(expr = !is.null(local$dt),
                     message = "Choisissez un indicateur dans le menu d\u00e9roulant et cliquez pour afficher l'\u00e9chantillon"))
       
-      t <- local$dt %>% sample_n(local$taille_echant) %>% select(1,5,9,10,11)
+      t <- local$echant %>% select(1,5,9,10,11)
       DT::datatable(t,rownames = FALSE)
       
     })
     
     output$vraie <- renderText({
       
-      "10"
+      req(local$dt)
+      t <- local$dt %>% mutate(PAUVRE = ifelse(PAUVRE == "1",TRUE,FALSE))
+      a <- mean(t[,local$select])
+      if (local$select=="PAUVRE"){
+        b <- a*100
+      }
+     else {
+       b <- a
+     }
+      format_box(b)
       
     })
     
     output$estime <- renderText({
       
-      "10"
+      req(local$dt)
+      t <- local$echant %>% mutate(PAUVRE = ifelse(PAUVRE == "1",TRUE,FALSE))
+      a <- mean(t[,local$select])
+      if (local$select=="PAUVRE"){
+        b <- a*100
+      }
+      else {
+        b <- a
+      }
+      format_box(b)
       
     })
     
