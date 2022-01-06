@@ -12,10 +12,16 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     # golem_add_external_resources(),
     # Your application UI logic 
-    navbarPage(
+ 
+ 
+  
+   navbarPage(
       
       shinyDashboardThemes(theme = "grey_light"),
-      
+      tags$script(HTML("var header = $('.navbar > .container-fluid');
+header.append('<div style=\"float:right\"><ahref=\"URL\"><img src=\"logo_cefil.jpg\" alt=\"alt\" style=\"float:right;width:33px;height:41px;padding-top:10px;\"> </a>`</div>');
+    console.log(header)")
+      ),
       title = "ASTA", 
       
       #TabPanel Sommaire

@@ -68,24 +68,14 @@ tabPanel(
             # badgeColor = "green",
             selected = FALSE
           )
-        ),
-        br(),
-        br(),
-        br(),
-        br(),
-        br(),
-        br(),
-        br(),
+        )),
         fluidRow(
-          href = 'https://www.cefil.fr/',
-          tags$img(
-            src = 'logo_cefil_new.jpg',
-            title = "CEFIL",
-            height = '105'
-          ) ,
-          style = "text-align: center;"
+          br(),br(),
+          HTML('<center> <img src="logo_cefil.jpg" width ="80" > </center>')
+          
+          
+          
         )
-      )
     ),
     
     #dashboardBody--------

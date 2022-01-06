@@ -74,13 +74,12 @@ mod_stat2_pond_univ_ui <- function(id){
             
             column(width=8,
                    
-                   box(title = "Repartition",
-                       footer = "Source : Cefil 2021",
-                       status = "primary", #style de la boite parmi c("primary","warning","info")
-                       solidHeader = TRUE, #met un fond de couleur au titre
-                       #background = "aqua",
-                       width = NULL, #largeur entre 1 et 12
-                       plotOutput(ns("nuageapur"))
+                   wellPanel(
+                     tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                     
+                     plotOutput(ns("nuageapur")),br(),
+                     tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+                     
                    )  )
             )
   )
