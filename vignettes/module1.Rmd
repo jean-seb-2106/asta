@@ -29,6 +29,15 @@ library(tidyr)
 
 # Les données
 
+## Visualisation des données
+
+```{r}
+DT::datatable(head(grandile,10))
+```
+
+## Dictionnaire des variables
+
+
 # Statistique descriptive univariée
 
 ## Sur une qualitative
@@ -36,7 +45,6 @@ library(tidyr)
 ### Les graphiques
 
 #### Les graphiques avec rAmCharts
-
 
 Il n'est pas possible d'introduire un rAmCharts dans un shiny.
 L'erreur suivante apparaît : impossible de trouver la fonction "controlShinyPlot"...
@@ -185,9 +193,58 @@ paste(format_box(eta2),"%")
 
 ## Estimations
 
+```{r}
+#Visualisation de l'échantillon
+taille_echant <- 1000
+
+a <- grandile %>% 
+  sample_n(taille_echant) %>% 
+  select(1,5,9,10,11) 
+
+DT::datatable(a) 
+```
+```{r}
+#Estimation avec la moyenne empirique
+b <- a %>% mutate(PAUVRE = ifelse(PAUVRE == "1",TRUE,FALSE))
+format_box(mean(b$AGE))
+format_box(mean(b$REV_DISPONIBLE))
+format_box(mean(b$PATRIMOINE))
+format_box(mean(b$PAUVRE)*100)
+```
+
 
 
 ## Simulations
+
+```{r}
+simul_moyenne <- function(data,var,taille_echant,nbr_simul){
+  replicate(nbr_simul, {
+  a <- data %>% sample_n(taille_echant)
+  b <- mean(a[,var])
+  b 
+})
+}
+
+histoplotly_simul <- function(serie,var){
+  a <- serie %>% as.data.frame() %>% rename({{var}} := ".")
+ggplot(a) + aes(.data[[var]])+geom_histogram()
+
+}
+
+dt <- grandile %>% mutate(PAUVRE = ifelse(PAUVRE == "1",TRUE,FALSE))
+a <- simul_moyenne(dt,"PAUVRE",1000,1000)*100
+histoplotly_simul(a,"PAUVRE")
+
+b <- simul_moyenne(dt,"AGE",1000,1000)
+histoplotly_simul(b,"AGE")
+c <- simul_moyenne(dt,"REV_DISPONIBLE",1000,1000)
+histoplotly_simul(c,"REV_DISPONIBLE")
+d <- simul_moyenne(dt,"PATRIMOINE",1000,1000)
+histoplotly_simul(d,"PATRIMOINE")
+
+
+```
+
 
 ## Intervalles de confiance
 
