@@ -234,7 +234,6 @@ ggplot(a) + aes(.data[[var]])+geom_histogram()
 dt <- grandile %>% mutate(PAUVRE = ifelse(PAUVRE == "1",TRUE,FALSE))
 a <- simul_moyenne(dt,"PAUVRE",1000,1000)*100
 histoplotly_simul(a,"PAUVRE")
-
 b <- simul_moyenne(dt,"AGE",1000,1000)
 histoplotly_simul(b,"AGE")
 c <- simul_moyenne(dt,"REV_DISPONIBLE",1000,1000)
