@@ -20,7 +20,7 @@ mod_stat1_inf_estimations_ui <- function(id){
                             tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                             selectInput(ns("select1"),
                                         "Quel indicateur voulez-vous estimer ?",
-                                        choices = c("Taux de pauvreté (en %)"="PAUVRE","Moyenne d'âge"="AGE","Moyenne des revenus disponibles (en \u20ac)"="REV_DISPONIBLE","Moyenne du patrimoine (en \u20ac)"="PATRIMOINE")),
+                                        choices = c("Taux de pauvret\u00e9 (en %)"="PAUVRE","Moyenne d'\u00e2ge"="AGE","Moyenne des revenus disponibles (en \u20ac)"="REV_DISPONIBLE","Moyenne du patrimoine (en \u20ac)"="PATRIMOINE")),
                             sliderInput(ns("slide1"),
                                         "Choisissez la taille de l'\u00e9chantillon :",
                                         min = 1,

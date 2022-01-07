@@ -42,9 +42,9 @@ DT::datatable(head(grandile,10))
 
 ## Sur une qualitative
 
-### Les graphiques
+### Graphique
 
-#### Les graphiques avec rAmCharts
+#### Avec rAmCharts...
 
 Il n'est pas possible d'introduire un rAmCharts dans un shiny.
 L'erreur suivante apparaît : impossible de trouver la fonction "controlShinyPlot"...
@@ -64,7 +64,7 @@ rambarplot_quali(grandile,"LIB_PCS")
 
 ```
 
-#### Les graphiques avec GGPLOT2
+#### Avec GGPLOT2
 
 ```{r}
 #Exemple
@@ -72,7 +72,7 @@ graphggplotly_diagbarre(grandile,var = "PCS")
 ```
 
 
-### Les tris à plat
+### Tableau statistique
 
 ```{r}
 #Exemple
@@ -217,20 +217,50 @@ format_box(mean(b$PAUVRE)*100)
 ## Simulations
 
 ```{r}
-simul_moyenne <- function(data,var,taille_echant,nbr_simul){
-  replicate(nbr_simul, {
-  a <- data %>% sample_n(taille_echant)
-  b <- mean(a[,var])
-  b 
-})
-}
 
-histoplotly_simul <- function(serie,var){
-  a <- serie %>% as.data.frame() %>% rename({{var}} := ".")
-ggplot(a) + aes(.data[[var]])+geom_histogram()
 
-}
+# #' simul_moyenne
+# #'
+# #' Fonction qui simule une série d'estimations d'indicateurs 
+# #' à l'aide de la moyenne empirique
+# #'
+# #' @param data un dataframe
+# #' @param var une variable quantitative
+# #' @param taille_echant taille de l'échantillon tiré
+# #' @param nbr_simul nombre de tirage d'échantillons
+# #'
+# #' @return un vecteur numérique
+# #' @export
+# #'
+# #' @examples  simul_moyenne(grandile,"AGE",1000,1000) 
+# simul_moyenne <- function(data,var,taille_echant,nbr_simul){
+#   replicate(nbr_simul, {
+#   a <- data %>% sample_n(taille_echant)
+#   b <- mean(a[,var])
+#   b 
+# })
+# }
 
+
+# 
+# #' histoplotly_simul
+# #'
+# #' Histogramme de la simulation d'estimation avec la moyenne empirique
+# #'
+# #' @param serie un vecteur numérique
+# #' @param var une variable quantitative
+# #'
+# #' @return un graphique GGPLOT2
+# #' @export
+# #'
+# #' @examples 
+# #' a <- simul_moyenne(grandile,"AGE",1000,1000)
+# #' histoplotly_simul(a,"AGE")
+# histoplotly_simul <- function(serie,var){
+#   a <- serie %>% as.data.frame() %>% rename({{var}} := ".")
+# ggplot(a) + aes(.data[[var]])+geom_histogram()
+# 
+# }
 dt <- grandile %>% mutate(PAUVRE = ifelse(PAUVRE == "1",TRUE,FALSE))
 a <- simul_moyenne(dt,"PAUVRE",1000,1000)*100
 histoplotly_simul(a,"PAUVRE")

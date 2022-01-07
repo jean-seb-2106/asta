@@ -244,7 +244,7 @@ mod_stat1_server <- function(id,global){
     mod_stat1_inf_estimations_server("stat1_inf_estimations",global=global)
     
     #Stat inférentielle simulation de tirages------
-    mod_stat1_inf_simulations_server("stat1_inf_simulations")
+    mod_stat1_inf_simulations_server("stat1_inf_simulations",global=global)
     
     #Stat inférentielle : intervalles de confiance-----
     mod_stat1_inf_intervalles_server("stat1_inf_intervalles")

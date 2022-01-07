@@ -22,11 +22,11 @@ mod_stat2_pond_coher_ui <- function(id){
                      selectInput(ns("Varcontrole1"), 
                                  "Variable 1",
                                  choices=c("Type de logement"="TYPE_LOG", 
-                                           "Presence piscine"="PISCINE_IND", "Présence jardin"="JARDIN_INDIC"), selected = "JARDIN_INDIC"),
+                                           "Presence piscine"="PISCINE_IND", "Pr\u00e9sence jardin"="JARDIN_INDIC"), selected = "JARDIN_INDIC"),
                      selectInput(ns("Varcontrole2"), 
                                  "Variable 2",
                                  choices=c("Type de logement"="TYPE_LOG", 
-                                           "Presence piscine"="PISCINE_IND", "Présence jardin"="JARDIN_INDIC"), selected = "PISCINE_IND"),
+                                           "Presence piscine"="PISCINE_IND", "Pr\u00e9sence jardin"="JARDIN_INDIC"), selected = "PISCINE_IND"),
                     
                      actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
                    

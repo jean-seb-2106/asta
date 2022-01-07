@@ -81,8 +81,8 @@ golem::add_fct("graphggplotly_nuage")
 golem::add_fct("graphggplotly_qualiquanti")
 golem::add_fct("tab_moyenne")
 golem::add_fct("tableau_croise")
-golem::add_fct("")
-golem::add_fct("")
+golem::add_fct("simul_moyenne")
+golem::add_fct("histoplotly_simul")
 
 
 golem::add_utils( "helpers" )
