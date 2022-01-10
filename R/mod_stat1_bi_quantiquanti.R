@@ -17,6 +17,7 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
           fluidRow(column(4,
                           
                           wellPanel(
+                            tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                             selectInput(ns("select1"),
                                         label = "Choisissez une variable :",
                                         choices = c("AGE","REV_DISPONIBLE","PATRIMOINE"),
@@ -33,26 +34,29 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
                           
                           ),
                    column(8,
-                          h3("Graphique"),        
+                          wellPanel(
+                            tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),        
                            plotlyOutput(ns("plotly1"))        
-                                   
+                          )
                                    )
                    ),
           br(),
           br(),
           fluidRow(column(4,),
                    column(8,
-                          h3("Indicateur d'intensit\u00e9 de la corr\u00e9lation"),
+                          
+                          tags$p("Indicateur d'intensit\u00e9 de la corr\u00e9lation", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                          # h3("Indicateur d'intensit\u00e9 de la corr\u00e9lation"),
                                      infoBox(
-                                       title = "Coeff de corr\u00e9lation lin\u00e9aire",
+                                       title = "Coefficient de corr\u00e9lation lin\u00e9aire",
                                        value = textOutput(ns("cor")),
                                        # subtitle = "Source : Grandile",
                                        icon = icon("chart-line"),
                                        #fill = TRUE,
                                        color="aqua",
-                                       width=6
+                                       width=8
                                      )
-                                     
+                          
                                      ))
           
           )

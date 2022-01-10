@@ -23,6 +23,7 @@ mod_stat1_uni_quanti_ui <- function(id){
                    
                    wellPanel(
                      
+                     tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("select1"),
                                  "Choisissez une variable :",
                                  choices = c("AGE","REV_DISPONIBLE","PATRIMOINE")),
@@ -37,15 +38,19 @@ mod_stat1_uni_quanti_ui <- function(id){
                    )
             ),
             column(8,
-                   h3("Graphique"),
+                   wellPanel(
+                     tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                    plotlyOutput(ns("plotly1"))
-                   
+                   )
                    
             )),
           
           fluidRow(column(4,),
                    column(8,
-                          h3("Indicateurs de tendance centrale et de position"),
+                          
+                         
+                            tags$p("Indicateurs de tendance centrale et de position", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                          # h3("Indicateurs de tendance centrale et de position"),
                           valueBox(
                             subtitle = "Moyenne",
                             value = textOutput(ns("moyenne")),
@@ -88,10 +93,13 @@ mod_stat1_uni_quanti_ui <- function(id){
                             width=3
                           )
                           
+                          
+                          
                           )),
           fluidRow(column(4,),
                    column(8,
-                          h3("Indicateurs de dispersion"),
+                          tags$p("Indicateurs de dispersion", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                          # h3("Indicateurs de dispersion"),
                           
                           valueBox(
                             subtitle = "Etendue",

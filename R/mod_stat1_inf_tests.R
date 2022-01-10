@@ -18,7 +18,7 @@ mod_stat1_inf_tests_ui <- function(id){
             column(4,
                    wellPanel(
                      
-                     
+                     tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("select1"),
                                  "Quel indicateur voulez-vous estimer ?",
                                  choices = LETTERS),
