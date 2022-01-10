@@ -12,9 +12,9 @@ mod_sommaire_ui <- function(id){
   
   tabPanel(    title = "Sommaire",
     fluidPage(
-      tags$style('.container-fluid {
-                             background-color: #fafad2 	;
-              }'),
+      # tags$style('.container-fluid {
+      #                        background-color: #fafad2 	;
+      #         }'),
   
     
     tags$h1("Programme du parcours statistique des attach\u00e9s", style = "background-color: #e7e7e7 ;"),
