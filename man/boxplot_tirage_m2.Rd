@@ -17,3 +17,6 @@ a graph
 \description{
 A fct function that builds box plot
 }
+\examples{
+boxplot_tirage_m2(grandile, "PATRIMOINE")
+}

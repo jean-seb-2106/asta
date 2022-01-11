@@ -8,7 +8,7 @@
 #' @import ggplot2
 #' @export
 #' 
-#' @example plot_apur_m2("Grandile_apur.RDS", 1, 500, var_apur2 =  "SUPERF_LOG")
+#' @examples plot_apur_m2(grandile_apur,var_apur =  "SUPERF_LOG")
 plot_apur_m2 <-
   function (input_data, var_apur) {
     data <- data_apur_m2(input_data, var_apur)

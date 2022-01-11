@@ -9,7 +9,7 @@
 #' @return a dataframe, result of a cluster sampling with 2 samplings
 #'
 #' @export
-#' @example tirage_grappe_m2(grandile, 2,500, "DIPL")
+#' @examples tirage_degres_m2(grandile, 2,500, "DIPL")
 tirage_degres_m2 <-
   function(input_data,
            taille_UP,

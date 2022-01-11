@@ -17,3 +17,6 @@ a dataframe, result of a simple random sampling
 \description{
 A fct function that does a simple random sampling (sas)
 }
+\examples{
+tirage_sas_m2(grandile, 12)
+}

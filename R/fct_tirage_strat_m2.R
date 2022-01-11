@@ -9,7 +9,7 @@
 #' @import dplyr
 #' @import sampling
 #' @export
-#' @example tirage_strat_m2("Grandile.RDS", 400, "DIPL")
+#' @examples tirage_strat_m2(grandile, 400, "DIPL")
 tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
   tab <- input_data %>%   select(var_strat)
   

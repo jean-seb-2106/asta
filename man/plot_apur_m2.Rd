@@ -17,3 +17,6 @@ a graph
 \description{
 A fct function that builds a plot with geompoints
 }
+\examples{
+plot_apur_m2(grandile_apur,var_apur =  "SUPERF_LOG")
+}

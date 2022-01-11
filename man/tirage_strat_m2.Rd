@@ -19,3 +19,6 @@ a dataframe, result of a stratified sampling without replacement
 \description{
 A fct function that does a stratified random sampling without replacement
 }
+\examples{
+tirage_strat_m2(grandile, 400, "DIPL")
+}

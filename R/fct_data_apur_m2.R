@@ -7,7 +7,7 @@
 #' @return a clean data frame
 #' @import dplyr
 #' @export
-#' @example data_apur_m2("Grandile_apur.RDS",100, 500, var_apur = "SUPERF_LOG")
+#' @examples data_apur_m2(grandile_apur, var_apur = "SUPERF_LOG")
 data_apur_m2 <- function(input_data, var_apur) {
   apur <- input_data %>% arrange(var_apur) %>% 
     mutate(numero = row_number())

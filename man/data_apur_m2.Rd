@@ -17,3 +17,6 @@ a clean data frame
 \description{
 A fct function that cleans database from extreme values
 }
+\examples{
+data_apur_m2(grandile_apur, var_apur = "SUPERF_LOG")
+}

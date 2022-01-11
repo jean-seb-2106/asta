@@ -19,7 +19,7 @@ mod_stat2_redress_na_ui <- function(id){
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
                                  "Choisissez une variable \u00e0 \u00e9tudier",
-                                 choices=c("Activité"="ACT", "PCS"="PCS", "Type de logement"="TYPE_LOG")),
+                                 choices=c("Activit\u00e9"="ACT", "PCS"="PCS", "Type de logement"="TYPE_LOG")),
                      
                      actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats"))
                    ),

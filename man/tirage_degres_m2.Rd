@@ -21,3 +21,6 @@ a dataframe, result of a cluster sampling with 2 samplings
 \description{
 A fct function that does a cluster sampling with 2 sample random sampling
 }
+\examples{
+tirage_degres_m2(grandile, 2,500, "DIPL")
+}
