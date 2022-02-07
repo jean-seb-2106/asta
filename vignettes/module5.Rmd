@@ -53,10 +53,64 @@ x4
 
 # Analyse des séries
 
+L'analyse des séries temporelles se fait à l'aide de 3 principaux types de graphique : 
+- les chronogrammes
+- les lag-plot
+- les month-plot
+
+Pour étudier les séries dans la perspectives de les modéliser, il est parfois nécessaire de les transformer en amont, pour mieux visualiser les phénomènes qui nous intéressent. 
+
+## Transformations des séries
+
+```{r}
+log.x1 <- log(x1)
+log.x1
+```
+
+
 ## Chronogrammes
+
+```{r}
+plot.ts(x1)
+plot.ts(log.x1)
+```
+
+## Lag plot
+
+### Pour Airpassengers
+
+```{r}
+lag.plot(rev(x1),12,layout = c(4,3),do.lines = FALSE,diag.col = "red")
+
+```
+
+### Pour le nombre d'accidents de la route
+
+```{r}
+lag.plot(rev(x4),12,layout = c(4,3),do.lines = FALSE,diag.col = "red")
+```
+
+## Month Plot
+
+### Pour Airpass
+
+```{r}
+monthplot(x1,cex.main=1)
+```
+
+### Pour le nombre d'accidents de la route
+
+```{r}
+monthplot(x4,cex.main=1)
+```
 
 
 
 # Désaisonnalisation
+
+```{r}
+plot(decompose(x1,type = "multiplicative"))
+```
+
 
 # Prévisions
