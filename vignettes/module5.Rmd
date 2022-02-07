@@ -16,4 +16,47 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(asta)
+library(caschrono)
 ```
+
+# Les données
+
+## La série Airpassengers
+
+```{r}
+#La Série Airpassengers
+x1 <- AirPassengers
+x1
+```
+
+## Populations
+
+```{r}
+data("popfr")
+x2 <- popfr
+x2
+```
+```{r}
+data("uspop")
+x3 <- uspop
+head(x3,15)
+```
+
+## Nombre de morts par accident de la route
+
+```{r}
+data("m30")
+x4 <- m30
+x4
+```
+
+
+# Analyse des séries
+
+## Chronogrammes
+
+
+
+# Désaisonnalisation
+
+# Prévisions
