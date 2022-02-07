@@ -16,7 +16,62 @@ mod_stat5_ui <- function(id){
            dashboardPage(
              
              dashboardHeader(title = "S\u00e9ries temporelles"),
-             dashboardSidebar(),
+             dashboardSidebar(
+               
+               fluidRow(collapsed = FALSE,
+                        
+                        
+                        sidebarMenu(id = "tabs_seriestemps",
+                                    
+                                    
+                                    
+                                    menuItem(
+                                      
+                                      "Donn\u00e9es",
+                                      icon = icon("th"),
+                                      selected = FALSE
+                                      
+                                      
+                                    ), 
+                                    
+                                    menuItem(
+                                      
+                                      "Analyse de la s\u00e9rie",
+                                      icon = icon("th"),
+                                      selected = FALSE
+                                      
+                                      
+                                    ),
+                                    
+                                    menuItem(
+                                      
+                                      "D\u00e9saisonalisation",
+                                      icon = icon("th"),
+                                      selected = FALSE
+                                      
+                                      
+                                    ),
+                                    
+                                    menuItem(
+                                      
+                                      "Pr\u00e9visions",
+                                      icon = icon("th"),
+                                      selected = FALSE
+                                      
+                                      
+                                    )
+                                    
+                                    
+                                    )
+                 
+                 
+                 
+                 
+                 
+               )
+               
+               
+             ),
              dashboardBody()
              
              
