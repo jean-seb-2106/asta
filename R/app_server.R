@@ -13,4 +13,6 @@ app_server <- function( input, output, session ) {
   
   mod_stat2_server("stat2_ui_1")
   
+  mod_stat4_server("stat4_ui")
+  
 }

@@ -32,9 +32,9 @@ mod_stat4_ui <- function(id){
                                       icon = icon("th"),
                                       selected = FALSE,
                                       menuSubItem("R\u00e9gressions lineaires Simple", 
-                                                  tabName = "subitema"),
+                                                  tabName = "reg_lineaire"),
                                       menuSubItem("R\u00e9gressions lineaires multiples", 
-                                                  tabName = "subitemb")
+                                                  tabName = "reg_multiple")
                                       
                                       
                                     ), 
@@ -68,26 +68,37 @@ mod_stat4_ui <- function(id){
                
                
              ),
-             dashboardBody()
-             
-             
-             
-           )
-           
-           
-           
+             dashboardBody(
+               
+               tabItems(
+                 
+                 
+                 tabItem(
+                   tabName = "reg_lineaire",
+                   mod_stat4_lineaire_simple_ui(ns("stat4_lineaire_simple_ui_1")), 
+                    ),
+                 tabItem(
+                   tabName = "reg_multiple",
+                   mod_stat4_lineaire_multiple_ui(ns("stat4_lineaire_multiple_ui_1")), 
+                 )
+                 
+             )
+             )
+             )
   )
-  
-  
-}
+  }
     
 #' stat4 Server Functions
 #'
 #' @noRd 
-mod_stat4_server <- function(id){
+mod_stat4_server <- function(id, global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    global <- reactiveValues(data = grandile)
  
+    mod_stat4_lineaire_simple_server("stat4_lineaire_simple_ui_1", global=global)
+    mod_stat4_lineaire_multiple_server("stat4_lineaire_multiple_ui_1",global=global)
   })
 }
     
