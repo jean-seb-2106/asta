@@ -9,13 +9,65 @@
 #' @importFrom shiny NS tagList 
 mod_stat4_ui <- function(id){
   ns <- NS(id)
-
+  
+  
   tabPanel(title = "Stat 4",
+           
            
            dashboardPage(
              
-             dashboardHeader(title = "Econom\u00e9trie"),
-             dashboardSidebar(),
+             dashboardHeader(title = "R\u00e9gression"),
+             dashboardSidebar(
+               
+               fluidRow(collapsed = FALSE,
+                        
+                        
+                        sidebarMenu(id = "tabs_regression",
+                                    
+                                    
+                                    
+                                    menuItem(
+                                      
+                                      "R\u00e9gressions lineaires",
+                                      icon = icon("th"),
+                                      selected = FALSE,
+                                      menuSubItem("R\u00e9gressions lineaires Simple", 
+                                                  tabName = "subitema"),
+                                      menuSubItem("R\u00e9gressions lineaires multiples", 
+                                                  tabName = "subitemb")
+                                      
+                                      
+                                    ), 
+                                    
+                                    menuItem(
+                                      
+                                      "R\u00e9gressions non lineaires",
+                                      icon = icon("th"),
+                                      selected = FALSE
+                                      
+                                      
+                                    ),
+                                    
+                                    menuItem(
+                                      
+                                      "R\u00e9gressions logistiques",
+                                      icon = icon("th"),
+                                      selected = FALSE
+                                      
+                                      
+                                    )
+                                    
+                                    
+                        )
+                        
+                        
+                        
+                        
+                        
+               )
+               
+               
+             ),
              dashboardBody()
              
              
@@ -23,7 +75,8 @@ mod_stat4_ui <- function(id){
            )
            
            
-           )
+           
+  )
   
   
 }
