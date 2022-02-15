@@ -39,8 +39,8 @@ mod_stat4_ui <- function(id){
                                       
                                     ), 
                                     
-                                    menuItem(
-                                      
+                                    menuItem(tabName = "reg_nl",
+                                        
                                       "R\u00e9gressions non lineaires",
                                       icon = icon("th"),
                                       selected = FALSE
@@ -48,7 +48,7 @@ mod_stat4_ui <- function(id){
                                       
                                     ),
                                     
-                                    menuItem(
+                                    menuItem(tabName = "reg_logistique",
                                       
                                       "R\u00e9gressions logistiques",
                                       icon = icon("th"),
@@ -80,6 +80,14 @@ mod_stat4_ui <- function(id){
                  tabItem(
                    tabName = "reg_multiple",
                    mod_stat4_lineaire_multiple_ui(ns("stat4_lineaire_multiple_ui_1")), 
+                 ),
+                 tabItem(
+                   tabName = "reg_nl",
+                   mod_stat4_non_lineaire_ui(ns("stat4_non_lineaire_ui_1")), 
+                 ),
+                 tabItem(
+                   tabName = "reg_logistique",
+                   mod_stat4_logistique_ui(ns("stat4_logistique_ui_1") )
                  )
                  
              )
@@ -87,7 +95,7 @@ mod_stat4_ui <- function(id){
              )
   )
   }
-    
+
 #' stat4 Server Functions
 #'
 #' @noRd 
@@ -99,6 +107,8 @@ mod_stat4_server <- function(id, global){
  
     mod_stat4_lineaire_simple_server("stat4_lineaire_simple_ui_1", global=global)
     mod_stat4_lineaire_multiple_server("stat4_lineaire_multiple_ui_1",global=global)
+    mod_stat4_non_lineaire_server("stat4_non_lineaire_ui_1", global=global)
+    mod_stat4_logistique_server("stat4_logistique_ui_1", global=global)
   })
 }
     

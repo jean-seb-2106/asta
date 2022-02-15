@@ -58,6 +58,8 @@ golem::add_module( name = "stat3" )
 golem::add_module( name = "stat4" )
 golem::add_module(name = "stat4_lineaire_simple")
 golem::add_module(name = "stat4_lineaire_multiple")
+golem::add_module(name = "stat4_non_lineaire")
+golem::add_module(name = "stat4_logistique")
 
 #Stat5
 golem::add_module( name = "stat5" )
