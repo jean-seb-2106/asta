@@ -12,7 +12,7 @@ mod_stat4_lineaire_simple_ui <- function(id){
   tagList(
     tabItem(tabName = "reg_lineaire",
             h2("R\u00e9gression lin\u00e9aire simple"),
-            fluidRow(
+            fluidRow(tags$style("background-color : #E3F2FD;"),
               column(4,
                      
                      wellPanel(
