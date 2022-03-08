@@ -1,0 +1,45 @@
+---
+title: "module4"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{module4}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(asta)
+```
+
+
+
+```{r}
+model_lineaireS_tab <- function(input_data, var_expliquee, var_explicative){
+  a <- paste0(var_expliquee, "~", var_explicative)
+   model <- lm(as.formula(a), data = input_data)
+  result <- summary(model)
+  result
+}
+
+model_lineaireS_tab(grandile, "REV_DISPONIBLE", "PATRIMOINE")
+```
+
+
+```{r}
+model_lineaireM_tab <- function(input_data, var_expliquee, var_explicatives){
+   a <- paste0(var_expliquee, "~", paste0(var_explicatives, collapse = "+"))
+  model <- lm(as.formula(a), data = input_data)
+  result <- summary(model)
+  result
+}
+
+model_lineaireM_tab(iris, "Petal.Length", c("Sepal.Length", "Petal.Width", "Sepal.Width"))
+```
+

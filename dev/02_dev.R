@@ -111,6 +111,7 @@ usethis::use_test( "app" )
 ## Vignette ----
 usethis::use_vignette("module2")
 usethis::use_vignette("module1")
+usethis::use_vignette("module4")
 devtools::build_vignettes("module1")
 
 ## Code Coverage----
