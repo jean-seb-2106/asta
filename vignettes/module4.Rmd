@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(asta)
+library(dplyr)
+library(ggplot2)
 ```
 
 
@@ -30,6 +32,28 @@ model_lineaireS_tab <- function(input_data, var_expliquee, var_explicative){
 
 model_lineaireS_tab(grandile, "REV_DISPONIBLE", "PATRIMOINE")
 ```
+
+```{r}
+model_lineaireS_plot <- function(input_data, var_expliquee, var_explicative){
+  a <- paste0(var_expliquee, "~", var_explicative)
+  model <- lm(as.formula(a), data = input_data)
+  result <- summary(model)
+  
+  a <- input_data %>% ggplot(aes(x = .data[[var_expliquee]],y = .data[[var_explicative]])) + 
+    geom_point(alpha=0.2,size=1,color="darkblue") + 
+    theme_minimal() +
+    geom_smooth(method="lm",color="red")
+  
+  
+  coeff=coefficients(model)
+  a + geom_abline(intercept = coeff[1], slope = coeff[2])+
+    ggtitle("Régression linéaire simple") 
+  }
+
+model_lineaireS_plot(grandile, "REV_DISPONIBLE", "PATRIMOINE")
+
+```
+
 
 
 ```{r}

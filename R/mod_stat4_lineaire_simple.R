@@ -19,11 +19,11 @@ mod_stat4_lineaire_simple_ui <- function(id){
                        tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                        selectInput(ns("Varexpliquee"), 
                                    "Choisissez une variable \u00e0 expliquer",
-                                   choices = c("appartement","maison")),
+                                   choices = c("Nb de personnes ménage"="NBPERS","Nb de pièces logement"="NBPIECES","Patrimoine"="PATRIMOINE", "Revenu Disponible"="REV_DISPONIBLE")),
                        
                        selectInput(ns("Varexplicative"), 
                                    "Choisissez la variable explicative",
-                                   choices = c("Superficie du logement"="SUPERF_LOG", "Superficie du jardin"="SUPERF_JARDIN")),
+                                   choices = c("Nb de personnes ménage"="NBPERS","Nb de pièces logement"="NBPIECES","Patrimoine"="PATRIMOINE", "Revenu Disponible"="REV_DISPONIBLE")),
                        
                        actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
                      
