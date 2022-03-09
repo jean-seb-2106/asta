@@ -90,12 +90,14 @@ mod_stat2_sond_2deg_server <- function(id, global){
     
     observeEvent(input$go, {
       local$dt <- global$data
-      local$ech <- tirage_degres_m2(input_data = global$data,
-                                    taille_UP = 4,
-                                    taille_tot = input$TailleEch,
-                                    var_degres = input$VarDegres)
+      local$varD <- input$VarDegres
       local$var <- input$NomVarDegres
       local$taille <- input$TailleEch
+      local$ech <- tirage_degres_m2(input_data = global$data,
+                                    taille_UP = 2,
+                                    taille_tot =  local$taille,
+                                    var_degres = local$varD)
+     
       
       
       

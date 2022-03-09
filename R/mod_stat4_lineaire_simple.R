@@ -58,11 +58,13 @@ mod_stat4_lineaire_simple_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    local <- reactiveValues(dt = NULL, var = NULL)
+    local <- reactiveValues(dt = NULL, var_explicative = NULL,var_expliquee = NULL )
     
     
     observeEvent(input$go, {
       local$dt <- global$data
+      local$var_explicative <- input$Varexplicative
+      local$var_expliquee <- input$Varexplicative
 
     })
     
@@ -71,7 +73,7 @@ mod_stat4_lineaire_simple_server <- function(id,global){
       validate(need(expr = !is.null(local$dt),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
       
-     shinipsum::random_DT(nrow = 8, ncol = 4)
+     model_lineaireS_tab(input_data=local$dt, var_expliquee = local$var_expliquee , var_explicative = local$var_explicative)
     })
     
     output$regline <- renderPlot(
