@@ -25,24 +25,33 @@ mod_stat4_lineaire_simple_ui <- function(id){
                                    "Choisissez la variable explicative",
                                    choices = c("Nb de personnes ménage"="NBPERS","Nb de pièces logement"="NBPIECES","Patrimoine"="PATRIMOINE", "Revenu Disponible"="REV_DISPONIBLE")),
                        
+                       
+                       
+                       checkboxInput(inputId=ns("constante"), "Retirer la constante", value = FALSE, width = NULL),
+                       
                        actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
                      
-                     wellPanel(span("BLABLABLA  :", style="color:blue"), 
-                               " BLABLABLA")
+                     wellPanel(
+                       tags$p("Coeff de détermination R2", style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
+                       ,
+                       verbatimTextOutput(ns("coeffcorr")),br(),
+                       "Compris entre 0 et 1, le coefficient de détermination ou R2 donne le % de variance expliqué par le modèle.",br(),
+                       br(),
+                       tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;"))
               ),
               
               column(8,
+                     
                      wellPanel(
-                       tags$p("Tableau statistique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                       DTOutput(ns("tab1")),br(),
-                       tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")),
-                     wellPanel(
-                       tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                       tags$p("Nuage de points", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                        
                        plotOutput(ns("regline")),br(),
                        tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
                        
-                     )
+                     ),wellPanel(
+                       tags$p("Résultat du modèle - sortie R", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                       verbatimTextOutput(ns("tab1")),br(),
+                       tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;"))
                      
                      
               )
@@ -64,16 +73,21 @@ mod_stat4_lineaire_simple_server <- function(id,global){
     observeEvent(input$go, {
       local$dt <- global$data
       local$var_explicative <- input$Varexplicative
-      local$var_expliquee <- input$Varexplicative
-
+      local$var_expliquee <- input$Varexpliquee
+      local$constante <- input$constante
+      local$model <- model_lineaireS_tab(input_data=global$data,
+                                         var_expliquee = local$var_expliquee ,
+                                         var_explicative = local$var_explicative, constante = local$constante)
     })
     
-    output$tab1 <- renderDT({
+    output$tab1 <- renderPrint({
       
       validate(need(expr = !is.null(local$dt),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
       
-     model_lineaireS_tab(input_data=local$dt, var_expliquee = local$var_expliquee , var_explicative = local$var_explicative)
+      # browser()
+      print(local$model)
+     
     })
     
     output$regline <- renderPlot(
@@ -82,12 +96,23 @@ mod_stat4_lineaire_simple_server <- function(id,global){
           need(expr = !is.null(local$dt),
                message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
         )
-        shinipsum::random_ggplot(type = "random")
+     model_lineaireS_plot(input_data = global$data, var_expliquee =  local$var_expliquee, var_explicative = local$var_explicative, constante = local$constante)
        
         
       }
       
     )
+    
+    output$coeffcorr <- renderPrint({
+      
+      validate(need(expr = !is.null(local$dt),
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
+      
+       # browser()
+   
+      c <- round(as.numeric(local$model[8]),2)
+      c
+    })
     
   })
 }

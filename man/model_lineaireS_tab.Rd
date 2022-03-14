@@ -4,7 +4,7 @@
 \alias{model_lineaireS_tab}
 \title{model_lineaireS_tab}
 \usage{
-model_lineaireS_tab(input_data, var_expliquee, var_explicative)
+model_lineaireS_tab(input_data, var_expliquee, var_explicative, constante)
 }
 \arguments{
 \item{input_data}{un dataframe}
