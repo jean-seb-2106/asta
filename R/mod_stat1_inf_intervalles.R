@@ -23,10 +23,18 @@ mod_stat1_inf_intervalles_ui <- function(id){
                      selectInput(ns("select1"),
                                  "Quel indicateur voulez-vous estimer ?",
                                  choices = LETTERS),
+                     
+                     sliderInput(ns("slide1"),
+                                 "Choisissez la taille de l'\u00e9chantillon :",
+                                 min = 1,
+                                 max = 5418,
+                                 value = 1000),
+                     
                      checkboxGroupInput(ns("check1"),
                                  "Choisissez un niveau de confiance :",
                                  choices = c("90 %","95 %","99 %")
                                 ),
+                     
                      actionButton(ns("go1"), 
                                   "Calculez l'intervalle de confiance" )
                    )
@@ -96,6 +104,18 @@ mod_stat1_inf_intervalles_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    
+    # local <- reactiveValues(dt = NULL,echant = NULL,taille_echant = NULL,select=NULL)
+    # 
+    # observeEvent(input$go1,{
+    #   
+    #   local$dt <- global$dt
+    #   local$taille_echant <- input$slide1
+    #   local$echant <- local$dt %>% sample_n(local$taille_echant)
+    #   local$select <- input$select1
+    #   
+    # })
+    
     output$vraie <- renderText({
       
       "10"

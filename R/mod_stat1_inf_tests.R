@@ -22,6 +22,13 @@ mod_stat1_inf_tests_ui <- function(id){
                      selectInput(ns("select1"),
                                  "Quel indicateur voulez-vous estimer ?",
                                  choices = LETTERS),
+                     
+                     sliderInput(ns("slide1"),
+                                 "Choisissez la taille de l'\u00e9chantillon :",
+                                 min = 1,
+                                 max = 5418,
+                                 value = 1000),
+                     
                      checkboxGroupInput(ns("check1"),
                                         "Choisissez un niveau de confiance :",
                                         choices = c("90 %","95 %","99 %")

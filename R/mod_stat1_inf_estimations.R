@@ -26,7 +26,7 @@ mod_stat1_inf_estimations_ui <- function(id){
                                         min = 1,
                                         max = 5418,
                                         value = 1000),
-                            actionButton(ns("go1"), "Cliquez pour tirer un \u00e9chantillon et estimer l'indicateur" )
+                            actionButton(ns("go1"), "Tirer un \u00e9chantillon et estimer l'indicateur" )
                           )
                           
                           
