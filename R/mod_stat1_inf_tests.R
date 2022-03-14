@@ -20,7 +20,7 @@ mod_stat1_inf_tests_ui <- function(id){
                      
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("select1"),
-                                 "Quel indicateur voulez-vous estimer ?",
+                                 "Quel indicateur voulez-vous tester ?",
                                  choices = LETTERS),
                      
                      sliderInput(ns("slide1"),
@@ -42,6 +42,9 @@ mod_stat1_inf_tests_ui <- function(id){
             
             
             column(4,
+                   
+                   tags$p("R\u00e9sultats du test", 
+                          style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                    
                    infoBox(
                      title = "Valeur estim\u00e9e",
