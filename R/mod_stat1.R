@@ -247,7 +247,7 @@ mod_stat1_server <- function(id,global){
     mod_stat1_inf_simulations_server("stat1_inf_simulations",global=global)
     
     #Stat inférentielle : intervalles de confiance-----
-    mod_stat1_inf_intervalles_server("stat1_inf_intervalles")
+    mod_stat1_inf_intervalles_server("stat1_inf_intervalles",global=global)
     
     #Stat inférentielle : tests statistiques-----
     mod_stat1_inf_tests_server("stat1_inf_tests")
