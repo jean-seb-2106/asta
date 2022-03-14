@@ -17,6 +17,9 @@ mod_stat1_inf_intervalles_ui <- function(id){
           fluidRow(
             
             column(4,
+                   
+                   
+                   
                    wellPanel(
                      
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
@@ -53,11 +56,13 @@ mod_stat1_inf_intervalles_ui <- function(id){
             
             column(4,
                    
+                   tags$p("Calcul de l'intervalle de confiance", 
+                          style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                   
                           infoBox(
-                            title = "Intervalle de confiance",
+                            title = "Borne inf\u00e9rieure",
                             value = textOutput(ns("borneinf")),
-                            subtitle = "Borne inf\u00e9rieure",
+                            # subtitle = "Borne inf\u00e9rieure",
                             icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
@@ -73,29 +78,40 @@ mod_stat1_inf_intervalles_ui <- function(id){
                             width=12
                           ),
                           infoBox(
-                            title = "Intervalle de confiance",
+                            title = "Borne sup\u00e9rieure",
                             value = textOutput(ns("bornesup")),
-                            subtitle = "Borne sup\u00e9rieure",
+                            # subtitle = "Borne sup\u00e9rieure",
                             icon = icon("chart-line"),
                             #fill = TRUE,
                             color="aqua",
                             width=12
-                          )
-            ),
-            
-            
-            column(4,
+                          ),
+                   
                    infoBox(
-                     title = "Vraie Valeur",
+                     title = "Valeur recherch\u00e9ee",
                      value = textOutput(ns("vraie")),
                      # subtitle = "Source : Grandile",
                      icon = icon("chart-line"),
                      #fill = TRUE,
-                     color="aqua",
+                     color="green",
                      width=12
                    )
                    
             )
+            
+            
+            # column(4,
+            #        infoBox(
+            #          title = "Vraie Valeur",
+            #          value = textOutput(ns("vraie")),
+            #          # subtitle = "Source : Grandile",
+            #          icon = icon("chart-line"),
+            #          #fill = TRUE,
+            #          color="aqua",
+            #          width=12
+            #        )
+            #        
+            # )
             
             
           )

@@ -48,12 +48,12 @@ mod_stat1_inf_estimations_ui <- function(id){
                                  style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                           
                                               infoBox(
-                                                title = "Vraie Valeur",
+                                                title = "Valeur recherch\u00e9ee",
                                                 value = textOutput(ns("vraie")),
                                                 # subtitle = "Source : Grandile",
                                                 icon = icon("chart-line"),
                                                 #fill = TRUE,
-                                                color="aqua",
+                                                color="green",
                                                 width=12
                                               ),
                                               infoBox(
