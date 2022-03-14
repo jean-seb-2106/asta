@@ -36,10 +36,12 @@ mod_stat1_inf_intervalles_ui <- function(id){
                                  max = 5418,
                                  value = 1000),
                      
-                     checkboxGroupInput(ns("check1"),
+                     sliderInput(ns("slide2"),
                                  "Choisissez un niveau de confiance :",
-                                 choices = c("90 %","95 %","99 %")
-                                ),
+                                 min = 0.90,
+                                 max = 0.99,
+                                 value = 0.95,
+                                 step = 0.01),
                      
                      actionButton(ns("go1"), 
                                   "Calculez l'intervalle de confiance" )
@@ -119,7 +121,8 @@ mod_stat1_inf_intervalles_server <- function(id,global){
       local$taille_echant <- input$slide1
       local$echant <- local$dt %>% sample_n(local$taille_echant)
       local$select <- input$select1
-      local$check <- input$check1
+      local$conf <- input$slide2
+    
 
     })
     
@@ -157,13 +160,46 @@ mod_stat1_inf_intervalles_server <- function(id,global){
     
     output$borneinf <- renderText({
       
-      "10"
+      req(local$dt)
+      t <- local$echant
+      if (local$select=="PAUVRE"){
+        n_pauvres <- mean(t[,local$select])*local$taille_echant #nombre de pauvres
+        test <- prop.test(n_pauvres,local$taille_echant,conf.level = local$conf)
+        a <- test$conf.int
+        b <- a[1]*100
+      } 
+      
+      else {
+        
+        test <- t.test(t[,local$select],conf.level = local$conf)
+        a <- test$conf.int
+        b <- a[1]
+      }
+      
+      format_box(b)
       
     })
     
     output$bornesup <- renderText({
       
-      "10"
+      req(local$dt)
+      t <- local$echant
+      if (local$select=="PAUVRE"){
+        n_pauvres <- mean(t[,local$select])*local$taille_echant #nombre de pauvres
+        test <- prop.test(n_pauvres,local$taille_echant,conf.level = local$conf)
+        a <- test$conf.int
+        b <- a[2]*100
+      } 
+      
+      else {
+        
+        test <- t.test(t[,local$select],conf.level = local$conf)
+        a <- test$conf.int
+        b <- a[2]
+      }
+      
+      format_box(b)
+      
       
     })
     
