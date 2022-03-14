@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 library(asta)
 library(sampling)
 library(dplyr)
+library(questionr)
 ```
 
 
@@ -163,5 +164,18 @@ plot_apur_m2 <-
   }
 
 # plot_apur_m2("Grandile_apur.RDS", 1, 500, var_apur2 =  "SUPERF_LOG")
+```
+
+
+```{r}
+
+cramer_m2 <- function(data,varquali1,varquali2){
+  a <- table(data$varquali1,data$varquali2)
+  cramer.v(a)
+  }
+
+cramer_m2( data=grandile_redress,varquali1= "REPONDANT_C",varquali2 = "ACT")
+
+
 ```
 
