@@ -29,7 +29,7 @@ mod_stat4_lineaire_simple_ui <- function(id){
                        
                        checkboxInput(inputId=ns("constante"), "Retirer la constante", value = FALSE, width = NULL),
                        
-                       actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
+                       actionButton(inputId=ns("go"),"Mettre \u00e0 jour")),
                      
                      wellPanel(
                        tags$p("Coeff de détermination R2", style = "font-size : 110%; font-weight : bold; text-decoration : underline;")

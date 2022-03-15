@@ -19,33 +19,33 @@ mod_stat4_lineaire_multiple_ui <- function(id){
                        tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                        selectInput(ns("Varexpliquee"), 
                                    "Choisissez une variable \u00e0 expliquer",
-                                   choices = c("appartement","maison")),
+                                   choices = c("PIB par hab."="gdp_per_capita","PIB"="gdp","Mortalité inf."="infant_mortality","Espérance de vie"="life_expectancy","Fécondité"="fertility","Population"="population")),
                        
                        selectizeInput(ns("Varexplicative"), 
-                                   "Choisissez des variables explicatives",
-                                   choices = c("coco","popo","toto","roro"),
-                                  multiple = TRUE  ),
+                                      "Choisissez des variables explicatives",
+                                      choices = c("Mortalité inf."="infant_mortality","Espérance de vie"="life_expectancy","Fécondité"="fertility","Population"="population","PIB par hab."="gdp_per_capita","PIB"="gdp"),
+                                      multiple = TRUE  ),
                        
-                       actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
+                       checkboxInput(inputId=ns("constante"), "Retirer la constante", value = FALSE, width = NULL),
+                       actionButton(inputId=ns("go"),"Mettre \u00e0 jour")),
                      
-                     wellPanel(span("BLABLABLA  :", style="color:blue"), 
-                               " BLABLABLA")
+                     
+                     wellPanel(
+                       tags$p("Coeff de détermination R2", style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
+                       ,
+                       verbatimTextOutput(ns("coeffcorr")),br(),
+                       "Compris entre 0 et 1, le coefficient de détermination ou R2 donne le % de variance expliqué par le modèle.",br(),
+                       br(),
+                       tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")) 
               ),
               
               column(8,
                      wellPanel(
                        tags$p("Tableau statistique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                       DTOutput(ns("tab1")),br(),
-                       tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")),
-                     wellPanel(
-                       tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                       
-                       plotOutput(ns("regline")),br(),
-                       tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
-                       
-                     )
-                     
-                     
+                       verbatimTextOutput(ns("tab1")),br(),
+                       tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;"))
+                    
+                      
               )
             )
     ))
@@ -59,34 +59,40 @@ mod_stat4_lineaire_multiple_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    local <- reactiveValues(dt = NULL, var = NULL)
-    
+    local <- reactiveValues(dt = NULL,var_expliquee = NULL )
+    global <- reactiveValues(dt = gapminder)
     
     observeEvent(input$go, {
-      local$dt <- global$data
+      local$dt <- global$dt
+      local$constante <- input$constante
+      
+     # local$constante <- input$constante
+      local$model <- model_lineaireM_tab(input_data = local$dt,
+                                         var_expliquee = input$Varexpliquee,
+                                         var_explicative = input$Varexplicative,
+                                         constante = local$constante     )
       
     })
     
-    output$tab1 <- renderDT({
+    output$tab1 <- renderPrint({
+      
+      validate(need(expr = !is.null(local$dt),
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
+    # browser()
+      print(local$model)
+    })
+    
+    output$coeffcorr <- renderPrint({
       
       validate(need(expr = !is.null(local$dt),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
       
-      shinipsum::random_DT(nrow = 8, ncol = 4)
-    })
-    
-    output$regline <- renderPlot(
-      {
-        validate(
-          need(expr = !is.null(local$dt),
-               message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
-        )
-        shinipsum::random_ggplot(type = "random")
-        
-        
-      }
+      # browser()
       
-    )
+      c <- round(as.numeric(local$model[8]),2)
+      c
+    })
+
     
   })
 }

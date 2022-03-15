@@ -21,14 +21,14 @@ mod_stat4_logistique_ui <- function(id){
                        tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                        selectInput(ns("Varexpliquee"), 
                                    "Choisissez une variable \u00e0 expliquer",
-                                   choices = c("appartement","maison")),
+                                   choices = c("PIB par hab."="gdp_per_capita","PIB"="gdp")),
                        
                        selectizeInput(ns("Varexplicative"), 
                                       "Choisissez des variables explicatives",
-                                      choices = c("coco","popo","toto","roro"),
+                                      choices = c("Mortalité inf."="infant_mortality","Espérance de vie"="life_expectancy","Fécondité"="fertility","Population"="population"),
                                       multiple = TRUE  ),
                        
-                       actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
+                       actionButton(inputId=ns("go"),"Mettre \u00e0 jour")),
                      
                      wellPanel(span("BLABLABLA  :", style="color:blue"), 
                                " BLABLABLA")

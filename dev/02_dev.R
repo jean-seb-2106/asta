@@ -89,6 +89,7 @@ golem::add_fct("simul_moyenne")
 golem::add_fct("histoplotly_simul")
 golem::add_fct("model_lineaireS_tab")
 golem::add_fct("model_lineaireS_plot")
+golem::add_fct("model_lineaireM_tab")
 
 golem::add_utils( "helpers" )
 
