@@ -23,7 +23,7 @@ library(ggplot2)
 
 
 ```{r}
-model_lineaireS_tab <- function(input_data, var_expliquee, var_explicative, constante){
+model_lineaireS_tab <- function(input_data, var_expliquee, var_explicative, constante = TRUE){
   
   if (constante == TRUE) {
   a <- paste0(var_expliquee, "~ 0 + ", var_explicative)
@@ -40,7 +40,7 @@ model_lineaireS_tab(grandile, "REV_DISPONIBLE", "PATRIMOINE")
 ```
 
 ```{r}
-model_lineaireS_plot <- function(input_data, var_expliquee, var_explicative, constante){
+model_lineaireS_plot <- function(input_data, var_expliquee, var_explicative, constante=TRUE){
   
     if (constante == TRUE) { a <- paste0(var_expliquee, "~ 0 + ", var_explicative)
   model <- lm(as.formula(a), data = input_data)
@@ -86,5 +86,32 @@ model_lineaireM_tab <- function(input_data, var_expliquee, var_explicatives){
 }
 
 model_lineaireM_tab(iris, "Petal.Length", c("Sepal.Length", "Petal.Width", "Sepal.Width"))
+```
+
+```{r}
+model_logistique_tab <- function(input_data, var_expliquee, var_explicatives, constante = TRUE){
+    # browser()
+  data_log <- input_data %>%
+    mutate(var_expliquee_num = ifelse(.data[[var_expliquee]] == "0",0, 1)) 
+  
+  
+  if (constante == FALSE) {
+    a <- paste0("var_expliquee_num ~ 0 + ", paste0(var_explicatives, collapse = "+"))
+    model <- glm(as.formula(a),family = binomial(link = "logit"), data = data_log)
+    result <- summary(model)
+    result
+  }
+  else{ 
+    a <- paste0("var_expliquee_num ~", paste0(var_explicatives, collapse = "+"))
+    model <- glm(as.formula(a),family = binomial(link = "logit"), data = data_log)
+    result <- summary(model)
+    result}
+  
+  
+}
+
+
+model_logistique_tab(input_data = grandile, var_expliquee = "PAUVRE", var_explicatives = c("REV_DISPONIBLE","ACT"), constante = TRUE)
+
 ```
 

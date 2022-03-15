@@ -17,6 +17,8 @@ model_lineaireM_tab(
 \item{var_expliquee}{une variable quantitative}
 
 \item{var_explicatives}{un vecteur de variables quantitatives}
+
+\item{constante}{un boolean}
 }
 \value{
 un tableau de resultat de la fontion lm()

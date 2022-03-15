@@ -21,27 +21,40 @@ mod_stat4_logistique_ui <- function(id){
                        tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                        selectInput(ns("Varexpliquee"), 
                                    "Choisissez une variable \u00e0 expliquer",
-                                   choices = c("PIB par hab."="gdp_per_capita","PIB"="gdp")),
+                                   choices = c("Survie"="Survived")),
                        
                        selectizeInput(ns("Varexplicative"), 
                                       "Choisissez des variables explicatives",
-                                      choices = c("Mortalité inf."="infant_mortality","Espérance de vie"="life_expectancy","Fécondité"="fertility","Population"="population"),
+                                      choices = c("Classe"="Class", "Sexe"="Sex", "Age"),
                                       multiple = TRUE  ),
+                       
+                       checkboxInput(inputId=ns("constante"), "Retirer la constante", value = FALSE, width = NULL),
                        
                        actionButton(inputId=ns("go"),"Mettre \u00e0 jour")),
                      
-                     wellPanel(span("BLABLABLA  :", style="color:blue"), 
-                               " BLABLABLA")
+                     wellPanel(span("Critère AIC  :", style="color:blue"), 
+                               "Le meilleur modèle est celui possédant l’AIC le plus
+faible. Le critère d'information d'Akaike est une mesure de la qualité d'un modèle statistique.
+Ce critère propose un compromis entre qualité d'ajustement (fonction de maximum de vraissemblance)
+                               et complexité du modèle (nombre de paramètres à estimer"),
+                     
+                     wellPanel(span("Coefficients du modèle  :", style="color:blue"), 
+                               "Les coefficients du modèle (estimate) mesurent l'effet des variables explicatives sur le modèle.
+                               On peut ainsi isoler l'effet de chaque modalité sur la variable expliquée. On peut ainsi produire des analyses de type 'toutes choses égales par ailleurs'..."),
+                     wellPanel(span("Exemple d'interprétation - modèle avec la variable explicative 'Sexe' seulement  :", style="color:blue"), 
+                               "Lors du naufrage du Titanic en 1912,les femmes avaient dix fois plus de chance de survivre que les hommes (à âge et classe de voyage identiques)..."),
+                               
+                               
               ),
               
               column(8,
                      wellPanel(
                        tags$p("Tableau statistique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                       DTOutput(ns("tab1")),br(),
+                       verbatimTextOutput(ns("tab1")),br(),
                        tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")),
                      wellPanel(
-                       tags$p("Tableau statistique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                       DTOutput(ns("tab2")),br(),
+                       tags$p("Graphique des coefficients du modele", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                       plotOutput(ns("plot1")),br(),
                        tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")),
                      
                      
@@ -59,28 +72,42 @@ mod_stat4_logistique_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    local <- reactiveValues(dt = NULL, var = NULL)
-    
+    local <- reactiveValues(dt = NULL, var_explicative = NULL,var_expliquee = NULL )
+    global <- reactiveValues(dt = titanic)
     
     observeEvent(input$go, {
-      local$dt <- global$data
+      local$dt <- global$dt
+      local$var_explicative <- input$Varexplicative
+      local$var_expliquee <- input$Varexpliquee
+      local$constante <- input$constante
+      local$model <- model_logistique_tab(input_data=global$dt,
+                                         var_expliquee = local$var_expliquee ,
+                                         var_explicative = local$var_explicative, constante = local$constante)
+      local$modelSS <- model_logistiqueSS_tab(input_data=global$dt,
+                                            var_expliquee = local$var_expliquee ,
+                                            var_explicative = local$var_explicative, constante = local$constante)
       
-    })
+      
+      })
     
-    output$tab1 <- renderDT({
+    output$tab1 <- renderPrint({
       
       validate(need(expr = !is.null(local$dt),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
       
-      shinipsum::random_DT(nrow = 8, ncol = 4)
+       # browser()
+      print(local$model)
+      
     })
     
-    output$tab2 <- renderDT({
+    output$plot1 <- renderPlot({
       
       validate(need(expr = !is.null(local$dt),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
-      
-      shinipsum::random_DT(nrow = 8, ncol = 4)
+     
+   
+      GGally::ggcoef(x = local$modelSS, exponentiate = TRUE, exclude_intercept = TRUE,
+        errorbar_height = .2, color = "blue")
     })
     
   })

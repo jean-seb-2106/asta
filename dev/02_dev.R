@@ -90,6 +90,8 @@ golem::add_fct("histoplotly_simul")
 golem::add_fct("model_lineaireS_tab")
 golem::add_fct("model_lineaireS_plot")
 golem::add_fct("model_lineaireM_tab")
+golem::add_fct("model_logistique_tab")
+golem::add_fct("model_logistiqueSS_tab")
 
 golem::add_utils( "helpers" )
 
