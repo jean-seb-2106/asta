@@ -32,7 +32,11 @@ mod_stat1_inf_tests_ui <- function(id){
                                  max = 5418,
                                  value = 1000),
                      
-                     numericInput(ns("num1"),"Hypothèse H0 = x",value = 15,min = 0,step = 1),
+                     numericInput(ns("num1"),
+                                  "Hypothèse H0 = x",
+                                  value = 15,
+                                  min = 0,
+                                  step = 1),
                      
                      selectInput(inputId = ns("select2"),
                                  label = "Hypothèse H1 ",
@@ -126,7 +130,8 @@ mod_stat1_inf_tests_server <- function(id,global){
                             indic=NULL,
                             conf=NULL,
                             h0=NULL,
-                            h1=NULL)
+                            h1=NULL,
+                            pvalue=NULL)
     
     observeEvent(input$go1,{
       
@@ -134,7 +139,7 @@ mod_stat1_inf_tests_server <- function(id,global){
       local$taille_echant <- input$slide1
       local$echant <- local$dt %>% sample_n(local$taille_echant)
       local$indic <- input$select1
-      local$conf <- input$slide2
+      local$conf <- input$slide2/100
       local$h0 <- input$num1
       local$h1 <- input$select2
       
@@ -143,19 +148,50 @@ mod_stat1_inf_tests_server <- function(id,global){
     
     output$pvalue <- renderText({
       
-      "10"
+      req(local$dt)
+      t <- local$echant
+      n <- local$taille_echant #taille de l'échantillon
+      n_pauvres <- mean(t[,local$indic])*n #nombre de pauvres
+      h0 <- local$h0
+      typetest <- local$h1
+      alpha <- as.numeric(local$conf) #niveau de confiance
+      if (local$indic == "PAUVRE") {
+        h0 <- h0/100
+        t <- prop.test(x = n_pauvres,n = n,p = h0,alternative = typetest,conf.level = 1-alpha) 
+      } else {
+        t <- t.test(t[,local$indic],mu = h0,alternative = typetest,conf.level = 1-alpha)
+      }
+      
+      local$pvalue <- as.numeric(t$p.value)
+      local$pvalue
       
     })
     
     output$resultat <- renderText({
       
-      "10"
+      req(local$dt)
+      if(local$pvalue < as.numeric(local$conf)){
+        a <- "Je rejette l'hypothèse H0"
+        a
+      } else {
+        a <- "Je ne rejette pas l'hypothèse H0"
+        a
+      }
       
     })
     
     output$estime <- renderText({
       
-      "10"
+      req(local$dt)
+      t <- local$echant
+      a <- mean(t[,local$indic])
+      if (local$indic=="PAUVRE"){
+        b <- a*100
+      }
+      else {
+        b <- a
+      }
+      format_box(b)
       
     })
     
