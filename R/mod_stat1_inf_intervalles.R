@@ -129,7 +129,7 @@ mod_stat1_inf_intervalles_server <- function(id,global){
     ns <- session$ns
  
     
-    local <- reactiveValues(dt = NULL,echant = NULL,taille_echant = NULL,select=NULL,check=NULL)
+    local <- reactiveValues(dt = NULL,echant = NULL,taille_echant = NULL,select=NULL,conf=NULL)
 
     observeEvent(input$go1,{
 

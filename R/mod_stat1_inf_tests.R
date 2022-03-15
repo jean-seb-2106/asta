@@ -116,10 +116,31 @@ mod_stat1_inf_tests_ui <- function(id){
 #' stat1_inf_tests Server Functions
 #'
 #' @noRd 
-mod_stat1_inf_tests_server <- function(id){
+mod_stat1_inf_tests_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    local <- reactiveValues(dt = NULL,
+                            echant = NULL,
+                            taille_echant = NULL,
+                            indic=NULL,
+                            conf=NULL,
+                            h0=NULL,
+                            h1=NULL)
+    
+    observeEvent(input$go1,{
+      
+      local$dt <- global$dt %>% mutate(PAUVRE = ifelse(PAUVRE == "1",TRUE,FALSE))
+      local$taille_echant <- input$slide1
+      local$echant <- local$dt %>% sample_n(local$taille_echant)
+      local$indic <- input$select1
+      local$conf <- input$slide2
+      local$h0 <- input$num1
+      local$h1 <- input$select2
+      
+    })
+    
+    
     output$pvalue <- renderText({
       
       "10"
