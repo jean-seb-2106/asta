@@ -114,3 +114,21 @@ plot(decompose(x1,type = "multiplicative"))
 
 
 # Prévisions
+
+## Lissage exponentiel
+
+
+```{r}
+library(forecast)
+library(expsmooth)
+library(caschrono)
+fmsales
+
+ets0 <- ets(fmsales,model="ANN",alpha = 0.1)
+plot(fmsales)
+summary(ets0)
+aaa <- predict(ets0,4)
+aaa
+plot(aaa)
+HoltWinters(ets0,alpha = 0.1,seasonal = "additive")
+```
