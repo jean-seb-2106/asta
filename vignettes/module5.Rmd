@@ -17,19 +17,42 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(asta)
 library(caschrono)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
 ```
 
-# Les données
+# Analyse de la série
 
-## La série Airpassengers
+Dans l'onglet paramètres, il faut commencer par choisir une série parmi les suivantes :
+
+## 1 - La série Airpassengers
 
 ```{r}
-#La Série Airpassengers
-x1 <- AirPassengers
-x1
+#La Série Airpassengers au format ts
+airpass_ts <- AirPassengers
+airpass_ts
+(eval(airpass_ts))
+
+plot_ts <- function(serie_ts){
+  plot(eval(parse(text = "AirPassengers")))
+}
+
+plot_ts("airpass_ts")
+
+plot(eval(parse(text = "AirPassengers")))
+
+airpass_dt <- data.frame(
+  date=seq(my("01/1949"), by = "month", length.out = 144),
+  as.data.frame(airpass_ts)
+)
+
+airpass_dt
 ```
 
-## Populations
+
+
+## 2 - Populations
 
 ```{r}
 data("popfr")
@@ -42,7 +65,7 @@ x3 <- uspop
 head(x3,15)
 ```
 
-## Nombre de morts par accident de la route
+## 3 - Nombre de morts par accident de la route
 
 ```{r}
 data("m30")
@@ -70,10 +93,18 @@ log.x1
 
 ## Chronogrammes
 
+### Graphique de la série air
+
 ```{r}
-plot.ts(x1)
-plot.ts(log.x1)
+ggplot(airpass_dt, aes(x = date, y=x)) + geom_line()
+
 ```
+```{r}
+
+
+```
+
+
 
 ## Lag plot
 
@@ -113,7 +144,7 @@ plot(decompose(x1,type = "multiplicative"))
 ```
 
 
-# Prévisions
+# Prévisionsftgg
 
 ## Lissage exponentiel
 

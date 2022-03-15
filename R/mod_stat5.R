@@ -25,14 +25,6 @@ mod_stat5_ui <- function(id){
                                     
                                     
                                     
-                                    menuItem(
-                                      
-                                      "Donn\u00e9es",
-                                      icon = icon("th"),
-                                      selected = FALSE
-                                      
-                                      
-                                    ), 
                                     
                                     menuItem(
                                       
