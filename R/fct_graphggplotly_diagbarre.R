@@ -15,11 +15,17 @@
 #' graphggplotly_diagbarre(grandile,var = "PCS")
 graphggplotly_diagbarre <- function(data,var){
   # a <- paste0("LIB_",var)
-  b <- grandile %>% ggplot(aes(x = .data[[var]])) + 
+  b <- grandile %>% ggplot(aes(x = .data[[var]],fill=.data[[var]])) + 
     # geom_bar(aes(col = .data[[a]]),show.legend = FALSE) +
     geom_bar() +
     # scale_color_hue() +
-    ylab(label = "Effectifs")
+    xlab(label = "Modalités") +
+    ylab(label = "Effectifs") + 
+    theme_light() + 
+    labs(fill = NULL) +
+    theme(
+      axis.text.x = element_blank()
+      )
   b %>% ggplotly
 }
 
