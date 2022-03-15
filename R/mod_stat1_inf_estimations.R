@@ -33,7 +33,7 @@ mod_stat1_inf_estimations_ui <- function(id){
                           ),
                    
                    
-                   column(4,
+                   column(5,
                           
                           tags$p("Visualisation de l'\u00e9chantillon", 
                                  style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
@@ -42,7 +42,7 @@ mod_stat1_inf_estimations_ui <- function(id){
                           ),
                    
                    
-                   column(4,
+                   column(3,
                           
                           tags$p("Calcul de l'estimation", 
                                  style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
