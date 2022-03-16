@@ -83,6 +83,7 @@ golem::add_fct("tab_moyenne")
 golem::add_fct("tableau_croise")
 golem::add_fct("simul_moyenne")
 golem::add_fct("histoplotly_simul")
+golem::add_fct("table_ponderee")
 
 
 golem::add_utils( "helpers" )
