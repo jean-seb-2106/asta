@@ -113,6 +113,7 @@ usethis::use_test( "app" )
 # Documentation
 
 ## Vignette ----
+usethis::use_vignette("module5")
 usethis::use_vignette("module2")
 usethis::use_vignette("module1")
 usethis::use_vignette("module4")
