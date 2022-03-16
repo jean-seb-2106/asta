@@ -17,58 +17,47 @@ mod_stat2_redress_corrna_ui <- function(id){
                    
                    wellPanel(
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                     selectInput(ns("Varcontrole"), 
+                     selectInput(ns("NomVarRedress2"), 
                                  "Choisissez une variable \u00e0 \u00e9tudier",
-                                 choices = c("Superficie du jardin"="SUPERF_JARDIN", "Superficie du logement"="SUPERF_LOG")),
+                                 choices = c("Age"="AGE_TRANCHE",
+                                             "pcs"="PCS",
+                                             "activité"="ACT",
+                                             "revenu"="REV_DISPONIBLE_TRANCHE")),
                      
-                     actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats"))
+                     actionButton(inputId=ns("go"),"Mettre \u00e0 jour"))
             ),
             
             column(8,
                    
                    fluidRow(
-                     column(6,
-                            
+                     
                             
                             infoBox(
-                              title = "Nb ind.  \u00e9chantillonn\u00e9s",
-                              value = "10",
+                            title = "V de cramer",
+                              value = textOutput(ns("vcramer")),
                               subtitle = "Source : Cefil 2021",
                               icon = icon("chart-line"),
                               #fill = TRUE,
                               color="light-blue",
                               width = NULL
-                            ) 
                             
-                     ),
-                     column(6,
                             
+                     )),
+                     
+                        fluidRow(    
                             infoBox(
-                              title = "Nb ind.  r\u00e9pondants",
-                              value = "10",
+                              title = "Chi2",
+                              value = textOutput(ns("chi2")),
                               subtitle = "Source : Cefil 2021",
                               icon = icon("chart-line"),
                               #fill = TRUE,
                               color="light-blue",
                               width = NULL
                             )
-                     )),
-                   fluidRow(
-                     
-                     
-                     column(width=12,
-                            
-                            wellPanel(
-                              tags$p("Graphique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                              
-                              plotOutput(ns("nuageapur")),br(),
-                              tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
-                              
-                            )  )
+                     ))
                    )
             )
-          )
-  )
+        
   
 }
     
@@ -79,13 +68,35 @@ mod_stat2_redress_corrna_server <- function(id, global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    output$nuageapur <- renderPlot(
+    
+    global <- reactiveValues(dt_apur = grandile_redress)
+    
+    local <- reactiveValues(dt = NULL, var = NULL)
+    
+    
+    observeEvent(input$go, {
       
-      {
-        shinipsum::random_ggplot()
-        
-      }
-    )
+      local$dt <- global$dt_apur 
+      local$var <- input$NomVarRedress2
+    }) 
+    
+    output$vcramer <- renderText({
+      req(local$dt, local$var)
+var1 <- local$dt[,REPONDANT_C]
+var2 <- local$dt[, local$var]
+      t1 <- table(var1,var2)
+      format(as.numeric(cramer.v(t1)), digits = 2)
+    })
+    
+    output$chi2 <- renderText({
+      req(local$dt, local$var)
+      var1 <- local$dt[,REPONDANT_C]
+      var2 <- local$dt[, local$var]
+      t1 <- table(var1,var2)
+      format(as.numeric(chisq.test(t1)[1]),digits=4)
+    })
+    
+    
  
   })
 }

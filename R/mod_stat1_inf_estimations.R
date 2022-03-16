@@ -26,14 +26,14 @@ mod_stat1_inf_estimations_ui <- function(id){
                                         min = 1,
                                         max = 5418,
                                         value = 1000),
-                            actionButton(ns("go1"), "Cliquez pour tirer un \u00e9chantillon et estimer l'indicateur" )
+                            actionButton(ns("go1"), "Tirer un \u00e9chantillon et estimer l'indicateur" )
                           )
                           
                           
                           ),
                    
                    
-                   column(4,
+                   column(5,
                           
                           tags$p("Visualisation de l'\u00e9chantillon", 
                                  style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
@@ -42,18 +42,18 @@ mod_stat1_inf_estimations_ui <- function(id){
                           ),
                    
                    
-                   column(4,
+                   column(3,
                           
                           tags$p("Calcul de l'estimation", 
                                  style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                           
                                               infoBox(
-                                                title = "Vraie Valeur",
+                                                title = "Valeur recherch\u00e9ee",
                                                 value = textOutput(ns("vraie")),
                                                 # subtitle = "Source : Grandile",
                                                 icon = icon("chart-line"),
                                                 #fill = TRUE,
-                                                color="aqua",
+                                                color="green",
                                                 width=12
                                               ),
                                               infoBox(
