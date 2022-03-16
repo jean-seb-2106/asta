@@ -12,7 +12,9 @@
 #' @return un model glm()
 #' @export
 #'
-#' @examples model_logistiqueSS_tab(input_data = grandile, var_expliquee = "PAUVRE", var_explicatives = c("REV_DISPONIBLE","ACT"), constante = TRUE)
+#' @examples model_logistiqueSS_tab(input_data = grandile, 
+#' var_expliquee = "PAUVRE", 
+#' var_explicatives = c("REV_DISPONIBLE","ACT"), constante = TRUE)
 model_logistiqueSS_tab <- function(input_data, var_expliquee, var_explicatives, constante = TRUE){
   # browser()
   

@@ -12,6 +12,8 @@ model_lineaireS_tab(input_data, var_expliquee, var_explicative, constante)
 \item{var_expliquee}{variable quantitative}
 
 \item{var_explicative}{variable quantitative}
+
+\item{constante}{boolean}
 }
 \value{
 un tableau de resultat de la fontion lm()

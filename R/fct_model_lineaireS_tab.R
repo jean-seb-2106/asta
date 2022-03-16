@@ -6,6 +6,7 @@
 #' @param input_data un dataframe
 #' @param var_expliquee variable quantitative
 #' @param var_explicative variable quantitative
+#' @param constante boolean
 #' 
 #' @importFrom stats lm as.formula
 #' 

@@ -5,8 +5,8 @@
 #' @param input_data un dataframe
 #' @param var_expliquee une variable quantitative
 #' @param var_explicative une variable quantitative
+#' @param constante un boolean
 #' 
-#' @importFrom magrittr %>% 
 #' @import ggplot2
 #'
 #' @return un graphique ggplot

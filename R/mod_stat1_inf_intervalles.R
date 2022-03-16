@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom stats t.test prop.test  
 mod_stat1_inf_intervalles_ui <- function(id){
   ns <- NS(id)
   

@@ -12,6 +12,8 @@ model_lineaireS_plot(input_data, var_expliquee, var_explicative, constante)
 \item{var_expliquee}{une variable quantitative}
 
 \item{var_explicative}{une variable quantitative}
+
+\item{constante}{un boolean}
 }
 \value{
 un graphique ggplot
