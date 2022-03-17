@@ -63,6 +63,11 @@ golem::add_module(name = "stat4_logistique")
 
 #Stat5
 golem::add_module( name = "stat5" )
+golem::add_module(name = "stat5_analyse_visualisation")
+# golem::add_module(name = "stat5_analyse_saisonnalite")
+# golem::add_module(name = "stat5_analyse_autocorrelation")
+golem::add_module(name = "stat5_desaisonnalisation_regression")
+golem::add_module(name = "stat5_desaisonnalisation_mm")
 
 #Stat6
 golem::add_module( name = "stat6" )

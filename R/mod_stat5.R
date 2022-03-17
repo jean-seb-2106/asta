@@ -10,12 +10,16 @@
 mod_stat5_ui <- function(id){
   ns <- NS(id)
 
-  tabPanel(title = "Stat 5",
+  tabPanel(
+    
+    title = "Stat 5",
            
            
            dashboardPage(
              
              dashboardHeader(title = "S\u00e9ries temporelles"),
+             
+             
              dashboardSidebar(
                
                fluidRow(collapsed = FALSE,
@@ -29,6 +33,10 @@ mod_stat5_ui <- function(id){
                                     menuItem(
                                       
                                       "Analyse de la s\u00e9rie",
+                                      
+                                      menuSubItem("Visualisation", tabName = ns("subitem1")),
+                                      
+                                      
                                       icon = icon("th"),
                                       selected = FALSE
                                       
@@ -46,7 +54,7 @@ mod_stat5_ui <- function(id){
                                     
                                     menuItem(
                                       
-                                      "Pr\u00e9visions",
+                                      "Mod\u00e9lisations",
                                       icon = icon("th"),
                                       selected = FALSE
                                       
