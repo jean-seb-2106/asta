@@ -62,7 +62,23 @@ mod_stat5_ui <- function(id){
                                     )
                                     
                                     
-                                    )
+                                    ),
+                        br(),
+                        br(),
+                        br(),
+                        br(),
+                        br(),
+                        br(),
+                        br(),
+                        fluidRow(
+                          href = 'https://www.cefil.fr/',
+                          tags$img(
+                            src = 'logo_cefil_new.jpg',
+                            title = "CEFIL",
+                            height = '105'
+                          ) ,
+                          style = "text-align: center;"
+                        )
                  
                  
                  
