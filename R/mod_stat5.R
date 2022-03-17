@@ -34,7 +34,7 @@ mod_stat5_ui <- function(id){
                                       
                                       "Analyse de la s\u00e9rie",
                                       
-                                      menuSubItem("Visualisation", tabName = ns("subitem1")),
+                                      menuSubItem("Visualisation", tabName = "subitem_1"),
                                       
                                       
                                       icon = icon("th"),
@@ -54,7 +54,7 @@ mod_stat5_ui <- function(id){
                                     
                                     menuItem(
                                       
-                                      "Mod\u00e9lisations",
+                                      "Mod\u00e9lisation",
                                       icon = icon("th"),
                                       selected = FALSE
                                       
@@ -88,7 +88,24 @@ mod_stat5_ui <- function(id){
                
                
              ),
-             dashboardBody()
+             dashboardBody(
+               
+               tabItems(
+                 
+                 #tabItem("subitem1")
+                 
+                 mod_stat5_analyse_visualisation_ui(ns("stat5_analyse_visualisation"))
+                 
+                 
+                 
+                 
+                 
+                 
+               )
+               
+               
+               
+             )
              
              
              

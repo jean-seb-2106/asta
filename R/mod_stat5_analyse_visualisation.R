@@ -9,9 +9,57 @@
 #' @importFrom shiny NS tagList 
 mod_stat5_analyse_visualisation_ui <- function(id){
   ns <- NS(id)
-  tagList(
+  
  
-  )
+    
+    tabItem(tabName = "subitem_1",
+            h2("Visualisation de la s\u00e9rie"),
+            br(),
+            br(),
+            
+            fluidRow(
+              
+              column(4,
+                     
+                     wellPanel(
+                       
+                       
+                tags$p("Param\u00e8tres", 
+                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                
+                
+                selectInput(
+                  inputId = ns("select1"),
+                  label = "Choisissez une s\u00e9rie :",
+                  choices = c("Trafic a\u00e9rien"="airpass")
+                  ),
+                
+                actionButton(
+                  ns("go1"),
+                  label = "Cliquez pour afficher"
+                  )
+                
+              )
+                     
+                     
+                     ),
+              
+              column(8,
+                     
+                     wellPanel(
+                       tags$p("Graphique", 
+                              style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                       plotOutput(ns("plot1"))
+                     )
+                     
+                     )
+              
+              
+              
+            )
+    )
+    
+ 
 }
     
 #' stat5_analyse_visualisation Server Functions
