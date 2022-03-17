@@ -25,6 +25,8 @@ library(ggplot2)
 
 Dans cette onglet, il faut d'abord choisir une série parmi celles proposées dans le menu déroulant : 
 - Airpassengers (package datasets)
+- Taux d'occupation dans l'hotellerie
+- Nombre de visiteurs d'un musée
 
 
 ```{r}
