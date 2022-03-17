@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom dygraphs renderDygraph dygraphOutput 
 mod_stat5_analyse_visualisation_ui <- function(id){
   ns <- NS(id)
   
@@ -69,9 +70,10 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    output$plot1 <- renderPlot({
+    output$plot1 <- render({
       
-   shinipsum::random_ggplot()
+   # plot(airpass)
+      shinipsum::random_dygraph()
       
     })
     
