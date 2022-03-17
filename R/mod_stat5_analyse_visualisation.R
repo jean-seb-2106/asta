@@ -65,10 +65,18 @@ mod_stat5_analyse_visualisation_ui <- function(id){
 #' stat5_analyse_visualisation Server Functions
 #'
 #' @noRd 
-mod_stat5_analyse_visualisation_server <- function(id){
+mod_stat5_analyse_visualisation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    output$plot1 <- renderPlot({
+      
+   shinipsum::random_ggplot()
+      
+    })
+    
+    
+    
   })
 }
     

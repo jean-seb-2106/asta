@@ -121,10 +121,15 @@ mod_stat5_ui <- function(id){
 #' stat5 Server Functions
 #'
 #' @noRd 
-mod_stat5_server <- function(id){
+mod_stat5_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    global <- reactiveValues(ts1 = airpass)
+    
+    mod_stat5_analyse_visualisation_server("stat5_analyse_visualisation",global=global)
+    
+    
   })
 }
     
