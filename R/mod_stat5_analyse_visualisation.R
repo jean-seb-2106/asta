@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList
-#' @importFrom dygraphs renderDygraph dygraphOutput 
+#' @importFrom dygraphs renderDygraph dygraphOutput dygraph
 mod_stat5_analyse_visualisation_ui <- function(id){
   ns <- NS(id)
   
@@ -50,7 +50,7 @@ mod_stat5_analyse_visualisation_ui <- function(id){
                      wellPanel(
                        tags$p("Graphique", 
                               style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                       plotOutput(ns("plot1"))
+                       dygraphOutput(ns("plot1"))
                      )
                      
                      )
@@ -70,11 +70,12 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    output$plot1 <- render({
+    output$plot1 <- renderDygraph({
       
    # plot(airpass)
-      shinipsum::random_dygraph()
-      
+      # shinipsum::random_dygraph()
+     dygraph(airpass)
+       
     })
     
     
