@@ -76,6 +76,7 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
     
     observeEvent(input$go1,{
       local$ts <- input$select1
+      local$log <- log(eval(parse(text = local$ts)))
 
     })
     
