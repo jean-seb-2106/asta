@@ -70,11 +70,22 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    local <- reactiveValues(ts=NULL)
+    
+    observeEvent(input$go1,{
+      local$ts <- input$select1
+    })
+    
     output$plot1 <- renderDygraph({
-      
+     
+      req(input$go1) 
    # plot(airpass)
       # shinipsum::random_dygraph()
-     dygraph(airpass)
+     # dygraph(local$ts)
+     dygraph_ts <- function(serie_ts){
+       dygraph(eval(parse(text = serie_ts)))
+     }
+     dygraph_ts(local$ts)
        
     })
     

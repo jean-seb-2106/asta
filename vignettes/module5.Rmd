@@ -19,6 +19,7 @@ library(asta)
 library(datasets)
 library(lubridate)
 library(ggplot2)
+library(dygraphs)
 ```
 
 # Analyse de la série
@@ -56,8 +57,14 @@ Création d'une fonction qui récupère le nom de la série pour l'afficher
 plot_ts <- function(serie_ts){
   plot.ts(eval(parse(text = serie_ts)))
 }
+
+dygraph_ts <- function(serie_ts){
+  dygraph(eval(parse(text = serie_ts)))
+}
+
 #Exemple
 plot_ts("airpass_ts")
+dygraph_ts("airpass_ts")
 
 plot_dt <- function(dt){
   ggplot(dt)+
