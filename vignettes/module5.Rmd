@@ -51,7 +51,7 @@ airpass_dt
 
 ```
 
-Création d'une fonction qui récupère le nom de la série pour l'afficher
+Création d'une fonction qui récupère le nom de la série au format caractère pour l'afficher au format dygraph
 
 ```{r}
 plot_ts <- function(serie_ts){

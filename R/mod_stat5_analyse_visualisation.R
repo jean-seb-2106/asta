@@ -78,7 +78,8 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
     
     output$plot1 <- renderDygraph({
      
-      req(input$go1) 
+      validate(need(expr = !is.null(local$ts),
+                    message = "Choisissez une s\u00e9rie temporelle dans le menu d\u00e9roulant et cliquez pour afficher le tableau")) 
    # plot(airpass)
       # shinipsum::random_dygraph()
      # dygraph(local$ts)
