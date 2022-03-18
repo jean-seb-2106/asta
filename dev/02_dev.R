@@ -97,6 +97,7 @@ golem::add_fct("model_lineaireS_plot")
 golem::add_fct("model_lineaireM_tab")
 golem::add_fct("model_logistique_tab")
 golem::add_fct("model_logistiqueSS_tab")
+golem::add_fct("dygraph_ts")
 
 golem::add_utils( "helpers" )
 

@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList
-#' @importFrom dygraphs renderDygraph dygraphOutput dygraph
+#' @importFrom dygraphs renderDygraph dygraphOutput dygraph dyRangeSelector
 mod_stat5_analyse_visualisation_ui <- function(id){
   ns <- NS(id)
   
@@ -34,6 +34,8 @@ mod_stat5_analyse_visualisation_ui <- function(id){
                   label = "Choisissez une s\u00e9rie :",
                   choices = c("Trafic a\u00e9rien"="airpass")
                   ),
+                
+                checkboxInput(inputId = ns("check1"),label = "Appliquez le logarithme",value = FALSE),
                 
                 actionButton(
                   ns("go1"),
@@ -74,18 +76,15 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
     
     observeEvent(input$go1,{
       local$ts <- input$select1
+
     })
     
     output$plot1 <- renderDygraph({
      
       validate(need(expr = !is.null(local$ts),
                     message = "Choisissez une s\u00e9rie temporelle dans le menu d\u00e9roulant et cliquez pour afficher le tableau")) 
-   # plot(airpass)
-      # shinipsum::random_dygraph()
-     # dygraph(local$ts)
-     dygraph_ts <- function(serie_ts){
-       dygraph(eval(parse(text = serie_ts)))
-     }
+     
+      
      dygraph_ts(local$ts)
        
     })
