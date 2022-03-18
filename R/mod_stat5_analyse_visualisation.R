@@ -72,11 +72,12 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    local <- reactiveValues(ts=NULL)
+    local <- reactiveValues(ts=NULL,log_ts=NULL)
     
     observeEvent(input$go1,{
-      local$ts <- input$select1
-      local$log <- log(eval(parse(text = local$ts)))
+      local$ts <- eval(parse(text=input$select1))
+      local$log_ts <- log(local$ts)
+      local$check <- input$check1
 
     })
     
@@ -85,9 +86,15 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
       validate(need(expr = !is.null(local$ts),
                     message = "Choisissez une s\u00e9rie temporelle dans le menu d\u00e9roulant et cliquez pour afficher le tableau")) 
      
-      
-     dygraph_ts(local$ts)
+     if(local$check){  
        
+     dygraph_ts(local$log_ts)
+       
+     }else{
+       
+       dygraph_ts(local$ts)
+       
+     }
     })
     
     

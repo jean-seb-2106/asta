@@ -56,22 +56,6 @@ airpass_dt
 
 Création d'une fonction qui récupère le nom de la série au format caractère pour l'afficher au format dygraph
 
-```{r}
-#Transformation d'une série en logarithme
-log_ts <- function(serie_ts,log=FALSE){
-  if(log==TRUE){
-    x <- log(eval(parse(text = serie_ts)))
-  }else{
-    x <- eval(parse(text = serie_ts))
-    }
-  x
-}
-
-log_airpass <- log_ts(serie_ts = "airpass",log=TRUE)
-airpass <- log_ts(serie_ts = "airpass",log = FALSE)
-
-```
-
 
 ```{r}
 
@@ -84,10 +68,10 @@ plot_ts("airpass_ts")
 
 #Représentation graphique avec DYGRAPHS
 # dygraph_ts <- function(serie_ts){
-#   dygraph(eval(parse(text = serie_ts)))
+#   dygraph(serie_ts)
 # }
 
-dygraph_ts("airpass")
+dygraph_ts(airpass)
 
 #Représentation graphique avec GGPLOT
 plot_dt <- function(dt){

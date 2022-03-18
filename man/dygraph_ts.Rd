@@ -7,7 +7,7 @@
 dygraph_ts(serie_ts)
 }
 \arguments{
-\item{serie_ts}{une chaîne de caractère}
+\item{serie_ts}{une série temporelle}
 }
 \value{
 un graphique dygraph
@@ -16,5 +16,5 @@ un graphique dygraph
 Chronogramme d'une série temporelle avec dygraph
 }
 \examples{
-dygraph_ts("airpass")
+dygraph_ts(airpass)
 }
