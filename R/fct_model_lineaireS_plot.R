@@ -12,7 +12,7 @@
 #' @return un graphique ggplot
 #' @export
 #'
-#' @examples model_lineaireS_plot(grandile, "REV_DISPONIBLE", "PATRIMOINE")
+#' @examples model_lineaireS_plot(grandile, "REV_DISPONIBLE", "PATRIMOINE", TRUE)
 #' 
 model_lineaireS_plot <- function(input_data, var_expliquee, var_explicative, constante){
   
