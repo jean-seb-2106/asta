@@ -32,15 +32,20 @@ mod_stat5_analyse_visualisation_ui <- function(id){
                 selectInput(
                   inputId = ns("select1"),
                   label = "Choisissez une s\u00e9rie :",
-                  choices = c("Trafic a\u00e9rien"="airpass")
+                  choices = c("Trafic a\u00e9rien"="airpass",
+                              "Fr\u00e9quentation hoteliere"="hotel")
                   ),
                 
-                checkboxInput(inputId = ns("check1"),label = "Appliquez le logarithme",value = FALSE),
+                checkboxInput(inputId = ns("check1"),
+                              label = "Appliquez le logarithme",
+                              value = FALSE),
                 
                 actionButton(
                   ns("go1"),
                   label = "Cliquez pour afficher"
                   )
+                
+            
                 
               )
                      
