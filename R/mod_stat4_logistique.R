@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom GGally  ggcoef
 mod_stat4_logistique_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -104,10 +105,10 @@ mod_stat4_logistique_server <- function(id,global){
       
       validate(need(expr = !is.null(local$dt),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
-     
-   
-      GGally::ggcoef(x = local$modelSS, exponentiate = TRUE, exclude_intercept = TRUE,
-        errorbar_height = .2, color = "blue")
+   #   
+   # browser()
+       GGally::ggcoef(x = local$modelSS, exponentiate = TRUE, exclude_intercept = TRUE,
+         errorbar_height = .2, color = "blue")
     })
     
   })

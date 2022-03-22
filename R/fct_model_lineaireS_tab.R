@@ -13,7 +13,7 @@
 #' @return un tableau de resultat de la fontion lm()
 #' @export
 #' 
-#' @examples model_lineaireS_tab(grandile, "REV_DISPONIBLE", "PATRIMOINE")
+#' @examples model_lineaireS_tab(grandile, "REV_DISPONIBLE", "PATRIMOINE", TRUE)
 model_lineaireS_tab <- function(input_data, var_expliquee, var_explicative, constante){
   
   if (constante == TRUE) {

@@ -23,5 +23,5 @@ Fonction qui fait tourner
 une regression lineaire simple et sort un tableau de resultat
 }
 \examples{
-model_lineaireS_tab(grandile, "REV_DISPONIBLE", "PATRIMOINE")
+model_lineaireS_tab(grandile, "REV_DISPONIBLE", "PATRIMOINE", TRUE)
 }

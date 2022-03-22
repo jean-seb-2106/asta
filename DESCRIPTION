@@ -29,7 +29,8 @@ Imports:
     shinydashboard,
     shinythemes,
     stats,
-    tidyr
+    tidyr,
+    GGally
 Suggests: 
     datasets,
     kableExtra,

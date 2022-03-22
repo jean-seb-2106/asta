@@ -27,5 +27,7 @@ un tableau de resultat de la fontion glm()
 Fonction qui fait tourner une regression logistique et sort un tableau de resultat
 }
 \examples{
-model_logistique_tab(input_data = grandile, var_expliquee = "PAUVRE", var_explicatives = c("REV_DISPONIBLE","ACT"), constante = TRUE)
+model_logistiqueSS_tab(input_data = titanic, 
+var_expliquee = "Survived", 
+var_explicatives = c("Sex","Age"), constante = TRUE)
 }
