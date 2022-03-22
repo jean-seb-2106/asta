@@ -16,6 +16,36 @@ mod_stat6_ui <- function(id){
              
              dashboardHeader(title = "Secret statistique et Big Data"),
              dashboardSidebar(
+               fluidRow(collapsed = FALSE,
+                        
+                        
+                        sidebarMenu(id = "tabs_secretstat",
+                                    
+                                    
+                                    
+                                    menuItem(
+                                      
+                                      "Secret Statistique",
+                                      icon = icon("th"),
+                                      selected = FALSE), 
+                                    
+                                    menuItem(
+                                             
+                                             "Big Data",
+                                             icon = icon("th"),
+                                             selected = FALSE
+                                             
+                                             
+                                    )
+                                    
+                                    
+                        )
+                        
+                        
+                        
+                        
+                        
+               ),
                br(),
                br(),
                br(),
