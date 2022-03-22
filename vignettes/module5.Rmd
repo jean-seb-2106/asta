@@ -71,7 +71,7 @@ plot_ts("airpass_ts")
 #   dygraph(serie_ts)
 # }
 
-dygraph_ts(airpass)
+dygraph_ts(airpass_ts)
 
 #Représentation graphique avec GGPLOT
 plot_dt <- function(dt){
@@ -80,7 +80,7 @@ plot_dt <- function(dt){
     geom_line()
 }
 #Exemple
-plot_dt(airpass)
+plot_dt(airpass_dt)
 
 ```
 
@@ -91,6 +91,7 @@ graph_month <-function(serie_ts){
   monthplot(eval(parse(text = serie_ts)),cex.main = 1,ylab = "",col='dodgerblue',col.base = 'indianred',lwd.base = 3)
 }
 graph_month("airpass")
+graph_month("hotel")
 ```
 # Desaisonnalisation
 
@@ -128,11 +129,12 @@ cvs_reg <- function(x){
   x - g
 }
 
-log_airpass <- log(airpass)
 airpass_cvs <- cvs_reg("airpass")
-log_airpass_cvs <- exp(cvs_reg("log_airpass"))
+log_airpass <- log(airpass)
+
+airpass_cvs2 <- exp(cvs_reg("log_airpass"))
 
 dygraph(airpass_cvs)
-dygraph(log_airpass_cvs)
+dygraph(airpass_cvs2)
 ```
 
