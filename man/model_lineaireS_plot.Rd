@@ -22,6 +22,6 @@ un graphique ggplot
 FOnction qui trace le nuage de point et la droite de regression lineaire
 }
 \examples{
-model_lineaireS_plot(grandile, "REV_DISPONIBLE", "PATRIMOINE")
+model_lineaireS_plot(grandile, "REV_DISPONIBLE", "PATRIMOINE", TRUE)
 
 }
