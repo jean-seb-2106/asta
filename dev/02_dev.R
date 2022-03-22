@@ -106,7 +106,7 @@ golem::add_utils( "helpers" )
 golem::add_js_file( "script" )
 golem::add_js_handler( "handlers" )
 golem::add_css_file( "custom" )
-golem::use_favicon(path = "inst/app/www/hex_ASTA.ico")
+golem::use_favicon(path = "favicon.ico")
 
 ## Add internal datasets ----
 ## If you have data in your package

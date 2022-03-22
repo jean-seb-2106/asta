@@ -81,9 +81,9 @@ tabPanel(
           tags$img(
             src = 'www/logo_cefil.jpg',
             title = "CEFIL",
-            height = '105'
+            height = '95'
           ) ,
-          style = "text-align: center;"
+          style = "text-align: center; float:bottom;"
         )
       )
     ),

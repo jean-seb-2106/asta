@@ -15,7 +15,24 @@ mod_stat6_ui <- function(id){
            dashboardPage(
              
              dashboardHeader(title = "Secret statistique et Big Data"),
-             dashboardSidebar(),
+             dashboardSidebar(
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               fluidRow(
+                 href = 'https://www.cefil.fr/',
+                 tags$img(
+                   src = 'www/logo_cefil.jpg',
+                   title = "CEFIL",
+                   height = '95'
+                 ) ,
+                 style = "text-align: center; float:bottom;"
+               )
+             ),
              dashboardBody()
              
              

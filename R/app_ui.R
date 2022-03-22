@@ -18,10 +18,10 @@ app_ui <- function(request) {
    navbarPage(
       
       shinyDashboardThemes(theme = "grey_light"),
-      tags$script(HTML("var header = $('.navbar > .container-fluid');
-header.append('<div style=\"float:right\"><ahref=\"URL\"><img src=\"logo_cefil.jpg\" alt=\"alt\" style=\"float:right;width:33px;height:41px;padding-top:10px;\"> </a>`</div>');
-    console.log(header)")
-      ),
+#       tags$script(HTML("var header = $('.navbar > .container-fluid');
+# header.append('<div style=\"float:right\"><ahref=\"URL\"><img src=\"www/hex_ASTA.png\" alt=\"alt\" style=\"float:right;width:40px;height:49px;padding-top:5px;\"> </a>`</div>');
+#     console.log(header)")
+#       ),
       title = "ASTA", 
       
       #TabPanel Sommaire

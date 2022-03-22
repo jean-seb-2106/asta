@@ -64,8 +64,25 @@ mod_stat4_ui <- function(id){
                         
                         
                         
+               ),
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               br(),
+               fluidRow(
+                 href = 'https://www.cefil.fr/',
+                 tags$img(
+                   src = 'www/logo_cefil.jpg',
+                   title = "CEFIL",
+                   height = '95'
+                 ) ,
+                 style = "text-align: center; float:bottom;"
                )
-               
                
              ),
              dashboardBody(

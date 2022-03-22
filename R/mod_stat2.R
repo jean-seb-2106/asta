@@ -87,13 +87,21 @@ tabPanel(
           
           
         )
-      ),
+      ),br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
       fluidRow(
-        br(),br(),
-      HTML('<center> <img src="logo_cefil.jpg" width ="80" > </center>')
-      
-      
-      
+        href = 'https://www.cefil.fr/',
+        tags$img(
+          src = 'www/logo_cefil.jpg',
+          title = "CEFIL",
+          height = '95'
+        ) ,
+        style = "text-align: center; float:bottom;"
       )
       
     ),
