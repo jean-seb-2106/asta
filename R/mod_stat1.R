@@ -79,7 +79,7 @@ tabPanel(
         fluidRow(
           href = 'https://www.cefil.fr/',
           tags$img(
-            src = 'logo_cefil_new.jpg',
+            src = 'www/logo_cefil.jpg',
             title = "CEFIL",
             height = '105'
           ) ,

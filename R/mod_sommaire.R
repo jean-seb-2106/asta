@@ -26,7 +26,7 @@ mod_sommaire_ui <- function(id){
     h2("Stat 5 : S\u00e9ries temporelles (en construction)"),
     h2("Stat 6 : Secret statistique et Big Data (en construction)"),
     tags$br(),tags$br(),tags$br(),
-    HTML('<center> <img src="logo_cefil.jpg" width ="80" > </center>')
+    HTML('<center> <img src="www/logo_cefil.jpg" width ="80" > </center>')
    
       
     
