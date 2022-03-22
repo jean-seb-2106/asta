@@ -83,10 +83,10 @@ mod_stat4_logistique_server <- function(id,global){
       local$constante <- input$constante
       local$model <- model_logistique_tab(input_data=global$dt,
                                          var_expliquee = local$var_expliquee ,
-                                         var_explicative = local$var_explicative, constante = local$constante)
+                                         var_explicatives = local$var_explicative, constante = local$constante)
       local$modelSS <- model_logistiqueSS_tab(input_data=global$dt,
                                             var_expliquee = local$var_expliquee ,
-                                            var_explicative = local$var_explicative, constante = local$constante)
+                                            var_explicatives = local$var_explicative, constante = local$constante)
       
       
       })
