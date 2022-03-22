@@ -10,12 +10,16 @@
 mod_stat5_ui <- function(id){
   ns <- NS(id)
 
-  tabPanel(title = "Stat 5",
+  tabPanel(
+    
+    title = "Stat 5",
            
            
            dashboardPage(
              
              dashboardHeader(title = "S\u00e9ries temporelles"),
+             
+             
              dashboardSidebar(
                
                fluidRow(collapsed = FALSE,
@@ -29,6 +33,10 @@ mod_stat5_ui <- function(id){
                                     menuItem(
                                       
                                       "Analyse de la s\u00e9rie",
+                                      
+                                      menuSubItem("Visualisation", tabName = "subitem_1"),
+                                      
+                                      
                                       icon = icon("th"),
                                       selected = FALSE
                                       
@@ -46,7 +54,7 @@ mod_stat5_ui <- function(id){
                                     
                                     menuItem(
                                       
-                                      "Pr\u00e9visions",
+                                      "Mod\u00e9lisation",
                                       icon = icon("th"),
                                       selected = FALSE
                                       
@@ -54,7 +62,23 @@ mod_stat5_ui <- function(id){
                                     )
                                     
                                     
-                                    )
+                                    ),
+                        br(),
+                        br(),
+                        br(),
+                        br(),
+                        br(),
+                        br(),
+                        br(),
+                        fluidRow(
+                          href = 'https://www.cefil.fr/',
+                          tags$img(
+                            src = 'logo_cefil_new.jpg',
+                            title = "CEFIL",
+                            height = '105'
+                          ) ,
+                          style = "text-align: center;"
+                        )
                  
                  
                  
@@ -64,7 +88,24 @@ mod_stat5_ui <- function(id){
                
                
              ),
-             dashboardBody()
+             dashboardBody(
+               
+               tabItems(
+                 
+                 #tabItem("subitem1")
+                 
+                 mod_stat5_analyse_visualisation_ui(ns("stat5_analyse_visualisation"))
+                 
+                 
+                 
+                 
+                 
+                 
+               )
+               
+               
+               
+             )
              
              
              
@@ -80,10 +121,15 @@ mod_stat5_ui <- function(id){
 #' stat5 Server Functions
 #'
 #' @noRd 
-mod_stat5_server <- function(id){
+mod_stat5_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    global <- reactiveValues(ts1 = airpass)
+    
+    mod_stat5_analyse_visualisation_server("stat5_analyse_visualisation",global=global)
+    
+    
   })
 }
     

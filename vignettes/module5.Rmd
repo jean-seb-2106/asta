@@ -19,12 +19,17 @@ library(asta)
 library(datasets)
 library(lubridate)
 library(ggplot2)
+library(dygraphs)
 ```
 
 # Analyse de la série
 
+## Visualisation
+
 Dans cette onglet, il faut d'abord choisir une série parmi celles proposées dans le menu déroulant : 
 - Airpassengers (package datasets)
+- Taux d'occupation dans l'hotellerie
+- Nombre de visiteurs d'un musée
 
 
 ```{r}
@@ -33,6 +38,7 @@ airpass_ts
 
 #Fonction qui transforme une ts en dataframe
 ts_to_dt <- function(serie_ts,date_debut,periode,taille){
+  
   data.frame(
   date=seq(date_debut, by = periode, length.out = taille),
   as.data.frame(serie_ts)
@@ -48,15 +54,26 @@ airpass_dt
 
 ```
 
-Création d'une fonction qui récupère le nom de la série pour l'afficher
+Création d'une fonction qui récupère le nom de la série au format caractère pour l'afficher au format dygraph
+
 
 ```{r}
+
+#Représentation graphique avec PLOT
 plot_ts <- function(serie_ts){
   plot.ts(eval(parse(text = serie_ts)))
 }
-#Exemple
 plot_ts("airpass_ts")
 
+
+#Représentation graphique avec DYGRAPHS
+# dygraph_ts <- function(serie_ts){
+#   dygraph(serie_ts)
+# }
+
+dygraph_ts(airpass_ts)
+
+#Représentation graphique avec GGPLOT
 plot_dt <- function(dt){
   ggplot(dt)+
     aes(x = date,y=x) +
@@ -67,5 +84,57 @@ plot_dt(airpass_dt)
 
 ```
 
+## Etude de la saisonnalité
 
+```{r}
+graph_month <-function(serie_ts){
+  monthplot(eval(parse(text = serie_ts)),cex.main = 1,ylab = "",col='dodgerblue',col.base = 'indianred',lwd.base = 3)
+}
+graph_month("airpass")
+graph_month("hotel")
+```
+# Desaisonnalisation
+
+## Avec la regression linéaire
+
+Dans le menu paramètres, il faut choisir une série. Cocher la case pour prendre ou pas le logarithme (en fonction de l'allure de la courbe). 
+
+```{r}
+cvs_reg <- function(x){
+  x <- eval(parse(text = x))
+  n <- length(x) #Nombre d'observations de la série temporelle
+  t <- 1:n
+  f <- frequency(x) #saisonnalité
+  ns <- n/f #Nombre de saisons (Valeur entière)
+  for (i in 1:f) {
+    su <- rep(0,times=f)
+    su[i] <- 1
+    s <- rep(su,times=ns)
+    assign(paste("s",i,sep=""),s)
+    rm(s,su)
+  } #création des variables explicatives s1 jusqu'à sf
+  a <- paste0("x~t-1+",paste0("s",1:f,collapse = "+"))
+  reg <- lm(as.formula(a)) #modèle de regression
+  #récupération des coefficients issus de la regression
+  a <- mean(reg$coefficients[2:(f+1)])
+  b <- reg$coefficients[1]
+  c <- reg$coefficients[2:(f+1)]-a
+  #calcul de la somme des coeff estimés
+  d <- paste0("c[",1:f,"]")
+  e <- paste0("s",1:f)
+  f <- paste0(d,"*",e,collapse = "+")
+  #création d'un vecteur avec les coeffs
+  #de desaisonnalisation
+  g <- eval(parse(text = f))
+  x - g
+}
+
+airpass_cvs <- cvs_reg("airpass")
+log_airpass <- log(airpass)
+
+airpass_cvs2 <- exp(cvs_reg("log_airpass"))
+
+dygraph(airpass_cvs)
+dygraph(airpass_cvs2)
+```
 

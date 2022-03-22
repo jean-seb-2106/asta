@@ -63,6 +63,11 @@ golem::add_module(name = "stat4_logistique")
 
 #Stat5
 golem::add_module( name = "stat5" )
+golem::add_module(name = "stat5_analyse_visualisation")
+# golem::add_module(name = "stat5_analyse_saisonnalite")
+# golem::add_module(name = "stat5_analyse_autocorrelation")
+golem::add_module(name = "stat5_desaisonnalisation_regression")
+golem::add_module(name = "stat5_desaisonnalisation_mm")
 
 #Stat6
 golem::add_module( name = "stat6" )
@@ -92,6 +97,7 @@ golem::add_fct("model_lineaireS_plot")
 golem::add_fct("model_lineaireM_tab")
 golem::add_fct("model_logistique_tab")
 golem::add_fct("model_logistiqueSS_tab")
+golem::add_fct("dygraph_ts")
 
 golem::add_utils( "helpers" )
 
@@ -104,7 +110,9 @@ golem::use_favicon(path = "inst/app/www/hex_ASTA.ico")
 
 ## Add internal datasets ----
 ## If you have data in your package
-usethis::use_data_raw( name = "grandile", open = FALSE ) 
+usethis::use_data_raw( name = "grandile", open = FALSE )
+usethis::use_data_raw( name = "airpass", open = FALSE )
+usethis::use_data_raw( name = "hotel", open = FALSE ) 
 
 ## Tests ----
 ## Add one line by test you want to create
