@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom stats decompose 
 mod_stat5_analyse_saisonnalite_ui <- function(id){
   ns <- NS(id)
   
@@ -55,7 +56,7 @@ mod_stat5_analyse_saisonnalite_ui <- function(id){
              wellPanel(
                tags$p("Graphique", 
                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-               dygraphOutput(ns("plot1"))
+               plotOutput(ns("plot1"))
              )
              
       )
@@ -79,6 +80,37 @@ mod_stat5_analyse_saisonnalite_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    
+    
+    local <- reactiveValues(ts=NULL,log_ts=NULL,check=NULL)
+    
+    observeEvent(input$go1,{
+      local$ts <- eval(parse(text=input$select1))
+      local$log_ts <- log(local$ts)
+      local$check <- input$check1
+      
+    })
+    
+    
+    output$plot1 <- renderPlot({
+      
+      validate(need(expr = !is.null(local$ts),
+                    message = "Choisissez une s\u00e9rie temporelle dans le menu d\u00e9roulant et cliquez pour afficher le tableau")) 
+      
+      graph_month <-function(serie_ts){
+        monthplot(serie_ts,cex.main = 1,ylab = "",col='dodgerblue',col.base = 'indianred',lwd.base = 3)
+      }
+      
+      if(local$check){  
+        
+        graph_month(local$log_ts)
+        
+      }else{
+        
+        graph_month(local$ts)
+        
+      }
+    })
     
     
     
