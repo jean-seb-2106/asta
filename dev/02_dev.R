@@ -117,7 +117,8 @@ golem::use_favicon(path = "favicon.ico")
 ## If you have data in your package
 usethis::use_data_raw( name = "grandile", open = FALSE )
 usethis::use_data_raw( name = "airpass", open = FALSE )
-usethis::use_data_raw( name = "hotel", open = FALSE ) 
+usethis::use_data_raw( name = "hotel", open = FALSE )
+usethis::use_data_raw(name="visiteurs",open = FALSE)
 
 ## Tests ----
 ## Add one line by test you want to create
