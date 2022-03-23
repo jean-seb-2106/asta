@@ -74,6 +74,7 @@ golem::add_module( name = "stat6" )
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
+#Module2
 golem::add_fct( "importation_m2" ) 
 golem::add_fct( "tirage_sas_m2" ) 
 golem::add_fct( "tirage_strat_m2" )
@@ -81,6 +82,7 @@ golem::add_fct( "tirage_degres_m2" )
 golem::add_fct( "boxplot_tirage_m2" )
 golem::add_fct( "data_apur_m2" )
 golem::add_fct( "plot_apur_m2" )
+#Module1
 golem::add_fct("tri_plat")
 golem::add_fct("graphggplotly_diagbarre")
 golem::add_fct("rambarplot_quali")
@@ -92,12 +94,15 @@ golem::add_fct("tab_moyenne")
 golem::add_fct("tableau_croise")
 golem::add_fct("simul_moyenne")
 golem::add_fct("histoplotly_simul")
+#☺Module4
 golem::add_fct("model_lineaireS_tab")
 golem::add_fct("model_lineaireS_plot")
 golem::add_fct("model_lineaireM_tab")
 golem::add_fct("model_logistique_tab")
 golem::add_fct("model_logistiqueSS_tab")
+#Module5
 golem::add_fct("dygraph_ts")
+golem::add_fct("graph_month")
 
 golem::add_utils( "helpers" )
 

@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList
-#' @importFrom stats decompose 
+#' @importFrom stats decompose monthplot
 mod_stat5_analyse_saisonnalite_ui <- function(id){
   ns <- NS(id)
   
@@ -97,9 +97,7 @@ mod_stat5_analyse_saisonnalite_server <- function(id,global){
       validate(need(expr = !is.null(local$ts),
                     message = "Choisissez une s\u00e9rie temporelle dans le menu d\u00e9roulant et cliquez pour afficher le tableau")) 
       
-      graph_month <-function(serie_ts){
-        monthplot(serie_ts,cex.main = 1,ylab = "",col='dodgerblue',col.base = 'indianred',lwd.base = 3)
-      }
+      
       
       if(local$check){  
         

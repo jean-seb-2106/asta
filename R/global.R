@@ -38,4 +38,6 @@ globalVariables( c("ECH",
                    "pond1",
                    "pond2",
                    "somme_ech",
-                   "somme_rep"))
+                   "somme_rep",
+                   "airpass",
+                   "monthplot"))

@@ -87,11 +87,11 @@ plot_dt(airpass_dt)
 ## Etude de la saisonnalité
 
 ```{r}
-graph_month <-function(serie_ts){
-  monthplot(eval(parse(text = serie_ts)),cex.main = 1,ylab = "",col='dodgerblue',col.base = 'indianred',lwd.base = 3)
-}
-graph_month("airpass")
-graph_month("hotel")
+# graph_month <-function(serie_ts){
+#   monthplot(serie_ts,cex.main = 1,ylab = "",col='dodgerblue',col.base = 'indianred',lwd.base = 3)
+# }
+graph_month(airpass)
+graph_month(hotel)
 ```
 # Desaisonnalisation
 
