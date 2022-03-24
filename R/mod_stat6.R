@@ -92,12 +92,12 @@ mod_stat6_ui <- function(id){
                  tabName = "big_data",
                  wellPanel(span("Big Data : un enjeu de taille", style="color:blue"),br(), br(), 
                            "- Des nouvelles données parfois volumineuses ou à haute fréquence, avec des formats variés",br(),br(),
-                           "- Des limites et et défis pour l'exploitation",br(),br(),
+                           "- Des limites et des défis pour l'exploitation",br(),br(),
                            "- Des initiatives à l'Insee et dans le SSP : données de caisse, partenariat Orange Lab, création d'un SSP Lab"),
                  wellPanel(span("Big Data : une définition en 5 V", style="color:blue"),br(), br(), 
                            "- Volume",br(),
                            "- Vitesse",br(),
-                           "- variété",br(),
+                           "- Variété",br(),
                            "- Véracité",br(),
                            "- Valeur")
                  
