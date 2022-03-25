@@ -42,7 +42,7 @@ mod_stat5_desaisonnalisation_regression_ui <- function(id){
                
                actionButton(
                  ns("go1"),
-                 label = "Cliquez pour afficher"
+                 label = "Cliquez pour désaisonnaliser"
                )
                
                
@@ -64,7 +64,17 @@ mod_stat5_desaisonnalisation_regression_ui <- function(id){
       
       
       
-    )
+    ),
+    
+    
+    fluidRow(column(4,),column(8,
+                               
+                               
+                               tags$p("Résultat du modèle - sortie R", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                               verbatimTextOutput(ns("tab1")),br(),
+                               tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+                               
+    ))
     
     
     
@@ -87,6 +97,10 @@ mod_stat5_desaisonnalisation_regression_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    
+    
+    
+    
   })
 }
     

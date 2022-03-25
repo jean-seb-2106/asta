@@ -14,7 +14,7 @@ mod_stat5_desaisonnalisation_mm_ui <- function(id){
     
     
     tabName = "subitem_4",
-    h2("Avec moyennes mobiles"),
+    h2("Désaisonnaliser avec les moyennes mobiles"),
     br(),
     br(),
     
@@ -42,7 +42,7 @@ mod_stat5_desaisonnalisation_mm_ui <- function(id){
                
                actionButton(
                  ns("go1"),
-                 label = "Cliquez pour afficher"
+                 label = "Cliquez pour désaisonnaliser"
                )
                
                
