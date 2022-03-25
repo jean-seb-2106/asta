@@ -109,10 +109,18 @@ mod_stat5_desaisonnalisation_regression_server <- function(id,global){
     
     output$plot1 <- renderDygraph({
       
-      # validate(need(expr = !is.null(local$ts),
-      #               message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
-      # 
-      shinipsum::random_dygraph()
+      validate(need(expr = !is.null(local$ts),
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
+
+      # shinipsum::random_dygraph()
+      x <- local$ts
+      if(local$check){
+        ycvs <- cvs_reg_desais(local$log_ts)
+        xcvs <- exp(ycvs)
+      }else{
+        xcvs <- cvs_reg_desais(local$ts)
+      }
+      dygraph_reg_cvs(x,xcvs)
       
       
     })
