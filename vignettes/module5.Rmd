@@ -98,6 +98,8 @@ graph_month(airpass)
 graph_month(hotel)
 graph_month(visiteurs)
 ```
+
+
 # Desaisonnalisation
 
 ## Avec la regression linéaire
@@ -108,24 +110,24 @@ Dans le menu paramètres, il faut choisir une série. Cocher la case pour prendr
 
 #fonction qui prend une série temporelle en entrée et qui renvoie 
 #le modèle de regression linéaire en sortie
-cvs_reg_model <- function(x){
-  
-  n <- length(x) #Nombre d'observations de la série temporelle
-  t <- 1:n #création d'une série
-  f <- frequency(x) #nombre de périodes par saison
-  ns <- n/f #Nombre de saisons (Valeur entière)
-  for (i in 1:f) {
-    su <- rep(0,times=f)
-    su[i] <- 1
-    s <- rep(su,times=ns)
-    assign(paste("s",i,sep=""),s)
-    rm(s,su)
-  } #création des variables explicatives s1 jusqu'à sf
-  a <- paste0("x~t-1+",paste0("s",1:f,collapse = "+"))
-  reg <- lm(as.formula(a)) #modèle de regression
-  reg
-  
-}
+# cvs_reg_model <- function(x){
+#   
+#   n <- length(x) #Nombre d'observations de la série temporelle
+#   t <- 1:n #création d'une série
+#   f <- frequency(x) #nombre de périodes par saison
+#   ns <- n/f #Nombre de saisons (Valeur entière)
+#   for (i in 1:f) {
+#     su <- rep(0,times=f)
+#     su[i] <- 1
+#     s <- rep(su,times=ns)
+#     assign(paste("s",i,sep=""),s)
+#     rm(s,su)
+#   } #création des variables explicatives s1 jusqu'à sf
+#   a <- paste0("x~t-1+",paste0("s",1:f,collapse = "+"))
+#   reg <- lm(as.formula(a)) #modèle de regression
+#   reg
+#   
+# }
 
 #Récupération de la série grace au menu déroulant
 ts1 <- eval(parse(text="airpass"))
@@ -145,35 +147,43 @@ reg_hotel <- cvs_reg_model(hotel_cut)
 summary(reg_hotel)
 
 #x est une série temporelle avec saisonnalité (avec frequency)
-cvs_reg_desais <- function(x){
-  n <- length(x) #Nombre d'observations de la série temporelle
-  t <- 1:n
-  f <- frequency(x) #saisonnalité
-  ns <- n/f #Nombre de saisons (Valeur entière)
-  for (i in 1:f) {
-    su <- rep(0,times=f)
-    su[i] <- 1
-    s <- rep(su,times=ns)
-    assign(paste("s",i,sep=""),s)
-    rm(s,su)
-  } #création des variables explicatives s1 jusqu'à sf
-  a <- paste0("x~t-1+",paste0("s",1:f,collapse = "+"))
-  reg <- lm(as.formula(a)) #modèle de regression
-  #récupération des coefficients issus de la regression et centrage
-  a <- mean(reg$coefficients[2:(f+1)])
-  b <- reg$coefficients[1]
-  c <- reg$coefficients[2:(f+1)]-a
-  
-  #on centre les coefficients pour respecter les ordres de grandeur
-  d <- paste0("c[",1:f,"]")
-  e <- paste0("s",1:f)
-  f <- paste0(d,"*",e,collapse = "+")
-  
-  #création d'un vecteur avec les coeffs
-  #de desaisonnalisation
-  g <- eval(parse(text = f))
-  x - g
-}
+# cvs_reg_desais <- function(x){
+#   n <- length(x) #Nombre d'observations de la série temporelle
+#   t <- 1:n
+#   f <- frequency(x) #saisonnalité
+#   ns <- n/f #Nombre de saisons (Valeur entière)
+#   for (i in 1:f) {
+#     su <- rep(0,times=f)
+#     su[i] <- 1
+#     s <- rep(su,times=ns)
+#     assign(paste("s",i,sep=""),s)
+#     rm(s,su)
+#   } #création des variables explicatives s1 jusqu'à sf
+#   a <- paste0("x~t-1+",paste0("s",1:f,collapse = "+"))
+#   reg <- lm(as.formula(a)) #modèle de regression
+#   #récupération des coefficients issus de la regression et centrage
+#   a <- mean(reg$coefficients[2:(f+1)])
+#   b <- reg$coefficients[1]
+#   c <- reg$coefficients[2:(f+1)]-a
+#   
+#   #on centre les coefficients pour respecter les ordres de grandeur
+#   d <- paste0("c[",1:f,"]")
+#   e <- paste0("s",1:f)
+#   f <- paste0(d,"*",e,collapse = "+")
+#   
+#   #création d'un vecteur avec les coeffs
+#   #de desaisonnalisation
+#   g <- eval(parse(text = f))
+#   x - g
+# }
+
+#Exemple avec airpass 
+x <- airpass
+y <- log(airpass)
+# on désaisonnalise la série passée en logarithme puis on repasse à l'exponentiel
+ycvs <- cvs_reg_desais(y)
+xcvs <- exp(ycvs)
+
 
 #1 - test sur la série Airpass
 
@@ -184,17 +194,12 @@ dygraph_reg_cvs <- function(x,x_cvs){
   dygraph(x_brut_cvs)
 } 
 
-#Exemple avec airpass 
-x <- airpass
-y <- log(airpass)
-# on désaisonnalise la série passée en logarithme puis on repasse à l'exponentiel
-ycvs <- cvs_reg_desais(y)
-xcvs <- exp(ycvs)
+
 
 dygraph_reg_cvs(x,xcvs)
 
 
-#Exemple avec la fréquentation hôtelière (on ne garde que la partie qui fonctionne bien)
+#Test sur la fréquentation hôtelière (on ne garde que la partie qui fonctionne bien)
 x <- window(hotel,start = c(2011,1),end = c(2019,12))
 xcvs <- cvs_reg_desais(x)
 dygraph_reg_cvs(x,xcvs)

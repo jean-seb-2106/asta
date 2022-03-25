@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom stats frequency 
 mod_stat5_desaisonnalisation_regression_ui <- function(id){
   ns <- NS(id)
   

@@ -104,6 +104,11 @@ golem::add_fct("model_logistiqueSS_tab")
 golem::add_fct("dygraph_ts")
 golem::add_fct("graph_month")
 
+golem::add_fct("dygraph_reg_cvs")
+golem::add_fct("cvs_reg_desais")
+golem::add_fct("cvs_reg_model")
+
+
 golem::add_utils( "helpers" )
 
 ## External resources
