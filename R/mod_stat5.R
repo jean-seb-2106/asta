@@ -47,20 +47,25 @@ mod_stat5_ui <- function(id){
                                     menuItem(
                                       
                                       "D\u00e9saisonalisation",
-                                      icon = icon("th"),
-                                      selected = FALSE
+                                      
+                                      menuSubItem("Regression lin\u00e9aire", tabName = "subitem_3"),
+                                      menuSubItem("Moyennes mobiles", tabName = "subitem_4"),  
                                       
                                       
-                                    ),
-                                    
-                                    menuItem(
-                                      
-                                      "Mod\u00e9lisation",
                                       icon = icon("th"),
                                       selected = FALSE
                                       
                                       
                                     )
+                                    
+                                    # menuItem(
+                                    #   
+                                    #   "Mod\u00e9lisation",
+                                    #   icon = icon("th"),
+                                    #   selected = FALSE
+                                    #   
+                                    #   
+                                    # )
                                     
                                     
                                     ),
