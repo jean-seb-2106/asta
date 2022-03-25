@@ -100,7 +100,11 @@ mod_stat5_ui <- function(id){
                  
                  mod_stat5_analyse_visualisation_ui(ns("stat5_analyse_visualisation")),
                  
-                 mod_stat5_analyse_saisonnalite_ui(ns("stat5_analyse_saisonnalite"))
+                 mod_stat5_analyse_saisonnalite_ui(ns("stat5_analyse_saisonnalite")), 
+                 
+                 mod_stat5_desaisonnalisation_regression_ui("stat5_desaisonnalisation_regression"),
+
+                 mod_stat5_desaisonnalisation_mm_ui("stat5_desaisonnalisation_mm")
                  
                  
                  
@@ -136,6 +140,10 @@ mod_stat5_server <- function(id,global){
     mod_stat5_analyse_visualisation_server("stat5_analyse_visualisation",global=global)
     
     mod_stat5_analyse_saisonnalite_server("stat5_analyse_saisonnalite",global=global)
+    
+    mod_stat5_desaisonnalisation_regression_server("stat5_desaisonnalisation_regression",global=global)
+    
+    mod_stat5_desaisonnalisation_mm_server("stat5_desaisonnalisation_mm",global=global)
     
     
   })
