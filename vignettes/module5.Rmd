@@ -72,8 +72,8 @@ plot_ts("airpass")
 
 dygraph_ts(airpass)
 dygraph_ts(hotel)
-hotel_cut <- window(hotel,start = c(2011,1),end = c(2019,12))
-dygraph_ts(hotel_cut)
+# hotel_cut <- window(hotel,start = c(2011,1),end = c(2019,12))
+# dygraph_ts(hotel_cut)
 
 #dygraph_ts(visiteurs) Celle-là ne fonctionne pas
 
@@ -131,7 +131,7 @@ Dans le menu paramètres, il faut choisir une série. Cocher la case pour prendr
 
 #Récupération de la série grace au menu déroulant
 ts1 <- eval(parse(text="airpass"))
-ts2 <- eval(parse(text="hotel_cut"))
+ts2 <- eval(parse(text="hotel"))
 ts3 <- eval(parse(text="visiteurs"))
 
 #Exemples pour la fonction
@@ -143,7 +143,7 @@ summary(reg_visiteurs)
 
 #Version modifiée de la fréquentation hôtelière
 
-reg_hotel <- cvs_reg_model(hotel_cut)
+reg_hotel <- cvs_reg_model(hotel)
 summary(reg_hotel)
 
 #x est une série temporelle avec saisonnalité (avec frequency)
@@ -189,10 +189,10 @@ xcvs <- exp(ycvs)
 
 #Fonction qui prend la serie desaisonnalisée et la série brute, et qui renvoie 
 # les deux séries sur un même graphique
-dygraph_reg_cvs <- function(x,x_cvs){
-  x_brut_cvs <- cbind(x,x_cvs)
-  dygraph(x_brut_cvs)
-} 
+# dygraph_reg_cvs <- function(x,x_cvs){
+#   x_brut_cvs <- cbind(x,x_cvs)
+#   dygraph(x_brut_cvs)
+# } 
 
 
 
@@ -200,9 +200,11 @@ dygraph_reg_cvs(x,xcvs)
 
 
 #Test sur la fréquentation hôtelière (on ne garde que la partie qui fonctionne bien)
-x <- window(hotel,start = c(2011,1),end = c(2019,12))
+x <- hotel
 xcvs <- cvs_reg_desais(x)
 dygraph_reg_cvs(x,xcvs)
 
 ```
+
+## Avec les moyennes mobiles
 

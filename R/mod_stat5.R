@@ -102,9 +102,9 @@ mod_stat5_ui <- function(id){
                  
                  mod_stat5_analyse_saisonnalite_ui(ns("stat5_analyse_saisonnalite")), 
                  
-                 mod_stat5_desaisonnalisation_regression_ui("stat5_desaisonnalisation_regression"),
+                 mod_stat5_desaisonnalisation_regression_ui(ns("stat5_desaisonnalisation_regression")),
 
-                 mod_stat5_desaisonnalisation_mm_ui("stat5_desaisonnalisation_mm")
+                 mod_stat5_desaisonnalisation_mm_ui(ns("stat5_desaisonnalisation_mm"))
                  
                  
                  

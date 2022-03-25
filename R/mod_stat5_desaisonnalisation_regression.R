@@ -58,7 +58,7 @@ mod_stat5_desaisonnalisation_regression_ui <- function(id){
              wellPanel(
                tags$p("Graphique", 
                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-               plotOutput(ns("plot1"))
+               dygraphOutput(ns("plot1"))
              )
              
       )
@@ -72,8 +72,7 @@ mod_stat5_desaisonnalisation_regression_ui <- function(id){
                                
                                
                                tags$p("Résultat du modèle - sortie R", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                               verbatimTextOutput(ns("tab1")),br(),
-                               tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+                               verbatimTextOutput(ns("tab1"))
                                
     ))
     
@@ -99,7 +98,39 @@ mod_stat5_desaisonnalisation_regression_server <- function(id,global){
     ns <- session$ns
  
     
+    local <- reactiveValues(ts=NULL,log_ts=NULL,check=NULL)
     
+    observeEvent(input$go1,{
+      local$ts <- eval(parse(text=input$select1))
+      local$log_ts <- log(local$ts)
+      local$check <- input$check1
+      
+    })
+    
+    output$plot1 <- renderDygraph({
+      
+      # validate(need(expr = !is.null(local$ts),
+      #               message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
+      # 
+      shinipsum::random_dygraph()
+      
+      
+    })
+    
+    output$tab1 <- renderPrint({
+      
+      validate(need(expr = !is.null(local$ts),
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
+
+      if(local$check){
+        reg <- cvs_reg_model(local$log_ts)
+      }else{
+        reg <- cvs_reg_model(local$ts)
+        }
+     summary(reg)
+     
+     
+    })
     
     
   })

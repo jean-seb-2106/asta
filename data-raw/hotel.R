@@ -14,5 +14,6 @@ hotel <- read.csv2(file = "data-raw/dataset/valeurs_mensuelles.CSV",
   select(V1,V2)
 
 hotel <- ts(hotel$V2, start=c(2011,1),frequency = 12)
+hotel <- window(hotel,start = c(2011,1),end = c(2019,12))
 
 usethis::use_data(hotel, overwrite = TRUE)
