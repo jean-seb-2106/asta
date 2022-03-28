@@ -64,7 +64,7 @@ golem::add_module(name = "stat4_logistique")
 #Stat5
 golem::add_module( name = "stat5" )
 golem::add_module(name = "stat5_analyse_visualisation")
-# golem::add_module(name = "stat5_analyse_saisonnalite")
+golem::add_module(name = "stat5_analyse_saisonnalite")
 # golem::add_module(name = "stat5_analyse_autocorrelation")
 golem::add_module(name = "stat5_desaisonnalisation_regression")
 golem::add_module(name = "stat5_desaisonnalisation_mm")
@@ -74,6 +74,8 @@ golem::add_module( name = "stat6" )
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
+
+#Module2 : tirage d'échantillons
 golem::add_fct( "importation_m2" ) 
 golem::add_fct( "tirage_sas_m2" ) 
 golem::add_fct( "tirage_strat_m2" )
@@ -81,6 +83,8 @@ golem::add_fct( "tirage_degres_m2" )
 golem::add_fct( "boxplot_tirage_m2" )
 golem::add_fct( "data_apur_m2" )
 golem::add_fct( "plot_apur_m2" )
+
+#Module1 : stat desc et stat inférentielle
 golem::add_fct("tri_plat")
 golem::add_fct("graphggplotly_diagbarre")
 golem::add_fct("rambarplot_quali")
@@ -92,12 +96,20 @@ golem::add_fct("tab_moyenne")
 golem::add_fct("tableau_croise")
 golem::add_fct("simul_moyenne")
 golem::add_fct("histoplotly_simul")
+
+#☺Module4 : modélisation
 golem::add_fct("model_lineaireS_tab")
 golem::add_fct("model_lineaireS_plot")
 golem::add_fct("model_lineaireM_tab")
 golem::add_fct("model_logistique_tab")
 golem::add_fct("model_logistiqueSS_tab")
+
+#Module5 : série temporelles
 golem::add_fct("dygraph_ts")
+golem::add_fct("graph_month")
+golem::add_fct("cvs_reg_desais")
+golem::add_fct("cvs_reg_model")
+golem::add_fct("dygraph_reg_cvs")
 
 golem::add_utils( "helpers" )
 
@@ -112,7 +124,8 @@ golem::use_favicon(path = "favicon.ico")
 ## If you have data in your package
 usethis::use_data_raw( name = "grandile", open = FALSE )
 usethis::use_data_raw( name = "airpass", open = FALSE )
-usethis::use_data_raw( name = "hotel", open = FALSE ) 
+usethis::use_data_raw( name = "hotel", open = FALSE )
+usethis::use_data_raw(name="visiteurs",open = FALSE)
 
 ## Tests ----
 ## Add one line by test you want to create

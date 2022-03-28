@@ -77,7 +77,7 @@ mod_stat5_analyse_visualisation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    local <- reactiveValues(ts=NULL,log_ts=NULL)
+    local <- reactiveValues(ts=NULL,log_ts=NULL,check=NULL)
     
     observeEvent(input$go1,{
       local$ts <- eval(parse(text=input$select1))

@@ -35,6 +35,7 @@ mod_stat5_ui <- function(id){
                                       "Analyse de la s\u00e9rie",
                                       
                                       menuSubItem("Visualisation", tabName = "subitem_1"),
+                                      menuSubItem("Saisonnalit\u00e9", tabName = "subitem_2"),
                                       
                                       
                                       icon = icon("th"),
@@ -46,20 +47,25 @@ mod_stat5_ui <- function(id){
                                     menuItem(
                                       
                                       "D\u00e9saisonalisation",
-                                      icon = icon("th"),
-                                      selected = FALSE
+                                      
+                                      menuSubItem("Regression lin\u00e9aire", tabName = "subitem_3"),
+                                      menuSubItem("Moyennes mobiles", tabName = "subitem_4"),  
                                       
                                       
-                                    ),
-                                    
-                                    menuItem(
-                                      
-                                      "Mod\u00e9lisation",
                                       icon = icon("th"),
                                       selected = FALSE
                                       
                                       
                                     )
+                                    
+                                    # menuItem(
+                                    #   
+                                    #   "Mod\u00e9lisation",
+                                    #   icon = icon("th"),
+                                    #   selected = FALSE
+                                    #   
+                                    #   
+                                    # )
                                     
                                     
                                     ),
@@ -92,7 +98,13 @@ mod_stat5_ui <- function(id){
                  
                  #tabItem("subitem1")
                  
-                 mod_stat5_analyse_visualisation_ui(ns("stat5_analyse_visualisation"))
+                 mod_stat5_analyse_visualisation_ui(ns("stat5_analyse_visualisation")),
+                 
+                 mod_stat5_analyse_saisonnalite_ui(ns("stat5_analyse_saisonnalite")), 
+                 
+                 mod_stat5_desaisonnalisation_regression_ui(ns("stat5_desaisonnalisation_regression")),
+
+                 mod_stat5_desaisonnalisation_mm_ui(ns("stat5_desaisonnalisation_mm"))
                  
                  
                  
@@ -126,6 +138,12 @@ mod_stat5_server <- function(id,global){
     global <- reactiveValues(ts1 = airpass)
     
     mod_stat5_analyse_visualisation_server("stat5_analyse_visualisation",global=global)
+    
+    mod_stat5_analyse_saisonnalite_server("stat5_analyse_saisonnalite",global=global)
+    
+    mod_stat5_desaisonnalisation_regression_server("stat5_desaisonnalisation_regression",global=global)
+    
+    mod_stat5_desaisonnalisation_mm_server("stat5_desaisonnalisation_mm",global=global)
     
     
   })

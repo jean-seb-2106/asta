@@ -2,10 +2,7 @@ Package: asta
 Title: ASTA
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Jean",
-           family = "Sebban",
-           role = c("cre", "aut"),
-           email = "jean.sebban@insee.fr")
+    person("Jean", "Sebban", , "jean.sebban@insee.fr", role = c("cre", "aut"))
 Description: Appli attaches.
 License: MIT + file LICENSE
 Depends: 
@@ -29,8 +26,7 @@ Imports:
     shinydashboard,
     shinythemes,
     stats,
-    tidyr,
-    GGally
+    tidyr
 Suggests: 
     datasets,
     kableExtra,
