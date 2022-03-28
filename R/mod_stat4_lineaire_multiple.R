@@ -69,7 +69,7 @@ mod_stat4_lineaire_multiple_server <- function(id,global){
      # local$constante <- input$constante
       local$model <- model_lineaireM_tab(input_data = local$dt,
                                          var_expliquee = input$Varexpliquee,
-                                         var_explicative = input$Varexplicative,
+                                         var_explicatives = input$Varexplicative,
                                          constante = local$constante     )
       
     })
