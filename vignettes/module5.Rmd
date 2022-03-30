@@ -208,3 +208,64 @@ dygraph_reg_cvs(x,xcvs)
 
 ## Avec les moyennes mobiles
 
+```{r}
+
+#Dans l'application, il faut choisir une série 
+#puis choisir un type de modèle
+cvs_mm_graph <- function(x,...){
+  decomp.x <- decompose(x,...)
+  plot(decomp.x)
+}
+
+#Décomposition de airpass
+cvs_mm_graph(airpass,type="multiplicative")
+
+#décomposition de visiteurs
+cvs_mm_graph(visiteurs,type="additive")
+
+#Décomposition de fréquentation hôtelière
+cvs_mm_graph(hotel,type="additive")
+decompose(hotel)
+
+cvs_mm_desais <- function(x,...){
+  decomp.x <- decompose(x,...)
+  if (decomp.x$type == "multiplicative"){
+    x/decomp.x$seasonal
+  } else {
+      x - decomp.x$seasonal
+  }
+}
+
+airpasscvs_mm <- cvs_mm_desais(airpass,type="multiplicative")
+airpasscvs_reg <- exp(cvs_reg_desais(log(airpass)))
+dygraph(cbind(airpass,airpasscvs_mm,airpasscvs_reg))
+
+
+m2_12=function(x){
+y=(1/12)*filter(x,c(0.5,rep(1,times=11),0.5))
+return(y)
+}
+
+x <- hotel
+y <- m2_12(x)
+dygraph(cbind(x,y))
+
+z <- x - y
+m3=function(x){
+y=(1/3)*filter(x,rep(1,times=3))
+return(y)
+}
+
+s1 <- m3(m3(z))
+S <- s1 - m2_12(s1)
+dygraph(m2_12(s1))
+
+dygraph(cbind(x,y,s1))
+
+bruit <- ts(rnorm(108,sd = 9),frequency = 12)
+bruit_lissee <- m3(m3(bruit))
+
+dygraph(cbind(bruit,bruit_lissee))
+
+```
+
