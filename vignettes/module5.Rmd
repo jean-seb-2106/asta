@@ -236,36 +236,36 @@ cvs_mm_desais <- function(x,...){
   }
 }
 
-airpasscvs_mm <- cvs_mm_desais(airpass,type="multiplicative")
-airpasscvs_reg <- exp(cvs_reg_desais(log(airpass)))
-dygraph(cbind(airpass,airpasscvs_mm,airpasscvs_reg))
-
-
-m2_12=function(x){
-y=(1/12)*filter(x,c(0.5,rep(1,times=11),0.5))
-return(y)
-}
-
-x <- hotel
-y <- m2_12(x)
-dygraph(cbind(x,y))
-
-z <- x - y
-m3=function(x){
-y=(1/3)*filter(x,rep(1,times=3))
-return(y)
-}
-
-s1 <- m3(m3(z))
-S <- s1 - m2_12(s1)
-dygraph(m2_12(s1))
-
-dygraph(cbind(x,y,s1))
-
-bruit <- ts(rnorm(108,sd = 9),frequency = 12)
-bruit_lissee <- m3(m3(bruit))
-
-dygraph(cbind(bruit,bruit_lissee))
+# airpasscvs_mm <- cvs_mm_desais(airpass,type="multiplicative")
+# airpasscvs_reg <- exp(cvs_reg_desais(log(airpass)))
+# dygraph(cbind(airpass,airpasscvs_mm,airpasscvs_reg))
+# 
+# 
+# m2_12=function(x){
+# y=(1/12)*filter(x,c(0.5,rep(1,times=11),0.5))
+# return(y)
+# }
+# 
+# x <- hotel
+# y <- m2_12(x)
+# dygraph(cbind(x,y))
+# 
+# z <- x - y
+# m3=function(x){
+# y=(1/3)*filter(x,rep(1,times=3))
+# return(y)
+# }
+# 
+# s1 <- m3(m3(z))
+# S <- s1 - m2_12(s1)
+# dygraph(m2_12(s1))
+# 
+# dygraph(cbind(x,y,s1))
+# 
+# bruit <- ts(rnorm(108,sd = 9),frequency = 12)
+# bruit_lissee <- m3(m3(bruit))
+# 
+# dygraph(cbind(bruit,bruit_lissee))
 
 ```
 
