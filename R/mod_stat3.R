@@ -87,7 +87,7 @@ mod_stat3_ui <- function(id){
                  ),
                  tabItem(
                    tabName = "cah",
-                   mod_stat4_lineaire_multiple_ui(ns("stat4_lineaire_multiple_ui_1")), 
+                   mod_stat3_cah_ui(ns("stat3_cah_1")), 
                  )
                  
                )
@@ -114,7 +114,7 @@ mod_stat3_server <- function(id, global){
     global <- reactiveValues(data = grandile)
     
     mod_stat3_acp_server("stat3_acp_1", global=global)
-    
+    mod_stat3_cah_server("stat3_cah_1", global=global)
   })
 }
     

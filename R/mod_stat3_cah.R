@@ -1,4 +1,4 @@
-#' stat3_acp UI Function
+#' stat3_cah UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -7,31 +7,30 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_stat3_acp_ui <- function(id){
+mod_stat3_cah_ui <- function(id){
   ns <- NS(id)
   tagList(
-    tabItem(tabName = "acp",
-            h2("Analyse en Composantes Principales"),
+ 
+    tabItem(tabName = "cah",
+            h2("Classification Ascendante Hiérarchique"),
             fluidRow(tags$style("background-color : #E3F2FD;"),
                      column(4,
                             
                             wellPanel(
                               tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                              textInput(ns("dim1"), label = "Choisissez un axe entre 1 et 9", value = "1"),
+                              sliderInput(ns("classes"), 
+                                          "Choisissez le nombre de classes", min = 1, max = 9, value = 3
+                                         ),
                               
-                              textInput(ns("dim2"), label = "Choisissez un axe entre 1 et 9", value =  "2"),
-                              
-                              
-                              
-                            
+                             
                               
                               actionButton(inputId=ns("go"),"Mettre \u00e0 jour")),
                             
                             wellPanel(
-                              tags$p("Décomposition de l'inertie", style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
+                              tags$p("Plan Factoriel", style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
                               ,
                               verbatimTextOutput(ns("coeffcorr")),br(),
-                             
+                              
                               br(),
                               tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;"))
                      ),
@@ -39,13 +38,13 @@ mod_stat3_acp_ui <- function(id){
                      column(8,
                             
                             wellPanel(
-                              tags$p("Graphe des variables", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                              tags$p("Arbre hiérarchique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                               
                               plotOutput(ns("arbre")),br(),
                               tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
                               
                             ),wellPanel(
-                              tags$p("Graphe des individus", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                              tags$p("Description des classes", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                               verbatimTextOutput(ns("classes")),br(),
                               tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;"))
                             
@@ -58,10 +57,10 @@ mod_stat3_acp_ui <- function(id){
   )
 }
     
-#' stat3_acp Server Functions
+#' stat3_cah Server Functions
 #'
 #' @noRd 
-mod_stat3_acp_server <- function(id, global){
+mod_stat3_cah_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
@@ -69,7 +68,7 @@ mod_stat3_acp_server <- function(id, global){
 }
     
 ## To be copied in the UI
-# mod_stat3_acp_ui("stat3_acp_1")
+# mod_stat3_cah_ui("stat3_cah_1")
     
 ## To be copied in the server
-# mod_stat3_acp_server("stat3_acp_1")
+# mod_stat3_cah_server("stat3_cah_1")
