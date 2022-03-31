@@ -2,9 +2,9 @@
 #'
 #' The titanic dataset is available in base R.
 #' The data has 5 variables and only 32 rows.
-#' Each row does NOT represent an observation.
-#' It is not tidy, instead the data set contains Frequencies!
-#'  And it is not a data frame, therefore we we need to convert it first.
+#' Each row does NOT represent an observation. 
+#' It is not tidy, instead the data set contains Frequencies! 
+#' And it is not a data frame, therefore we we need to convert it first.
 #' 
 #' @name titanic
 #' @docType data
