@@ -1,6 +1,6 @@
 Package: asta
 Title: ASTA
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: 
     person("Jean", "Sebban", , "jean.sebban@insee.fr", role = c("cre", "aut"))
 Description: Appli attaches.
