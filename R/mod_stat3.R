@@ -16,6 +16,50 @@ mod_stat3_ui <- function(id){
              
              dashboardHeader(title = "Analyse exploratoire de donn\u00e9es"),
              dashboardSidebar(
+               fluidRow(collapsed = FALSE,
+                        
+                        
+                        sidebarMenu(id = "tabs_regression",
+                                    
+                                    
+                                    
+                                    menuItem(
+                                      
+                                      "M\u00e9thodes factorielles",
+                                      icon = icon("th"),
+                                      selected = FALSE,
+                                      menuSubItem("ACP", 
+                                                  tabName = "acp"),
+                                      menuSubItem("AFC", 
+                                                  tabName = "afc"),
+                                      menuSubItem("ACM", 
+                                                  tabName = "acm")
+                                      
+                                      
+                                    ),
+                                    menuItem(
+                                      
+                                      "Classification",
+                                      icon = icon("th"),
+                                      selected = FALSE,
+                                      menuSubItem("CAH", 
+                                                  tabName = "cah"),
+                                      menuSubItem("AD", 
+                                                  tabName = "ad"),
+                                      menuSubItem("K-means", 
+                                                  tabName = "kmeans")
+                                      
+                                      
+                                    )
+                                    
+                                    
+                        )
+                        
+                        
+                        
+                        
+                        
+               ),
                br(),
                br(),
                br(),
@@ -32,7 +76,24 @@ mod_stat3_ui <- function(id){
                  ) ,
                  style = "text-align: center; float:bottom;"
                )),
-             dashboardBody()
+             dashboardBody(
+               
+               tabItems(
+                 
+                 
+                 tabItem(
+                   tabName = "acp",
+                   mod_stat3_acp_ui(ns("stat3_acp_1")), 
+                 ),
+                 tabItem(
+                   tabName = "cah",
+                   mod_stat4_lineaire_multiple_ui(ns("stat4_lineaire_multiple_ui_1")), 
+                 )
+                 
+               )
+               
+               
+             )
              
              
              
@@ -46,10 +107,14 @@ mod_stat3_ui <- function(id){
 #' stat3 Server Functions
 #'
 #' @noRd 
-mod_stat3_server <- function(id){
+mod_stat3_server <- function(id, global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    global <- reactiveValues(data = grandile)
+    
+    mod_stat3_acp_server("stat3_acp_1", global=global)
+    
   })
 }
     
