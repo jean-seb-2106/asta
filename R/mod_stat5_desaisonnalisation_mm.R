@@ -67,7 +67,15 @@ mod_stat5_desaisonnalisation_mm_ui <- function(id){
       
       
       
-    )
+    ),fluidRow(column(4,),column(8,
+                                 
+                                 wellPanel(
+                                   tags$p("Décomposition de la série", 
+                                          style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                                   plotOutput(ns("plot2"))
+                                 )
+                                 
+                                 ))
     
     
     
@@ -116,6 +124,16 @@ mod_stat5_desaisonnalisation_mm_server <- function(id,global){
       dygraph_reg_cvs(x,xcvs)
       
     })
+    
+    output$plot2 <- renderPlot({
+      
+      validate(need(expr = !is.null(local$ts),
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
+      
+      
+      cvs_decompo_graph(local$ts,type=local$modele)
+      
+      })
     
     
   })
