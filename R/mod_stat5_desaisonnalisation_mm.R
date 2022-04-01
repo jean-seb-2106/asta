@@ -60,7 +60,7 @@ mod_stat5_desaisonnalisation_mm_ui <- function(id){
              wellPanel(
                tags$p("Graphique", 
                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-               plotOutput(ns("plot1"))
+               dygraphOutput(ns("plot1"))
              )
              
       )
@@ -99,7 +99,23 @@ mod_stat5_desaisonnalisation_mm_server <- function(id,global){
       
     })
     
-    
+    output$plot1 <- renderDygraph({
+      
+      validate(need(expr = !is.null(local$ts),
+                    message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
+      
+      # shinipsum::random_dygraph()
+      
+      x <- local$ts
+      if(local$modele=="multiplicative"){
+        ycvs <- cvs_mm_desais(local$log_ts)
+        xcvs <- exp(ycvs)
+      }else{
+        xcvs <- cvs_mm_desais(local$ts)
+      }
+      dygraph_reg_cvs(x,xcvs)
+      
+    })
     
     
   })
