@@ -19,7 +19,7 @@ pond_m2 <- function(data_pond, var_pond){
   tab2 <- data_pond  %>%   dplyr::group_by(.data[[var_pond]]) %>% summarise(somme_rep=sum(REPONDANT), somme_ech=sum(ECH)) %>% 
     mutate(pond2= somme_ech/somme_rep)
   
-  tab_red <- tab1 %>% left_join(tab2) %>% mutate(PONDEF=pond1*pond2) %>% filter(REPONDANT==1) %>% 
+  tab_red <- tab1 %>% left_join(tab2) %>% mutate(PONDEF=pond1*pond2) %>% dplyr::filter(REPONDANT==1) %>% 
     mutate(REV_DISPONIBLE_POND=REV_DISPONIBLE*PONDEF, 
            PATRIMOINE_POND = PATRIMOINE*PONDEF)
   tab_red

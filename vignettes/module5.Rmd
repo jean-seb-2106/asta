@@ -212,22 +212,27 @@ dygraph_reg_cvs(x,xcvs)
 
 #Dans l'application, il faut choisir une série 
 #puis choisir un type de modèle
-cvs_mm_graph <- function(x,...){
-  decomp.x <- decompose(x,...)
-  plot(decomp.x)
-}
+# cvs_decompo_graph <- function(x,...){
+#   decomp.x <- decompose(x,...)
+#   plot(decomp.x)
+# }
+
+#Choisir dans le menu un modèle de type multiplicatif au additif
+
 
 #Décomposition de airpass
-cvs_mm_graph(airpass,type="multiplicative")
+cvs_decompo_graph(airpass,type="multiplicative")
+cvs_decompo_graph(airpass,type="additive")
 
 #décomposition de visiteurs
-cvs_mm_graph(visiteurs,type="additive")
+cvs_decompo_graph(visiteurs,type="additive")
 
 #Décomposition de fréquentation hôtelière
-cvs_mm_graph(hotel,type="additive")
-decompose(hotel)
+cvs_decompo_graph(hotel,type="additive")
+cvs_decompo_graph(hotel,type="multiplicative")
+# decompose(hotel)
 
-cvs_mm_desais <- function(x,...){
+cvs_decompo_desais <- function(x,...){
   decomp.x <- decompose(x,...)
   if (decomp.x$type == "multiplicative"){
     x/decomp.x$seasonal
@@ -236,36 +241,49 @@ cvs_mm_desais <- function(x,...){
   }
 }
 
-# airpasscvs_mm <- cvs_mm_desais(airpass,type="multiplicative")
-# airpasscvs_reg <- exp(cvs_reg_desais(log(airpass)))
-# dygraph(cbind(airpass,airpasscvs_mm,airpasscvs_reg))
-# 
-# 
-# m2_12=function(x){
-# y=(1/12)*filter(x,c(0.5,rep(1,times=11),0.5))
+
+#Cette fonction ne désaisonnalise pour l'instant que les 
+#série temporelle de période 12
+# cvs_mm_desais <- function(x,...){
+#   
+#   m2_12 <- function(a){
+#     
+# y <- (1/12)*stats::filter(a,c(0.5,rep(1,times=11),0.5))
+# return(y)
+#   }
+#   
+#   m3=function(b){
+# y <- (1/3)*stats::filter(b,rep(1,times=3))
 # return(y)
 # }
-# 
-# x <- hotel
-# y <- m2_12(x)
-# dygraph(cbind(x,y))
-# 
-# z <- x - y
-# m3=function(x){
-# y=(1/3)*filter(x,rep(1,times=3))
-# return(y)
+#   
+#   if(frequency(x)==12){
+#     
+#     a <- m2_12(x) #Ce filtre permet d'estimer la tendance pure de période 12
+#     b <- x - a  #b correspond à la composante Saison + Bruit
+#     
+#     c <- m3(m3(b)) #Estimation des coefficients des saisonniers
+#     d <- c - m2_12(c) #Moyennisation pour que la somme de 12 périodes 
+#       #consécutives des coefficients saisonniers est égale à 0
+#     
+#   }
+#   
+#   x - d
+#   
 # }
+
+# #Modèle multiplicatif
+# airpass_mm_cvs <- exp(cvs_mm_desais(log(airpass)))
 # 
-# s1 <- m3(m3(z))
-# S <- s1 - m2_12(s1)
-# dygraph(m2_12(s1))
+# #Modèle additif
+hotel_mm_cvs <- cvs_mm_desais(hotel)
 # 
-# dygraph(cbind(x,y,s1))
 # 
-# bruit <- ts(rnorm(108,sd = 9),frequency = 12)
-# bruit_lissee <- m3(m3(bruit))
 # 
-# dygraph(cbind(bruit,bruit_lissee))
+# #Représentation graphique
+# dygraph_reg_cvs(airpass,airpass_mm_cvs)
+dygraph_reg_cvs(hotel,hotel_mm_cvs)
+
 
 ```
 

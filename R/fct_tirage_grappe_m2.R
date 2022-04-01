@@ -18,6 +18,6 @@ tirage_grappe_m2 <- function (input_data, taille_grappe, var_grappe) {
   sond1 <-
     UP[sample(1:nrow(UP), taille_grappe), ] %>% mutate(ECH = "1")  %>%
     right_join(input_data, by = var_grappe) %>%
-    filter(ECH == "1")
+    dplyr::filter(ECH == "1")
   
 }

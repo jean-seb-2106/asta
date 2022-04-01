@@ -110,6 +110,8 @@ golem::add_fct("graph_month")
 golem::add_fct("cvs_reg_desais")
 golem::add_fct("cvs_reg_model")
 golem::add_fct("dygraph_reg_cvs")
+golem::add_fct("cvs_decompo_graph")
+golem::add_fct("cvs_mm_desais")
 
 golem::add_utils( "helpers" )
 
