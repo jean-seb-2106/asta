@@ -36,9 +36,12 @@ mod_stat5_desaisonnalisation_mm_ui <- function(id){
                              "Fr\u00e9quentation hoteliere"="hotel")
                ),
                
-               checkboxInput(inputId = ns("check1"),
-                             label = "Appliquez le logarithme",
-                             value = FALSE),
+               selectInput(
+                 inputId = ns("select2"),
+                 label = "Choisissez un modele :",
+                 choices = c("Modele additif"="additive",
+                             "Modele multiplicatif"="multiplicative")
+               ),
                
                actionButton(
                  ns("go1"),
@@ -87,6 +90,18 @@ mod_stat5_desaisonnalisation_mm_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
+    local <- reactiveValues(ts=NULL,log_ts=NULL,modele=NULL)
+    
+    observeEvent(input$go1,{
+      local$ts <- eval(parse(text=input$select1))
+      local$log_ts <- log(local$ts)
+      local$modele <- input$select2
+      
+    })
+    
+    
+    
+    
   })
 }
     
