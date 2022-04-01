@@ -15,18 +15,29 @@ mod_sommaire_ui <- function(id){
       # tags$style('.container-fluid {
       #                        background-color: #fafad2 	;
       #         }'),
-  
-    
-    tags$h1("Programme du parcours statistique des attach\u00e9s", style = "background-color: #e7e7e7 ;"),
+     wellPanel( 
+       fluidRow(
+       column(2,
+       HTML('<div style=\"float:left\"><img src=\"www/hex_AstA2.png\" alt=\"alt\" style=\"float:left;width:80px;height:95px;vertical-align: middle;\"> </a></div>'),
+        ),
+       column(8,"  ",
+      tags$p("Bienvenue dans AstA !", style = "text-align: center; font-size: 60px;")), 
+      column(2,
+      HTML('<div style=\"float:right\"><img src=\"www/logo_cefil.jpg\" alt=\"alt\" style=\"float:right;width:70px;height:95px;vertical-align: top;padding-top:5px;\"> </a></div>')
+      )
+      )),
+      
+    br(),
+    tags$h2("Programme du parcours statistique des attach\u00e9s", style = "background-color: #e7e7e7 ;"),
     tags$br(),
-    h2("Stat 1 : Statistiques descriptives et inf\u00e9rentielles"),
-    h2("Stat 2 : Enqu\u00eates et sondages"),
-    h2("Stat 3 : Analyse exploratoire de donn\u00e9es (en construction)"),
-    h2("Stat 4 : Mod\u00e9lisation"),
-    h2("Stat 5 : S\u00e9ries temporelles"),
-    h2("Stat 6 : Secret statistique et Big Data (en construction)"),
-    tags$br(),tags$br(),tags$br(),
-    HTML('<center> <img src="www/logo_cefil.jpg" width ="80" > </center>')
+    h3("Stat 1 : Statistiques descriptives et inf\u00e9rentielles"),
+    h3("Stat 2 : Enqu\u00eates et sondages"),
+    h3(span("Stat 3 : Analyse exploratoire de donn\u00e9es (en construction)", style="font-style:italic")),
+    h3("Stat 4 : Mod\u00e9lisation"),
+    h3("Stat 5 : S\u00e9ries temporelles"),
+    h3(span("Stat 6 : Secret statistique et Big Data (en construction)", style="font-style:italic")),
+    tags$br(),tags$br(),tags$br()
+    
    
       
     
