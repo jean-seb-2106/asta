@@ -23,7 +23,7 @@ tirage_degres_m2 <-
     sond1 <-
       UP[sample(1:nrow(UP), taille_UP), ] %>% mutate(ECH = "1")  %>%
       right_join(input_data, by = var_degres) %>%
-      filter(ECH == "1")
+      dplyr::filter(ECH == "1")
     
     sond2 <-  as.data.frame(tirage_sas_m2(sond1, taille_tot))
     sond2

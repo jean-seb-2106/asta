@@ -16,5 +16,5 @@
 #' dygraph_reg_cvs(x,xcvs)
 dygraph_reg_cvs <- function(x,x_cvs){
   x_brut_cvs <- cbind(x,x_cvs)
-  dygraph(x_brut_cvs)
+  dygraph(x_brut_cvs) %>% dyRangeSelector()
 } 

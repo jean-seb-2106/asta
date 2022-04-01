@@ -208,3 +208,82 @@ dygraph_reg_cvs(x,xcvs)
 
 ## Avec les moyennes mobiles
 
+```{r}
+
+#Dans l'application, il faut choisir une série 
+#puis choisir un type de modèle
+# cvs_decompo_graph <- function(x,...){
+#   decomp.x <- decompose(x,...)
+#   plot(decomp.x)
+# }
+
+#Choisir dans le menu un modèle de type multiplicatif au additif
+
+
+#Décomposition de airpass
+cvs_decompo_graph(airpass,type="multiplicative")
+cvs_decompo_graph(airpass,type="additive")
+
+#décomposition de visiteurs
+cvs_decompo_graph(visiteurs,type="additive")
+
+#Décomposition de fréquentation hôtelière
+cvs_decompo_graph(hotel,type="additive")
+cvs_decompo_graph(hotel,type="multiplicative")
+# decompose(hotel)
+
+cvs_decompo_desais <- function(x,...){
+  decomp.x <- decompose(x,...)
+  if (decomp.x$type == "multiplicative"){
+    x/decomp.x$seasonal
+  } else {
+      x - decomp.x$seasonal
+  }
+}
+
+
+#Cette fonction ne désaisonnalise pour l'instant que les 
+#série temporelle de période 12
+# cvs_mm_desais <- function(x,...){
+#   
+#   m2_12 <- function(a){
+#     
+# y <- (1/12)*stats::filter(a,c(0.5,rep(1,times=11),0.5))
+# return(y)
+#   }
+#   
+#   m3=function(b){
+# y <- (1/3)*stats::filter(b,rep(1,times=3))
+# return(y)
+# }
+#   
+#   if(frequency(x)==12){
+#     
+#     a <- m2_12(x) #Ce filtre permet d'estimer la tendance pure de période 12
+#     b <- x - a  #b correspond à la composante Saison + Bruit
+#     
+#     c <- m3(m3(b)) #Estimation des coefficients des saisonniers
+#     d <- c - m2_12(c) #Moyennisation pour que la somme de 12 périodes 
+#       #consécutives des coefficients saisonniers est égale à 0
+#     
+#   }
+#   
+#   x - d
+#   
+# }
+
+# #Modèle multiplicatif
+# airpass_mm_cvs <- exp(cvs_mm_desais(log(airpass)))
+# 
+# #Modèle additif
+hotel_mm_cvs <- cvs_mm_desais(hotel)
+# 
+# 
+# 
+# #Représentation graphique
+# dygraph_reg_cvs(airpass,airpass_mm_cvs)
+dygraph_reg_cvs(hotel,hotel_mm_cvs)
+
+
+```
+
