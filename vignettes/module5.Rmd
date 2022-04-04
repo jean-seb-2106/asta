@@ -232,6 +232,10 @@ cvs_decompo_graph(hotel,type="additive")
 cvs_decompo_graph(hotel,type="multiplicative")
 # decompose(hotel)
 
+#Décomposition de fréquentation hôtelière
+cvs_decompo_graph(chomage_bit,type="additive")
+cvs_decompo_graph(chomage_bit,type="multiplicative")
+
 cvs_decompo_desais <- function(x,...){
   decomp.x <- decompose(x,...)
   if (decomp.x$type == "multiplicative"){

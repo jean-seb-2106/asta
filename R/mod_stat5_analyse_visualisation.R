@@ -33,7 +33,8 @@ mod_stat5_analyse_visualisation_ui <- function(id){
                   inputId = ns("select1"),
                   label = "Choisissez une s\u00e9rie :",
                   choices = c("Trafic a\u00e9rien"="airpass",
-                              "Fr\u00e9quentation hoteliere"="hotel")
+                              "Fr\u00e9quentation hoteliere"="hotel",
+                              "Taux de chomage au sens du BIT (en %)" = "chomage_bit")
                   ),
                 
                 checkboxInput(inputId = ns("check1"),
