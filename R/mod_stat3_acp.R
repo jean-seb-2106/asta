@@ -110,8 +110,9 @@ mod_stat3_acp_server <- function(id, global){
         need(expr = !is.null(local$dt),
              message = "Choisissez des axes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
-      
-      plot.PCA(local$result,title="Graphe des individus de l'ACP")
+      dim1_num <- as.numeric(input$dim1)
+      dim2_num <- as.numeric(input$dim2)
+      plot.PCA(local$result,axes=c(dim1_num,dim2_num),title="Graphe des individus de l'ACP")
     })
     
     
