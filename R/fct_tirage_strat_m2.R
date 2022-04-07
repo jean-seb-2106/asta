@@ -20,7 +20,7 @@ tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
   y <- x * taille_strat
   
   base_echantillon_strat <-
-    input_data %>% arrange(var_strat)
+    input_data %>% arrange(var_strat) #attention ajouter un .data[[]] ou autre, le arrange ne marche#
   
   s = strata(
     base_echantillon_strat,
