@@ -40,4 +40,4 @@ globalVariables( c("ECH",
                    "somme_ech",
                    "somme_rep",
                    "airpass",
-                   "monthplot"))
+                   "monthplot","state","barplot","clust","Population","Income","Illiteracy","Life Exp","Murder","HS Grad","Frost","Area"))
