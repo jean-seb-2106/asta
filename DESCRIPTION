@@ -10,9 +10,11 @@ Depends:
 Imports: 
     config (>= 0.3.1),
     dashboardthemes,
+    data.table,
     dplyr,
     DT,
     dygraphs,
+    FactoMineR,
     GGally,
     ggplot2,
     ggthemes,
