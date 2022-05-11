@@ -11,7 +11,7 @@
 #' @export
 #' @examples tirage_strat_m2(grandile, 400, "DIPL")
 tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
-  tab <- input_data %>%   select(var_strat)
+  tab <- input_data %>%   select(.data[[var_strat]])
   
   v <- table(tab)
   
@@ -20,7 +20,7 @@ tirage_strat_m2 <- function(input_data, taille_strat, var_strat) {
   y <- x * taille_strat
   
   base_echantillon_strat <-
-    input_data %>% arrange(var_strat) #attention ajouter un .data[[]] ou autre, le arrange ne marche#
+    input_data %>% arrange(.data[[var_strat]]) #attention ajouter un .data[[]] ou autre, le arrange ne marche#
   
   s = strata(
     base_echantillon_strat,

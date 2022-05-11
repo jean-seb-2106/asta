@@ -27,7 +27,7 @@ mod_stat4_logistique_ui <- function(id){
                        selectizeInput(ns("Varexplicative"), 
                                       "Choisissez des variables explicatives",
                                       choices = c("Classe"="Class", "Sexe"="Sex", "Age"),
-                                      multiple = TRUE  ),
+                                      multiple = TRUE ),
                        
                        checkboxInput(inputId=ns("constante"), "Retirer la constante", value = FALSE, width = NULL),
                        
@@ -73,29 +73,29 @@ mod_stat4_logistique_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    local <- reactiveValues(dt = NULL, var_explicative = NULL,var_expliquee = NULL )
+    local <- reactiveValues(dt = NULL, var_explicative = NULL ,var_expliquee = NULL )
     global <- reactiveValues(dt = titanic)
     
     observeEvent(input$go, {
+       
+    
       local$dt <- global$dt
       local$var_explicative <- input$Varexplicative
       local$var_expliquee <- input$Varexpliquee
       local$constante <- input$constante
-      local$model <- model_logistique_tab(input_data=global$dt,
-                                         var_expliquee = local$var_expliquee ,
-                                         var_explicatives = local$var_explicative, constante = local$constante)
-      local$modelSS <- model_logistiqueSS_tab(input_data=global$dt,
-                                            var_expliquee = local$var_expliquee ,
-                                            var_explicatives = local$var_explicative, constante = local$constante)
+
+      
       
       
       })
     
     output$tab1 <- renderPrint({
       
-      validate(need(expr = !is.null(local$dt),
+      validate(need(expr = !is.null(local$var_explicative),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
-      
+      local$model <- model_logistique_tab(input_data=global$dt,
+                                          var_expliquee = local$var_expliquee ,
+                                          var_explicatives = local$var_explicative, constante = local$constante)
        # browser()
       print(local$model)
       
@@ -103,8 +103,12 @@ mod_stat4_logistique_server <- function(id,global){
     
     output$plot1 <- renderPlot({
       
-      validate(need(expr = !is.null(local$dt),
+      validate(need(expr = !is.null(local$var_explicative),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
+   
+      local$modelSS <- model_logistiqueSS_tab(input_data=global$dt,
+                                              var_expliquee = local$var_expliquee ,
+                                              var_explicatives = local$var_explicative, constante = local$constante)
    #   
    # browser()
        GGally::ggcoef(x = local$modelSS, exponentiate = TRUE, exclude_intercept = TRUE,
