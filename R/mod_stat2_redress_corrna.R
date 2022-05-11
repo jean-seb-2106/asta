@@ -78,11 +78,12 @@ mod_stat2_redress_corrna_server <- function(id, global){
       
       local$dt <- global$dt_apur 
       local$var <- input$NomVarRedress2
+      local$var1 <- "REPONDANT_C"
     }) 
     
     output$vcramer <- renderText({
       req(local$dt, local$var)
-var1 <- local$dt[,REPONDANT_C]
+var1 <- local$dt[,local$var1]
 var2 <- local$dt[, local$var]
       t1 <- table(var1,var2)
       format(as.numeric(cramer.v(t1)), digits = 2)
@@ -90,7 +91,7 @@ var2 <- local$dt[, local$var]
     
     output$chi2 <- renderText({
       req(local$dt, local$var)
-      var1 <- local$dt[,REPONDANT_C]
+      var1 <- local$dt[,local$var1]
       var2 <- local$dt[, local$var]
       t1 <- table(var1,var2)
       format(as.numeric(chisq.test(t1)[1]),digits=4)
