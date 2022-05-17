@@ -32,10 +32,10 @@ mod_sommaire_ui <- function(id){
     tags$br(),
     h3("Stat 1 : Statistiques descriptives et inf\u00e9rentielles"),
     h3("Stat 2 : Enqu\u00eates et sondages"),
-    h3(span("Stat 3 : Analyse exploratoire de donn\u00e9es (en construction)", style="font-style:italic")),
+    h3(span("Stat 3 : Analyse exploratoire de donn\u00e9es")),
     h3("Stat 4 : Mod\u00e9lisation"),
     h3("Stat 5 : S\u00e9ries temporelles"),
-    h3(span("Stat 6 : Secret statistique et Big Data (en construction)", style="font-style:italic")),
+    h3(span("Stat 6 : Secret statistique et Big Data")),
     tags$br(),tags$br(),tags$br()
     
    
