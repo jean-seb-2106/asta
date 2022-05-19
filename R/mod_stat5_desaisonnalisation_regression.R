@@ -38,9 +38,16 @@ mod_stat5_desaisonnalisation_regression_ui <- function(id){
                              "Taux de chomage au sens du BIT (en %)" = "chomage_bit")
                ),
                
-               checkboxInput(inputId = ns("check1"),
-                             label = "Appliquez le logarithme",
-                             value = FALSE),
+               # checkboxInput(inputId = ns("check1"),
+               #               label = "Appliquez le logarithme",
+               #               value = FALSE),
+               
+               selectInput(
+                 inputId = ns("select2"),
+                 label = "Choisissez un modele :",
+                 choices = c("Modele additif"="additive",
+                             "Modele multiplicatif"="multiplicative")
+               ),
                
                actionButton(
                  ns("go1"),
@@ -99,12 +106,12 @@ mod_stat5_desaisonnalisation_regression_server <- function(id,global){
     ns <- session$ns
  
     
-    local <- reactiveValues(ts=NULL,log_ts=NULL,check=NULL)
+    local <- reactiveValues(ts=NULL,log_ts=NULL,modele=NULL)
     
     observeEvent(input$go1,{
       local$ts <- eval(parse(text=input$select1))
       local$log_ts <- log(local$ts)
-      local$check <- input$check1
+      local$modele <- input$select2
       
     })
     
@@ -115,7 +122,7 @@ mod_stat5_desaisonnalisation_regression_server <- function(id,global){
 
       # shinipsum::random_dygraph()
       x <- local$ts
-      if(local$check){
+      if(local$modele == "multiplicative"){
         ycvs <- cvs_reg_desais(local$log_ts)
         xcvs <- exp(ycvs)
       }else{
@@ -131,7 +138,7 @@ mod_stat5_desaisonnalisation_regression_server <- function(id,global){
       validate(need(expr = !is.null(local$ts),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
 
-      if(local$check){
+      if(local$modele == "multiplicative"){
         reg <- cvs_reg_model(local$log_ts)
       }else{
         reg <- cvs_reg_model(local$ts)

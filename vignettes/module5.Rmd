@@ -97,6 +97,7 @@ plot_dt(airpass_dt)
 graph_month(airpass)
 graph_month(hotel)
 graph_month(visiteurs)
+graph_month(accidents)
 ```
 
 
