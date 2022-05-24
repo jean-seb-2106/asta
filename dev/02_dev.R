@@ -55,6 +55,7 @@ golem::add_module( name = "stat2_redress_impact" ) # Name of the module
 golem::add_module( name = "stat3" )
 golem::add_module( name = "stat3_acp" )
 golem::add_module( name = "stat3_cah" )
+golem::add_module( name = "stat3_kmeans" )
 
 #Stat4
 golem::add_module( name = "stat4" )
