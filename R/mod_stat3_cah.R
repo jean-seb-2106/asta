@@ -45,8 +45,7 @@ mod_stat3_cah_ui <- function(id) {
           tags$p("Arbre hiérarchique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
           
           plotOutput(ns("arbre")),
-          br(),
-          tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+          br()
         )
       ),
       
@@ -56,27 +55,35 @@ mod_stat3_cah_ui <- function(id) {
         
         
         wellPanel(
-          tags$p("Plan Factoriel", style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
-          ,
+          
+          
+          tabsetPanel(type = "tabs",
+          
+                      tabPanel("Plan Factoriel",
+                               br(),
           plotOutput(ns("facto")),
           br(),
           
-          br(),
-          tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+          br()
         ),
       
+        tabPanel("Description Classes",
       
-        wellPanel(
-          tags$p("Description des classes", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                 br(),
           DT::DTOutput(ns("tab_classes")),
           br(),
-          tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+          br()
         )
       )
       
       
-    )
+    ),
     
+    wellPanel(br(), DT::DTOutput(ns("tab_ind")),
+              br()
+             )
+    
+  ))
   ))
 }
     
@@ -122,6 +129,21 @@ mod_stat3_cah_server <- function(id,global){
       e_t <- e_t[-1,]
     })
     
+    
+    output$tab_ind <- renderDT({
+      
+      validate(
+        need(expr = !is.null(local$dt),
+             message = "Choisissez le nombre de classes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
+      )
+      
+      p <- local$result
+      e <- p$data.clust %>% group_by(clust) %>% select(clust)
+      f <- bind_cols( state.name, e) %>% rename("Etat" = "...1", "Cluster" = "clust")
+      f
+      
+      
+        })
     
     output$arbre <- renderPlot({
       

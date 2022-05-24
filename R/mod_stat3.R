@@ -86,6 +86,15 @@ mod_stat3_ui <- function(id){
                    mod_stat3_acp_ui(ns("stat3_acp_1")), 
                  ),
                  tabItem(
+                   tabName = "ad",
+                   h2("Analyse Discriminante"),
+                   wellPanel("L’analyse factorielle discriminante (AFD) ou simplement analyse discriminante
+                             est une technique statistique qui vise à décrire, expliquer et prédire l’appartenance
+                             à des groupes prédéfinis (classes, modalités de la variable à prédire…) d’un ensemble d’observations 
+                             (individus, exemples…) à partir d’une série de variables prédictives (descripteurs, variables exogènes…).", br(),
+                             "Source : Wikipedia")
+                 ),
+                 tabItem(
                    tabName = "cah",
                    mod_stat3_cah_ui(ns("stat3_cah_1")), 
                  ),
