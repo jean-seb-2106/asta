@@ -1,7 +1,6 @@
 name: Dockerize
 
 on:
-  workflow_dispatch:
   push:
     tags:
       - "*"
