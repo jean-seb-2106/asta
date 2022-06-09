@@ -28,7 +28,7 @@ mod_sommaire_ui <- function(id){
       )),
       
     br(),
-    tags$h2("Programme du parcours statistique des attach\u00e9s", style = "background-color: #e7e7e7 ;"),
+    tags$h2("~ Programme du parcours statistique des attach\u00e9s ~", style = "background-color: #e7e7e7 ;"),
     tags$br(),
     h3("Stat 1 : Statistiques descriptives et inf\u00e9rentielles"),
     h3("Stat 2 : Enqu\u00eates et sondages"),
