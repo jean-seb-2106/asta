@@ -48,7 +48,7 @@ mod_stat1_inf_estimations_ui <- function(id){
                                  style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                           
                                               infoBox(
-                                                title = "Valeur recherch\u00e9ee",
+                                                title = "Valeur recherch\u00e9e",
                                                 value = textOutput(ns("vraie")),
                                                 # subtitle = "Source : Grandile",
                                                 icon = icon("chart-line"),
