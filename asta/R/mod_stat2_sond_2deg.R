@@ -20,7 +20,7 @@ mod_stat2_sond_2deg_ui <- function(id){
              sliderInput(ns("TailleEch"), 
                          "Choisissez la taille de l'\u00e9chantillon",
                          min=100,
-                         max=1500,
+                         max=1000,
                          value=150),
              selectInput(ns("VarDegres"),"Choisissez une variable pour la selection des UP :",  choices=c("Diplome"="DIPL","PCS"="PCS", "Activite"="ACT")),
              selectInput(ns("NomVarDegres"),"Choisissez un caract\u00e8re :", choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
