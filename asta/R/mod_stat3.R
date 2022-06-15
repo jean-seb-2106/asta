@@ -122,7 +122,16 @@ mod_stat3_ui <- function(id){
                        tags$p("Area : aire en miles au carr\u00e9  ", style = "font-size : 110% ")
                        
                      )
-                     )
+                     ),
+                     column(8,
+                            
+                            tags$img(
+                              src = 'www/etats_unis.png',
+                              title = "CEFIL",
+                              height = '450'
+                            )    
+                            
+                            )
                      
                    )),
                    

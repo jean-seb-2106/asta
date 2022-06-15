@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>module4</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">module4</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(asta)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>model_lineaireS_tab &lt;-<span class="st"> </span><span class="cf">function</span>(input_data, var_expliquee, var_explicative, <span class="dt">constante =</span> <span class="ot">TRUE</span>){</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  </span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="cf">if</span> (constante <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>) {</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  a &lt;-<span class="st"> </span><span class="kw">paste0</span>(var_expliquee, <span class="st">&quot;~ 0 + &quot;</span>, var_explicative)</span>
+<span id="cb2-5"><a href="#cb2-5"></a>   model &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">as.formula</span>(a), <span class="dt">data =</span> input_data)</span>
+<span id="cb2-6"><a href="#cb2-6"></a>  result &lt;-<span class="st"> </span><span class="kw">summary</span>(model)</span>
+<span id="cb2-7"><a href="#cb2-7"></a>  result}</span>
+<span id="cb2-8"><a href="#cb2-8"></a>  <span class="cf">else</span> {  a &lt;-<span class="st"> </span><span class="kw">paste0</span>(var_expliquee, <span class="st">&quot;~&quot;</span>, var_explicative)</span>
+<span id="cb2-9"><a href="#cb2-9"></a>   model &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">as.formula</span>(a), <span class="dt">data =</span> input_data)</span>
+<span id="cb2-10"><a href="#cb2-10"></a>  result &lt;-<span class="st"> </span><span class="kw">summary</span>(model)</span>
+<span id="cb2-11"><a href="#cb2-11"></a>  result}</span>
+<span id="cb2-12"><a href="#cb2-12"></a>}</span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="kw">model_lineaireS_tab</span>(grandile, <span class="st">&quot;REV_DISPONIBLE&quot;</span>, <span class="st">&quot;PATRIMOINE&quot;</span>)</span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="co">#&gt; </span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="co">#&gt; lm(formula = as.formula(a), data = input_data)</span></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co">#&gt; </span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="co">#&gt; -232768   11612   20000   24694   51313 </span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co">#&gt; </span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="co">#&gt;            Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="co">#&gt; PATRIMOINE 0.040897   0.000443   92.32   &lt;2e-16 ***</span></span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co">#&gt; ---</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb2-28"><a href="#cb2-28"></a><span class="co">#&gt; </span></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="co">#&gt; Residual standard error: 24350 on 5417 degrees of freedom</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="co">#&gt; Multiple R-squared:  0.6114, Adjusted R-squared:  0.6113 </span></span>
+<span id="cb2-31"><a href="#cb2-31"></a><span class="co">#&gt; F-statistic:  8523 on 1 and 5417 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>model_lineaireS_plot &lt;-<span class="st"> </span><span class="cf">function</span>(input_data, var_expliquee, var_explicative, <span class="dt">constante=</span><span class="ot">TRUE</span>){</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  </span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="cf">if</span> (constante <span class="op">==</span><span class="st"> </span><span class="ot">TRUE</span>) { a &lt;-<span class="st"> </span><span class="kw">paste0</span>(var_expliquee, <span class="st">&quot;~ 0 + &quot;</span>, var_explicative)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  model &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">as.formula</span>(a), <span class="dt">data =</span> input_data)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  result &lt;-<span class="st"> </span><span class="kw">summary</span>(model)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  </span>
+<span id="cb3-7"><a href="#cb3-7"></a>  a &lt;-<span class="st"> </span>input_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> .data[[var_explicative]],<span class="dt">y =</span> .data[[var_expliquee]])) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>,<span class="dt">size=</span><span class="dv">1</span>,<span class="dt">color=</span><span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>,<span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb3-11"><a href="#cb3-11"></a>  </span>
+<span id="cb3-12"><a href="#cb3-12"></a>  </span>
+<span id="cb3-13"><a href="#cb3-13"></a>  coeff=<span class="kw">coefficients</span>(model)</span>
+<span id="cb3-14"><a href="#cb3-14"></a>  a <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> coeff[<span class="dv">1</span>])}</span>
+<span id="cb3-15"><a href="#cb3-15"></a>  </span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="cf">else</span> {</span>
+<span id="cb3-17"><a href="#cb3-17"></a>  </span>
+<span id="cb3-18"><a href="#cb3-18"></a>  a &lt;-<span class="st"> </span><span class="kw">paste0</span>(var_expliquee, <span class="st">&quot;~&quot;</span>, var_explicative)</span>
+<span id="cb3-19"><a href="#cb3-19"></a>  model &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">as.formula</span>(a), <span class="dt">data =</span> input_data)</span>
+<span id="cb3-20"><a href="#cb3-20"></a>  result &lt;-<span class="st"> </span><span class="kw">summary</span>(model)</span>
+<span id="cb3-21"><a href="#cb3-21"></a>  </span>
+<span id="cb3-22"><a href="#cb3-22"></a>  a &lt;-<span class="st"> </span>input_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> .data[[var_explicative]],<span class="dt">y =</span> .data[[var_expliquee]])) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb3-23"><a href="#cb3-23"></a><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha=</span><span class="fl">0.2</span>,<span class="dt">size=</span><span class="dv">1</span>,<span class="dt">color=</span><span class="st">&quot;darkblue&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb3-24"><a href="#cb3-24"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span><span class="st">&quot;lm&quot;</span>,<span class="dt">color=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb3-26"><a href="#cb3-26"></a>  </span>
+<span id="cb3-27"><a href="#cb3-27"></a>  </span>
+<span id="cb3-28"><a href="#cb3-28"></a>  coeff=<span class="kw">coefficients</span>(model)</span>
+<span id="cb3-29"><a href="#cb3-29"></a>  a <span class="op">+</span><span class="st"> </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> coeff[<span class="dv">1</span>], <span class="dt">slope =</span> coeff[<span class="dv">2</span>])}</span>
+<span id="cb3-30"><a href="#cb3-30"></a>  }</span>
+<span id="cb3-31"><a href="#cb3-31"></a></span>
+<span id="cb3-32"><a href="#cb3-32"></a><span class="kw">model_lineaireS_plot</span>(grandile, <span class="st">&quot;REV_DISPONIBLE&quot;</span>, <span class="st">&quot;PATRIMOINE&quot;</span>)</span>
+<span id="cb3-33"><a href="#cb3-33"></a><span class="co">#&gt; `geom_smooth()` using formula &#39;y ~ x&#39;</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>model_lineaireM_tab &lt;-<span class="st"> </span><span class="cf">function</span>(input_data, var_expliquee, var_explicatives){</span>
+<span id="cb4-2"><a href="#cb4-2"></a>   a &lt;-<span class="st"> </span><span class="kw">paste0</span>(var_expliquee, <span class="st">&quot;~&quot;</span>, <span class="kw">paste0</span>(var_explicatives, <span class="dt">collapse =</span> <span class="st">&quot;+&quot;</span>))</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  model &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">as.formula</span>(a), <span class="dt">data =</span> input_data)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>  result &lt;-<span class="st"> </span><span class="kw">summary</span>(model)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  result</span>
+<span id="cb4-6"><a href="#cb4-6"></a>}</span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="kw">model_lineaireM_tab</span>(iris, <span class="st">&quot;Petal.Length&quot;</span>, <span class="kw">c</span>(<span class="st">&quot;Sepal.Length&quot;</span>, <span class="st">&quot;Petal.Width&quot;</span>, <span class="st">&quot;Sepal.Width&quot;</span>))</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="co">#&gt; </span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="co">#&gt; lm(formula = as.formula(a), data = input_data)</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="co">#&gt; </span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co">#&gt;      Min       1Q   Median       3Q      Max </span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="co">#&gt; -0.99333 -0.17656 -0.01004  0.18558  1.06909 </span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="co">#&gt; </span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co">#&gt; (Intercept)  -0.26271    0.29741  -0.883    0.379    </span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="co">#&gt; Sepal.Length  0.72914    0.05832  12.502   &lt;2e-16 ***</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="co">#&gt; Petal.Width   1.44679    0.06761  21.399   &lt;2e-16 ***</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a><span class="co">#&gt; Sepal.Width  -0.64601    0.06850  -9.431   &lt;2e-16 ***</span></span>
+<span id="cb4-23"><a href="#cb4-23"></a><span class="co">#&gt; ---</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="co">#&gt; </span></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="co">#&gt; Residual standard error: 0.319 on 146 degrees of freedom</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="co">#&gt; Multiple R-squared:  0.968,  Adjusted R-squared:  0.9674 </span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="co">#&gt; F-statistic:  1473 on 3 and 146 DF,  p-value: &lt; 2.2e-16</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>model_logistique_tab &lt;-<span class="st"> </span><span class="cf">function</span>(input_data, var_expliquee, var_explicatives, <span class="dt">constante =</span> <span class="ot">TRUE</span>){</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="co"># browser()</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  data_log &lt;-<span class="st"> </span>input_data <span class="op">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">var_expliquee_num =</span> <span class="kw">ifelse</span>(.data[[var_expliquee]] <span class="op">==</span><span class="st"> &quot;0&quot;</span>,<span class="dv">0</span>, <span class="dv">1</span>)) </span>
+<span id="cb5-5"><a href="#cb5-5"></a>  </span>
+<span id="cb5-6"><a href="#cb5-6"></a>  </span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="cf">if</span> (constante <span class="op">==</span><span class="st"> </span><span class="ot">FALSE</span>) {</span>
+<span id="cb5-8"><a href="#cb5-8"></a>    a &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;var_expliquee_num ~ 0 + &quot;</span>, <span class="kw">paste0</span>(var_explicatives, <span class="dt">collapse =</span> <span class="st">&quot;+&quot;</span>))</span>
+<span id="cb5-9"><a href="#cb5-9"></a>    model &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">as.formula</span>(a),<span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="dt">data =</span> data_log)</span>
+<span id="cb5-10"><a href="#cb5-10"></a>    result &lt;-<span class="st"> </span><span class="kw">summary</span>(model)</span>
+<span id="cb5-11"><a href="#cb5-11"></a>    result</span>
+<span id="cb5-12"><a href="#cb5-12"></a>  }</span>
+<span id="cb5-13"><a href="#cb5-13"></a>  <span class="cf">else</span>{ </span>
+<span id="cb5-14"><a href="#cb5-14"></a>    a &lt;-<span class="st"> </span><span class="kw">paste0</span>(<span class="st">&quot;var_expliquee_num ~&quot;</span>, <span class="kw">paste0</span>(var_explicatives, <span class="dt">collapse =</span> <span class="st">&quot;+&quot;</span>))</span>
+<span id="cb5-15"><a href="#cb5-15"></a>    model &lt;-<span class="st"> </span><span class="kw">glm</span>(<span class="kw">as.formula</span>(a),<span class="dt">family =</span> <span class="kw">binomial</span>(<span class="dt">link =</span> <span class="st">&quot;logit&quot;</span>), <span class="dt">data =</span> data_log)</span>
+<span id="cb5-16"><a href="#cb5-16"></a>    result &lt;-<span class="st"> </span><span class="kw">summary</span>(model)</span>
+<span id="cb5-17"><a href="#cb5-17"></a>    result}</span>
+<span id="cb5-18"><a href="#cb5-18"></a>  </span>
+<span id="cb5-19"><a href="#cb5-19"></a>  </span>
+<span id="cb5-20"><a href="#cb5-20"></a>}</span>
+<span id="cb5-21"><a href="#cb5-21"></a></span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="kw">model_logistique_tab</span>(<span class="dt">input_data =</span> grandile, <span class="dt">var_expliquee =</span> <span class="st">&quot;PAUVRE&quot;</span>, <span class="dt">var_explicatives =</span> <span class="kw">c</span>(<span class="st">&quot;REV_DISPONIBLE&quot;</span>,<span class="st">&quot;ACT&quot;</span>), <span class="dt">constante =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="co">#&gt; </span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="co">#&gt; glm(formula = as.formula(a), family = binomial(link = &quot;logit&quot;), </span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="co">#&gt;     data = data_log)</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="co">#&gt; </span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="co">#&gt; Deviance Residuals: </span></span>
+<span id="cb5-30"><a href="#cb5-30"></a><span class="co">#&gt;     Min       1Q   Median       3Q      Max  </span></span>
+<span id="cb5-31"><a href="#cb5-31"></a><span class="co">#&gt; -1.1233  -0.2596  -0.1043  -0.0538   3.4548  </span></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="co">#&gt; </span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="co">#&gt;                  Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="co">#&gt; (Intercept)     5.337e-01  1.454e-01   3.671 0.000241 ***</span></span>
+<span id="cb5-36"><a href="#cb5-36"></a><span class="co">#&gt; REV_DISPONIBLE -5.273e-05  8.370e-06  -6.300 2.98e-10 ***</span></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="co">#&gt; ACT1           -1.941e+00  4.024e-01  -4.824 1.41e-06 ***</span></span>
+<span id="cb5-38"><a href="#cb5-38"></a><span class="co">#&gt; ACT2           -2.772e+00  3.343e-01  -8.295  &lt; 2e-16 ***</span></span>
+<span id="cb5-39"><a href="#cb5-39"></a><span class="co">#&gt; ACT3           -2.935e+00  6.000e-01  -4.892 1.00e-06 ***</span></span>
+<span id="cb5-40"><a href="#cb5-40"></a><span class="co">#&gt; ACT4           -4.019e+00  3.921e-01 -10.251  &lt; 2e-16 ***</span></span>
+<span id="cb5-41"><a href="#cb5-41"></a><span class="co">#&gt; ---</span></span>
+<span id="cb5-42"><a href="#cb5-42"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span>
+<span id="cb5-43"><a href="#cb5-43"></a><span class="co">#&gt; </span></span>
+<span id="cb5-44"><a href="#cb5-44"></a><span class="co">#&gt; (Dispersion parameter for binomial family taken to be 1)</span></span>
+<span id="cb5-45"><a href="#cb5-45"></a><span class="co">#&gt; </span></span>
+<span id="cb5-46"><a href="#cb5-46"></a><span class="co">#&gt;     Null deviance: 4875.8  on 5417  degrees of freedom</span></span>
+<span id="cb5-47"><a href="#cb5-47"></a><span class="co">#&gt; Residual deviance: 3117.0  on 5412  degrees of freedom</span></span>
+<span id="cb5-48"><a href="#cb5-48"></a><span class="co">#&gt; AIC: 3129</span></span>
+<span id="cb5-49"><a href="#cb5-49"></a><span class="co">#&gt; </span></span>
+<span id="cb5-50"><a href="#cb5-50"></a><span class="co">#&gt; Number of Fisher Scoring iterations: 8</span></span></code></pre></div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
