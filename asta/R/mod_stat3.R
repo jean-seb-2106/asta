@@ -22,6 +22,14 @@ mod_stat3_ui <- function(id){
                         sidebarMenu(id = "tabs_regression",
                                     
                                     
+                                    menuItem(
+                                      "Donnees",
+                                      menuSubItem("Visualisation", tabName = "viz"),
+                                      menuSubItem("Description", tabName = "description"),
+                                      icon = icon("th"),
+                                      selected = FALSE
+                                    ),
+                                    
                                     
                                     menuItem(
                                       
@@ -80,6 +88,15 @@ mod_stat3_ui <- function(id){
                
                tabItems(
                  
+                 tabItem(
+                   
+                   tabName = "viz",h2("Visualisation du fichier"),
+                   tags$br(), 
+                   DT::DTOutput(ns('dt1'))
+                   
+                   ),
+                 
+                 tabItem(tabName = "description"),
                  
                  tabItem(
                    tabName = "acp",
