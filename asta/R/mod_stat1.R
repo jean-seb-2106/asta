@@ -96,7 +96,7 @@ tabPanel(
         
         #Les données--------
         tabItem(tabName = "subitem1",
-                h2("Visualisation du fichier "),
+                h2("Visualisation du fichier"),
                 tags$br(), 
                 DT::DTOutput(ns('dt1'))),
 
