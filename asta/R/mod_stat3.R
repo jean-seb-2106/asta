@@ -99,10 +99,33 @@ mod_stat3_ui <- function(id){
                  
                  tabItem(
                    
-                   tabName = "description"
+                   tabName = "description",
+                   h2("Description des donn\u00e9es"),
+                   tags$br(),
+                   tags$p("Il s’agit d’un jeu de donn\u00e9es portant sur certaines caract\u00e9ristiques des diff\u00e9rents Etats des USA dans les ann\u00e9es 70. Ce jeu de donn\u00e9es fait partie des nombreux jeux de donn\u00e9es d’exemple qui peuvent être charg\u00e9s directement sur R.", 
+                          style = "font-size : 110%; "),
+                   fluidRow(
+                     
+                     column(4,
+                     
+                     wellPanel(
+                       tags$p("Dictionnaire des variables", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                       
+                       tags$br(),  
+                       tags$p("Population : estimation de la population au 1er juillet 1975 (en milliers)", style = "font-size : 110% "),
+                       tags$p("Income : revenu par tête en dollars (1974) ", style = "font-size : 110% "),
+                       tags$p("Illiteracy : illetrisme (1970, pourcentage) ", style = "font-size : 110% "),
+                       tags$p("Life Exp : esp\u00e9rance de vie (1969-1971, ann\u00e9es) ", style = "font-size : 110% "),
+                       tags$p("Murder : nombre d’homicides pour une population de 100 000 personnes (1976) ", style = "font-size : 110% "),
+                       tags$p("HS Grad : pourcentage de diplôm\u00e9s de l’enseignement supérieur (1970) ", style = "font-size : 110% "),
+                       tags$p("Frost : nombre moyen de jours ayant une temp\u00e9rature minimale inf\u00e9rieure à 0°C dans la capitale ou plus grande vile (1931-1960)", style = "font-size : 110% "),
+                       tags$p("Area : aire en miles au carr\u00e9  ", style = "font-size : 110% ")
+                       
+                     )
+                     )
+                     
+                   )),
                    
-                   
-                   ),
                  
                  tabItem(
                    tabName = "acp",
