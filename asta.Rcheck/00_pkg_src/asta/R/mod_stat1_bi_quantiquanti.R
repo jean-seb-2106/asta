@@ -19,11 +19,11 @@ mod_stat1_bi_quantiquanti_ui <- function(id){
                           wellPanel(
                             tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                             selectInput(ns("select1"),
-                                        label = "Choisissez une variable :",
+                                        label = "Choisissez une variable en abscisse :",
                                         choices = c("AGE","REV_DISPONIBLE","PATRIMOINE"),
                                         selected = "REV_DISPONIBLE"),
                             selectInput(ns("select2"),
-                                        label = "Choisissez une variable :",
+                                        label = "Choisissez une variable en ordonn\u00e9e:",
                                         choices = c("AGE","REV_DISPONIBLE","PATRIMOINE"),
                                         selected = "PATRIMOINE"),
                             actionButton(ns("go1"),

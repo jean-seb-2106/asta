@@ -25,6 +25,13 @@ mod_stat4_ui <- function(id){
                         sidebarMenu(id = "tabs_regression",
                                     
                                     
+                                    menuItem(
+                                      "Donn\u00e9es",
+                                      menuSubItem("Visualisation", tabName = "viz_reg"),
+                                      menuSubItem("Description", tabName = "description_reg"),
+                                      icon = icon("th"),
+                                      selected = FALSE
+                                    ),
                                     
                                     menuItem(
                                       
@@ -89,6 +96,27 @@ mod_stat4_ui <- function(id){
                
                tabItems(
                  
+                 tabItem(
+                   
+                   tabName = "viz_reg",
+                   h2("Visualisation des fichiers"),
+                   tags$br(), 
+                   
+                   tabsetPanel(type="tabs",
+                               tabPanel("gapminder",
+                                 
+                                 DT::DTOutput(ns('dt1'))
+                                 
+                               ),
+                               tabPanel("titanic",
+                                 
+                                        DT::DTOutput(ns('dt2'))
+                                 
+                               ))
+                   
+                   
+                   
+                 ),
                  
                  tabItem(
                    tabName = "reg_lineaire",
@@ -121,6 +149,19 @@ mod_stat4_server <- function(id, global){
     ns <- session$ns
     
     global <- reactiveValues(data = grandile)
+    local <- reactiveValues(dt1 = gapminder, dt2=titanic)
+    
+    output$dt1 <- renderDT({
+      
+      local$dt1 %>% DT::datatable(class = "display")
+      
+    })
+    
+    output$dt2 <- renderDT({
+      
+      local$dt2 %>% DT::datatable(class = "display")
+      
+    })
  
     mod_stat4_lineaire_simple_server("stat4_lineaire_simple_ui_1", global=global)
     mod_stat4_lineaire_multiple_server("stat4_lineaire_multiple_ui_1",global=global)

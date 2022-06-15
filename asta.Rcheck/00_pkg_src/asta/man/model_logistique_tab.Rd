@@ -4,12 +4,7 @@
 \alias{model_logistique_tab}
 \title{model_logistique_tab}
 \usage{
-model_logistique_tab(
-  input_data,
-  var_expliquee,
-  var_explicatives,
-  constante = TRUE
-)
+model_logistique_tab(input_data, var_expliquee, var_explicatives)
 }
 \arguments{
 \item{input_data}{un dataframe}
@@ -29,5 +24,5 @@ Fonction qui fait tourner une regression logistique et sort un tableau de result
 \examples{
 model_logistiqueSS_tab(input_data = titanic, 
 var_expliquee = "Survived", 
-var_explicatives = c("Sex","Age"), constante = TRUE)
+var_explicatives = c("Sex","Age"))
 }
