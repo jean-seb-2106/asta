@@ -1,0 +1,46 @@
+accidents               accidents
+airpass                 airpass
+boxplot_tirage_m2       boxplot_tirage_m2
+chomage_bit             chomage_bit
+cvs_decompo_graph       cvs_decompo_graph
+cvs_mm_desais           cvs_mm_desais
+cvs_reg_desais          cvs_reg_desais
+cvs_reg_model           cvs_reg_model
+data_apur_m2            data_apur_m2
+dygraph_reg_cvs         dygraph_reg_cvs
+dygraph_ts              dygraph_ts
+format_box              format_box
+gapminder               gapminder
+grandile                grandile
+grandile_apur           grandile_apur
+grandile_redress        grandile_redress
+graph_month             graph_month
+graphggplotly_diagbarre
+                        graphggplotly_diagbarre
+graphggplotly_histo     graphggplotly_histo
+graphggplotly_nuage     graphggplotly_nuage
+graphggplotly_qualiquanti
+                        graphggplotly_qualiquanti
+histoplotly_simul       histoplotly_simul
+hotel                   hotel
+model_lineaireM_tab     model_lineaireM_tab
+model_lineaireS_plot    model_lineaireS_plot
+model_lineaireS_tab     model_lineaireS_tab
+model_logistiqueSS_tab
+                        model_logistiqueSS_tab
+model_logistique_tab    model_logistique_tab
+plot_apur_m2            plot_apur_m2
+pond_m2                 table_ponderee
+rambarplot_quali        rambarplot_quali
+run_app                 Run the Shiny Application
+simul_moyenne           simul_moyenne
+state                   state
+tab_moyenne             tab_moyenne
+tableau_croise          tableau_croise
+tirage_degres_m2        tirage_degres_m2
+tirage_grappe_m2        Tirage_grappe_m2
+tirage_sas_m2           tirage_sas_m2
+tirage_strat_m2         tirage_strat_m2
+titanic                 titanic
+tri_plat                tri_plat
+visiteurs               visiteurs

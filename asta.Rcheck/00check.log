@@ -1,0 +1,160 @@
+* using log directory 'C:/Users/Jean/Documents/packagesR/asta/asta.Rcheck'
+* using R version 4.0.2 (2020-06-22)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: ISO8859-1
+* using options '--no-manual --as-cran'
+* checking for file 'asta/DESCRIPTION' ... OK
+* this is package 'asta' version '1.0'
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking serialization versions ... OK
+* checking whether package 'asta' can be installed ... WARNING
+Found the following significant warnings:
+  Warning: replacing previous import 'dplyr::filter' by 'stats::filter' when loading 'asta'
+See 'C:/Users/Jean/Documents/packagesR/asta/asta.Rcheck/00install.out' for details.
+* checking installed package size ... NOTE
+  installed size is  8.2Mb
+  sub-directories of 1Mb or more:
+    app   2.5Mb
+    doc   5.1Mb
+* checking package directory ... OK
+* checking for future file timestamps ... NOTE
+unable to verify current time
+* checking 'build' directory ... OK
+* checking DESCRIPTION meta-information ... WARNING
+Invalid license file pointers: LICENSE
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... WARNING
+Found the following files with non-ASCII characters:
+  fct_graphggplotly_diagbarre.R
+  mod_stat1.R
+  mod_stat1_inf_tests.R
+  mod_stat2_redress_corrna.R
+  mod_stat2_redress_impact.R
+  mod_stat3.R
+  mod_stat3_acp.R
+  mod_stat3_cah.R
+  mod_stat4_lineaire_multiple.R
+  mod_stat4_lineaire_simple.R
+  mod_stat4_logistique.R
+  mod_stat5_desaisonnalisation_mm.R
+  mod_stat5_desaisonnalisation_regression.R
+  mod_stat6.R
+Portable packages must use only ASCII characters in their R code,
+except perhaps in comments.
+Use \uxxxx escapes for other characters.
+* checking R files for syntax errors ... WARNING
+Warnings in file 'R/mod_stat1_inf_estimations.R':
+  unable to translate 'Taux de pauvret<U+00E9> (en %)' to native encoding
+  unable to translate 'Moyenne d'<U+00E2>ge' to native encoding
+  unable to translate 'Moyenne des revenus disponibles (en <U+20AC>)' to native encoding
+  unable to translate 'Moyenne du patrimoine (en <U+20AC>)' to native encoding
+
+Warnings in file 'R/mod_stat1_inf_intervalles.R':
+  unable to translate 'Taux de pauvret<U+00E9> (en %)' to native encoding
+  unable to translate 'Moyenne d'<U+00E2>ge' to native encoding
+  unable to translate 'Moyenne des revenus disponibles (en <U+20AC>)' to native encoding
+  unable to translate 'Moyenne du patrimoine (en <U+20AC>)' to native encoding
+
+Warnings in file 'R/mod_stat1_inf_simulations.R':
+  unable to translate 'Taux de pauvret<U+00E9> (en %)' to native encoding
+  unable to translate 'Moyenne d'<U+00E2>ge' to native encoding
+  unable to translate 'Moyenne des revenus disponibles (en <U+20AC>)' to native encoding
+  unable to translate 'Moyenne du patrimoine (en <U+20AC>)' to native encoding
+
+Warnings in file 'R/mod_stat1_inf_tests.R':
+  unable to translate 'Taux de pauvret<U+00E9> (en %)' to native encoding
+  unable to translate 'Moyenne d'<U+00E2>ge' to native encoding
+  unable to translate 'Moyenne des revenus disponibles (en <U+20AC>)' to native encoding
+  unable to translate 'Moyenne du patrimoine (en <U+20AC>)' to native encoding
+  unable to translate 'H1 diff<U+00E9>rent de x' to native encoding
+
+Warnings in file 'R/mod_stat2_pond_coher.R':
+  unable to translate 'Pr<U+00E9>sence jardin' to native encoding
+  unable to translate 'Pr<U+00E9>sence jardin' to native encoding
+
+Warning in file 'R/mod_stat2_pond_vraiss.R':
+  unable to translate 'Superficie par pi<U+00E8>ce' to native encoding
+
+Warnings in file 'R/mod_stat2_redress_na.R':
+  unable to translate 'Activit<U+00E9>' to native encoding
+  unable to translate 'R<U+00E9>pondants' to native encoding
+  unable to translate 'Echantillon<U+00E9>s' to native encoding
+
+Warnings in file 'R/mod_stat5_analyse_saisonnalite.R':
+  unable to translate 'Trafic a<U+00E9>rien' to native encoding
+  unable to translate 'Fr<U+00E9>quentation hoteliere' to native encoding
+
+Warnings in file 'R/mod_stat5_analyse_visualisation.R':
+  unable to translate 'Trafic a<U+00E9>rien' to native encoding
+  unable to translate 'Fr<U+00E9>quentation hoteliere' to native encoding
+
+Warnings in file 'R/mod_stat5_desaisonnalisation_mm.R':
+  unable to translate 'Trafic a<U+00E9>rien' to native encoding
+  unable to translate 'Fr<U+00E9>quentation hoteliere' to native encoding
+
+Warnings in file 'R/mod_stat5_desaisonnalisation_regression.R':
+  unable to translate 'Trafic a<U+00E9>rien' to native encoding
+  unable to translate 'Fr<U+00E9>quentation hoteliere' to native encoding
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+mod_stat3_cah_server : <anonymous>: no visible binding for global
+  variable 'state.name'
+mod_stat3_kmeans_server : <anonymous> : clusters: no visible global
+  function definition for 'kmeans'
+mod_stat3_kmeans_server : <anonymous>: no visible global function
+  definition for 'palette'
+mod_stat3_kmeans_server : <anonymous>: no visible global function
+  definition for 'par'
+mod_stat3_kmeans_server : <anonymous>: no visible global function
+  definition for 'points'
+Undefined global functions or variables:
+  kmeans palette par points state.name
+Consider adding
+  importFrom("datasets", "state.name")
+  importFrom("grDevices", "palette")
+  importFrom("graphics", "par", "points")
+  importFrom("stats", "kmeans")
+to your NAMESPACE file.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of 'data' directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+ WARNING
+'qpdf' is needed for checks on size reduction of PDFs
+* checking installed files from 'inst/doc' ... OK
+* checking files in 'vignettes' ... OK
+* checking examples ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in 'inst/doc' ... OK
+* checking re-building of vignette outputs ... OK
+* checking for non-standard things in the check directory ... OK
+* checking for detritus in the temp directory ... OK
+* DONE
+Status: 5 WARNINGs, 3 NOTEs
