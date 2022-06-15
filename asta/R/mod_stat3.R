@@ -38,9 +38,9 @@ mod_stat3_ui <- function(id){
                                       selected = FALSE,
                                       menuSubItem("ACP", 
                                                   tabName = "acp"),
-                                      menuSubItem("AFC", 
+                                      menuSubItem("AFC (en construction)", 
                                                   tabName = "afc"),
-                                      menuSubItem("ACM", 
+                                      menuSubItem("ACM (en construction)", 
                                                   tabName = "acm")
                                       
                                       
