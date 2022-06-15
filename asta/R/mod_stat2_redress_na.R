@@ -148,7 +148,7 @@ mod_stat2_redress_na_server <- function(id, global){
         mutate(taux_reponse = paste(round((
           repondants / echantillonnes
         ) * 100, 1), " %")) %>% 
-        rename("R\u00e9pondants" = repondants , "Echantillon\u00e9s" = echantillonnes )
+        rename("R\u00e9pondants" = repondants , "Echantillonn\u00e9s" = echantillonnes )
       
       
       
