@@ -90,13 +90,19 @@ mod_stat3_ui <- function(id){
                  
                  tabItem(
                    
-                   tabName = "viz",h2("Visualisation du fichier"),
+                   tabName = "viz",
+                   h2("Visualisation du fichier"),
                    tags$br(), 
                    DT::DTOutput(ns('dt1'))
                    
                    ),
                  
-                 tabItem(tabName = "description"),
+                 tabItem(
+                   
+                   tabName = "description"
+                   
+                   
+                   ),
                  
                  tabItem(
                    tabName = "acp",
@@ -142,6 +148,13 @@ mod_stat3_server <- function(id, global){
     ns <- session$ns
  
     global <- reactiveValues(data = grandile)
+    local <- reactiveValues(dt = state)
+    
+    output$dt1 <- renderDT({
+      
+      local$dt %>% DT::datatable(class = "display")
+      
+    })
     
     mod_stat3_acp_server("stat3_acp_1", global=global)
     mod_stat3_cah_server("stat3_cah_1", global=global) 
