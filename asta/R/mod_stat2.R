@@ -57,7 +57,7 @@ tabPanel(
           
           
           menuItem(
-            "Ponderation",
+            "Apurements",
             icon = icon("th"),
             menuSubItem("Base des r\u00e9pondants", 
                         tabName = "subiteme"),
