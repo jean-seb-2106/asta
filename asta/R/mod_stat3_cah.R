@@ -164,7 +164,7 @@ mod_stat3_cah_server <- function(id,global){
              message = "Choisissez le nombre de classes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
       
-      plot(local$result,choice='map',draw.tree=FALSE, xlim = c(-3,3)) 
+      plot(local$result,choice='map',draw.tree=FALSE) 
       
     })
   })
