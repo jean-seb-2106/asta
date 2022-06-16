@@ -26,7 +26,7 @@ mod_stat3_cah_ui <- function(id) {
             ns("dimensions"),
             "Choisissez le nombre de dimensions de l'ACP que vous souhaitez conserver",
             min = 1,
-            max = 9,
+            max = 6,
             value = 4
           ),
           sliderInput(
@@ -103,7 +103,7 @@ mod_stat3_cah_server <- function(id,global){
       local$dt <- global$dt
       local$dimensions <- input$dimensions
       local$classes <- input$classes
-      local$result <- HCPC(PCA(local$dt,graph=FALSE), nb.clust=local$classes, consol=FALSE,graph=FALSE,nb.par=local$dimensions)
+      local$result <- HCPC(PCA(local$dt,graph=FALSE, ncp=local$dimensions), nb.clust=local$classes, consol=FALSE,graph=FALSE)
       
     })
     
@@ -164,7 +164,7 @@ mod_stat3_cah_server <- function(id,global){
              message = "Choisissez le nombre de classes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
       
-      plot(local$result,choice='map',draw.tree=FALSE) + xlim(-3,3)
+      plot(local$result,choice='map',draw.tree=FALSE) 
       
     })
   })

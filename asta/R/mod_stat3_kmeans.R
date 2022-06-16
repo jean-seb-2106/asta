@@ -69,7 +69,17 @@ mod_stat3_kmeans_server <- function(id,global){
       local$vary <- input$ycol
       local$clusters <- input$clusters
      
-
+      selectedData <- function(){
+        b <- local$dt
+        b[, c(local$varx, local$vary)]
+      }
+      local$selectedData <- selectedData()
+      
+      clusters <- function() {
+        kmeans(selectedData(), local$clusters, nstart = 5)
+      }
+      local$clusters <- clusters()
+      
     })
     
     
@@ -83,24 +93,17 @@ mod_stat3_kmeans_server <- function(id,global){
              message = "Choisissez des axes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
       
-      selectedData <- function(){
-        b <- local$dt
-        b[, c(local$varx, local$vary)]
-      }
-      
-      clusters <- function() {
-        kmeans(selectedData(), local$clusters)
-      }
-    
+     
+    a <- local$clusters
     
       palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
                 "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999"))
       
       par(mar = c(5.1, 4.1, 0, 1))
-      plot(selectedData(),
-           col = clusters()$cluster,
+      plot(local$selectedData,
+           col = a$cluster,
            pch = 20, cex = 3)
-      points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
+      points(a$centers, pch = 4, cex = 4, lwd = 4)
     })
     
   
