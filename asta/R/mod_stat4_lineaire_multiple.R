@@ -65,31 +65,39 @@ mod_stat4_lineaire_multiple_server <- function(id,global){
     observeEvent(input$go, {
       local$dt <- global$dt
       local$constante <- input$constante
+      local$explicative <- input$Varexplicative
       
      # local$constante <- input$constante
-      local$model <- model_lineaireM_tab(input_data = local$dt,
-                                         var_expliquee = input$Varexpliquee,
-                                         var_explicatives = input$Varexplicative,
-                                         constante = local$constante     )
+ 
       
     })
     
     output$tab1 <- renderPrint({
       
-      validate(need(expr = !is.null(local$dt),
+      validate(need(expr = !is.null(local$explicative),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
     # browser()
-      print(local$model)
+      model <- model_lineaireM_tab(input_data = local$dt,
+                                         var_expliquee = input$Varexpliquee,
+                                         var_explicatives = local$explicative,
+                                         constante = local$constante     )
+      print(model)
     })
     
     output$coeffcorr <- renderPrint({
       
-      validate(need(expr = !is.null(local$dt),
+      validate(need(expr = !is.null(local$explicative),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
       
       # browser()
       
-      c <- round(as.numeric(local$model[8]),2)
+      model <- model_lineaireM_tab(input_data = local$dt,
+                                   var_expliquee = input$Varexpliquee,
+                                   var_explicatives = local$explicative,
+                                   constante = local$constante     )
+      
+      
+      c <- round(as.numeric(model[8]),2)
       c
     })
 

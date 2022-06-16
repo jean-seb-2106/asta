@@ -76,7 +76,7 @@ mod_stat2_pond_agreg_server <- function(id, global){
       validate(need(expr = !is.null(local$dt),
                     message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le tableau"))
      
-      t <- local$dt %>% filter(TYPE_LOG == local$filtre ) %>% 
+      t <- local$dt %>% dplyr::filter(TYPE_LOG == local$filtre ) %>% 
         mutate(NBPIECES == as.character(NBPIECES)) %>% 
         group_by(NBPIECES) %>% 
         summarise(Effectifs = n(),Moyenne = mean(.data[[local$Varcontrole]]),Mediane=median(.data[[local$Varcontrole]]), Q1=quantile(.data[[local$Varcontrole]],probs = 0.25), Q3=quantile(.data[[local$Varcontrole]],probs = 0.75))
@@ -89,7 +89,7 @@ mod_stat2_pond_agreg_server <- function(id, global){
                message = "Choisissez une variable dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
         )
         
-        grandile_apur2 <- local$dt %>% filter(SUPERF_JARDIN>0)
+        grandile_apur2 <- local$dt %>% dplyr::filter(SUPERF_JARDIN>0)
         p <- ggplot(grandile_apur2, aes(.data[[local$Varcontrole]], fill = TYPE_LOG)) +
           geom_histogram(binwidth = 20, colour="black") +
           ylab("Effectifs") + 
