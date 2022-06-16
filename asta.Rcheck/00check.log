@@ -16,18 +16,16 @@
 * checking serialization versions ... OK
 * checking whether package 'asta' can be installed ... WARNING
 Found the following significant warnings:
-  Warning: The package `ellipsis` (>= 0.3.2) is required as of rlang 1.0.0.
   Warning: Can't find generic `sew` in package knitr to register S3 method.
   Warning: replacing previous import 'dplyr::filter' by 'stats::filter' when loading 'asta'
 See 'C:/Users/Jean/Documents/packagesR/asta/asta.Rcheck/00install.out' for details.
 * checking installed package size ... NOTE
-  installed size is  8.4Mb
+  installed size is  8.5Mb
   sub-directories of 1Mb or more:
     app   2.7Mb
     doc   5.1Mb
 * checking package directory ... OK
-* checking for future file timestamps ... NOTE
-unable to verify current time
+* checking for future file timestamps ... OK
 * checking 'build' directory ... OK
 * checking DESCRIPTION meta-information ... WARNING
 Invalid license file pointers: LICENSE
@@ -45,6 +43,7 @@ Found the following files with non-ASCII characters:
   mod_stat3.R
   mod_stat3_acp.R
   mod_stat3_cah.R
+  mod_stat4.R
   mod_stat4_lineaire_multiple.R
   mod_stat4_lineaire_simple.R
   mod_stat4_logistique.R
@@ -117,8 +116,6 @@ Warnings in file 'R/mod_stat5_desaisonnalisation_regression.R':
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
 * checking R code for possible problems ... NOTE
-mod_stat3_cah_server : <anonymous>: no visible binding for global
-  variable 'state.name'
 mod_stat3_kmeans_server : <anonymous> : clusters: no visible global
   function definition for 'kmeans'
 mod_stat3_kmeans_server : <anonymous>: no visible global function
@@ -128,9 +125,8 @@ mod_stat3_kmeans_server : <anonymous>: no visible global function
 mod_stat3_kmeans_server : <anonymous>: no visible global function
   definition for 'points'
 Undefined global functions or variables:
-  kmeans palette par points state.name
+  kmeans palette par points
 Consider adding
-  importFrom("datasets", "state.name")
   importFrom("grDevices", "palette")
   importFrom("graphics", "par", "points")
   importFrom("stats", "kmeans")
@@ -160,10 +156,14 @@ Extensions' manual.
 * checking installed files from 'inst/doc' ... OK
 * checking files in 'vignettes' ... OK
 * checking examples ... OK
+Examples with CPU (user + system) or elapsed time > 5s
+                  user system elapsed
+simul_moyenne     7.22   0.47    7.70
+histoplotly_simul 7.16   0.46    7.72
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in 'inst/doc' ... OK
 * checking re-building of vignette outputs ... OK
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 6 WARNINGs, 3 NOTEs
+Status: 6 WARNINGs, 2 NOTEs

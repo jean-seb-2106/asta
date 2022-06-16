@@ -16,6 +16,6 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.0
 NeedsCompilation: no
-Packaged: 2022-06-15 09:58:54 UTC; Jean
+Packaged: 2022-06-16 13:02:09 UTC; Jean
 Author: Jean Sebban [cre, aut]
 Maintainer: Jean Sebban <jean.sebban@insee.fr>
