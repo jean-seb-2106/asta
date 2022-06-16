@@ -408,7 +408,7 @@ base::assign(".ptime", proc.time(), pos = "CheckExEnv")
 
 model_logistiqueSS_tab(input_data = titanic, 
 var_expliquee = "Survived", 
-var_explicatives = c("Sex","Age"), constante = TRUE)
+var_explicatives = c("Sex","Age"))
 
 
 

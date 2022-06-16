@@ -16,7 +16,7 @@ graphggplotly_histo <- function(data,var,nbclass){
   x <- data[,var]
   y <- ggplot(data) +
     aes(x=.data[[var]]) +
-    geom_histogram(bins = nbclass,col="black") +
+    geom_histogram(bins = nbclass,col="black",fill="lightgrey") +
     theme_minimal() +
     geom_vline(xintercept = mean(x),color="red") +
     geom_vline(xintercept = median(x),color="darkgreen")

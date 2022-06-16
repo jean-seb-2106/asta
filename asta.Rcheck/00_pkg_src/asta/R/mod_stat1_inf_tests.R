@@ -28,7 +28,7 @@ mod_stat1_inf_tests_ui <- function(id){
                      
                      sliderInput(ns("slide1"),
                                  "Choisissez la taille de l'\u00e9chantillon :",
-                                 min = 1,
+                                 min = 5,
                                  max = 5418,
                                  value = 1000),
                      

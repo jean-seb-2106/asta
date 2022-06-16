@@ -14,8 +14,8 @@ Suggests: datasets, kableExtra, knitr, lubridate, purrr, rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 NeedsCompilation: no
-Packaged: 2022-06-15 08:23:29 UTC; Jean
+Packaged: 2022-06-15 09:58:54 UTC; Jean
 Author: Jean Sebban [cre, aut]
 Maintainer: Jean Sebban <jean.sebban@insee.fr>

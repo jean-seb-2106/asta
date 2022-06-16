@@ -14,22 +14,15 @@
 #'
 #' @examples model_logistiqueSS_tab(input_data = titanic, 
 #' var_expliquee = "Survived", 
-#' var_explicatives = c("Sex","Age"), constante = TRUE)
-model_logistique_tab <- function(input_data, var_expliquee, var_explicatives, constante = TRUE){
+#' var_explicatives = c("Sex","Age"))
+model_logistique_tab <- function(input_data, var_expliquee, var_explicatives){
   # browser()
 
   
-  if (constante == TRUE) {
-    a <- paste0(var_expliquee, " ~ 0 + ", paste0(var_explicatives, collapse = "+"))
-    model <- glm(as.formula(a),family = binomial(link = "logit"), data = input_data, weights = input_data$Freq)
-    result <- summary(model)
-    result
-  }
-  else{ 
+ 
     a <- paste0(var_expliquee, " ~", paste0(var_explicatives, collapse = "+"))
     model <- glm(as.formula(a),family = binomial(link = "logit"), data = input_data, weights = input_data$Freq)
-    result <- summary(model)
-    result}
+    model
   
   
 }
