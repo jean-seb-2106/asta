@@ -25,7 +25,7 @@ mod_stat3_cah_ui <- function(id) {
           sliderInput(
             ns("dimensions"),
             "Choisissez le nombre de dimensions de l'ACP que vous souhaitez conserver",
-            min = 1,
+            min = 2,
             max = 6,
             value = 4
           ),
