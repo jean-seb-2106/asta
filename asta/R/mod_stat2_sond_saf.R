@@ -24,7 +24,7 @@ mod_stat2_sond_saf_ui <- function(id){
                          value=150),
              selectInput(ns("NomVar1"),
                          "Choisissez une variable de stratification :", 
-                         choices=c("Diplome"="DIPL","Pauvre"="PAUVRE")),
+                         choices=c("Diplome"="DIPL","Pauvre"="PAUVRE", "PCS"="PCS")),
              selectInput(ns("NomVar2"),
                          "Choisissez un caract\u00e8re :", 
                          choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
