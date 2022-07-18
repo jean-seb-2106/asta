@@ -1,6 +1,6 @@
 Package: asta
 Title: ASTA
-Version: 1.0
+Version: 1.1
 Authors@R: 
     person("Jean", "Sebban", , "jean.sebban@insee.fr", role = c("cre", "aut"))
 Description: Appli attaches.
@@ -16,7 +16,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.0
 NeedsCompilation: no
-Packaged: 2022-06-16 13:02:09 UTC; Jean
+Packaged: 2022-06-30 12:25:50 UTC; Jean
 Author: Jean Sebban [cre, aut]
 Maintainer: Jean Sebban <jean.sebban@insee.fr>
-Built: R 4.0.2; ; 2022-06-16 13:02:22 UTC; windows
+Built: R 4.0.2; ; 2022-06-30 12:25:59 UTC; windows

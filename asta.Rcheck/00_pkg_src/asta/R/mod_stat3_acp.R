@@ -18,9 +18,9 @@ mod_stat3_acp_ui <- function(id){
                             
                             wellPanel(
                               tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                              textInput(ns("dim1"), label = "Choisissez un axe entre 1 et 9", value = "1"),
+                              sliderInput(ns("dim1"), label = "Choisissez un axe entre 1 et 6", value = "1", step = 1, min = 1, max = 6),
                               
-                              textInput(ns("dim2"), label = "Choisissez un axe entre 1 et 9", value =  "2"),
+                              sliderInput(ns("dim2"), label = "Choisissez un axe entre 1 et 6", value =  "2", step = 1, min = 1, max = 6),
                               
                               
                               
@@ -72,7 +72,7 @@ mod_stat3_acp_server <- function(id, global){
     
     observeEvent(input$go, {
       local$dt <- global$dt
-      local$result <- PCA(local$dt,graph=FALSE)
+      local$result <- PCA(local$dt,graph=FALSE, ncp = 6)
       
     })
     
