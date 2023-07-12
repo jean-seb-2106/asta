@@ -6,16 +6,17 @@ Authors@R:
 Description: Appli attaches.
 License: MIT + file LICENSE
 Depends: R (>= 2.10)
-Imports: config (>= 0.3.1), dashboardthemes, data.table, dplyr, DT,
-        dygraphs, FactoMineR, GGally, ggplot2, ggthemes, golem (>=
-        0.3.1), plotly, questionr, rAmCharts, sampling, shinipsum,
-        shiny (>= 1.7.1), shinydashboard, shinythemes, stats, tidyr
+Imports: broom.helpers, config (>= 0.3.1), dashboardthemes, data.table,
+        dplyr, DT, dygraphs, FactoMineR, GGally, ggplot2, ggthemes,
+        golem (>= 0.3.1), plotly, questionr, rAmCharts, sampling,
+        shinipsum, shiny (>= 1.7.1), shinydashboard, shinythemes,
+        stats, tidyr
 Suggests: datasets, kableExtra, knitr, lubridate, purrr, rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2022-06-30 12:25:50 UTC; Jean
+Packaged: 2023-07-12 13:14:29 UTC; onyxia
 Author: Jean Sebban [cre, aut]
 Maintainer: Jean Sebban <jean.sebban@insee.fr>
