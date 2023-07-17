@@ -26,9 +26,9 @@ hotel                   hotel
 model_lineaireM_tab     model_lineaireM_tab
 model_lineaireS_plot    model_lineaireS_plot
 model_lineaireS_tab     model_lineaireS_tab
-model_logistique_tab    model_logistique_tab
 model_logistiqueSS_tab
                         model_logistiqueSS_tab
+model_logistique_tab    model_logistique_tab
 plot_apur_m2            plot_apur_m2
 pond_m2                 table_ponderee
 rambarplot_quali        rambarplot_quali

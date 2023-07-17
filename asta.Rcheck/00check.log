@@ -1,10 +1,14 @@
-* using log directory ‘/home/onyxia/work/asta/asta.Rcheck’
-* using R version 4.2.3 (2023-03-15)
-* using platform: x86_64-pc-linux-gnu (64-bit)
+* using log directory 'C:/Users/Dr Constance SEBBAN/Dropbox/PC/Documents/packageR/asta/asta.Rcheck'
+* using R version 4.3.1 (2023-06-16 ucrt)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* R was compiled by
+    gcc.exe (GCC) 12.2.0
+    GNU Fortran (GCC) 12.2.0
+* running under: Windows 10 x64 (build 19045)
 * using session charset: UTF-8
-* using options ‘--no-manual --as-cran’
-* checking for file ‘asta/DESCRIPTION’ ... OK
-* this is package ‘asta’ version ‘1.1’
+* using options '--no-manual --as-cran'
+* checking for file 'asta/DESCRIPTION' ... OK
+* this is package 'asta' version '1.1'
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
@@ -17,22 +21,18 @@ use conditionally.
 * checking for executable files ... OK
 * checking for hidden files and directories ... OK
 * checking for portable file names ... OK
-* checking for sufficient/correct file permissions ... OK
 * checking serialization versions ... OK
-* checking whether package ‘asta’ can be installed ... [36s/11s] WARNING
-Found the following significant warnings:
-  Warning: replacing previous import ‘dplyr::filter’ by ‘stats::filter’ when loading ‘asta’
-See ‘/home/onyxia/work/asta/asta.Rcheck/00install.out’ for details.
+* checking whether package 'asta' can be installed ... [15s] OK
 * checking installed package size ... NOTE
-  installed size is  8.9Mb
+  installed size is  8.7Mb
   sub-directories of 1Mb or more:
-    app   2.8Mb
-    doc   5.5Mb
+    app   2.7Mb
+    doc   5.4Mb
 * checking package directory ... OK
 * checking for future file timestamps ... OK
-* checking ‘build’ directory ... OK
-* checking DESCRIPTION meta-information ... WARNING
-Invalid license file pointers: LICENSE
+* checking 'build' directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+Pointeur de fichier licence incorrect : LICENSE
 * checking top-level files ... OK
 * checking for left-over files ... OK
 * checking index information ... OK
@@ -40,17 +40,17 @@ Invalid license file pointers: LICENSE
 * checking R files for non-ASCII characters ... WARNING
 Found the following files with non-ASCII characters:
   fct_graphggplotly_diagbarre.R
-  mod_stat1_inf_tests.R
   mod_stat1.R
+  mod_stat1_inf_tests.R
   mod_stat2_redress_corrna.R
   mod_stat2_redress_impact.R
+  mod_stat3.R
   mod_stat3_acp.R
   mod_stat3_cah.R
-  mod_stat3.R
+  mod_stat4.R
   mod_stat4_lineaire_multiple.R
   mod_stat4_lineaire_simple.R
   mod_stat4_logistique.R
-  mod_stat4.R
   mod_stat5_desaisonnalisation_mm.R
   mod_stat5_desaisonnalisation_regression.R
   mod_stat6.R
@@ -65,25 +65,25 @@ Use \uxxxx escapes for other characters.
 * checking whether the namespace can be unloaded cleanly ... OK
 * checking loading without being on the library search path ... OK
 * checking dependencies in R code ... NOTE
-Namespace in Imports field not imported from: ‘broom.helpers’
+Dépendance d'espace de nom dans le champ Imports non importé depuis : 'broom.helpers'
   All declared Imports should be used.
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
-* checking R code for possible problems ... [85s/22s] NOTE
+* checking R code for possible problems ... [14s] NOTE
 mod_stat3_kmeans_server : <anonymous> : clusters: no visible global
-  function definition for ‘kmeans’
+  function definition for 'kmeans'
 mod_stat3_kmeans_server : <anonymous>: no visible global function
-  definition for ‘palette’
+  definition for 'palette'
 mod_stat3_kmeans_server : <anonymous>: no visible global function
-  definition for ‘par’
+  definition for 'par'
 mod_stat3_kmeans_server : <anonymous>: no visible global function
-  definition for ‘points’
+  definition for 'points'
 Undefined global functions or variables:
   kmeans palette par points
 Consider adding
-  importFrom("graphics", "par", "points")
   importFrom("grDevices", "palette")
+  importFrom("graphics", "par", "points")
   importFrom("stats", "kmeans")
 to your NAMESPACE file.
 * checking Rd files ... OK
@@ -93,31 +93,31 @@ to your NAMESPACE file.
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
 * checking Rd \usage sections ... WARNING
-Documented arguments not in \usage in documentation object 'model_logistique_tab':
-  ‘constante’
+Arguments documentés non repris dans \usage pour la documentation de l'objet 'model_logistique_tab' :
+  'constante'
 
 Functions with \usage entries need to have the appropriate \alias
 entries, and all their arguments documented.
 The \usage entries must correspond to syntactically valid R code.
-See chapter ‘Writing R documentation files’ in the ‘Writing R
-Extensions’ manual.
+See chapter 'Writing R documentation files' in the 'Writing R
+Extensions' manual.
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
-* checking contents of ‘data’ directory ... OK
+* checking contents of 'data' directory ... OK
 * checking data for non-ASCII characters ... OK
 * checking LazyData ... OK
 * checking data for ASCII and uncompressed saves ... OK
-* checking installed files from ‘inst/doc’ ... OK
-* checking files in ‘vignettes’ ... OK
-* checking examples ... [37s/22s] OK
+* checking installed files from 'inst/doc' ... OK
+* checking files in 'vignettes' ... OK
+* checking examples ... [37s] OK
 Examples with CPU (user + system) or elapsed time > 5s
-                           user system elapsed
-graphggplotly_diagbarre   1.215  4.293   0.351
-graphggplotly_qualiquanti 1.443  3.728   0.542
+                  user system elapsed
+simul_moyenne     5.28   6.72   12.30
+histoplotly_simul 5.09   6.75   12.02
 * checking for unstated dependencies in vignettes ... OK
-* checking package vignettes in ‘inst/doc’ ... OK
-* checking re-building of vignette outputs ... [71s/36s] OK
+* checking package vignettes in 'inst/doc' ... OK
+* checking re-building of vignette outputs ... [34s] OK
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 4 WARNINGs, 4 NOTEs
+Status: 2 WARNINGs, 5 NOTEs
