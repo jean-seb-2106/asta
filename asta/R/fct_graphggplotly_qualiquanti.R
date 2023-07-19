@@ -21,6 +21,9 @@ graphggplotly_qualiquanti <- function(data,varquali,varquanti){
     geom_point(size = 1L) +
     scale_color_hue() +
     theme_minimal() +
-    geom_hline(yintercept=moy,color="red",size=0.5)  
+    geom_hline(yintercept=moy,color="red",size=0.5)  +
+    stat_summary(fun=mean,geom = "crossbar",size=0.5,width=0.5,show.legend = TRUE)+
+    xlab(varquali)+
+    ylab(varquanti)
   
 }
