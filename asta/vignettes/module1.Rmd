@@ -168,6 +168,29 @@ graphggplotly_qualiquanti(grandile,"PCS","REV_DISPONIBLE")
 ```
 
 ```{r}
+#Autre fonction pour créer un nuage de points quali-quanti avec moyennes
+
+#paramètres
+df <- grandile
+varquali <- "DIPL"
+varquanti <- "REV_DISPONIBLE"
+
+varquali_lib <- paste0("LIB_",varquali)
+moy <- mean(df[,varquanti])
+ggplot(df,aes(x = .data[[varquali]],y=.data[[varquanti]],color=.data[[varquali_lib]])) +
+    geom_point(show.legend = FALSE) +
+    geom_hline(yintercept = moy,size=1)+
+    stat_summary(fun=mean,geom = "crossbar",size=0.5,width=0.5,show.legend = TRUE)+
+    theme_light()+
+    xlab(varquali)+
+    ylab(varquanti)
+    # ggtitle(titre,subtitle = waiver())+
+    # scale_y_continuous(breaks = seq(160,210,by=10),limits = c(160,210))
+
+```
+
+
+```{r}
 tab <- tab_moyenne(grandile,"PCS","AGE")
 
 #Fonction pour calculer la variation inter-groupe sur la quanti
