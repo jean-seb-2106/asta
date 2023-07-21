@@ -12,8 +12,6 @@ model_logistique_tab(input_data, var_expliquee, var_explicatives)
 \item{var_expliquee}{une variable quantitative}
 
 \item{var_explicatives}{un vecteur de variables quantitatives}
-
-\item{constante}{un boolean}
 }
 \value{
 un tableau de resultat de la fontion glm()

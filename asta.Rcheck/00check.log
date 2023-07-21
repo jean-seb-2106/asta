@@ -23,7 +23,7 @@ use conditionally.
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
 * checking serialization versions ... OK
-* checking whether package ‘asta’ can be installed ... [38s/16s] WARNING
+* checking whether package ‘asta’ can be installed ... [31s/26s] WARNING
 Found the following significant warnings:
   Warning: replacing previous import ‘dplyr::filter’ by ‘stats::filter’ when loading ‘asta’
 See ‘/home/onyxia/work/asta/asta.Rcheck/00install.out’ for details.
@@ -74,37 +74,14 @@ Namespace in Imports field not imported from: ‘broom.helpers’
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
-* checking R code for possible problems ... [88s/28s] NOTE
-mod_stat3_kmeans_server : <anonymous> : clusters: no visible global
-  function definition for ‘kmeans’
-mod_stat3_kmeans_server : <anonymous>: no visible global function
-  definition for ‘palette’
-mod_stat3_kmeans_server : <anonymous>: no visible global function
-  definition for ‘par’
-mod_stat3_kmeans_server : <anonymous>: no visible global function
-  definition for ‘points’
-Undefined global functions or variables:
-  kmeans palette par points
-Consider adding
-  importFrom("graphics", "par", "points")
-  importFrom("grDevices", "palette")
-  importFrom("stats", "kmeans")
-to your NAMESPACE file.
+* checking R code for possible problems ... [61s/49s] OK
 * checking Rd files ... OK
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
 * checking Rd cross-references ... OK
 * checking for missing documentation entries ... OK
 * checking for code/documentation mismatches ... OK
-* checking Rd \usage sections ... WARNING
-Documented arguments not in \usage in documentation object 'model_logistique_tab':
-  ‘constante’
-
-Functions with \usage entries need to have the appropriate \alias
-entries, and all their arguments documented.
-The \usage entries must correspond to syntactically valid R code.
-See chapter ‘Writing R documentation files’ in the ‘Writing R
-Extensions’ manual.
+* checking Rd \usage sections ... OK
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
 * checking contents of ‘data’ directory ... OK
@@ -113,16 +90,16 @@ Extensions’ manual.
 * checking data for ASCII and uncompressed saves ... OK
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... [44s/31s] OK
+* checking examples ... [47s/50s] OK
 Examples with CPU (user + system) or elapsed time > 5s
-                         user system elapsed
-histoplotly_simul       6.845  0.211   7.060
-simul_moyenne           6.549  0.210   6.760
-graphggplotly_diagbarre 1.815  3.481   0.441
+                           user system elapsed
+histoplotly_simul         8.890  0.451  12.082
+simul_moyenne             8.204  0.497   9.760
+graphggplotly_qualiquanti 2.673  4.116   1.624
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
-* checking re-building of vignette outputs ... [85s/50s] OK
+* checking re-building of vignette outputs ... [90s/78s] OK
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 4 WARNINGs, 4 NOTEs
+Status: 3 WARNINGs, 3 NOTEs

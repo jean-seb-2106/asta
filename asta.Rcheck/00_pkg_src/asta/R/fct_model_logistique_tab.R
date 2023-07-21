@@ -5,7 +5,6 @@
 #' @param input_data un dataframe
 #' @param var_expliquee une variable quantitative
 #' @param var_explicatives un vecteur de variables quantitatives
-#' @param constante un boolean
 #'
 #' @importFrom stats glm as.formula
 #'

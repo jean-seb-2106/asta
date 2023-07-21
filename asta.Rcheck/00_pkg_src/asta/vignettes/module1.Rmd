@@ -167,6 +167,7 @@ format_box(vcramer)
 graphggplotly_qualiquanti(grandile,"PCS","REV_DISPONIBLE")
 ```
 
+
 ```{r}
 tab <- tab_moyenne(grandile,"PCS","AGE")
 

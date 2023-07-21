@@ -52,4 +52,8 @@ globalVariables( c("ECH",
                    "HS Grad",
                    "Frost",
                    "Area",
-                   "state.name"))
+                   "state.name",
+                   "kmeans",
+                   "palette",
+                   "par",
+                   "points"))
