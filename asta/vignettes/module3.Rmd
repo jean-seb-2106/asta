@@ -1,0 +1,19 @@
+---
+title: "module3 : Analyses factorielles et classification non supervisée"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{module3}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(asta)
+```

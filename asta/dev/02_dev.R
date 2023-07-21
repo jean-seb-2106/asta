@@ -145,6 +145,7 @@ usethis::use_vignette("module5")
 usethis::use_vignette("module2")
 usethis::use_vignette("module1")
 usethis::use_vignette("module4")
+usethis::use_vignette("module3")
 devtools::build_vignettes("module1")
 
 ## Code Coverage----
