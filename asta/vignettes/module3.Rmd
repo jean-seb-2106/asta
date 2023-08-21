@@ -16,4 +16,21 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(asta)
+library(dplyr)
+library(DT)
 ```
+
+# Onglet données
+
+## Sous-onglet Visualisation
+
+```{r}
+departements %>% datatable(class = "display")
+str(departements)
+```
+
+
+## Sous-onglet Description
+
+
+
