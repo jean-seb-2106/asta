@@ -102,7 +102,8 @@ mod_stat3_ui <- function(id){
                    tabName = "description",
                    h2("Description des donn\u00e9es"),
                    tags$br(),
-                   tags$p("Il s’agit d’un jeu de donn\u00e9es portant sur certaines caract\u00e9ristiques des diff\u00e9rents Etats des USA dans les ann\u00e9es 70. Ce jeu de donn\u00e9es fait partie des nombreux jeux de donn\u00e9es d’exemple qui peuvent être charg\u00e9s directement sur R.", 
+                   tags$p("Il s’agit d’un jeu de donn\u00e9es donnant des informations socio-\u00e9conomiques sur les d\u00e9partements francais. 
+                          Les donn\u00e9es ont \u00e9t\u00e9 constitu\u00e9es à partir du site internet statistiques-locales.fr", 
                           style = "font-size : 110%; "),
                    fluidRow(
                      
@@ -112,14 +113,21 @@ mod_stat3_ui <- function(id){
                        tags$p("Dictionnaire des variables", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                        
                        tags$br(),  
-                       tags$p("Population : estimation de la population au 1er juillet 1975 (en milliers)", style = "font-size : 110% "),
-                       tags$p("Income : revenu par tête en dollars (1974) ", style = "font-size : 110% "),
-                       tags$p("Illiteracy : illetrisme (1970, pourcentage) ", style = "font-size : 110% "),
-                       tags$p("Life Exp : esp\u00e9rance de vie (1969-1971, ann\u00e9es) ", style = "font-size : 110% "),
-                       tags$p("Murder : nombre d’homicides pour une population de 100 000 personnes (1976) ", style = "font-size : 110% "),
-                       tags$p("HS Grad : pourcentage de diplôm\u00e9s de l’enseignement supérieur (1970) ", style = "font-size : 110% "),
-                       tags$p("Frost : nombre moyen de jours ayant une temp\u00e9rature minimale inf\u00e9rieure à 0°C dans la capitale ou plus grande vile (1931-1960)", style = "font-size : 110% "),
-                       tags$p("Area : aire en miles au carr\u00e9  ", style = "font-size : 110% ")
+                       tags$p("nb_habitants : nombre d'habitants", style = "font-size : 110% "),
+                       tags$p("Densite_pop : densit\u00e9 de population ", style = "font-size : 110% "),
+                       tags$p("Part_6599 : part des personnes entre 65 et 99 ans (pourcentage) ", style = "font-size : 110% "),
+                       tags$p("part_bacp5 :  ", style = "font-size : 110% "),
+                       tags$p("Tx_activite : taux d'activit\u00e9 (pourcentage) ", style = "font-size : 110% "),
+                       tags$p("Tx_chomage : taux de chomage (pourcentage) ", style = "font-size : 110% "),
+                       tags$p("Tx_emploi : taux d'emploi", style = "font-size : 110% "),
+                       tags$p("Part_cadres : part de cadres  ", style = "font-size : 110% "),
+                       tags$p("Salaire_horaire : salaire horaire  ", style = "font-size : 110% "),
+                       tags$p("Part_prest : poids des prestations sociales dans les revenus  ", style = "font-size : 110% "),
+                       tags$p("part_resid_secondaires : part des résidences secondaires  ", style = "font-size : 110% "),
+                       tags$p("part_maisons : part des maisons  ", style = "font-size : 110% "),
+                       tags$p("part_propriétaires : part des propriétaires  ", style = "font-size : 110% "),
+                       tags$p("Tx_vols_vehicules : taux  ", style = "font-size : 110% "),
+                       tags$p("GR_REG :   ", style = "font-size : 110% ")
                        
                      )
                      ),
@@ -179,12 +187,12 @@ mod_stat3_server <- function(id, global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    global <- reactiveValues(data = grandile)
+    global <- reactiveValues(data = departements)
     local <- reactiveValues(dt = state)
     
     output$dt1 <- renderDT({
       
-      local$dt %>% DT::datatable(class = "display")
+      global$data %>% DT::datatable(class = "display")
       
     })
     
