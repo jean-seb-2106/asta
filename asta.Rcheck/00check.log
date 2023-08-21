@@ -2,9 +2,9 @@
 * using R version 4.3.1 (2023-06-16)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * R was compiled by
-    gcc (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0
-    GNU Fortran (Ubuntu 11.3.0-1ubuntu1~22.04.1) 11.3.0
-* running under: Ubuntu 22.04.2 LTS
+    gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+    GNU Fortran (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
+* running under: Ubuntu 22.04.3 LTS
 * using session charset: UTF-8
 * using options ‘--no-manual --as-cran’
 * checking for file ‘asta/DESCRIPTION’ ... OK
@@ -23,7 +23,7 @@ use conditionally.
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
 * checking serialization versions ... OK
-* checking whether package ‘asta’ can be installed ... [31s/26s] WARNING
+* checking whether package ‘asta’ can be installed ... [37s/10s] WARNING
 Found the following significant warnings:
   Warning: replacing previous import ‘dplyr::filter’ by ‘stats::filter’ when loading ‘asta’
 See ‘/home/onyxia/work/asta/asta.Rcheck/00install.out’ for details.
@@ -74,7 +74,7 @@ Namespace in Imports field not imported from: ‘broom.helpers’
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
-* checking R code for possible problems ... [61s/49s] OK
+* checking R code for possible problems ... [84s/20s] OK
 * checking Rd files ... OK
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
@@ -85,21 +85,43 @@ Namespace in Imports field not imported from: ‘broom.helpers’
 * checking Rd contents ... OK
 * checking for unstated dependencies in examples ... OK
 * checking contents of ‘data’ directory ... OK
-* checking data for non-ASCII characters ... OK
+* checking data for non-ASCII characters ... WARNING
+  Warning: found non-ASCII strings
+  'Ard<c3><a8>che' in object 'departements'
+  'Ari<c3><a8>ge' in object 'departements'
+  'Bouches-du-Rh<c3><b4>ne' in object 'departements'
+  'Corr<c3><a8>ze' in object 'departements'
+  'C<c3><b4>te-d'Or' in object 'departements'
+  'C<c3><b4>tes-d'Armor' in object 'departements'
+  'Dr<c3><b4>me' in object 'departements'
+  'Finist<c3><a8>re' in object 'departements'
+  'H<c3><a9>rault' in object 'departements'
+  'Is<c3><a8>re' in object 'departements'
+  'Loz<c3><a8>re' in object 'departements'
+  'Ni<c3><a8>vre' in object 'departements'
+  'Puy-de-D<c3><b4>me' in object 'departements'
+  'Pyr<c3><a9>n<c3><a9>es-Atlantiques' in object 'departements'
+  'Hautes-Pyr<c3><a9>n<c3><a9>es' in object 'departements'
+  'Pyr<c3><a9>n<c3><a9>es-Orientales' in object 'departements'
+  'Rh<c3><b4>ne' in object 'departements'
+  'Haute-Sa<c3><b4>ne' in object 'departements'
+  'Sa<c3><b4>ne-et-Loire' in object 'departements'
+  'Deux-S<c3><a8>vres' in object 'departements'
+  'Vend<c3><a9>e' in object 'departements'
+  'La R<c3><a9>union' in object 'departements'
 * checking LazyData ... OK
 * checking data for ASCII and uncompressed saves ... OK
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... [47s/50s] OK
+* checking examples ... [37s/18s] OK
 Examples with CPU (user + system) or elapsed time > 5s
                            user system elapsed
-histoplotly_simul         8.890  0.451  12.082
-simul_moyenne             8.204  0.497   9.760
-graphggplotly_qualiquanti 2.673  4.116   1.624
+graphggplotly_qualiquanti 1.734  7.586   0.646
+graphggplotly_diagbarre   0.924  4.526   0.353
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
-* checking re-building of vignette outputs ... [90s/78s] OK
+* checking re-building of vignette outputs ... [76s/33s] OK
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 3 WARNINGs, 3 NOTEs
+Status: 4 WARNINGs, 3 NOTEs

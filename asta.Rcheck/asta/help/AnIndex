@@ -7,6 +7,7 @@ cvs_mm_desais	cvs_mm_desais
 cvs_reg_desais	cvs_reg_desais
 cvs_reg_model	cvs_reg_model
 data_apur_m2	data_apur_m2
+departements	departements
 dygraph_reg_cvs	dygraph_reg_cvs
 dygraph_ts	dygraph_ts
 format_box	format_box
