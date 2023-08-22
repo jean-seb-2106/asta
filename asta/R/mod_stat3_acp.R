@@ -7,7 +7,8 @@
 #' @noRd 
 #' 
 #' @importFrom FactoMineR PCA plot.PCA
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom factoextra fviz_eig fviz_pca_var fviz_pca_ind
 mod_stat3_acp_ui <- function(id){
   ns <- NS(id)
   tagList(
@@ -34,7 +35,7 @@ mod_stat3_acp_ui <- function(id){
                               plotOutput(ns("inertie")),br(),
                              
                               br(),
-                              tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;"))
+                              tags$p("Source : CEFIL", style = "font-size : 90%; font-style : italic; text-align : right;"))
                      ),
                      
                      column(8,
@@ -43,12 +44,12 @@ mod_stat3_acp_ui <- function(id){
                               tags$p("Graphe des variables", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                               
                               plotOutput(ns("variables")),br(),
-                              tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+                              tags$p("Source : CEFIL", style = "font-size : 90%; font-style : italic; text-align : right;")
                               
                             ),wellPanel(
                               tags$p("Graphe des individus", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                               plotOutput(ns("individus")),br(),
-                              tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;"))
+                              tags$p("Source : CEFIL", style = "font-size : 90%; font-style : italic; text-align : right;"))
                             
                             
                      )
@@ -73,21 +74,25 @@ mod_stat3_acp_server <- function(id, global){
     observeEvent(input$go, {
       local$dt <- global$dt
       local$result <- PCA(local$dt,graph=FALSE, ncp = 6)
+      local$dt2 <- global$data
       
     })
     
     output$inertie <- renderPlot({
       
-      result <- PCA(state,graph=FALSE)
+      # result <- PCA(state,graph=FALSE)
+      # 
+      # eig <- result[["eig"]]
+      # 
+      # eig2 <- as.data.frame(eig[,2]) 
+      # eig2$names <- c("Dim1", "Dim2", "Dim3", "Dim4", "Dim5", "Dim6", "Dim7",  "Dim8")
+      # eig2 <-eig2[order(eig2$`eig[, 2]`),]
+      # 
+      # barplot(main = "Pourcentage d'inertie selon la dimension",height = eig2$`eig[, 2]`, xlim = c(0, 60), names=eig2$names, col="#77b5fe", horiz=T , las=1,
+      # )
       
-      eig <- result[["eig"]]
       
-      eig2 <- as.data.frame(eig[,2]) 
-      eig2$names <- c("Dim1", "Dim2", "Dim3", "Dim4", "Dim5", "Dim6", "Dim7",  "Dim8")
-      eig2 <-eig2[order(eig2$`eig[, 2]`),]
       
-      barplot(main = "Pourcentage d'inertie selon la dimension",height = eig2$`eig[, 2]`, xlim = c(0, 60), names=eig2$names, col="#77b5fe", horiz=T , las=1,
-      )
     })
     
     

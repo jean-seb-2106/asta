@@ -8,13 +8,13 @@ License: MIT + file LICENSE
 Depends: 
     R (>= 2.10)
 Imports:
-    broom.helpers,
     config (>= 0.3.1),
     dashboardthemes,
     data.table,
     dplyr,
     DT,
     dygraphs,
+    factoextra,
     FactoMineR,
     GGally,
     ggplot2,
