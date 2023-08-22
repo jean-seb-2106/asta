@@ -50,6 +50,7 @@ Description de la source et dictionnaire des variables.
 axe1 <- 1 
 axe2 <- 2 
 repel <- FALSE #case à cocher checkbox
+varsupe <- FALSE
 
 ```
 
@@ -78,25 +79,29 @@ fviz_pca_var(res.pca,
              axes=c(axe1,axe2), 
              col.var = "cos2", 
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
-             repel = TRUE)
+             repel = repel)
 
 ```
 ### Graphique nuage des individus
 
-Ajouter la fonction fviz_pca_ind au namespace
+Ajouter la fonction fviz_pca_ind au namespace. 
+
+Si la case variable quali supplémentaire n'a pas été cochée :
 
 ```{r}
 #Graphique "Nuage des individus" - axes paramétrables
 fviz_pca_ind(res.pca, 
              axes=c(axe1,axe2), 
-             repel = TRUE, 
+             repel = repel, 
              labelsize=3)
 ```
+Si la case variable supplémentaire a été cochée :
+
 ```{r}
 #Graphique "Nuage des individus" - idem, mais avec projection d'une supplémentaire quali (région) + ellipses
 fviz_pca_ind(res.pca, 
              axes=c(axe1,axe2), 
-             repel = FALSE, 
+             repel = repel, 
              labelsize=3, 
              habillage = "GR_REG", 
              addEllipses = TRUE, 
