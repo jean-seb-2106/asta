@@ -69,6 +69,7 @@ Il faut rajouter la fonction fviz_eig du package factoextra
 #Graphique "Décomposition de l'inertie"
 fviz_eig(res.pca, addlabels = TRUE)
 ```
+
 ### Affichage du graphe des variables
 
 Ajouter la fonction fviz_pca_var au namespace
@@ -82,9 +83,8 @@ fviz_pca_var(res.pca,
              repel = repel)
 
 ```
-### Graphique nuage des individus
 
-Ajouter la fonction fviz_pca_ind au namespace. 
+### Graphique nuage des individus
 
 Si la case variable quali supplémentaire n'a pas été cochée :
 
@@ -95,7 +95,8 @@ fviz_pca_ind(res.pca,
              repel = repel, 
              labelsize=3)
 ```
-Si la case variable supplémentaire a été cochée :
+
+Si la case variable quali supplémentaire a été cochée :
 
 ```{r}
 #Graphique "Nuage des individus" - idem, mais avec projection d'une supplémentaire quali (région) + ellipses
