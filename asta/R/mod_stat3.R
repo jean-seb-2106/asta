@@ -134,9 +134,9 @@ mod_stat3_ui <- function(id){
                      column(8,
                             
                             tags$img(
-                              src = 'www/etats_unis.png',
-                              title = "CEFIL",
-                              height = '450'
+                              src = 'www/france_dpt.jpg',
+                              title = "D\u00e9partements",
+                              height = '350'
                             )    
                             
                             )
