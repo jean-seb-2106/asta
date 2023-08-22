@@ -86,8 +86,7 @@ mod_stat3_acp_server <- function(id, global){
       
         validate(
           need(expr = !is.null(local$dt),
-               message = "Choisissez des axes et cliquez sur 
-               mettre a jour pour afficher le graphique")
+               message = "Choisissez des axes et cliquez sur mettre a jour pour afficher le graphique")
         )
       
       
