@@ -16,7 +16,7 @@
 (x86)\\WinMerge\\WinMergeU.exe\" -u -e -dl Local -dr Remote \"\$LOCAL\" \"\$REMOTE\"
 \"\$MERGED\""
 
-#pour giter depuis le terminal
+#pour giter depuis le terminal :
 git add . # on coche tout les fichiers
 git commit -m "message de commit" # on fait un commit
 git pull # on récupere les modifications distantes
