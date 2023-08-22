@@ -79,6 +79,7 @@ mod_stat3_acp_server <- function(id, global){
       local$dim1 <- as.numeric(input$dim1)
       local$dim2 <- as.numeric(input$dim2)
       local$chevauch <- input$check1
+      local$varsup <- input$check2
       
     })
     
@@ -126,7 +127,7 @@ mod_stat3_acp_server <- function(id, global){
       # dim1_num <- as.numeric(input$dim1)
       # dim2_num <- as.numeric(input$dim2)
       # plot.PCA(local$result,axes=c(dim1_num,dim2_num),title="Graphe des individus de l'ACP")
-    if(input$check2){
+    if(local$varsup){
       fviz_pca_ind(local$result, 
                    axes=c(local$dim1,local$dim2), 
                    repel = local$chevauch, 
