@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 library(asta)
 library(dplyr)
 library(DT)
+library(factoextra)
+library(FactoMineR)
 ```
 
 # Onglet données
@@ -32,5 +34,73 @@ str(departements)
 
 ## Sous-onglet Description
 
+Description de la source et dictionnaire des variables.
 
+# Onglet Méthodes factorielles
+
+## Sous-onglet ACP
+
+### Paramétrage de l'ACP
+
+```{r}
+#paramètres : quel axe affiché en abscisse - réglette de 1 à 6
+#             quel axe affiché en ordonnée - réglette de 1 à 6
+#             case à cocher pour "chevauchement des labels non/oui" -> option "repel =T/F" à côté du bouton "mettre à jour"
+
+axe1 <- 1 
+axe2 <- 2 
+repel <- FALSE #case à cocher checkbox
+
+```
+
+
+
+```{r}
+#ACP en gardant jusqu'à 6 composantes principales
+res.pca <- PCA(departements, graph=F, ncp=6, quali.sup = "GR_REG")
+```
+
+### Affichage du graphe de décomposition de l'inertie
+
+Il faut rajouter la fonction fviz_eig du package factoextra
+
+```{r}
+#Graphique "Décomposition de l'inertie"
+fviz_eig(res.pca, addlabels = TRUE)
+```
+### Affichage du graphe des variables
+
+Ajouter la fonction fviz_pca_var au namespace
+
+```{r}
+#graphique "Graphe des variables" - axes paramétrables
+fviz_pca_var(res.pca, 
+             axes=c(axe1,axe2), 
+             col.var = "cos2", 
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), 
+             repel = TRUE)
+
+```
+### Graphique nuage des individus
+
+Ajouter la fonction fviz_pca_ind au namespace
+
+```{r}
+#Graphique "Nuage des individus" - axes paramétrables
+fviz_pca_ind(res.pca, 
+             axes=c(axe1,axe2), 
+             repel = TRUE, 
+             labelsize=3)
+```
+```{r}
+#Graphique "Nuage des individus" - idem, mais avec projection d'une supplémentaire quali (région) + ellipses
+fviz_pca_ind(res.pca, 
+             axes=c(axe1,axe2), 
+             repel = FALSE, 
+             labelsize=3, 
+             habillage = "GR_REG", 
+             addEllipses = TRUE, 
+             ellipse.level=0.9)
+
+```
 
