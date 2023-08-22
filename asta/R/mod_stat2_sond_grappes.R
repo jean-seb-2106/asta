@@ -21,16 +21,25 @@ mod_stat2_sond_grappes_ui <- function(id){
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("NomVar1"),
                                  "Choisissez une variable pour la selection des UP :", 
-                                 choices=c("Grappes 20 log"="grappe20","Grappes 10 log"="grappe10","Grappes 5 log"="grappe5","Diplome"="DIPL")),
-                     numericInput(ns("UP"), label = "Choisissez le nombre d'UP \u00e0 \u00e9chantillonner", min = 1, max = 4, value = 1),
+                                 choices=c("Grappes de 20 logements"="grappe20","Grappes de 10 logements"="grappe10","Grappes de 5 logements"="grappe5")),
+                     numericInput(ns("UP"), label = "Choisissez le nombre d'UP \u00e0 \u00e9chantillonner", min = 1, max = 20, value = 5),
                      selectInput(ns("NomVar2"),
                                  "Choisissez un caract\u00e8re :", 
                                  choices=c("Revenu Disponible"="REV_DISPONIBLE","Patrimoine"="PATRIMOINE")),
                      actionButton(ns("go"),
                                   label="Lancer le tirage et les calculs")
                    ),
+                   infoBox(
+                     title = tags$p("Taille de l'\u00e9chantillon", style = "font-size : 80%;"),
+                     value = textOutput(ns("taillech")),
+                     color="green",
+                     width = NULL
+                   ),
+                   
+                   
                    wellPanel("La fonction utilis\u00e9e en R est la fonction",span("sample", style="color:blue"),   "de R base pour la s\u00e9lection des unit\u00e9s primaires"
             )),
+            
             column(4,
                    
                    
@@ -179,6 +188,11 @@ mod_stat2_sond_grappes_server <- function(id, global){
       paste0(format_box(local$sd), " \u20ac")
     })
     
+    output$taillech <- renderText({
+      req(local$ech)
+      
+      nrow(local$ech)
+    })
     
     
   })
