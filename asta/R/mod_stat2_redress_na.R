@@ -19,7 +19,7 @@ mod_stat2_redress_na_ui <- function(id){
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
                                  "Choisissez une variable \u00e0 \u00e9tudier",
-                                 choices=c("Secteur d'activit\u00e9"="ACT", "PCS"="PCS", "Diplome"="DIPL")),
+                                 choices=c("Secteur d'activit\u00e9"="LIB_ACT", "PCS"="LIB_PCS", "Diplome"="LIB_DIPL", "Composition du m\u00e9nage"="LIB_MODCOHA","Age personne de ref."="AGE", "Nombre de pieces"="NBPIECES")),
                      
                      actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats"))
                    ),
