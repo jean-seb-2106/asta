@@ -29,6 +29,7 @@ Imports:
     shinydashboard,
     shinythemes,
     stats,
+    stringr,
     tidyr
 Suggests: 
     datasets,
