@@ -6,8 +6,8 @@ Authors@R:
 Description: Appli attaches.
 License: MIT + file LICENSE
 Depends: R (>= 2.10)
-Imports: broom.helpers, config (>= 0.3.1), dashboardthemes, data.table,
-        dplyr, DT, dygraphs, FactoMineR, GGally, ggplot2, ggthemes,
+Imports: config (>= 0.3.1), dashboardthemes, data.table, dplyr, DT,
+        dygraphs, factoextra, FactoMineR, GGally, ggplot2, ggthemes,
         golem (>= 0.3.1), plotly, questionr, rAmCharts, sampling,
         shinipsum, shiny (>= 1.7.1), shinydashboard, shinythemes,
         stats, tidyr
@@ -17,7 +17,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-08-21 14:38:31 UTC; onyxia
+Packaged: 2023-08-23 13:29:13 UTC; onyxia
 Author: Jean Sebban [cre, aut]
 Maintainer: Jean Sebban <jean.sebban@insee.fr>
-Built: R 4.3.1; ; 2023-08-21 14:38:40 UTC; unix
+Built: R 4.3.1; ; 2023-08-23 13:29:21 UTC; unix
