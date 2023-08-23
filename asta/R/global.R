@@ -56,4 +56,4 @@ globalVariables( c("ECH",
                    "kmeans",
                    "palette",
                    "par",
-                   "points"))
+                   "points","departements","ordre"))
