@@ -65,7 +65,7 @@ tabPanel(
                         tabName = "subitemf"),
             menuSubItem("Contr\u00f4le de coh\u00e9rence interne",
                         tabName = "subitemg"),
-            menuSubItem("Contr\u00f4les de vraissemblance", 
+            menuSubItem("Contr\u00f4les de vraisemblance", 
                         tabName = "subitemh"),
             menuSubItem("Contr\u00f4les agr\u00e9g\u00e9s", 
                         tabName = "subitemi"),
@@ -78,9 +78,9 @@ tabPanel(
             icon = icon("th"),
             menuSubItem("Analyse de la non r\u00e9ponse", 
                         tabName = "subitemj"),
-            menuSubItem("Etude corr\u00e9lation non r\u00e9ponse", 
-                        tabName = "subitemk"),
-            menuSubItem("Redressement et impact", 
+            #menuSubItem("Etude corr\u00e9lation non r\u00e9ponse", 
+            #            tabName = "subitemk"),
+            menuSubItem("Effets du redressement", 
                         tabName = "subiteml"),
             selected = FALSE
           )
@@ -166,7 +166,7 @@ tabPanel(
         
         mod_stat2_redress_na_ui(ns("stat2_redress_na")),
         
-        mod_stat2_redress_corrna_ui(ns("stat2_redress_corrna")),
+        #mod_stat2_redress_corrna_ui(ns("stat2_redress_corrna")),
         
         mod_stat2_redress_impact_ui(ns("stat2_redress_impact"))
         
@@ -223,7 +223,7 @@ mod_stat2_server <- function(id,global){
     
     mod_stat2_redress_na_server("stat2_redress_na", global=global)
     
-    mod_stat2_redress_corrna_server("stat2_redress_corrna", global=global)
+    #mod_stat2_redress_corrna_server("stat2_redress_corrna", global=global)
     
     mod_stat2_redress_impact_server("stat2_redress_impact", global=global)
     

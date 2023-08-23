@@ -10,13 +10,13 @@ Imports: config (>= 0.3.1), dashboardthemes, data.table, dplyr, DT,
         dygraphs, factoextra, FactoMineR, GGally, ggplot2, ggthemes,
         golem (>= 0.3.1), plotly, questionr, rAmCharts, sampling,
         shinipsum, shiny (>= 1.7.1), shinydashboard, shinythemes,
-        stats, tidyr
+        stats, stringr, tidyr
 Suggests: datasets, kableExtra, knitr, lubridate, purrr, rmarkdown
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2023-08-23 13:29:13 UTC; onyxia
+Packaged: 2023-08-23 14:48:25 UTC; onyxia
 Author: Jean Sebban [cre, aut]
 Maintainer: Jean Sebban <jean.sebban@insee.fr>
