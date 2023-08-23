@@ -80,7 +80,7 @@ tabPanel(
                         tabName = "subitemj"),
             #menuSubItem("Etude corr\u00e9lation non r\u00e9ponse", 
             #            tabName = "subitemk"),
-            menuSubItem("Redressement et impact", 
+            menuSubItem("Effets du redressement", 
                         tabName = "subiteml"),
             selected = FALSE
           )

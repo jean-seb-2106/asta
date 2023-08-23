@@ -19,7 +19,7 @@ mod_stat2_redress_impact_ui <- function(id){
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
                                  "Choisissez une variable sur laquelle redresser",
-                                 choices = c("Secteur d'activit\u00e9"="ACT", "PCS"="PCS", "diplome"="DIPL")),
+                                 choices = c("Secteur d'activit\u00e9"="LIB_ACT", "PCS"="LIB_PCS", "diplome"="LIB_DIPL", "Composition du m\u00e9nage"="LIB_MODCOHA","Age personne de ref."="AGE", "Nombre de pieces"="NBPIECES")),
                      
                      actionButton(inputId=ns("go"),"Mettre \u00e0 jour")),
                    
@@ -181,13 +181,13 @@ mod_stat2_redress_impact_server <- function(id, global){
    output$moy_poids <- renderText({
      req(local$dt)
       m <- local$dt_pond 
-     round(mean(m$PONDEF),1)
+     round(mean(m$PONDEF),2)
    })
    
    output$sd_poids <- renderText({
      req(local$dt)
      m <- local$dt_pond 
-     round(sd(m$PONDEF),1)
+     round(sd(m$PONDEF),2)
    })
    
    output$rev_nonpond <- renderText({
