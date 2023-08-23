@@ -18,8 +18,8 @@ mod_stat2_redress_impact_ui <- function(id){
                    wellPanel(
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
-                                 "Choisissez une variable \u00e0 \u00e9tudier",
-                                 choices = c("Activite"="ACT", "PCS"="PCS", "Revenu Disponible"="REV_DISPONIBLE_TRANCHE", "Revenu Disponible 2"="REV_DISPONIBLE_TRANCHE2")),
+                                 "Choisissez une variable sur laquelle redresser",
+                                 choices = c("Secteur d'activit\u00e9"="ACT", "PCS"="PCS", "diplome"="DIPL")),
                      
                      actionButton(inputId=ns("go"),"Mettre \u00e0 jour")),
                    
@@ -51,8 +51,8 @@ mod_stat2_redress_impact_ui <- function(id){
                             
                             infoBox(
                               title = "Rev. Disp. moyen",
-                              value = textOutput(ns("rev_pond")),
-                              subtitle = "Redress\u00e9",
+                              value = textOutput(ns("rev_mere")),
+                              subtitle = "Population m\u00e8re",
                               icon = icon("euro-sign"),
                               #fill = TRUE,
                               color="light-blue",
@@ -69,8 +69,8 @@ mod_stat2_redress_impact_ui <- function(id){
                             ) ,
                             infoBox(
                               title = "Rev. Disp. moyen",
-                              value = textOutput(ns("rev_mere")),
-                              subtitle = "Population m\u00e8re",
+                              value = textOutput(ns("rev_pond")),
+                              subtitle = "Redress\u00e9",
                               icon = icon("euro-sign"),
                               #fill = TRUE,
                               color="light-blue",
@@ -82,8 +82,8 @@ mod_stat2_redress_impact_ui <- function(id){
                             
                             infoBox(
                               title = "Patrimoine moyen",
-                              value = textOutput(ns("pat_pond")),
-                              subtitle = "Redress\u00e9",
+                              value = textOutput(ns("pat_mere")),
+                              subtitle = "Population m\u00e8re",
                               icon = icon("home"),
                               #fill = TRUE,
                               color="light-blue",
@@ -100,8 +100,8 @@ mod_stat2_redress_impact_ui <- function(id){
                             ),
                             infoBox(
                               title = "Patrimoine moyen",
-                              value = textOutput(ns("pat_mere")),
-                              subtitle = "Population m\u00e8re",
+                              value = textOutput(ns("pat_pond")),
+                              subtitle = "Redress\u00e9",
                               icon = icon("home"),
                               #fill = TRUE,
                               color="light-blue",
@@ -114,9 +114,9 @@ mod_stat2_redress_impact_ui <- function(id){
                      column(width=12,
                             
                             wellPanel(
-                              tags$p("Tableau", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                              #tags$p("Tableau", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                               
-                              DTOutput(ns("tab1")),br(),
+                              #DTOutput(ns("tab1")),br(),
                               tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
                               
                             )  )

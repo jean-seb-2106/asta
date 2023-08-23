@@ -11,7 +11,7 @@ mod_stat2_pond_vraiss_ui <- function(id){
   ns <- NS(id)
   
   tabItem(tabName = "subitemh",
-          h2("Contr\u00f4les de vraissemblance"),
+          h2("Contr\u00f4les de vraisemblance"),
           fluidRow(
             column(4,
                    
@@ -23,7 +23,7 @@ mod_stat2_pond_vraiss_ui <- function(id){
                      
                      actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats")),
                    
-                   wellPanel(span("Le contr\u00f4le de vraissemblance :", style="color:blue"),
+                   wellPanel(span("Le contr\u00f4le de vraisemblance :", style="color:blue"),
                              " il fait intervenir plusieurs variables simultan\u00e9ment toujours sous forme de ratios (moyenne, part etc.). Il permet de v\u00e9rifier la pertinence du ratio selon des bornes acceptables \u00e9tablies en fonction de la connaissance qu'on a du domaine.")
             ),
             column(4,

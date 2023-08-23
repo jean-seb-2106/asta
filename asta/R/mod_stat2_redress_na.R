@@ -19,7 +19,7 @@ mod_stat2_redress_na_ui <- function(id){
                      tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                      selectInput(ns("Varcontrole"), 
                                  "Choisissez une variable \u00e0 \u00e9tudier",
-                                 choices=c("Activit\u00e9"="ACT", "PCS"="PCS")),
+                                 choices=c("Secteur d'activit\u00e9"="ACT", "PCS"="PCS", "Diplome"="DIPL")),
                      
                      actionButton(inputId=ns("go"),"Mettre \u00e0 jour les r\u00e9sultats"))
                    ),
@@ -40,10 +40,10 @@ mod_stat2_redress_na_ui <- function(id){
                      width = NULL
                    ) ,
                    infoBox(
-                     title = "Taux sondage global",
-                     value = textOutput(ns("taux_sond")),
+                     title = "Taux r\u00e9ponse global",
+                     value =textOutput(ns("taux_rep")),
                      subtitle = "Source : Cefil 2021",
-                     icon = icon("buromobelexperte"),
+                     icon = icon("registered"),
                      #fill = TRUE,
                      color="light-blue",
                      width = NULL
@@ -62,10 +62,10 @@ mod_stat2_redress_na_ui <- function(id){
                      width = NULL
                    ),
                    infoBox(
-                     title = "Taux r\u00e9ponse global",
-                     value =textOutput(ns("taux_rep")),
+                     title = "V de cramer",
+                     value = textOutput(ns("vcramer")),
                      subtitle = "Source : Cefil 2021",
-                     icon = icon("registered"),
+                     icon = icon("chart-line"),
                      #fill = TRUE,
                      color="light-blue",
                      width = NULL
@@ -106,6 +106,7 @@ mod_stat2_redress_na_server <- function(id, global){
     
         local$dt <- global$dt_apur 
         local$var <- input$Varcontrole
+        local$var1 <- "REPONDANT_C"
     }) 
     
     
@@ -133,6 +134,16 @@ mod_stat2_redress_na_server <- function(id, global){
       local$taux_rep <- paste0(round((sum(local$dt[, "REPONDANT"], na.rm = TRUE)/ sum(local$dt[, "ECH"], na.rm = TRUE))*100,1)," %")
       
     })
+    
+    
+    output$vcramer <- renderText({
+      req(local$dt, local$var)
+      var1 <- local$dt[,local$var1]
+      var2 <- local$dt[, local$var]
+      t1 <- table(var1,var2)
+      format(as.numeric(cramer.v(t1)), digits = 2)
+    })
+    
  
     output$tab1 <- renderTable({
       validate(
@@ -144,7 +155,7 @@ mod_stat2_redress_na_server <- function(id, global){
       t <- local$dt %>%   
         group_by(.data[[local$var]]) %>%
         summarise(repondants = sum(REPONDANT, na.rm = TRUE),
-                  echantillonnes =  sum(ECH, na.rm = TRUE)) %>%
+                  echantillonnes =  sum(as.integer(ECH), na.rm = TRUE)) %>%
         mutate(taux_reponse = paste(round((
           repondants / echantillonnes
         ) * 100, 1), " %")) %>% 
