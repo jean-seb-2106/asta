@@ -177,28 +177,23 @@ fviz_cluster(res.hcpc, axes = c(1,2), ellipse.type = "convex", repel=F, labelsiz
 ## Tableau de résumé (colonne droite, en haut, deuxième onglet)
 
 ```{r}
-p <- res.hcpc
-e <- p$data.clust %>% group_by(clust) #%>%
-e
-purrr::map_df(e,.f = mean) %>% round(1)
+#Fonction qui prend en entrée le résultat de la CAH avec une variable quali sup
+# du fichier départements et qui renvoie un tableau de moyennes
+# par cluster
 
-#   summarise(
-#     
-#   Population_moyenne=round(mean(Population)),
-#   Revenu_percapita=round(mean(Income)),
-#   Taux_illetrisme_pourcent =round(mean(Illiteracy),1),
-#   Esperance_vie=round(mean(`Life Exp`)),
-#   Taux_meurtres_pourcentmille=round(mean(Murder),1),
-#   Part_diplomes_sup=round(mean(`HS Grad`),1),
-#   Nb_jours_gel=round(mean(Frost)), 
-#   Superficie_squaremiles=round(mean(Area))
-#   
-#   )
-# row.names(e) <- paste0("Cluster ", e$clust)
-# e_t <- transpose(e)
-# rownames(e_t) <- colnames(e)
-# colnames(e_t) <- rownames(e)
-# e_t <- e_t[-1,]
+p <- res.hcpc
+e <- p$data.clust[,-15] %>% #on retire la variable quali GR_REG
+  group_by(clust) %>%
+  summarise_all(.funs = mean) %>% 
+  mutate_at(vars(Densite_pop:Tx_vols_vehicules),~round(.x,1)) %>% 
+  mutate(nb_habitants = round(nb_habitants))
+row.names(e) <- paste0("Cluster ", e$clust)
+e_t <- data.table::transpose(e) #à ne pas confondre avec le transpose de purrr
+rownames(e_t) <- colnames(e)
+colnames(e_t) <- rownames(e)
+e_t <- e_t[-1,] #on enlève la première ligne avec le numéro du cluster
+
+
 ```
 
 
