@@ -1,5 +1,5 @@
 ---
-title: "module3 : Analyses factorielles et classification non supervisée"
+title: "module3"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{module3}
@@ -20,6 +20,7 @@ library(dplyr)
 library(DT)
 library(factoextra)
 library(FactoMineR)
+library(purrr)
 ```
 
 # Onglet données
@@ -107,6 +108,132 @@ fviz_pca_ind(res.pca,
              habillage = "GR_REG", 
              addEllipses = TRUE, 
              ellipse.level=0.9)
+
+```
+
+
+# Onglet clustering
+
+## CAH
+
+### Paramètres
+
+```{r}
+#paramètres : le nombre N d'axes à conserver de l'ACP (réglette de 2 à 6)
+#             le nombre K de cluster souhaité (réglette de 2 à 8)
+#             quel axe affiché en abscisse - réglette de 1 à N
+#             quel axe affiché en ordonnée - réglette de 1 à N
+#             case à cocher pour "chevauchement des labels non/oui" -> option "repel =T/F" à côté du bouton "mettre à jour"
+
+#Ajouter un bouton pour la superposition des textes (Checkbox)
+
+#je fais tourner l'ACP et je garde les N premiers axes
+res.pca <- PCA(departements, 
+               graph=FALSE, 
+               ncp=3, 
+               quali.sup="GR_REG")
+
+#Ajouter la fonction HCPC du package FactoMineR dans le namespace
+#CAH en K classes, sans consolidation (puisqu'on ne la présente pas en TD)
+res.hcpc <- HCPC(res.pca, 
+                 nb.clust=4, 
+                 consol=FALSE, 
+                 stand=TRUE, 
+                 graph=FALSE)
+
+
+
+```
+### Diagramme gain d'intertie en bas à droite
+
+```{r}
+#Graphique - Diagramme gains d'inertie (il suggère en noir le nombre de classes à conserver)
+#Graphique à faire apparaître dans le renderPlot sous la barre des paramètres
+plot.HCPC(res.hcpc, 
+          choice = "bar")
+```
+
+## Dendogramme à faire apparaître sur la colonne de gauche en bas
+
+
+```{r}
+#Graphique - Dendogramme
+#Ajouter la fonction fviz_dend au namespace
+fviz_dend(res.hcpc, cex = 0.5, rect = F)
+```
+
+## Nuage d'individus (colonne droite en haut, premier onglet)
+
+
+```{r}
+#Graphique - Nuage des individus (axes paramétrables)
+#Ajouter la fonction fviz_cluster au namespace
+fviz_cluster(res.hcpc, axes = c(1,2), ellipse.type = "convex", repel=F, labelsize = 8)
+
+#je n'arrive pas à forcer pour qu'on ait exactement les mêmes couleurs ici que pour le dendogramme
+
+```
+
+## Tableau de résumé (colonne droite, en haut, deuxième onglet)
+
+```{r}
+p <- res.hcpc
+e <- p$data.clust %>% group_by(clust) #%>%
+e
+purrr::map_df(e,.f = mean) %>% round(1)
+
+#   summarise(
+#     
+#   Population_moyenne=round(mean(Population)),
+#   Revenu_percapita=round(mean(Income)),
+#   Taux_illetrisme_pourcent =round(mean(Illiteracy),1),
+#   Esperance_vie=round(mean(`Life Exp`)),
+#   Taux_meurtres_pourcentmille=round(mean(Murder),1),
+#   Part_diplomes_sup=round(mean(`HS Grad`),1),
+#   Nb_jours_gel=round(mean(Frost)), 
+#   Superficie_squaremiles=round(mean(Area))
+#   
+#   )
+# row.names(e) <- paste0("Cluster ", e$clust)
+# e_t <- transpose(e)
+# rownames(e_t) <- colnames(e)
+# colnames(e_t) <- rownames(e)
+# e_t <- e_t[-1,]
+```
+
+
+
+```{r}
+##############
+### Kmeans ###
+##############
+
+
+#paramètres : le nombre N d'axes à conserver de l'ACP (réglette de 2 à 6)
+#             le nombre K de cluster souhaité (réglette de 2 à 8)
+#             quel axe affiché en abscisse - réglette de 1 à N
+#             quel axe affiché en ordonnée - réglette de 1 à N
+#             case à cocher pour "chevauchement des labels non/oui" -> option "repel =T/F" à côté du bouton "mettre à jour"
+
+
+#je fais tourner l'ACP et je garde les N premiers axes
+res.pca <- PCA(departements, graph=F, ncp=3, quali.sup="GR_REG")
+
+#récupérer ces N axes factoriels
+axesfacto <- res.pca$ind$coord
+
+#kmeans en K classes (pas de réitérations, pour voir que l'algorithme ne converge pas systématiquement vers le même découpage : nstart=1)
+res.km <- kmeans(axesfacto, centers=4, nstart=1)
+
+#Graphique - Nuage des individus avec ellipses autour des groupes (axes paramétrables)
+fviz_cluster(res.km, data = axesfacto, stand=F, ellipse.type = "convex", repel=F, axes=c(1,2), labelsize=8)
+
+#Tableau - afficher le ratio inertie inter/totale (qualité du découpage)
+res.km$betweenss/res.km$totss
+
+#je ne comprend pas pourquoi, mais les axes du nuage de points sont inversés par rapport à l'ACP si on prend 3 axes principaux.
+
+
 
 ```
 
