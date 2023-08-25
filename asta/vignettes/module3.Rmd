@@ -153,7 +153,7 @@ plot.HCPC(res.hcpc,
           choice = "bar")
 ```
 
-## Dendogramme à faire apparaître sur la colonne de gauche en bas
+### Dendogramme à faire apparaître sur la colonne de gauche en bas
 
 
 ```{r}
@@ -162,7 +162,7 @@ plot.HCPC(res.hcpc,
 fviz_dend(res.hcpc, cex = 0.5, rect = F)
 ```
 
-## Nuage d'individus (colonne droite en haut, premier onglet)
+### Nuage d'individus (colonne droite en haut, premier onglet)
 
 
 ```{r}
@@ -174,7 +174,7 @@ fviz_cluster(res.hcpc, axes = c(1,2), ellipse.type = "convex", repel=F, labelsiz
 
 ```
 
-## Tableau de résumé (colonne droite, en haut, deuxième onglet)
+### Tableau de résumé (colonne droite, en haut, deuxième onglet)
 
 ```{r}
 #Fonction qui prend en entrée le résultat de la CAH avec une variable quali sup
@@ -196,7 +196,7 @@ e_t <- e_t[-1,] #on enlève la première ligne avec le numéro du cluster
 
 ```
 
-
+## Onglet K-means dans l'onglet classification
 
 ```{r}
 ##############
