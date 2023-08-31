@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom stats runif
 mod_stat2_redress_impact_ui <- function(id){
   ns <- NS(id)
   

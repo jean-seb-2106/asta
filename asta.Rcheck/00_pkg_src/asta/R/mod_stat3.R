@@ -52,8 +52,7 @@ mod_stat3_ui <- function(id){
                                       selected = FALSE,
                                       menuSubItem("CAH", 
                                                   tabName = "cah"),
-                                      menuSubItem("AD", 
-                                                  tabName = "ad"),
+                                      
                                       menuSubItem("K-means", 
                                                   tabName = "kmeans")
                                       

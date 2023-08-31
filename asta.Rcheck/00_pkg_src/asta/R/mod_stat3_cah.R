@@ -7,6 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom FactoMineR PCA plot.PCA plot.HCPC HCPC
+#' @importFrom factoextra fviz_dend fviz_cluster
 #' @importFrom shiny NS tagList 
 #' @importFrom data.table transpose
 mod_stat3_cah_ui <- function(id) {
@@ -42,7 +43,7 @@ mod_stat3_cah_ui <- function(id) {
           actionButton(inputId = ns("go"), "Mettre \u00e0 jour")
         ),
         wellPanel(
-          tags$p("Arbre hiérarchique", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+          tags$p("Gain d'inertie", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
           
           plotOutput(ns("arbre")),
           br()
@@ -79,7 +80,7 @@ mod_stat3_cah_ui <- function(id) {
       
     ),
     
-    wellPanel(br(), DT::DTOutput(ns("tab_ind")),
+    wellPanel(br(), plotOutput(ns("tab_ind")),
               br()
              )
     
@@ -96,14 +97,22 @@ mod_stat3_cah_server <- function(id,global){
  
     
     
-    local <- reactiveValues(dt = NULL, classes = NULL )
-    global <- reactiveValues(dt = state)
+    local <- reactiveValues(dt = NULL, 
+                            dimensions = NULL,
+                            classes = NULL,
+                            result = NULL,#résultats de la CAH avec les axes de l'ACP
+                            chevauch = NULL)
     
     observeEvent(input$go, {
-      local$dt <- global$dt
+      local$dt <- global$data
       local$dimensions <- input$dimensions
       local$classes <- input$classes
-      local$result <- HCPC(PCA(local$dt,graph=FALSE, ncp=local$dimensions), nb.clust=local$classes, consol=FALSE,graph=FALSE)
+      local$result <- HCPC(PCA(local$dt,graph=FALSE, ncp=local$dimensions,quali.sup="GR_REG"), 
+                           nb.clust=local$classes, 
+                           consol=FALSE,
+                           graph=FALSE,
+                           stand=TRUE
+                           )
       
     })
     
@@ -116,33 +125,29 @@ mod_stat3_cah_server <- function(id,global){
       )
       
       p <- local$result
-      e <- p$data.clust %>% group_by(clust) %>% summarise(Population_moyenne=round(mean(Population)), Revenu_percapita=round(mean(Income)), Taux_illetrisme_pourcent =round(mean(Illiteracy),1),
-                                                          Esperance_vie=round(mean(`Life Exp`)), Taux_meurtres_pourcentmille=round(mean(Murder),1), Part_diplomes_sup=round(mean(`HS Grad`),1),
-                                                          Nb_jours_gel=round(mean(Frost)), Superficie_squaremiles=round(mean(Area)))
+      e <- p$data.clust[,-15] %>% #on retire la variable quali GR_REG
+        group_by(clust) %>%
+        summarise_all(.funs = mean) %>% 
+        mutate_at(vars(Densite_pop:Tx_vols_vehicules),~round(.x,1)) %>% 
+        mutate(nb_habitants = round(nb_habitants))
       row.names(e) <- paste0("Cluster ", e$clust)
-      
-      
-      
-      e_t <- transpose(e)
+      e_t <- data.table::transpose(e) #à ne pas confondre avec le transpose de purrr
       rownames(e_t) <- colnames(e)
       colnames(e_t) <- rownames(e)
-      e_t <- e_t[-1,]
+      e_t <- e_t[-1,] #on enlève la première ligne avec le numéro du cluster
     })
     
     
-    output$tab_ind <- renderDT({
-      
+    output$tab_ind <- renderPlot({
+
       validate(
         need(expr = !is.null(local$dt),
              message = "Choisissez le nombre de classes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
-      
-      p <- local$result
-      e <- p$data.clust %>% group_by(clust) %>% select(clust)
-      f <- bind_cols( state.name, e) %>% rename("Etat" = "...1", "Cluster" = "clust")
-      f
-      
-      
+
+      fviz_dend(local$result, cex = 0.5, rect = FALSE)
+
+
         })
     
     output$arbre <- renderPlot({
@@ -152,7 +157,8 @@ mod_stat3_cah_server <- function(id,global){
              message = "Choisissez le nombre de classes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
       
-      plot.HCPC(local$result,choice='tree',title='Arbre hiérarchique')
+      plot.HCPC(local$result, 
+                choice = "bar")
       
     })
     
@@ -164,7 +170,10 @@ mod_stat3_cah_server <- function(id,global){
              message = "Choisissez le nombre de classes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
       
-      plot(local$result,choice='map',draw.tree=FALSE) 
+      fviz_cluster(local$result, 
+                   axes = c(1,2), 
+                   ellipse.type = "convex", 
+                   repel=F, labelsize = 8)
       
     })
   })
