@@ -210,18 +210,34 @@ e_t <- e_t[-1,] #on enlève la première ligne avec le numéro du cluster
 #             quel axe affiché en ordonnée - réglette de 1 à N
 #             case à cocher pour "chevauchement des labels non/oui" -> option "repel =T/F" à côté du bouton "mettre à jour"
 
+input_axes <- 4
+input_classes <- 3
+input_axe1 <- 1
+input_axe2 <- 2
+
 
 #je fais tourner l'ACP et je garde les N premiers axes
-res.pca <- PCA(departements, graph=F, ncp=3, quali.sup="GR_REG")
+res.pca <- PCA(departements, 
+               graph=FALSE, 
+               ncp=input_axes, 
+               quali.sup="GR_REG")
 
 #récupérer ces N axes factoriels
 axesfacto <- res.pca$ind$coord
 
 #kmeans en K classes (pas de réitérations, pour voir que l'algorithme ne converge pas systématiquement vers le même découpage : nstart=1)
-res.km <- kmeans(axesfacto, centers=4, nstart=1)
+res.km <- kmeans(axesfacto, 
+                 centers=input_classes, 
+                 nstart=1)
 
 #Graphique - Nuage des individus avec ellipses autour des groupes (axes paramétrables)
-fviz_cluster(res.km, data = axesfacto, stand=F, ellipse.type = "convex", repel=F, axes=c(1,2), labelsize=8)
+fviz_cluster(res.km, 
+             data = axesfacto, 
+             stand=FALSE, 
+             ellipse.type = "convex", 
+             repel=FALSE, 
+             axes=c(input_axe1,input_axe2), 
+             labelsize=8)
 
 #Tableau - afficher le ratio inertie inter/totale (qualité du découpage)
 res.km$betweenss/res.km$totss

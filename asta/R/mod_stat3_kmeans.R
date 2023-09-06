@@ -20,10 +20,24 @@ mod_stat3_kmeans_ui <- function(id){
         wellPanel(
           tags$p("Param\u00e8tres", style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
 
-
-          selectInput(ns("xcol"), "Variable X", choices = c("Population" = "Population", "Income" = "Income","Illiteracy"="Illiteracy", "Life Exp"="Life Exp", "Murder"= "Murder") ),
-          selectInput(ns("ycol"), 'Variable Y',choices = c("Population"="Population", "Income"="Income","Illiteracy"="Illiteracy", "Life Exp"="Life Exp", "Murder"= "Murder")),
-          numericInput(ns("clusters"), 'Cluster count', 3, min = 1, max = 9),
+          sliderInput(
+            ns("dimensions"),
+            "Choisissez le nombre de dimensions de l'ACP que vous souhaitez conserver",
+            min = 2,
+            max = 6,
+            value = 4
+          ),
+          sliderInput(
+            ns("classes"),
+            "Choisissez le nombre de classes",
+            min = 1,
+            max = 9,
+            value = 3
+          ),
+         
+          sliderInput(ns("dim1"), label = "Choisissez un axe entre 1 et 6", value = "1", step = 1, min = 1, max = 6),
+          
+          sliderInput(ns("dim2"), label = "Choisissez un axe entre 1 et 6", value =  "2", step = 1, min = 1, max = 6),
 
 
 
@@ -43,7 +57,15 @@ mod_stat3_kmeans_ui <- function(id){
           br(),
 
           br(),
-          tags$p("Source : CEFIL 2021", style = "font-size : 90%; font-style : italic; text-align : right;")
+          tags$p("Source : CEFIL", style = "font-size : 90%; font-style : italic; text-align : right;")
+        ),
+        infoBox(
+          title = tags$p("Ratio Inertie inter-groupe/Inertie totale", style = "font-size : 80%;"),
+          value = textOutput(ns("ratio_inertie")),
+          icon = icon("chart-line"),
+          #fill = TRUE,
+          color="blue",
+          width = NULL
         )
       )
 
@@ -60,25 +82,28 @@ mod_stat3_kmeans_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
  
-    local <- reactiveValues(dt = NULL, classes = NULL )
-    global <- reactiveValues(dt = state)
+    local <- reactiveValues(dt = NULL, 
+                            axes = NULL,
+                            classes = NULL,
+                            axe1 = NULL,
+                            axe2 = NULL,
+                            axesfacto = NULL,
+                            reskmeans = NULL)
 
     observeEvent(input$go, {
-      local$dt <- global$dt
-      local$varx <- input$xcol
-      local$vary <- input$ycol
-      local$clusters <- input$clusters
+      local$dt <- global$data
+      local$axes <- input$dimensions
+      local$classes <- input$classes
+      local$axe1 <- input$dim1
+      local$axe2 <- input$dim2
+      local$axesfacto <- PCA(local$dt, 
+                             graph=FALSE, 
+                             ncp=local$axes, 
+                             quali.sup="GR_REG")$ind$coord
+      local$reskmeans <- kmeans(local$axesfacto, 
+                                centers=local$classes, 
+                                nstart=1)
      
-      selectedData <- function(){
-        b <- local$dt
-        b[, c(local$varx, local$vary)]
-      }
-      local$selectedData <- selectedData()
-      
-      clusters <- function() {
-        kmeans(selectedData(), local$clusters, nstart = 5)
-      }
-      local$clusters <- clusters()
       
     })
     
@@ -88,24 +113,27 @@ mod_stat3_kmeans_server <- function(id,global){
     
     output$plot1 <- renderPlot({
       
+      
       validate(
         need(expr = !is.null(local$dt),
              message = "Choisissez des axes dans le menu d\u00e9roulant et cliquez pour afficher le graphique")
       )
       
+      fviz_cluster(local$reskmeans, 
+                   data = local$axesfacto, 
+                   stand=FALSE, 
+                   ellipse.type = "convex", 
+                   repel=FALSE, 
+                   axes=c(local$axe1,local$axe2), 
+                   labelsize=8)
      
-    a <- local$clusters
-    
-      palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
-                "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999"))
-      
-      par(mar = c(5.1, 4.1, 0, 1))
-      plot(local$selectedData,
-           col = a$cluster,
-           pch = 20, cex = 3)
-      points(a$centers, pch = 4, cex = 4, lwd = 4)
     })
     
+    output$ratio_inertie <- renderText({
+      req(local$dt)
+      x <- local$reskmeans$betweenss/local$reskmeans$totss
+      format_box(x)
+    })
   
     
   })
