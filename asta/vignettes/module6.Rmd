@@ -44,6 +44,7 @@ skim(vins)
 #paramètres
 part_training <- 3/4 #proportion du découpage aléatoire en training et test
 var_strata <- "quality" #variable de stratification : souvent la variable target
+nb_folds <-10 #nombre de classes pour la validation croisée
 
 set.seed(123)
 #Découpage en training et en test
@@ -54,9 +55,14 @@ data_split <- rsample::initial_split(vins,
 train_data <- training(data_split) #le fichier d'entraînement
 test_data <- testing(data_split) #le fichier de test
 
+#Mise en place d'une validation croisée
+set.seed(345)
+folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée 
+
+
 #Apprentissage
 
-#Création de la recette : on met toutes les variables dans un premier temps
+#1 - Création de la recette : on met toutes les variables dans un premier temps
 #Voulez vous retirer des variables du modèle ? (liste des variables)
 #Voulez-vous centrer réduire les variables ? (oui/non)
 vins_rec <- 
@@ -64,29 +70,76 @@ vins_rec <-
 # %>% step_dummy(all_nominal_predictors()) : pour transformer les variables nominales en indicatrices
 # %>% update_role(flight, time_hour, new_role = "ID") : pour retirer des variables du modèle
 
-#Choix de l'algorithme : ici, la regression logistique
+#2 - Choix de l'algorithme :
+
+#2-1 la regression logistique
 lr_mod <- 
   logistic_reg() %>% 
   set_engine("glm")
+#2-2 la forêt aléatoire
+rf_mod <- 
+  rand_forest(trees = 1000) %>% 
+  set_engine("ranger") %>% 
+  set_mode("classification")
 
-#Création du workflow
+#3 - Création du workflow
 vins_wflow <- 
   workflow() %>% 
-  add_model(lr_mod) %>% #ajout de la regression logistique
+  #add_model(lr_mod) %>% #ajout de la regression logistique
+  add_model(rf_mod) %>% #ajout de la random forest
   add_recipe(vins_rec) #on garde toutes les variables
 
-#Entraînement du modèle directement sur le workflow
+#4 - Entraînement du modèle directement sur le workflow
+#Sans la validation croisée
 vins_fit <- 
   vins_wflow %>% 
-  fit(data = train_data)
+  fit(data = train_data) 
 
-#Visualisation du résultat de la regression logistique
+#Avec la validation croisée
+vins_fit_rs <- 
+  vins_wflow %>% 
+  fit(data = train_data) %>% 
+  fit_resamples(folds) #pour ajouter la validation croisée définie plus haut
+
+#5 - Visualisation du résultat (regression logistique et random forest)
+
+#ne marche pas quand on met en place de la validation croisée
 vins_fit %>% 
-  extract_fit_parsnip() %>% 
-  tidy()
+  extract_fit_parsnip() #%>% 
+  tidy() #le tidy ne marche pas pour la forêt aléatoire
+
+  #pour voir les résultats avec la validation croisée
+collect_metrics(vins_fit_rs)
+  
+  
+#6 - Prédiction sur la base de test
+predict(vins_fit,test_data) #renvoie une base avec une colonne de résultats 
+predict(vins_fit,test_data,type = "prob") #renvoie une base avec deux colonnes de proba
+vins_aug <- augment(vins_fit, test_data) #renvoie une base avec aussi les probas 
 
 
+#7 - analyse de la performance
 
+#affichage de la courbe ROC
+vins_aug %>% 
+  roc_curve(truth = quality, .pred_bon) %>% 
+  autoplot()
+
+#Aire sous la courbe
+vins_aug %>% 
+  roc_auc(truth = quality, .pred_bon)
+
+#Accuracy : pourcentage de biens classés
+vins_aug %>% 
+  accuracy(truth = quality, .pred_class)
+
+#Spécificité
+vins_aug %>% 
+  specificity(truth = quality, .pred_class)
+
+#Sensitivité
+vins_aug %>% 
+  sensitivity(truth = quality, .pred_class)
 
 
 # Quel algorithme voulez-vous utilisez ? 
