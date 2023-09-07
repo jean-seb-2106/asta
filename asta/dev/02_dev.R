@@ -134,6 +134,7 @@ usethis::use_data_raw(name="visiteurs",open = FALSE)
 usethis::use_data_raw(name="chomage_bit",open = FALSE)
 usethis::use_data_raw(name="accidents",open = FALSE)
 usethis::use_data_raw(name="departements",open = FALSE)
+usethis::use_data_raw(name="vins",open = FALSE)
 
 ## Tests ----
 ## Add one line by test you want to create
