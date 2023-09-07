@@ -18,14 +18,91 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(asta)
 library(skimr)
+library(tidymodels)
 ```
 
-# Premier onglet : les données
+# menuItem 1 : les données
+
+## menuSubItem 1 : Dictionnaire des variables
+
+```{r}
+glimpse(vins)
+```
+
+
+## menuSubitem 2 : Exploration
 
 ```{r}
 skim(vins)
 ```
 
+## menuItem 2 : Classification supervisée
 
+## menuSubItem : preparation de la base
+
+```{r}
+#paramètres
+part_training <- 3/4 #proportion du découpage aléatoire en training et test
+var_strata <- "quality" #variable de stratification : souvent la variable target
+
+set.seed(123)
+#Découpage en training et en test
+data_split <- rsample::initial_split(vins, 
+                                     strata = .data[[var_strata]],
+                                     prop = part_training)
+
+train_data <- training(data_split) #le fichier d'entraînement
+test_data <- testing(data_split) #le fichier de test
+
+#Apprentissage
+
+#Création de la recette : on met toutes les variables dans un premier temps
+#Voulez vous retirer des variables du modèle ? (liste des variables)
+#Voulez-vous centrer réduire les variables ? (oui/non)
+vins_rec <- 
+  recipe(quality ~ ., data = train_data) 
+# %>% step_dummy(all_nominal_predictors()) : pour transformer les variables nominales en indicatrices
+# %>% update_role(flight, time_hour, new_role = "ID") : pour retirer des variables du modèle
+
+#Choix de l'algorithme : ici, la regression logistique
+lr_mod <- 
+  logistic_reg() %>% 
+  set_engine("glm")
+
+#Création du workflow
+vins_wflow <- 
+  workflow() %>% 
+  add_model(lr_mod) %>% #ajout de la regression logistique
+  add_recipe(vins_rec) #on garde toutes les variables
+
+#Entraînement du modèle directement sur le workflow
+vins_fit <- 
+  vins_wflow %>% 
+  fit(data = train_data)
+
+#Visualisation du résultat de la regression logistique
+vins_fit %>% 
+  extract_fit_parsnip() %>% 
+  tidy()
+
+
+
+
+
+# Quel algorithme voulez-vous utilisez ? 
+# 1 - Regression logistique ? 
+# 2 - KNN ?
+# 3 - Forêt aléatoire ?
+
+# Quelle validation voulez vous utiliser sur le fichier d'entraînement ? 
+# 1 - Validation normale ?
+# 2 - Validation croisée ?
+# 3 - Validation hold-out ?
+
+
+```
+
+
+## menuItem 3 : Regression
 
 
