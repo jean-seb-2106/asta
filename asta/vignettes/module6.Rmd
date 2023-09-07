@@ -17,7 +17,15 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(asta)
+library(skimr)
 ```
+
+# Premier onglet : les données
+
+```{r}
+skim(vins)
+```
+
 
 
 
