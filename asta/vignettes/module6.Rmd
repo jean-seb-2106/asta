@@ -82,6 +82,20 @@ rf_mod <-
   set_engine("ranger") %>% 
   set_mode("classification")
 
+#3-3 l'arbre de décision
+tune_spec <- 
+  decision_tree(
+    cost_complexity = tune(),
+    tree_depth = tune() 
+  ) %>% 
+  set_engine("rpart") %>% 
+  set_mode("classification")
+
+#Hyper-paramètres à tester
+tree_grid <- grid_regular(cost_complexity(),
+                          tree_depth(),
+                          levels = 5)
+
 #3 - Création du workflow
 vins_wflow <- 
   workflow() %>% 
