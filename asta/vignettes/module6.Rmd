@@ -63,7 +63,7 @@ folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée
 #Apprentissage
 
 
-#################### 1 - Recettes #####################################
+#################### 1 - Recettes #####################################----------------
 
 #1 - Création de la recette : on met toutes les variables dans un premier temps
 #Voulez vous retirer des variables du modèle ? (liste des variables)
@@ -76,7 +76,7 @@ vins_rec <-
 # %>% step_zv() #pour enlever les variables avec une seules valeur
 # %>% step_rm() #removes variables
 
-##############         2 - Modèles      ########################
+##############         2 - Modèles      ########################-----------------
 
 #2 - Choix de l'algorithme :
 
@@ -110,7 +110,7 @@ tree_grid <- grid_regular(cost_complexity(),
 #3-4 la regression logistique sous contrainte
 
 
-############# 3 - Workflows     ########################
+############# 3 - Workflows     ########################--------------
 
 #3 - Création des workflows
 
@@ -126,31 +126,34 @@ vins_wflow_rf <-
   add_model(rf_mod) %>% 
   add_recipe(vins_rec)
 
+vins_wflow_tree <- 
+  workflow() %>% 
+  add_model(tree_mod) %>% 
+  add_recipe(vins_rec)
 
-
-############# 4 - Entraînement du modèle directement sur le workflow #######
+############# 4 - Entraînement du modèle directement sur le workflow #######------
 
 #Sans validation croiése, sans optimisation des paramètres
 
 ###########Sans la validation croisée#######
 vins_fit_lr <- 
-  vins_wflow %>% 
+  vins_wflow_lr %>% 
   fit(data = train_data) 
 
 #Avec validation croisée, sans optimisation des hyper-paramètres
 
 #Avec la validation croisée
-vins_fit_rs <- 
-  vins_wflow %>% 
+vins_fit_rf <- 
+  vins_wflow_rf %>% 
   fit(data = train_data) %>% 
   fit_resamples(folds) #pour ajouter la validation croisée définie plus haut
 
 #Avec validation croisée et optimisation des hyper-paramètres
 
-vins_tree_res <- 
-  vins_wflow %>% 
+vins_fit_tree <- 
+  vins_wflow_tree %>% 
   tune_grid(
-    resamples = tree_grid,
+    resamples = folds,
     grid = tree_grid
   )
 
