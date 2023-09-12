@@ -62,6 +62,9 @@ folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée
 
 #Apprentissage
 
+
+#################### 1 - Recettes #####################################
+
 #1 - Création de la recette : on met toutes les variables dans un premier temps
 #Voulez vous retirer des variables du modèle ? (liste des variables)
 #Voulez-vous centrer réduire les variables ? (oui/non)
@@ -69,6 +72,11 @@ vins_rec <-
   recipe(quality ~ ., data = train_data) 
 # %>% step_dummy(all_nominal_predictors()) : pour transformer les variables nominales en indicatrices
 # %>% update_role(flight, time_hour, new_role = "ID") : pour retirer des variables du modèle
+# %>%step_normalize(all_numeric_predictors()) #pour centrer réduire
+# %>% step_zv() #pour enlever les variables avec une seules valeur
+# %>% step_rm() #removes variables
+
+##############         2 - Modèles      ########################
 
 #2 - Choix de l'algorithme :
 
@@ -76,44 +84,75 @@ vins_rec <-
 lr_mod <- 
   logistic_reg() %>% 
   set_engine("glm")
+
+
 #2-2 la forêt aléatoire
 rf_mod <- 
   rand_forest(trees = 1000) %>% 
   set_engine("ranger") %>% 
   set_mode("classification")
 
+
 #3-3 l'arbre de décision
-tune_spec <- 
+tree_mod <- 
   decision_tree(
     cost_complexity = tune(),
     tree_depth = tune() 
   ) %>% 
   set_engine("rpart") %>% 
   set_mode("classification")
-
 #Hyper-paramètres à tester
 tree_grid <- grid_regular(cost_complexity(),
                           tree_depth(),
                           levels = 5)
+#Je teste 25 combinaisons d'hyper paramètres pour trouver le meilleur arbre
 
-#3 - Création du workflow
-vins_wflow <- 
+#3-4 la regression logistique sous contrainte
+
+
+############# 3 - Workflows     ########################
+
+#3 - Création des workflows
+
+#pour la logistique et la première recette
+vins_wflow_lr <- 
   workflow() %>% 
-  #add_model(lr_mod) %>% #ajout de la regression logistique
-  add_model(rf_mod) %>% #ajout de la random forest
+  add_model(lr_mod) %>% #ajout de la regression logistique
   add_recipe(vins_rec) #on garde toutes les variables
 
-#4 - Entraînement du modèle directement sur le workflow
-#Sans la validation croisée
-vins_fit <- 
+
+vins_wflow_rf <- 
+  workflow() %>% 
+  add_model(rf_mod) %>% 
+  add_recipe(vins_rec)
+
+
+
+############# 4 - Entraînement du modèle directement sur le workflow #######
+
+#Sans validation croiése, sans optimisation des paramètres
+
+###########Sans la validation croisée#######
+vins_fit_lr <- 
   vins_wflow %>% 
   fit(data = train_data) 
+
+#Avec validation croisée, sans optimisation des hyper-paramètres
 
 #Avec la validation croisée
 vins_fit_rs <- 
   vins_wflow %>% 
   fit(data = train_data) %>% 
   fit_resamples(folds) #pour ajouter la validation croisée définie plus haut
+
+#Avec validation croisée et optimisation des hyper-paramètres
+
+vins_tree_res <- 
+  vins_wflow %>% 
+  tune_grid(
+    resamples = tree_grid,
+    grid = tree_grid
+  )
 
 #5 - Visualisation du résultat (regression logistique et random forest)
 
