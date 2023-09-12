@@ -68,7 +68,7 @@ folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée
 #1 - Création de la recette : on met toutes les variables dans un premier temps
 #Voulez vous retirer des variables du modèle ? (liste des variables)
 #Voulez-vous centrer réduire les variables ? (oui/non)
-vins_rec <- 
+vins_rec1 <- 
   recipe(quality ~ ., data = train_data) 
 # %>% step_dummy(all_nominal_predictors()) : pour transformer les variables nominales en indicatrices
 # %>% update_role(flight, time_hour, new_role = "ID") : pour retirer des variables du modèle
@@ -76,6 +76,9 @@ vins_rec <-
 # %>% step_zv() #pour enlever les variables avec une seules valeur
 # %>% step_rm() #removes variables
 
+vins_rec2 <- 
+  recipe(quality ~ ., data = train_data) %>% 
+  step_normalize(all_numeric_predictors())
 ##############         2 - Modèles      ########################-----------------
 
 #2 - Choix de l'algorithme :
@@ -107,8 +110,13 @@ tree_grid <- grid_regular(cost_complexity(),
                           levels = 5)
 #Je teste 25 combinaisons d'hyper paramètres pour trouver le meilleur arbre
 
-#3-4 la regression logistique sous contrainte
-
+#3-4 la regression lasso
+lasso_mod <- 
+  logistic_reg(penalty = tune(), 
+               mixture = 1) %>% 
+  set_engine("glmnet")
+#lasso grid : 30 hyper-paramètres à tester
+lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
 
 ############# 3 - Workflows     ########################--------------
 
@@ -124,12 +132,17 @@ vins_wflow_lr <-
 vins_wflow_rf <- 
   workflow() %>% 
   add_model(rf_mod) %>% 
-  add_recipe(vins_rec)
+  add_recipe(vins_rec1)
 
 vins_wflow_tree <- 
   workflow() %>% 
   add_model(tree_mod) %>% 
-  add_recipe(vins_rec)
+  add_recipe(vins_rec1)
+
+vins_workflow_lasso <- 
+  workflow() %>% 
+  add_model(lasso_mod) %>% 
+  add_recipe(vins_rec2)
 
 ############# 4 - Entraînement du modèle directement sur le workflow #######------
 
@@ -156,6 +169,8 @@ vins_fit_tree <-
     resamples = folds,
     grid = tree_grid
   )
+
+
 
 #5 - Visualisation du résultat (regression logistique et random forest)
 
