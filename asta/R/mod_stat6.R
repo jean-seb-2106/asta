@@ -14,27 +14,31 @@ mod_stat6_ui <- function(id){
            
            dashboardPage(
              
-             dashboardHeader(title = "Secret statistique et Big Data"),
+             dashboardHeader(title = "Machine Learning"),
              dashboardSidebar(
                fluidRow(collapsed = FALSE,
                         
                         
-                        sidebarMenu(id = "secret_bigdata",
+                        sidebarMenu(id = "classif_regression",
                                     
                                     
                                     
-                                    menuItem(tabName = "secret",
+                                    menuItem(tabName = "classif",
                                       
-                                      "Secret Statistique",
+                                      "Classification supervis\u00e9e",
+                                      menuSubItem("Donn\u00e9es", tabName = "subitem_1"),
+                                      menuSubItem("Pr\u00e9paration", tabName = "subitem_2"),
+                                      menuSubItem("Entrainement", tabName = "subitem_3"),
+                                      menuSubItem("G\u00e9n\u00e9ralisation", tabName = "subitem_4"),
                                       icon = icon("th"),
                                       selected = FALSE
                                       
                                       
                                     ), 
                                     
-                                    menuItem(tabName = "big_data",
+                                    menuItem(tabName = "regression",
                                              
-                                             "Big Data",
+                                             "R\u00e9gression",
                                              icon = icon("th"),
                                              selected = FALSE
                                              
@@ -73,7 +77,7 @@ mod_stat6_ui <- function(id){
                
                
                tabItem(
-                 tabName = "secret",
+                 tabName = "classif",
                  wellPanel(span("Le cadre légal et règlementaire  :", style="color:blue"),br(), br(), 
                            "- La loi n°51-711 du 7 juin 1951 modifiée sur l'obligation, la coordination et le secret
                            en matière de statistiques définit ce qu'est le secret statistique, ses limites et ses conditions",br(),br(),
@@ -89,7 +93,7 @@ mod_stat6_ui <- function(id){
                  
                ),
                tabItem(
-                 tabName = "big_data",
+                 tabName = "regression",
                  wellPanel(span("Big Data : un enjeu de taille", style="color:blue"),br(), br(), 
                            "- Des nouvelles données parfois volumineuses ou à haute fréquence, avec des formats variés",br(),br(),
                            "- Des limites et des défis pour l'exploitation",br(),br(),

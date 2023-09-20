@@ -21,30 +21,26 @@ library(skimr)
 library(tidymodels)
 ```
 
-# menuItem 1 : les données
-
-## menuSubItem 1 : Dictionnaire des variables
-
-```{r}
-glimpse(vins)
-```
 
 
-## menuSubitem 2 : Exploration
+# menuItem 1 : Classification supervisée
 
-```{r}
-skim(vins)
-```
+## menuSubItem : données
 
-## menuItem 2 : Classification supervisée
+Choisir la base de données et le pourcentage de test :
 
-## menuSubItem : preparation de la base
+En affichage : 
+le skim du train (fichier d'entraînement)
+le skim du test (fichier test)
+
+En variable globale, on a les bases de données train et test qui seront 
+transmises aux sous-modules suivants.
 
 ```{r}
 #paramètres
 part_training <- 3/4 #proportion du découpage aléatoire en training et test
 var_strata <- "quality" #variable de stratification : souvent la variable target
-nb_folds <-10 #nombre de classes pour la validation croisée
+# nb_folds <-10 #nombre de classes pour la validation croisée
 
 set.seed(123)
 #Découpage en training et en test
@@ -54,33 +50,68 @@ data_split <- rsample::initial_split(vins,
 
 train_data <- training(data_split) #le fichier d'entraînement
 test_data <- testing(data_split) #le fichier de test
-
-#Mise en place d'une validation croisée
-set.seed(345)
-folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée 
-
-
-#Apprentissage
+skim(train_data)
+skim(test_data)
+```
 
 
+
+## menuSubItem : preparation de la base
+
+On part du fichier d'entraînement qui est une variable globale du module précédent.
+
+### Modifs de la base d'entraînement
+
+Une fenêtre avec la modif de la base de données : 
+A la fin du module de préparation, la base de données a été modifiée : 
+- selection des variables rentrant dans le modèle
+- centrage-réduction d'une sélection de variables numériques
+- pour transformer des variables nominales en indicatrices
+- pour mettre certaines variables au carré ou en interaction
+On obtient donc une recette après sélection des différents items et un clic. 
+
+
+```{r}
 #################### 1 - Recettes #####################################----------------
 
 #1 - Création de la recette : on met toutes les variables dans un premier temps
 #Voulez vous retirer des variables du modèle ? (liste des variables)
 #Voulez-vous centrer réduire les variables ? (oui/non)
+
+#Modèle avec toutes les variables
 vins_rec1 <- 
   recipe(quality ~ ., data = train_data) 
+
+#Modèle avec deux variables en moins
+vins_rec2 <- 
+  recipe(quality ~ ., data = train_data) %>% 
+  step_rm(c(fixed.acidity,volatile.acidity))
+
+#Modèle avec toutes les variables centrées réduites
+vins_rec3 <- 
+  recipe(quality ~ ., data = train_data) %>%
+  step_normalize(all_numeric_predictors())
 # %>% step_dummy(all_nominal_predictors()) : pour transformer les variables nominales en indicatrices
 # %>% update_role(flight, time_hour, new_role = "ID") : pour retirer des variables du modèle
 # %>%step_normalize(all_numeric_predictors()) #pour centrer réduire
 # %>% step_zv() #pour enlever les variables avec une seules valeur
 # %>% step_rm() #removes variables
 
-vins_rec2 <- 
-  recipe(quality ~ ., data = train_data) %>% 
-  step_normalize(all_numeric_predictors())
 ##############         2 - Modèles      ########################-----------------
+```
 
+
+### Choix de l'algo
+
+Paramètre algo : 
+Une autre fenêtre avec le choix de l'algorithme : 
+- la regression logistique
+- l'arbre (hyparamètres par défaut)
+- le KNN (hyparamètres par défaut)
+- la forêt (hyparamètres par défaut)
+On obtient un modèle (à voir si on optimise les hyper-paramètres)
+
+```{r}
 #2 - Choix de l'algorithme :
 
 #2-1 la regression logistique
@@ -118,15 +149,31 @@ lasso_mod <-
 #lasso grid : 30 hyper-paramètres à tester
 lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
 
+```
+
+
+### Nom algo
+
+On joint la recette et le modèle pour arriver à un workflow, qui est la 
+variable globale de ce module qu'on va utiliser dans le sous-module suivant. 
+
+
+```{r}
 ############# 3 - Workflows     ########################--------------
 
 #3 - Création des workflows
 
 #pour la logistique et la première recette
-vins_wflow_lr <- 
+vins_wflow_lr1 <- 
   workflow() %>% 
   add_model(lr_mod) %>% #ajout de la regression logistique
-  add_recipe(vins_rec) #on garde toutes les variables
+  add_recipe(vins_rec1) #on garde toutes les variables
+
+#pour la logistique et la deuxième recette
+vins_wflow_lr2 <- 
+  workflow() %>% 
+  add_model(lr_mod) %>% #ajout de la regression logistique
+  add_recipe(vins_rec2) #avec deux variables en moins
 
 
 vins_wflow_rf <- 
@@ -144,24 +191,60 @@ vins_workflow_lasso <-
   add_model(lasso_mod) %>% 
   add_recipe(vins_rec2)
 
+
+```
+
+Dans ce module, on affiche la base d'entraînement (qui peut être modifiée) et le modèle choisi + son nom.
+
+## menuSubItem : entraînement
+
+On récupère un workflow de l'étape précédente. 
+On choisit si on fait une validation croisée (combien de folds) ?
+Une validation croisée stratifiée ? 
+ou alors une validation hold-out ?
+ou une validation croisée leave-one-out ?
+
+```{r}
+#Mise en place d'une validation croisée
+set.seed(345)
+folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée 
+
+
+
 ############# 4 - Entraînement du modèle directement sur le workflow #######------
 
-#Sans validation croiése, sans optimisation des paramètres
+#Sans validation croisée, sans optimisation des paramètres
 
-###########Sans la validation croisée#######
-vins_fit_lr <- 
-  vins_wflow_lr %>% 
-  fit(data = train_data) 
+########### Sans la validation croisée #######
+vins_fit_lr1 <- 
+  vins_wflow_lr1 %>% 
+  fit(data = train_data)
 
-#Avec validation croisée, sans optimisation des hyper-paramètres
+vins_fit_lr2 <- 
+  vins_wflow_lr2 %>% 
+  fit(data = train_data)
 
-#Avec la validation croisée
+########### Avec validation croisée #######
+vins_fit_lr1_vc <- 
+  vins_wflow_lr1 %>% 
+  fit(data = train_data) %>% 
+  fit_resamples(folds)
+
+
+
+print(vins_fit_lr1)
+print(vins_fit_lr2)
+
+vins_fit_lr1_vc %>% collect_metrics()
+
 vins_fit_rf <- 
   vins_wflow_rf %>% 
   fit(data = train_data) %>% 
   fit_resamples(folds) #pour ajouter la validation croisée définie plus haut
 
 #Avec validation croisée et optimisation des hyper-paramètres
+
+
 
 vins_fit_tree <- 
   vins_wflow_tree %>% 
@@ -226,7 +309,16 @@ vins_aug %>%
 
 ```
 
+A la fin de cette étape, on a choisi un modèle : on prend le meilleur au vu des résultats et on clique sur OK. 
+c'est ce modèle qui sera utilisé pour la généralisation sur la phase de test. 
 
-## menuItem 3 : Regression
+## menuSubItem : généralisation
+
+En entrée, on a le modèle qui a été sélectionné.
+
+On a sélectionné le meilleur modèle et on teste ses performances sur des données qu'il n'a jamais vu. 
+On fait apparaître le tableau de truc + courve AUC + Accuracy (pour voir le taux de biens classés par exemple).
+
+# menuItem 2 : Regression
 
 
