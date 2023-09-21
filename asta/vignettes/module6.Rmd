@@ -79,16 +79,16 @@ On obtient donc une recette après sélection des différents items et un clic.
 #Voulez-vous centrer réduire les variables ? (oui/non)
 
 #Modèle avec toutes les variables
-vins_rec1 <- 
+rec1 <- 
   recipe(quality ~ ., data = train_data) 
 
 #Modèle avec deux variables en moins
-vins_rec2 <- 
+rec2 <- 
   recipe(quality ~ ., data = train_data) %>% 
   step_rm(c(fixed.acidity,volatile.acidity))
 
 #Modèle avec toutes les variables centrées réduites
-vins_rec3 <- 
+rec3 <- 
   recipe(quality ~ ., data = train_data) %>%
   step_normalize(all_numeric_predictors())
 # %>% step_dummy(all_nominal_predictors()) : pour transformer les variables nominales en indicatrices
@@ -96,8 +96,10 @@ vins_rec3 <-
 # %>%step_normalize(all_numeric_predictors()) #pour centrer réduire
 # %>% step_zv() #pour enlever les variables avec une seules valeur
 # %>% step_rm() #removes variables
+# %>% step_impute_mode() #imputation des valeurs manquantes avec le mode
+# %>% step_impute_mean() #imputation des valeurs manquates avec la moyenne
 
-##############         2 - Modèles      ########################-----------------
+
 ```
 
 
@@ -112,23 +114,25 @@ Une autre fenêtre avec le choix de l'algorithme :
 On obtient un modèle (à voir si on optimise les hyper-paramètres)
 
 ```{r}
+
+##############         2 - Modèles      ########################-----------------
+
 #2 - Choix de l'algorithme :
 
 #2-1 la regression logistique
-lr_mod <- 
+mod_lr <- 
   logistic_reg() %>% 
   set_engine("glm")
 
-
 #2-2 la forêt aléatoire
-rf_mod <- 
+mod_rf <- 
   rand_forest(trees = 1000) %>% 
   set_engine("ranger") %>% 
   set_mode("classification")
 
 
 #3-3 l'arbre de décision
-tree_mod <- 
+mod_tree <- 
   decision_tree(
     cost_complexity = tune(),
     tree_depth = tune() 
@@ -136,28 +140,35 @@ tree_mod <-
   set_engine("rpart") %>% 
   set_mode("classification")
 #Hyper-paramètres à tester
-tree_grid <- grid_regular(cost_complexity(),
+grid_tree <- grid_regular(cost_complexity(),
                           tree_depth(),
                           levels = 5)
 #Je teste 25 combinaisons d'hyper paramètres pour trouver le meilleur arbre
 
-#3-4 la regression lasso
-lasso_mod <- 
+#3-4 KNN
+mod_knn <- 
+  nearest_neighbor(
+    neighbors = 3
+  ) %>% 
+  set_engine("kknn") %>% 
+  set_mode("classification")
+
+
+#3-5 la regression lasso
+mod_lasso <- 
   logistic_reg(penalty = tune(), 
                mixture = 1) %>% 
   set_engine("glmnet")
 #lasso grid : 30 hyper-paramètres à tester
-lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
+grid_lasso <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
 
 #3-4 la regression ridge
-ridge_mod <- 
+mod_ridge <- 
   logistic_reg(penalty = tune(), 
                mixture = 0) %>% 
   set_engine("glmnet")
 #ridge grid : 30 hyper-paramètres à tester
-lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
-
-
+grid_ridge <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
 
 ```
 
@@ -174,38 +185,38 @@ variable globale de ce module qu'on va utiliser dans le sous-module suivant.
 #3 - Création des workflows
 
 #pour la logistique et la première recette
-vins_wflow_lr1 <- 
+wflow_lr1 <- 
   workflow() %>% 
-  add_model(lr_mod) %>% #ajout de la regression logistique
-  add_recipe(vins_rec1) #on garde toutes les variables
+  add_model(mod_lr) %>% #ajout de la regression logistique
+  add_recipe(rec1) #on garde toutes les variables
 
 #pour la logistique et la deuxième recette
-vins_wflow_lr2 <- 
+wflow_lr2 <- 
   workflow() %>% 
-  add_model(lr_mod) %>% #ajout de la regression logistique
-  add_recipe(vins_rec2) #avec deux variables en moins
+  add_model(mod_lr) %>% #ajout de la regression logistique
+  add_recipe(rec2) #avec deux variables en moins
 
 #Pour la random forest avec la première recette
-vins_wflow_rf1 <- 
+wflow_rf1 <- 
   workflow() %>% 
-  add_model(rf_mod) %>% 
-  add_recipe(vins_rec1)
+  add_model(mod_rf) %>% 
+  add_recipe(rec1)
 
 #Pour la random forest avec la troisième recette
-vins_wflow_rf2 <- 
+wflow_rf2 <- 
   workflow() %>% 
-  add_model(rf_mod) %>% 
-  add_recipe(vins_rec3)
+  add_model(mod_rf) %>% 
+  add_recipe(rec3)
 
-vins_wflow_tree <- 
+wflow_tree <- 
   workflow() %>% 
   add_model(tree_mod) %>% 
-  add_recipe(vins_rec1)
+  add_recipe(rec1)
 
-vins_workflow_lasso <- 
-  workflow() %>% 
-  add_model(lasso_mod) %>% 
-  add_recipe(vins_rec2)
+# workflow_lasso <- 
+#   workflow() %>% 
+#   add_model(lasso_mod) %>% 
+#   add_recipe(rec2)
 
 
 ```
@@ -222,49 +233,52 @@ On choisit un workflow dans la liste (avec une recette et un modèle) et on affi
 #Mise en place d'une validation croisée
 
 set.seed(345)
-folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée 
+nb_folds <- 10
+folds <- vfold_cv(train_data, v = nb_folds)#paramétrage de la validation croisée 
 
 ############# 4 - Entraînement du modèle directement sur le workflow #######------
 
 
 ########### Avec validation croisée #######
-vins_fit_lr1 <- 
-  vins_wflow_lr1 %>% 
+
+#On peut créer une fonction qui donne en sortie le modèle fité
+
+fit_lr1 <- 
+  wflow_lr1 %>% 
   fit(data = train_data) 
 
+fit_lr2 <- 
+  wflow_lr2 %>% 
+  fit(data = train_data)
+
+fit_rf1 <- 
+  wflow_rf1 %>% 
+  fit(data=train_data)
+
+fit_rf2 <- 
+  wflow_rf2 %>% 
+  fit(data=train_data)
+
+
 #Evaluation du modèle avec la validation croisée
-vins_fit_lr1 %>% fit_resamples(folds) %>% collect_metrics()
-
-vins_fit_lr2 <- 
-  vins_wflow_lr2 %>% 
-  fit(data = train_data) %>% 
-  fit_resamples(folds)
-
-vins_fit_rf1 <- 
-  vins_wflow_rf1 %>% 
-  fit(data=train_data) %>% 
-  fit_resamples(folds)
-
-vins_fit_rf2 <- 
-  vins_wflow_rf2 %>% 
-  fit(data=train_data) %>% 
-  fit_resamples(folds)
-
-print(vins_fit_lr1)
-print(vins_fit_lr2)
-
-vins_fit_lr1 %>% collect_metrics()
-vins_fit_lr2 %>% collect_metrics()
-vins_fit_rf1 %>% collect_metrics()
-vins_fit_rf2 %>% collect_metrics()
-
+fit_lr1 %>% fit_resamples(folds) %>% collect_metrics()
+fit_lr2 %>% fit_resamples(folds) %>% collect_metrics()
+fit_rf1 %>% fit_resamples(folds) %>% collect_metrics()
+fit_rf2 %>% fit_resamples(folds) %>% collect_metrics()
 
 ```
 
 
-
 ```{r}
-predict(vins_fit_lr1, train_data) 
+#renvoie les tables avec les prédictions sur le fichier d'entraînement
+pred_training_lr1 <- augment(fit_lr1, train_data)
+pred_training_lr2 <- augment(fit_rf1, train_data) 
+pred_training_rf1
+pred_training_rf2
+
+DT::datatable(lr1_training_pred)
+DT::datatable(rf1_training_pred)
+
 ```
 
 A la fin de cette étape, on a choisi un modèle : on prend le meilleur au vu des résultats et on clique sur OK. 
