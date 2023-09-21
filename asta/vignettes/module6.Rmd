@@ -149,6 +149,16 @@ lasso_mod <-
 #lasso grid : 30 hyper-paramètres à tester
 lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
 
+#3-4 la regression ridge
+ridge_mod <- 
+  logistic_reg(penalty = tune(), 
+               mixture = 0) %>% 
+  set_engine("glmnet")
+#ridge grid : 30 hyper-paramètres à tester
+lr_reg_grid <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
+
+
+
 ```
 
 
@@ -175,11 +185,17 @@ vins_wflow_lr2 <-
   add_model(lr_mod) %>% #ajout de la regression logistique
   add_recipe(vins_rec2) #avec deux variables en moins
 
-
-vins_wflow_rf <- 
+#Pour la random forest avec la première recette
+vins_wflow_rf1 <- 
   workflow() %>% 
   add_model(rf_mod) %>% 
   add_recipe(vins_rec1)
+
+#Pour la random forest avec la troisième recette
+vins_wflow_rf2 <- 
+  workflow() %>% 
+  add_model(rf_mod) %>% 
+  add_recipe(vins_rec3)
 
 vins_wflow_tree <- 
   workflow() %>% 
@@ -198,63 +214,65 @@ Dans ce module, on affiche la base d'entraînement (qui peut être modifiée) et
 
 ## menuSubItem : entraînement
 
-On récupère un workflow de l'étape précédente. 
-On choisit si on fait une validation croisée (combien de folds) ?
-Une validation croisée stratifiée ? 
-ou alors une validation hold-out ?
-ou une validation croisée leave-one-out ?
+On ne fait que la validation croisée sur les données d'entraînement. On peut changer le nombre de folds.
+On choisit un workflow dans la liste (avec une recette et un modèle) et on affiche les résultats.
+ça peut prendre plus ou moins de temps selon l'alogorithme choisi. 
 
 ```{r}
 #Mise en place d'une validation croisée
+
 set.seed(345)
 folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée 
 
-
-
 ############# 4 - Entraînement du modèle directement sur le workflow #######------
 
-#Sans validation croisée, sans optimisation des paramètres
-
-########### Sans la validation croisée #######
-vins_fit_lr1 <- 
-  vins_wflow_lr1 %>% 
-  fit(data = train_data)
-
-vins_fit_lr2 <- 
-  vins_wflow_lr2 %>% 
-  fit(data = train_data)
 
 ########### Avec validation croisée #######
-vins_fit_lr1_vc <- 
+vins_fit_lr1 <- 
   vins_wflow_lr1 %>% 
   fit(data = train_data) %>% 
   fit_resamples(folds)
 
+vins_fit_lr2 <- 
+  vins_wflow_lr2 %>% 
+  fit(data = train_data) %>% 
+  fit_resamples(folds)
 
+vins_fit_rf1 <- 
+  vins_wflow_rf1 %>% 
+  fit(data=train_data) %>% 
+  fit_resamples(folds)
+
+vins_fit_rf2 <- 
+  vins_wflow_rf2 %>% 
+  fit(data=train_data) %>% 
+  fit_resamples(folds)
 
 print(vins_fit_lr1)
 print(vins_fit_lr2)
 
-vins_fit_lr1_vc %>% collect_metrics()
-
-vins_fit_rf <- 
-  vins_wflow_rf %>% 
-  fit(data = train_data) %>% 
-  fit_resamples(folds) #pour ajouter la validation croisée définie plus haut
-
-#Avec validation croisée et optimisation des hyper-paramètres
+vins_fit_lr1 %>% collect_metrics()
+vins_fit_lr2 %>% collect_metrics()
+vins_fit_rf1 %>% collect_metrics()
+vins_fit_rf2 %>% collect_metrics()
 
 
-
-vins_fit_tree <- 
-  vins_wflow_tree %>% 
-  tune_grid(
-    resamples = folds,
-    grid = tree_grid
-  )
+```
 
 
 
+```{r}
+
+```
+
+A la fin de cette étape, on a choisi un modèle : on prend le meilleur au vu des résultats et on clique sur OK. 
+c'est ce modèle qui sera utilisé pour la généralisation sur la phase de test. 
+
+## menuSubItem : généralisation
+
+En entrée, on a le modèle qui a été sélectionné.
+
+```{r}
 #5 - Visualisation du résultat (regression logistique et random forest)
 
 #ne marche pas quand on met en place de la validation croisée
@@ -305,16 +323,8 @@ vins_aug %>%
 # 1 - Validation normale ?
 # 2 - Validation croisée ?
 # 3 - Validation hold-out ?
-
-
 ```
 
-A la fin de cette étape, on a choisi un modèle : on prend le meilleur au vu des résultats et on clique sur OK. 
-c'est ce modèle qui sera utilisé pour la généralisation sur la phase de test. 
-
-## menuSubItem : généralisation
-
-En entrée, on a le modèle qui a été sélectionné.
 
 On a sélectionné le meilleur modèle et on teste ses performances sur des données qu'il n'a jamais vu. 
 On fait apparaître le tableau de truc + courve AUC + Accuracy (pour voir le taux de biens classés par exemple).
