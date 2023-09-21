@@ -230,8 +230,10 @@ folds <- vfold_cv(train_data, v = 10)#paramétrage de la validation croisée
 ########### Avec validation croisée #######
 vins_fit_lr1 <- 
   vins_wflow_lr1 %>% 
-  fit(data = train_data) %>% 
-  fit_resamples(folds)
+  fit(data = train_data) 
+
+#Evaluation du modèle avec la validation croisée
+vins_fit_lr1 %>% fit_resamples(folds) %>% collect_metrics()
 
 vins_fit_lr2 <- 
   vins_wflow_lr2 %>% 
@@ -262,7 +264,7 @@ vins_fit_rf2 %>% collect_metrics()
 
 
 ```{r}
-
+predict(vins_fit_lr1, train_data) 
 ```
 
 A la fin de cette étape, on a choisi un modèle : on prend le meilleur au vu des résultats et on clique sur OK. 
