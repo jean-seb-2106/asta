@@ -50,8 +50,8 @@ data_split <- rsample::initial_split(vins,
 
 train_data <- training(data_split) #le fichier d'entraînement
 test_data <- testing(data_split) #le fichier de test
-skim(train_data)
-skim(test_data)
+# skim(train_data)
+# skim(test_data)
 ```
 
 
@@ -98,12 +98,22 @@ rec3 <-
 # %>% step_rm() #removes variables
 # %>% step_impute_mode() #imputation des valeurs manquantes avec le mode
 # %>% step_impute_mean() #imputation des valeurs manquates avec la moyenne
+# %>% step_clean_names #nettoyer le nom des variables
 
+#la recette choisie parmi les recettes ci-dessous quand on clique sur validé
+rec <- rec3 #paramètre à changer pour changer de recette
+rm(rec1,rec2,rec3)#pour nettoyer l'environnement
+```
 
+Affichage de la table tranformée après la recette
+
+```{r}
+data_rec <- bake(prep(rec),new_data = NULL)
+data_rec
 ```
 
 
-### Choix de l'algo
+### Choix du modèle
 
 Paramètre algo : 
 Une autre fenêtre avec le choix de l'algorithme : 
@@ -125,6 +135,9 @@ mod_lr <-
   set_engine("glm")
 
 #2-2 la forêt aléatoire
+#Les paramètres de la forêt aléatoire : 
+# trees nombre d'arbres trees
+# Nombre de variables pour chaque arbre
 mod_rf <- 
   rand_forest(trees = 1000) %>% 
   set_engine("ranger") %>% 
@@ -132,6 +145,8 @@ mod_rf <-
 
 
 #3-3 l'arbre de décision
+#complexité
+#
 mod_tree <- 
   decision_tree(
     cost_complexity = tune(),
@@ -139,7 +154,7 @@ mod_tree <-
   ) %>% 
   set_engine("rpart") %>% 
   set_mode("classification")
-#Hyper-paramètres à tester
+#Hyper-paramètres à tester, généré automatiquement par grid regular
 grid_tree <- grid_regular(cost_complexity(),
                           tree_depth(),
                           levels = 5)
@@ -170,60 +185,46 @@ mod_ridge <-
 #ridge grid : 30 hyper-paramètres à tester
 grid_ridge <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
 
+#On choisit la recette
+mod <- mod_knn #paramètre à changer pour changer de modèle
+
+rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn)
 ```
 
 
-### Nom algo
+```{r}
+############# 3 - Workflows     ########################--------------
+#3 - Création des workflows
+wflow <-  workflow() %>% 
+  add_model(mod) %>% #ajout de la regression logistique
+  add_recipe(rec)
+```
+
+
+```{r}
+#Entraînement du modèle (non fité)
+fit <- 
+  wflow %>% 
+  fit(data = train_data) 
+
+#
+
+#Visualisation du résultat
+fit %>% 
+  extract_fit_parsnip() 
+```
+
+
+
+
+### Validation
 
 On joint la recette et le modèle pour arriver à un workflow, qui est la 
 variable globale de ce module qu'on va utiliser dans le sous-module suivant. 
 
 
-```{r}
-############# 3 - Workflows     ########################--------------
-
-#3 - Création des workflows
-
-#pour la logistique et la première recette
-wflow_lr1 <- 
-  workflow() %>% 
-  add_model(mod_lr) %>% #ajout de la regression logistique
-  add_recipe(rec1) #on garde toutes les variables
-
-#pour la logistique et la deuxième recette
-wflow_lr2 <- 
-  workflow() %>% 
-  add_model(mod_lr) %>% #ajout de la regression logistique
-  add_recipe(rec2) #avec deux variables en moins
-
-#Pour la random forest avec la première recette
-wflow_rf1 <- 
-  workflow() %>% 
-  add_model(mod_rf) %>% 
-  add_recipe(rec1)
-
-#Pour la random forest avec la troisième recette
-wflow_rf2 <- 
-  workflow() %>% 
-  add_model(mod_rf) %>% 
-  add_recipe(rec3)
-
-wflow_tree <- 
-  workflow() %>% 
-  add_model(tree_mod) %>% 
-  add_recipe(rec1)
-
-# workflow_lasso <- 
-#   workflow() %>% 
-#   add_model(lasso_mod) %>% 
-#   add_recipe(rec2)
-
-
-```
 
 Dans ce module, on affiche la base d'entraînement (qui peut être modifiée) et le modèle choisi + son nom.
-
-## menuSubItem : entraînement
 
 On ne fait que la validation croisée sur les données d'entraînement. On peut changer le nombre de folds.
 On choisit un workflow dans la liste (avec une recette et un modèle) et on affiche les résultats.
@@ -234,50 +235,26 @@ On choisit un workflow dans la liste (avec une recette et un modèle) et on affi
 
 set.seed(345)
 nb_folds <- 10
-folds <- vfold_cv(train_data, v = nb_folds)#paramétrage de la validation croisée 
-
-############# 4 - Entraînement du modèle directement sur le workflow #######------
-
-
-########### Avec validation croisée #######
-
-#On peut créer une fonction qui donne en sortie le modèle fité
-
-fit_lr1 <- 
-  wflow_lr1 %>% 
-  fit(data = train_data) 
-
-fit_lr2 <- 
-  wflow_lr2 %>% 
-  fit(data = train_data)
-
-fit_rf1 <- 
-  wflow_rf1 %>% 
-  fit(data=train_data)
-
-fit_rf2 <- 
-  wflow_rf2 %>% 
-  fit(data=train_data)
+folds <- vfold_cv(train_data, 
+                  v = nb_folds)#paramétrage de la validation croisée 
 
 
 #Evaluation du modèle avec la validation croisée
-fit_lr1 %>% fit_resamples(folds) %>% collect_metrics()
-fit_lr2 %>% fit_resamples(folds) %>% collect_metrics()
-fit_rf1 %>% fit_resamples(folds) %>% collect_metrics()
-fit_rf2 %>% fit_resamples(folds) %>% collect_metrics()
+fit_rs <- fit %>% fit_resamples(folds) 
+# metrics <- metric_set(accuracy)
+fit_rs %>% collect_metrics() 
+  
+  
 
 ```
 
 
 ```{r}
 #renvoie les tables avec les prédictions sur le fichier d'entraînement
-pred_training_lr1 <- augment(fit_lr1, train_data)
-pred_training_lr2 <- augment(fit_rf1, train_data) 
-pred_training_rf1
-pred_training_rf2
+pred_training <- augment(fit, train_data)
+pred_training
 
-DT::datatable(lr1_training_pred)
-DT::datatable(rf1_training_pred)
+# DT::datatable(pred_training)
 
 ```
 
@@ -291,54 +268,33 @@ En entrée, on a le modèle qui a été sélectionné.
 ```{r}
 #5 - Visualisation du résultat (regression logistique et random forest)
 
-#ne marche pas quand on met en place de la validation croisée
-vins_fit %>% 
-  extract_fit_parsnip() #%>% 
-  tidy() #le tidy ne marche pas pour la forêt aléatoire
-
-  #pour voir les résultats avec la validation croisée
-collect_metrics(vins_fit_rs)
   
   
 #6 - Prédiction sur la base de test
-predict(vins_fit,test_data) #renvoie une base avec une colonne de résultats 
-predict(vins_fit,test_data,type = "prob") #renvoie une base avec deux colonnes de proba
-vins_aug <- augment(vins_fit, test_data) #renvoie une base avec aussi les probas 
+pred_testing <- augment(fit, test_data) #renvoie une base avec aussi les probas 
 
-
-#7 - analyse de la performance
 
 #affichage de la courbe ROC
-vins_aug %>% 
+roc_plot_testing <- pred_testing %>% 
   roc_curve(truth = quality, .pred_bon) %>% 
   autoplot()
 
 #Aire sous la courbe
-vins_aug %>% 
+pred_testing %>% 
   roc_auc(truth = quality, .pred_bon)
 
 #Accuracy : pourcentage de biens classés
-vins_aug %>% 
+pred_testing %>% 
   accuracy(truth = quality, .pred_class)
 
 #Spécificité
-vins_aug %>% 
+pred_testing %>% 
   specificity(truth = quality, .pred_class)
 
 #Sensitivité
-vins_aug %>% 
+pred_testing %>% 
   sensitivity(truth = quality, .pred_class)
 
-
-# Quel algorithme voulez-vous utilisez ? 
-# 1 - Regression logistique ? 
-# 2 - KNN ?
-# 3 - Forêt aléatoire ?
-
-# Quelle validation voulez vous utiliser sur le fichier d'entraînement ? 
-# 1 - Validation normale ?
-# 2 - Validation croisée ?
-# 3 - Validation hold-out ?
 ```
 
 
