@@ -44,14 +44,17 @@ var_strata <- "quality" #variable de stratification : souvent la variable target
 
 set.seed(123)
 #Découpage en training et en test
-data_split <- rsample::initial_split(vins, 
-                                     strata = .data[[var_strata]],
-                                     prop = part_training)
+# data_split <- rsample::initial_split(vins, 
+#                                      strata = .data[[var_strata]],
+#                                      prop = part_training)
+data_split <- initial_validation_split(vins,strata = .data[[var_strata]])
 
 train_data <- training(data_split) #le fichier d'entraînement
 test_data <- testing(data_split) #le fichier de test
+valid_data <- validation(data_split)
 # skim(train_data)
 # skim(test_data)
+
 ```
 
 
@@ -233,18 +236,39 @@ On choisit un workflow dans la liste (avec une recette et un modèle) et on affi
 ```{r}
 #Mise en place d'une validation croisée
 
-set.seed(345)
-nb_folds <- 10
-folds <- vfold_cv(train_data, 
-                  v = nb_folds)#paramétrage de la validation croisée 
-
-
-#Evaluation du modèle avec la validation croisée
-fit_rs <- fit %>% fit_resamples(folds) 
-# metrics <- metric_set(accuracy)
-fit_rs %>% collect_metrics() 
+# set.seed(345)
+# nb_folds <- 10
+# folds <- vfold_cv(train_data, 
+#                   v = nb_folds)#paramétrage de la validation croisée 
+# 
+# 
+# #Evaluation du modèle avec la validation croisée
+# fit_rs <- fit %>% fit_resamples(folds) 
+# # metrics <- metric_set(accuracy)
+# fit_rs %>% collect_metrics() 
   
-  
+#validation simple
+pred_valid <- augment(fit, valid_data)
+
+roc_plot_valid <- pred_valid %>% 
+  roc_curve(truth = quality, .pred_bon) %>% 
+  autoplot()
+
+#Aire sous la courbe
+pred_valid %>% 
+  roc_auc(truth = quality, .pred_bon)
+
+#Accuracy : pourcentage de biens classés
+pred_valid %>% 
+  accuracy(truth = quality, .pred_class)
+
+#Spécificité
+pred_valid %>% 
+  specificity(truth = quality, .pred_class)
+
+#Sensitivité
+pred_valid %>% 
+  sensitivity(truth = quality, .pred_class)
 
 ```
 
