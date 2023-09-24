@@ -39,8 +39,14 @@ transmises aux sous-modules suivants.
 
 ```{r}
 #paramètres
+
+
+data <- grandile   #changer la base de données ("vins","grandile")
+# data <- data %>% rename(target = quality)
+data <- data %>% rename(target = PAUVRE) %>% select(-starts_with("LIB"))
+
 part_training <- 3/4 #proportion du découpage aléatoire en training et test
-var_strata <- "quality" #variable de stratification : souvent la variable target
+var_strata <- "target" #variable de stratification : souvent la variable target
 # nb_folds <-10 #nombre de classes pour la validation croisée
 
 set.seed(123)
@@ -48,7 +54,7 @@ set.seed(123)
 # data_split <- rsample::initial_split(vins, 
 #                                      strata = .data[[var_strata]],
 #                                      prop = part_training)
-data_split <- initial_validation_split(vins,strata = .data[[var_strata]])
+data_split <- initial_validation_split(data,strata = .data[[var_strata]])
 
 train_data <- training(data_split) #le fichier d'entraînement
 test_data <- testing(data_split) #le fichier de test
@@ -84,19 +90,19 @@ On obtient donc une recette après sélection des différents items et un clic.
 
 #Modèle avec toutes les variables
 rec1 <- 
-  recipe(quality ~ ., data = train_data) 
+  recipe(target ~ ., data = train_data) 
 
 #Modèle avec deux variables en moins
 rec2 <- 
-  recipe(quality ~ ., data = train_data) %>% 
+  recipe(target ~ ., data = train_data) %>% 
   step_rm(c(fixed.acidity,volatile.acidity))
 
 #Modèle avec toutes les variables centrées réduites
 rec3 <- 
-  recipe(quality ~ ., data = train_data) %>%
-  step_normalize(all_numeric_predictors())
-# %>% step_dummy(all_nominal_predictors()) : pour transformer les variables nominales en indicatrices
-# %>% update_role(flight, time_hour, new_role = "ID") : pour retirer des variables du modèle
+  recipe(target ~ ., data = train_data) %>%
+  step_normalize(all_numeric_predictors()) 
+# %>% step_dummy(all_nominal_predictors()) %>% #: pour transformer les variables nominales en indicatrices
+# %>% update_role(flight, time_hour, new_role = "ID") %>% #: pour retirer des variables du modèle
 # %>%step_normalize(all_numeric_predictors()) #pour centrer réduire
 # %>% step_zv() #pour enlever les variables avec une seules valeur
 # %>% step_rm() #removes variables
@@ -104,9 +110,17 @@ rec3 <-
 # %>% step_impute_mean() #imputation des valeurs manquates avec la moyenne
 # %>% step_clean_names #nettoyer le nom des variables
 
+#Recette pour grandile
+rec4 <- 
+  recipe(target ~ ., data = train_data) %>%
+  step_normalize(all_numeric_predictors()) %>% 
+  step_rm(IDENT) %>% 
+  step_dummy(all_nominal_predictors()) %>% 
+  step_string2factor(target)
+
 #la recette choisie parmi les recettes ci-dessous quand on clique sur validé
-rec <- rec3 #paramètre à changer pour changer de recette
-rm(rec1,rec2,rec3)#pour nettoyer l'environnement
+rec <- rec4 #paramètre à changer pour changer de recette
+rm(rec1,rec2,rec3,rec4)#pour nettoyer l'environnement
 ```
 
 Affichage de la table tranformée après la recette
@@ -199,7 +213,7 @@ mod_svm <- svm_rbf(mode = "classification",
   set_engine("kernlab")
 
 #On choisit la recette
-mod <- mod_svm #paramètre à changer pour changer de modèle
+mod <- mod_lr #paramètre à changer pour changer de modèle
 
 rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn)
 ```
@@ -258,31 +272,32 @@ On choisit un workflow dans la liste (avec une recette et un modèle) et on affi
 # fit_rs %>% collect_metrics() 
   
 #validation simple
+predict(fit,valid_data)
 pred_valid <- augment(fit, valid_data)
 
 roc_plot_valid <- pred_valid %>% 
-  roc_curve(truth = quality, .pred_bon) %>% 
+  roc_curve(truth = target, .pred_bon) %>% 
   autoplot()
 roc_plot_valid
 
 #Aire sous la courbe
 pred_valid %>% 
-  roc_auc(truth = quality, .pred_bon)
+  roc_auc(truth = target, .pred_bon)
 
 #Accuracy : pourcentage de biens classés
 pred_valid %>% 
-  accuracy(truth = quality, .pred_class)
+  accuracy(truth = target, .pred_class)
 
 #Spécificité
 pred_valid %>% 
-  specificity(truth = quality, .pred_class)
+  specificity(truth = target, .pred_class)
 
 #Sensitivité
 pred_valid %>% 
-  sensitivity(truth = quality, .pred_class)
+  sensitivity(truth = target, .pred_class)
 
 pred_valid %>%
-  conf_mat(quality, .pred_class) %>%
+  conf_mat(target, .pred_class) %>%
   pluck(1) %>%
   as_tibble() %>%
   ggplot(aes(Prediction, Truth, fill = n)) +
@@ -317,28 +332,28 @@ pred_testing <- augment(fit_final, test_data) #renvoie une base avec aussi les p
 
 #affichage de la courbe ROC
 roc_plot_testing <- pred_testing %>% 
-  roc_curve(truth = quality, .pred_bon) %>% 
+  roc_curve(truth = target, .pred_bon) %>% 
   autoplot()
 roc_plot_testing
 
 #Aire sous la courbe
 pred_testing %>% 
-  roc_auc(truth = quality, .pred_bon)
+  roc_auc(truth = target, .pred_bon)
 
 #Accuracy : pourcentage de biens classés
 pred_testing %>% 
-  accuracy(truth = quality, .pred_class)
+  accuracy(truth = target, .pred_class)
 
 #Spécificité
 pred_testing %>% 
-  specificity(truth = quality, .pred_class)
+  specificity(truth = target, .pred_class)
 
 #Sensitivité
 pred_testing %>% 
-  sensitivity(truth = quality, .pred_class)
+  sensitivity(truth = target, .pred_class)
 
 pred_testing %>%
-  conf_mat(quality, .pred_class) %>%
+  conf_mat(target, .pred_class) %>%
   pluck(1) %>%
   as_tibble() %>%
   ggplot(aes(Prediction, Truth, fill = n)) +
