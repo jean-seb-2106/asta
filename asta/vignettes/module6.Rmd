@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 library(asta)
 library(skimr)
 library(tidymodels)
+library(ggthemes)
 ```
 
 
@@ -142,18 +143,20 @@ mod_lr <-
 # trees nombre d'arbres trees
 # Nombre de variables pour chaque arbre
 mod_rf <- 
-  rand_forest(trees = 1000) %>% 
+  rand_forest(trees = 1000,
+              mtry = 3,
+              min_n = NULL) %>% 
   set_engine("ranger") %>% 
   set_mode("classification")
 
 
 #3-3 l'arbre de décision
-#complexité
-#
+
 mod_tree <- 
   decision_tree(
     cost_complexity = tune(),
-    tree_depth = tune() 
+    tree_depth = tune(),
+    min_n = NULL
   ) %>% 
   set_engine("rpart") %>% 
   set_mode("classification")
@@ -188,8 +191,15 @@ mod_ridge <-
 #ridge grid : 30 hyper-paramètres à tester
 grid_ridge <- tibble(penalty = 10^seq(-4, -1, length.out = 30))
 
+#SVM : machine à support de vecteur
+mod_svm <- svm_rbf(mode = "classification", 
+                     cost = 10, 
+                     rbf_sigma = 0.1, 
+                     margin = 1) %>%
+  set_engine("kernlab")
+
 #On choisit la recette
-mod <- mod_knn #paramètre à changer pour changer de modèle
+mod <- mod_svm #paramètre à changer pour changer de modèle
 
 rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn)
 ```
@@ -253,6 +263,7 @@ pred_valid <- augment(fit, valid_data)
 roc_plot_valid <- pred_valid %>% 
   roc_curve(truth = quality, .pred_bon) %>% 
   autoplot()
+roc_plot_valid
 
 #Aire sous la courbe
 pred_valid %>% 
@@ -270,17 +281,19 @@ pred_valid %>%
 pred_valid %>% 
   sensitivity(truth = quality, .pred_class)
 
+pred_valid %>%
+  conf_mat(quality, .pred_class) %>%
+  pluck(1) %>%
+  as_tibble() %>%
+  ggplot(aes(Prediction, Truth, fill = n)) +
+  geom_tile(show.legend = FALSE) +
+  geom_text(aes(label = n), colour = "white", alpha = 1, size = 5) +
+  ggtitle("Table de confusion") +
+  xlab("Classe prédite") + ylab("Classe réelle") +
+  theme_hc() + scale_colour_hc()
+
 ```
 
-
-```{r}
-#renvoie les tables avec les prédictions sur le fichier d'entraînement
-pred_training <- augment(fit, train_data)
-pred_training
-
-# DT::datatable(pred_training)
-
-```
 
 A la fin de cette étape, on a choisi un modèle : on prend le meilleur au vu des résultats et on clique sur OK. 
 c'est ce modèle qui sera utilisé pour la généralisation sur la phase de test. 
@@ -292,16 +305,21 @@ En entrée, on a le modèle qui a été sélectionné.
 ```{r}
 #5 - Visualisation du résultat (regression logistique et random forest)
 
-  
+train_valid_data <- train_data %>% bind_rows(valid_data)
+
+fit_final <- 
+  wflow %>% 
+  fit(data = train_valid_data) 
   
 #6 - Prédiction sur la base de test
-pred_testing <- augment(fit, test_data) #renvoie une base avec aussi les probas 
+pred_testing <- augment(fit_final, test_data) #renvoie une base avec aussi les probas 
 
 
 #affichage de la courbe ROC
 roc_plot_testing <- pred_testing %>% 
   roc_curve(truth = quality, .pred_bon) %>% 
   autoplot()
+roc_plot_testing
 
 #Aire sous la courbe
 pred_testing %>% 
@@ -318,6 +336,17 @@ pred_testing %>%
 #Sensitivité
 pred_testing %>% 
   sensitivity(truth = quality, .pred_class)
+
+pred_testing %>%
+  conf_mat(quality, .pred_class) %>%
+  pluck(1) %>%
+  as_tibble() %>%
+  ggplot(aes(Prediction, Truth, fill = n)) +
+  geom_tile(show.legend = FALSE) +
+  geom_text(aes(label = n), colour = "white", alpha = 1, size = 5) +
+  ggtitle("Table de confusion") +
+  xlab("Classe prédite") + ylab("Classe réelle") +
+  theme_hc() + scale_colour_hc()
 
 ```
 
