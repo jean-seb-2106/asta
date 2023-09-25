@@ -40,10 +40,15 @@ transmises aux sous-modules suivants.
 ```{r}
 #paramètres
 
-
+# Grandile
 data <- grandile   #changer la base de données ("vins","grandile")
-# data <- data %>% rename(target = quality)
-data <- data %>% rename(target = PAUVRE) %>% select(-starts_with("LIB"))
+data <- data %>% rename(target = PAUVRE) %>%
+  select(-starts_with("LIB")) %>%
+  select(-IDENT) %>%
+  mutate(target = as.factor(target))
+
+#vins
+# data <- vins %>% rename(target = quality)
 
 part_training <- 3/4 #proportion du découpage aléatoire en training et test
 var_strata <- "target" #variable de stratification : souvent la variable target
@@ -51,16 +56,18 @@ var_strata <- "target" #variable de stratification : souvent la variable target
 
 set.seed(123)
 #Découpage en training et en test
-# data_split <- rsample::initial_split(vins, 
-#                                      strata = .data[[var_strata]],
-#                                      prop = part_training)
-data_split <- initial_validation_split(data,strata = .data[[var_strata]])
+# data_split <- rsample::initial_split(data,
+                                     # strata = .data[[var_strata]],
+                                     # prop = part_training)
+data_split <- initial_validation_split(data,strata = .data[[var_strata]]) 
 
 train_data <- training(data_split) #le fichier d'entraînement
 test_data <- testing(data_split) #le fichier de test
 valid_data <- validation(data_split)
-# skim(train_data)
-# skim(test_data)
+train_valid_data <- train_data %>% bind_rows(valid_data)
+
+skim(train_valid_data)
+skim(test_data)
 
 ```
 
@@ -90,16 +97,16 @@ On obtient donc une recette après sélection des différents items et un clic.
 
 #Modèle avec toutes les variables
 rec1 <- 
-  recipe(target ~ ., data = train_data) 
+  recipe(target ~ ., data = train_valid_data) 
 
 #Modèle avec deux variables en moins
 rec2 <- 
-  recipe(target ~ ., data = train_data) %>% 
+  recipe(target ~ ., data = train_valid_data) %>% 
   step_rm(c(fixed.acidity,volatile.acidity))
 
 #Modèle avec toutes les variables centrées réduites
 rec3 <- 
-  recipe(target ~ ., data = train_data) %>%
+  recipe(target ~ ., data = train_valid_data) %>%
   step_normalize(all_numeric_predictors()) 
 # %>% step_dummy(all_nominal_predictors()) %>% #: pour transformer les variables nominales en indicatrices
 # %>% update_role(flight, time_hour, new_role = "ID") %>% #: pour retirer des variables du modèle
@@ -112,11 +119,12 @@ rec3 <-
 
 #Recette pour grandile
 rec4 <- 
-  recipe(target ~ ., data = train_data) %>%
-  step_normalize(all_numeric_predictors()) %>% 
-  step_rm(IDENT) %>% 
-  step_dummy(all_nominal_predictors()) %>% 
-  step_string2factor(target)
+  recipe(target ~ ., data = train_valid_data) %>%
+  # step_rm(all_nominal_predictors())   #%>% 
+  step_normalize(all_numeric_predictors()) #%>%
+  # step_string2factor(target)
+  # step_rm(IDENT) %>% 
+  # step_dummy(all_nominal_predictors()) 
 
 #la recette choisie parmi les recettes ci-dessous quand on clique sur validé
 rec <- rec4 #paramètre à changer pour changer de recette
@@ -213,43 +221,27 @@ mod_svm <- svm_rbf(mode = "classification",
   set_engine("kernlab")
 
 #On choisit la recette
-mod <- mod_lr #paramètre à changer pour changer de modèle
+mod <- mod_rf #paramètre à changer pour changer de modèle
 
-rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn)
+rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 ```
 
 
 ```{r}
 ############# 3 - Workflows     ########################--------------
 #3 - Création des workflows
+
+#Workflow sans tuning
 wflow <-  workflow() %>% 
   add_model(mod) %>% #ajout de la regression logistique
   add_recipe(rec)
+wflow
 ```
-
-
-```{r}
-#Entraînement du modèle (non fité)
-fit <- 
-  wflow %>% 
-  fit(data = train_data) 
-
-#
-
-#Visualisation du résultat
-fit %>% 
-  extract_fit_parsnip() 
-```
-
-
-
 
 ### Validation
 
 On joint la recette et le modèle pour arriver à un workflow, qui est la 
 variable globale de ce module qu'on va utiliser dans le sous-module suivant. 
-
-
 
 Dans ce module, on affiche la base d'entraînement (qui peut être modifiée) et le modèle choisi + son nom.
 
@@ -258,31 +250,45 @@ On choisit un workflow dans la liste (avec une recette et un modèle) et on affi
 ça peut prendre plus ou moins de temps selon l'alogorithme choisi. 
 
 ```{r}
-#Mise en place d'une validation croisée
-
+##############Validation croisée##################
 # set.seed(345)
-# nb_folds <- 10
-# folds <- vfold_cv(train_data, 
-#                   v = nb_folds)#paramétrage de la validation croisée 
+nb_folds <- 5
+folds <- vfold_cv(train_valid_data,
+                  v = nb_folds)#paramétrage de la validation croisée
 # 
-# 
-# #Evaluation du modèle avec la validation croisée
-# fit_rs <- fit %>% fit_resamples(folds) 
-# # metrics <- metric_set(accuracy)
-# fit_rs %>% collect_metrics() 
+# Evaluation du modèle avec la validation croisée
+metrics <- metric_set(accuracy,recall, precision,roc_auc,sensitivity, specificity)
+fit_rs <- wflow %>% fit_resamples(folds,
+                                  metrics = metrics,
+                                  control = control_resamples(save_pred = TRUE))
+
+nb_rs_metrics <- collect_metrics(fit_rs)
+nb_rs_predictions <- collect_predictions(fit_rs)
+
+fit_rs %>% collect_metrics()
+conf_mat_resampled(fit_rs, tidy = FALSE) %>%
+  autoplot(type = "heatmap")
   
-#validation simple
-predict(fit,valid_data)
+
+```
+
+
+```{r}
+#############validation simple##############
+
+fit <- wflow %>% fit(train_data)
+
+predict(fit,new_data = valid_data)
 pred_valid <- augment(fit, valid_data)
 
 roc_plot_valid <- pred_valid %>% 
-  roc_curve(truth = target, .pred_bon) %>% 
+  roc_curve(truth = target, .pred_1) %>% 
   autoplot()
 roc_plot_valid
 
 #Aire sous la courbe
 pred_valid %>% 
-  roc_auc(truth = target, .pred_bon)
+  roc_auc(truth = target, .pred_1)
 
 #Accuracy : pourcentage de biens classés
 pred_valid %>% 
@@ -298,15 +304,16 @@ pred_valid %>%
 
 pred_valid %>%
   conf_mat(target, .pred_class) %>%
-  pluck(1) %>%
-  as_tibble() %>%
-  ggplot(aes(Prediction, Truth, fill = n)) +
-  geom_tile(show.legend = FALSE) +
-  geom_text(aes(label = n), colour = "white", alpha = 1, size = 5) +
-  ggtitle("Table de confusion") +
-  xlab("Classe prédite") + ylab("Classe réelle") +
-  theme_hc() + scale_colour_hc()
-
+  autoplot(type="heatmap")
+  
+  # pluck(1) %>%
+  # as_tibble() %>%
+  # ggplot(aes(Prediction, Truth, fill = n)) +
+  # geom_tile(show.legend = FALSE) +
+  # geom_text(aes(label = n), colour = "white", alpha = 1, size = 5) +
+  # ggtitle("Table de confusion") +
+  # xlab("Classe prédite") + ylab("Classe réelle") +
+  # theme_hc() + scale_colour_hc()
 ```
 
 
@@ -319,8 +326,6 @@ En entrée, on a le modèle qui a été sélectionné.
 
 ```{r}
 #5 - Visualisation du résultat (regression logistique et random forest)
-
-train_valid_data <- train_data %>% bind_rows(valid_data)
 
 fit_final <- 
   wflow %>% 
