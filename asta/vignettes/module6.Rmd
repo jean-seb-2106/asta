@@ -30,6 +30,19 @@ library(ggthemes)
 
 Choisir la base de données et le pourcentage de test :
 
+```{r}
+# Grandile
+data <- grandile   #changer la base de données ("vins","grandile")
+data <- data %>% rename(target = PAUVRE) %>%
+  select(-starts_with("LIB")) %>%
+  select(-IDENT) %>%
+  mutate(target = as.factor(target))
+
+#vins
+# data <- vins %>% rename(target = quality)
+```
+
+
 En affichage : 
 le skim du train (fichier d'entraînement)
 le skim du test (fichier test)
@@ -40,22 +53,14 @@ transmises aux sous-modules suivants.
 ```{r}
 #paramètres
 
-# Grandile
-data <- grandile   #changer la base de données ("vins","grandile")
-data <- data %>% rename(target = PAUVRE) %>%
-  select(-starts_with("LIB")) %>%
-  select(-IDENT) %>%
-  mutate(target = as.factor(target))
 
-#vins
-# data <- vins %>% rename(target = quality)
 
 part_training <- 3/4 #proportion du découpage aléatoire en training et test
 var_strata <- "target" #variable de stratification : souvent la variable target
 # nb_folds <-10 #nombre de classes pour la validation croisée
 
 set.seed(123)
-#Découpage en training et en test
+#Découpage en training et en test (ancien découpage)
 # data_split <- rsample::initial_split(data,
                                      # strata = .data[[var_strata]],
                                      # prop = part_training)
@@ -120,11 +125,11 @@ rec3 <-
 #Recette pour grandile
 rec4 <- 
   recipe(target ~ ., data = train_valid_data) %>%
-  # step_rm(all_nominal_predictors())   #%>% 
-  step_normalize(all_numeric_predictors()) #%>%
-  # step_string2factor(target)
+  # step_rm(all_nominal_predictors())   %>% 
+  step_normalize(all_numeric_predictors()) %>%
+  # step_string2factor(target) %>% 
   # step_rm(IDENT) %>% 
-  # step_dummy(all_nominal_predictors()) 
+  step_dummy(all_nominal_predictors()) 
 
 #la recette choisie parmi les recettes ci-dessous quand on clique sur validé
 rec <- rec4 #paramètre à changer pour changer de recette
@@ -199,7 +204,7 @@ mod_knn <-
 
 #3-5 la regression lasso
 mod_lasso <- 
-  logistic_reg(penalty = tune(), 
+  logistic_reg(penalty = 0.001, 
                mixture = 1) %>% 
   set_engine("glmnet")
 #lasso grid : 30 hyper-paramètres à tester
@@ -221,7 +226,7 @@ mod_svm <- svm_rbf(mode = "classification",
   set_engine("kernlab")
 
 #On choisit la recette
-mod <- mod_rf #paramètre à changer pour changer de modèle
+mod <- mod_knn #paramètre à changer pour changer de modèle
 
 rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 ```
