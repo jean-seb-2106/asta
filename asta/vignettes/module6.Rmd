@@ -59,7 +59,7 @@ part_training <- 3/4 #proportion du découpage aléatoire en training et test
 var_strata <- "target" #variable de stratification : souvent la variable target
 # nb_folds <-10 #nombre de classes pour la validation croisée
 
-set.seed(123)
+# set.seed(123)
 #Découpage en training et en test (ancien découpage)
 # data_split <- rsample::initial_split(data,
                                      # strata = .data[[var_strata]],
@@ -226,7 +226,7 @@ mod_svm <- svm_rbf(mode = "classification",
   set_engine("kernlab")
 
 #On choisit la recette
-mod <- mod_knn #paramètre à changer pour changer de modèle
+mod <- mod_tree #paramètre à changer pour changer de modèle
 
 rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 ```
@@ -240,6 +240,7 @@ rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 wflow <-  workflow() %>% 
   add_model(mod) %>% #ajout de la regression logistique
   add_recipe(rec)
+mod
 wflow
 ```
 
@@ -381,4 +382,102 @@ On fait apparaître le tableau de truc + courve AUC + Accuracy (pour voir le tau
 
 # menuItem 2 : Regression
 
+## Données
 
+
+```{r}
+data <- departements %>% rename(target = nb_habitants) 
+
+# data <- mtcars %>% rename(target = mpg)
+```
+
+Séparation de la base
+
+```{r}
+
+data_split <- initial_validation_split(data) 
+
+train_data <- training(data_split) #le fichier d'entraînement
+test_data <- testing(data_split) #le fichier de test
+valid_data <- validation(data_split)
+train_valid_data <- train_data %>% bind_rows(valid_data)
+
+skim(train_valid_data)
+skim(test_data)
+```
+
+
+## Préparation
+
+```{r}
+rec1 <- 
+  recipe(target ~ ., data = train_valid_data) %>% 
+  step_dummy(GR_REG)
+
+rec <- rec1
+```
+
+```{r}
+prep <- prep(rec)
+bake <- bake(prep, new_data = NULL)
+bake
+```
+
+
+## Modèles
+
+```{r}
+
+#modèle SVM
+mod_svm <- svm_linear() %>%
+  set_mode("regression") %>%
+  set_engine("LiblineaR")
+
+#random forest
+mod_rf <- rand_forest(trees = 1000) %>%
+  set_engine("ranger") %>%
+  set_mode("regression")
+
+mod_lr <- linear_reg() %>% 
+  set_engine("lm") 
+
+
+mod <- mod_rf
+rm(mod_lr,mod_rf,mod_svm)
+```
+
+
+```{r}
+wflow <- workflow() %>% 
+  add_recipe(rec) %>% 
+  add_model(mod)
+wflow
+```
+
+## Validation
+
+### Validation croisée
+
+```{r}
+# set.seed(345)
+nb_folds <- 5
+folds <- vfold_cv(train_valid_data,
+                  v = nb_folds)#paramétrage de la validation croisée
+# 
+# Evaluation du modèle avec la validation croisée
+metrics <- metric_set(rmse,rsq,mae, mape)
+fit_rs <- wflow %>% fit_resamples(folds,
+                                  metrics = metrics,
+                                  control = control_resamples(save_pred = TRUE))
+
+nb_rs_metrics <- collect_metrics(fit_rs)
+nb_rs_predictions <- collect_predictions(fit_rs)
+
+
+nb_rs_metrics
+
+```
+
+### Validation simple
+
+## Généralisation
