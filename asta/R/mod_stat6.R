@@ -85,7 +85,8 @@ mod_stat6_ui <- function(id){
                
                
                  mod_stat6_classif_donnees_ui(ns("stat6_classif_donnees")),
-                 mod_stat6_classif_preparation_ui(ns("stat6_classif_preparation"))
+                 mod_stat6_classif_preparation_ui(ns("stat6_classif_preparation")),
+                 mod_stat6_classif_modele_ui(ns("stat6_classif_modele"))
              
              
              
@@ -117,6 +118,7 @@ mod_stat6_server <- function(id,global){
     
     mod_stat6_classif_donnees_server("stat6_classif_donnees",global=global)
     mod_stat6_classif_preparation_server("stat6_classif_preparation",global = global)
+    mod_stat6_classif_modele_server("stat6_classif_modele",global=global)
  
   })
 }
