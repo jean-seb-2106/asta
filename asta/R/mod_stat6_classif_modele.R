@@ -13,6 +13,15 @@ mod_stat6_classif_modele_ui <- function(id){
   tabItem(tabName = "subitem__3",
           
           h2("Les modèles/algorithmes"),
+          
+          fluidRow(column(3,
+                          
+                          wellPanel(
+                            
+                            tags$p("Paramètres", 
+                                   style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
+                          
+                          )),column(9,))
     
     
     
