@@ -109,7 +109,11 @@ mod_stat6_server <- function(id,global){
     ns <- session$ns
     
     
-    global <- reactiveValues(dt1 = vins,dt2=grandile)
+    global <- reactiveValues(dt = NULL,
+                             rec = NULL,
+                             mod = NULL,
+                             wflow = NULL,
+                             fit = NULL)
     
     mod_stat6_classif_donnees_server("stat6_classif_donnees",global=global)
     mod_stat6_classif_preparation_server("stat6_classif_preparation",global = global)
