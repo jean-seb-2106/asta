@@ -19,9 +19,15 @@ mod_stat6_classif_modele_ui <- function(id){
                           wellPanel(
                             
                             tags$p("Paramètres", 
-                                   style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
+                                   style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                            selectInput(ns("select1"),"Choissisez un algorithme :",choices = c("Regression Logistique","Arbre","Forêt aléatoire","KNN"))
                           
-                          )),column(9,))
+                          ),
+                          
+                          wellPanel(tags$p("Descriptif du modèle", 
+                                           style = "font-size : 110%; font-weight : bold; text-decoration : underline;"))
+                          
+                          ),column(9,))
     
     
     
