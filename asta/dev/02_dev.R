@@ -75,6 +75,7 @@ golem::add_module(name = "stat5_desaisonnalisation_mm")
 #Stat6
 golem::add_module( name = "stat6" )
 golem::add_module(name = "stat6_classif_donnees")
+golem::add_module(name = "stat6_classif_preparation")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
