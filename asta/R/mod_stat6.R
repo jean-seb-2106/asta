@@ -79,62 +79,12 @@ mod_stat6_ui <- function(id){
                )
                
              ),
-             dashboardBody(tabItems(
+             dashboardBody(
+               
+               tabItems(
                
                
-               tabItem(
-                 tabName = "subitem__1",
-                h2("Les données"),
-                fluidRow(column(4,
-                                
-                                wellPanel(
-                                  
-                                  tags$p("Description de la base de données", 
-                                         style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                                  
-                                  selectInput(inputId = ns("select1"),
-                                              label = "Choississez une base de données",
-                                              choices = c("vins","grandile")),
-                                  
-                                  actionButton(ns("go1"),label = "Affichez la base")
-                                  
-                                ),
-                                
-                                
-                               
-                                
-                                wellPanel(
-                                  
-                                  tags$p("Description de la base de données", 
-                                         style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
-                                  
-                                )
-                                
-                                
-                                
-                                ),
-                         
-                           column(8, 
-                                  
-                                  wellPanel(
-                                    
-                                    tags$p("Visualisation de la base", 
-                                           style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                                    
-                                    DT::DTOutput(ns("dt1"))
-                                    
-                                  ) 
-                                  
-                                  )
-                         
-                         ),
-                
-               
-               
-               
-             ),
-             
-             tabItem(tabName = "subitem__2",h2("SUPER"))
+                 mod_stat6_classif_donnees_ui(ns("stat6_classif_donnees"))
              
              
              
@@ -153,9 +103,14 @@ mod_stat6_ui <- function(id){
 #' stat6 Server Functions
 #'
 #' @noRd 
-mod_stat6_server <- function(id){
+mod_stat6_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    
+    # global <- reactiveValues(dt1 = vins,dt2=grandile)
+    
+    mod_stat6_classif_donnees_server("stat6_classif_donnees",global=global)
  
   })
 }
