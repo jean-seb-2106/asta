@@ -140,7 +140,7 @@ Affichage de la table tranformée après la recette
 
 ```{r}
 data_rec <- bake(prep(rec),new_data = NULL)
-data_rec
+skim(data_rec)
 ```
 
 

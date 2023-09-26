@@ -31,7 +31,7 @@ mod_stat6_classif_preparation_ui <- function(id){
                            max = 99,
                            value = 80,
                            step = 5),
-               actionButton(ns("go1"),label = "Afficher la base")
+               actionButton(ns("go1"),label = "Explorer la base d'entraînement")
                
               
                
@@ -41,8 +41,12 @@ mod_stat6_classif_preparation_ui <- function(id){
                
                
                tags$p("Paramètres", 
-                      style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
-             )
+                      style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+               checkboxInput(ns("check1"),"Cochez pour centrer-r\u00e9duire les variables quantitatives"),
+               checkboxInput(ns("check2"),"Cochez pour transformer les variables qualitatives en indicatrices"),
+               actionButton(ns("go2"),label = "Mettre à jour la base")
+             ),
+            
              
              ),
       column(9,
@@ -72,7 +76,7 @@ mod_stat6_classif_preparation_server <- function(id,global){
     
     output$print1 <- renderPrint({
       
-      shinipsum::random_print()
+      skimr::skim(vins)
     })
  
   })
