@@ -32,14 +32,14 @@ Choisir la base de données et le pourcentage de test :
 
 ```{r}
 # Grandile
-data <- grandile   #changer la base de données ("vins","grandile")
-data <- data %>% rename(target = PAUVRE) %>%
-  select(-starts_with("LIB")) %>%
-  select(-IDENT) %>%
-  mutate(target = as.factor(target))
+# data <- grandile   #changer la base de données ("vins","grandile")
+# data <- data %>% rename(target = PAUVRE) %>%
+#   select(-starts_with("LIB")) %>%
+#   select(-IDENT) %>%
+#   mutate(target = as.factor(target))
 
 #vins
-# data <- vins %>% rename(target = quality)
+data <- vins %>% rename(target = quality)
 ```
 
 
@@ -181,16 +181,26 @@ mod_rf <-
 
 mod_tree <- 
   decision_tree(
-    cost_complexity = tune(),
-    tree_depth = tune(),
+    cost_complexity = 0.001,
+    tree_depth = 7,
     min_n = NULL
-  ) %>% 
-  set_engine("rpart") %>% 
+  ) %>%
+  set_engine("rpart") %>%
   set_mode("classification")
-#Hyper-paramètres à tester, généré automatiquement par grid regular
-grid_tree <- grid_regular(cost_complexity(),
-                          tree_depth(),
-                          levels = 5)
+
+
+# mod_tree <- 
+#   decision_tree(
+#     cost_complexity = tune(),
+#     tree_depth = tune(),
+#     min_n = NULL
+#   ) %>% 
+#   set_engine("rpart") %>% 
+#   set_mode("classification")
+# #Hyper-paramètres à tester, généré automatiquement par grid regular
+# grid_tree <- grid_regular(cost_complexity(),
+#                           tree_depth(),
+#                           levels = 5)
 #Je teste 25 combinaisons d'hyper paramètres pour trouver le meilleur arbre
 
 #3-4 KNN
@@ -226,7 +236,7 @@ mod_svm <- svm_rbf(mode = "classification",
   set_engine("kernlab")
 
 #On choisit la recette
-mod <- mod_tree #paramètre à changer pour changer de modèle
+mod <- mod_lasso #paramètre à changer pour changer de modèle
 
 rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 ```

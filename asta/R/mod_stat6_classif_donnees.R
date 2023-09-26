@@ -81,9 +81,19 @@ mod_stat6_classif_donnees_server <- function(id,global){
     
     ns <- session$ns
     
+    local <- reactiveValues(dt1 = NULL,dt2=NULL)
+    
+    observeEvent(input$go1,{
+      local$dt1 <- global$dt1[1:10,]
+      global$dt1 <- local$dt1
+    })
+  
+    
     output$dt1 <- renderDT({
       
-      shinipsum::random_DT(nrow = 10,ncol = 10)
+      req(local$dt1)
+      # shinipsum::random_DT(nrow = 10,ncol = 10)
+      DT::datatable(local$dt1)
       
     })
     

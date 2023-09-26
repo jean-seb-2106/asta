@@ -74,9 +74,16 @@ mod_stat6_classif_preparation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    output$print1 <- renderPrint({
+    local <- reactiveValues(dt1 = NULL)
+    
+    observeEvent(input$go1,{
       
-      skimr::skim(vins)
+      local$dt1 <- global$dt1
+    })
+    
+    output$print1 <- renderPrint({
+      req(local$dt1)
+      skimr::skim(local$dt1)
     })
  
   })
