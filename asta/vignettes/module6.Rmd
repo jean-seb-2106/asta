@@ -413,7 +413,7 @@ valid_data <- validation(data_split)
 train_valid_data <- train_data %>% bind_rows(valid_data)
 
 skim(train_valid_data)
-skim(test_data)
+skim(test_data) 
 ```
 
 
