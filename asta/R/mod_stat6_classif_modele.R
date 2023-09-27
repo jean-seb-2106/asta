@@ -46,7 +46,14 @@ mod_stat6_classif_modele_ui <- function(id){
                             
                             )
                           
-                          ),column(9,))
+                          ),column(9,
+                                   
+                                   wellPanel( tags$p("Résultats du modèle", 
+                                                     style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),verbatimTextOutput(ns("text2")))
+                                   
+                                  
+                                   
+                                   ))
     
     
     
