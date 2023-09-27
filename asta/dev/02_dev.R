@@ -77,6 +77,7 @@ golem::add_module( name = "stat6" )
 golem::add_module(name = "stat6_classif_donnees")
 golem::add_module(name = "stat6_classif_preparation")
 golem::add_module(name = "stat6_classif_modele")
+golem::add_module(name = "stat6_classif_validation")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
