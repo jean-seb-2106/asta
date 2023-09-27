@@ -82,8 +82,8 @@ mod_stat6_classif_preparation_server <- function(id,global){
     })
     
     output$print1 <- renderPrint({
-      req(local$dt1)
-      skimr::skim(local$dt1)
+      # req(local$dt1)
+      skimr::skim(vins)
     })
  
   })

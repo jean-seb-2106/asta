@@ -91,9 +91,9 @@ mod_stat6_classif_donnees_server <- function(id,global){
     
     output$dt1 <- renderDT({
       
-      req(local$dt1)
-      # shinipsum::random_DT(nrow = 10,ncol = 10)
-      DT::datatable(local$dt1)
+      # req(local$dt1)
+      shinipsum::random_DT(nrow = 10,ncol = 10)
+      # DT::datatable(local$dt1)
       
     })
     
