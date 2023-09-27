@@ -20,12 +20,31 @@ mod_stat6_classif_modele_ui <- function(id){
                             
                             tags$p("Paramètres", 
                                    style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                            selectInput(ns("select1"),"Choissisez un algorithme :",choices = c("Regression Logistique","Arbre","Forêt aléatoire","KNN"))
+                            selectInput(ns("select1"),
+                                        "Choissisez un algorithme :",
+                                        choices = c("Regression Logistique","Arbre","Forêt aléatoire","KNN")),
+                            actionButton(ns("go1"),"Ajustement du modèle")
                           
                           ),
                           
-                          wellPanel(tags$p("Descriptif du modèle", 
-                                           style = "font-size : 110%; font-weight : bold; text-decoration : underline;"))
+                          wellPanel(
+                            
+                            tags$p("Descriptif du modèle", 
+                                           style = "font-size : 110%; font-weight : bold; text-decoration : underline;")),
+                          
+                          
+                          wellPanel(
+                            
+                            tags$p("Hyper-paramètres", 
+                                   style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                            selectInput(ns("select2"),
+                                        "Quel hyper-paramètres voulez-vous modifier ? :",
+                                        choices = NULL),
+                            sliderInput(ns("slide1"),label = textOutput(ns("text1")),min = 1,max = 10,step = 1,value = 5),
+                            actionButton(ns("go2"),"Mettre à jour le modèle")
+                            
+                            
+                            )
                           
                           ),column(9,))
     
@@ -42,6 +61,14 @@ mod_stat6_classif_modele_ui <- function(id){
 mod_stat6_classif_modele_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    
+    output$text1 <- renderText({
+      
+      "Nombre d'arbres"
+      
+    })
+    
  
   })
 }
