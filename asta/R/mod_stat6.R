@@ -87,7 +87,7 @@ mod_stat6_ui <- function(id){
                  mod_stat6_classif_donnees_ui(ns("stat6_classif_donnees")),
                  mod_stat6_classif_preparation_ui(ns("stat6_classif_preparation")),
                  mod_stat6_classif_modele_ui(ns("stat6_classif_modele")),
-                 mod_stat6_classif_validation_ui("stat6_classif_validation")
+                 mod_stat6_classif_validation_ui(ns("stat6_classif_validation"))
              
              
              

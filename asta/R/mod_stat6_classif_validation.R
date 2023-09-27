@@ -36,7 +36,8 @@ mod_stat6_classif_validation_ui <- function(id){
               wellPanel(
                 
                 tags$p("Descriptif", 
-                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;")
+                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                textOutput(ns("txt1"))
                 
                 
                 
@@ -58,7 +59,7 @@ mod_stat6_classif_validation_ui <- function(id){
                                      
                                      wellPanel(tags$p("Table de confusion", 
                                                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                                       renderTable(ns("tab1"))),
+                                       tableOutput(ns("tab1"))),
                                      infoBox(
                                        title = tags$p("Accuracy", style = "font-size : 80%;"),
                                        value = textOutput(ns("accuracy")),
@@ -126,6 +127,23 @@ mod_stat6_classif_validation_ui <- function(id){
 mod_stat6_classif_validation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    output$plot1 <- renderPlot({
+      
+      shinipsum::random_ggplot()
+      
+    })
+    
+    
+    output$tab1 <- renderTable({
+      
+      shinipsum::random_table(nrow = 4,ncol = 4)
+    })
+    
+    output$txt1 <- renderText({
+      shinipsum::random_text(nwords = 100)
+    })
+    
  
   })
 }
