@@ -22,7 +22,7 @@ mod_stat6_classif_modele_ui <- function(id){
                                    style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                             selectInput(ns("select1"),
                                         "Choissisez un algorithme :",
-                                        choices = c("Regression Logistique","Arbre","Forêt aléatoire","KNN")),
+                                        choices = c("Régression Logistique","Arbre","Forêt aléatoire","KNN")),
                             actionButton(ns("go1"),"Ajustement du modèle")
                           
                           ),
@@ -72,7 +72,7 @@ mod_stat6_classif_modele_server <- function(id,global){
     
     output$text1 <- renderText({
       
-      "Nombre d'arbres"
+      "?"
       
     })
     

@@ -48,7 +48,67 @@ mod_stat6_classif_validation_ui <- function(id){
                    
                    
                    
-            column(9,)
+            column(9,
+                   
+                   
+                   fluidRow(
+                     
+                     
+                     column(6,
+                                     
+                                     wellPanel(tags$p("Table de confusion", 
+                                                      style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                                       renderTable(ns("tab1"))),
+                                     infoBox(
+                                       title = tags$p("Accuracy", style = "font-size : 80%;"),
+                                       value = textOutput(ns("accuracy")),
+                                       icon = icon("chart-line"),
+                                       color="blue",
+                                       width = NULL
+                                     ),
+                                     infoBox(
+                                       title = tags$p("Specificity", style = "font-size : 80%;"),
+                                       value = textOutput(ns("spec")),
+                                       icon = icon("chart-line"),
+                                       color="blue",
+                                       width = NULL
+                                     ),
+                                     infoBox(
+                                       title = tags$p("Sensibility", style = "font-size : 80%;"),
+                                       value = textOutput(ns("sens")),
+                                       icon = icon("chart-line"),
+                                       color="blue",
+                                       width = NULL
+                                     )
+                                     
+                                     
+                                     ),
+                     
+                     column(6,
+                            
+                            wellPanel(tags$p("Courbe ROC", 
+                                             style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                       plotOutput(ns("plot1"))
+                       
+                       
+                       ),
+                       
+                       infoBox(
+                         title = tags$p("Aire sous la courbe", style = "font-size : 80%;"),
+                         value = textOutput(ns("AUC")),
+                         icon = icon("chart-line"),
+                         color="blue",
+                         width = NULL
+                       )
+                       
+                       
+                       )
+                   
+                   
+                   
+                   )
+                   
+                   )
             
             
             
