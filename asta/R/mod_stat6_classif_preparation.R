@@ -93,8 +93,9 @@ mod_stat6_classif_preparation_server <- function(id,global){
       local$dt_train <- training(local$dt_split)
       local$dt_valid <- validation(local$dt_split)
       local$dt_train_valid <- local$dt_train %>% bind_rows(local$dt_valid)
-      local$dt_test <- testing(local$dt_split)
       global$dt_train_valid <- local$dt_train_valid
+      local$dt_test <- testing(local$dt_split)
+      global$dt_test <- local$dt_test
       local$rec <- recipe(target~.,data=local$dt_train_valid)
       global$rec <- local$rec
       local$dt_train_valid_rec <- bake(prep(local$rec),new_data = NULL)

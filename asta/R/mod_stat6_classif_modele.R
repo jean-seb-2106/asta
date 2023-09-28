@@ -7,6 +7,8 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+#' @importFrom parsnip set_engine logistic_reg fit
+#' @importFrom workflows workflow add_model add_recipe
 mod_stat6_classif_modele_ui <- function(id){
   ns <- NS(id)
   
@@ -81,6 +83,25 @@ mod_stat6_classif_modele_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    
+    local <- reactiveValues(dt = NULL,
+                            rec=NULL,
+                            mod = NULL,
+                            wflow = NULL)
+    
+    observeEvent("go1",{
+      local$dt <- global$dt_train_valid
+      local$rec <- global$rec #importation de la recette de l'étape précédente
+      if(input$select1 == "Régression Logistique"){
+        local$mod <- logistic_reg() %>% 
+          set_engine("glm")
+      }
+      # local$wflow <- workflow() %>% 
+      #   add_model(local$mod) %>% 
+      #   add_recipe(local$rec)
+      # local$fit <- local$wflow %>% fit(local$dt)
+    })
+    
     output$text1 <- renderText({
       
       shinipsum::random_text(nwords = 100)
@@ -96,7 +117,11 @@ mod_stat6_classif_modele_server <- function(id,global){
     
     output$print1 <- renderPrint({
       
-      shinipsum::random_print(type = "model")
+      req(local$dt)
+      
+      local$fit
+      
+      # shinipsum::random_print(type = "model")
       
     })
     
