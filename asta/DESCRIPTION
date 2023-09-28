@@ -28,6 +28,7 @@ Imports:
     shiny (>= 1.7.1),
     shinydashboard,
     shinythemes,
+    skimr,
     stats,
     stringr,
     tidyr
@@ -37,7 +38,8 @@ Suggests:
     knitr,
     lubridate,
     purrr,
-    rmarkdown
+    rmarkdown,
+    tidymodels
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

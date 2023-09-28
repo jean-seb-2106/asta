@@ -7,6 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+#' @importFrom skimr skim
 mod_stat6_classif_donnees_ui <- function(id){
   ns <- NS(id)
 
@@ -55,7 +56,8 @@ mod_stat6_classif_donnees_ui <- function(id){
                tags$p("Visualisation de la base", 
                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                
-               DTOutput(ns("dt1"))
+               # DTOutput(ns("dt1"))
+               verbatimTextOutput(ns("print1"))
                
              ) 
              
@@ -81,19 +83,38 @@ mod_stat6_classif_donnees_server <- function(id,global){
     
     ns <- session$ns
     
-    local <- reactiveValues(dt1 = NULL,dt2=NULL)
+    local <- reactiveValues(dt = NULL)
     
     observeEvent(input$go1,{
-      local$dt1 <- global$dt1[1:10,]
-      global$dt1 <- local$dt1
+      local$dt <- eval(parse(text = input$select1))
+      
+      if (input$select1 == "vins"){
+        local$dt <- local$dt %>% rename(target=quality)
+        
+      }else if(input$select1 == "grandile"){
+        local$dt <- local$dt %>% 
+          rename(target=PAUVRE) %>% 
+          select(-starts_with("LIB")) %>% 
+          select(-IDENT) %>% 
+          mutate(target = as.factor(target))
+        
+      }
+      global$dt <- local$dt
     })
   
     
-    output$dt1 <- renderDT({
+    # output$dt1 <- renderDT({
+    #   
+    #   req(local$dt)
+    #   # shinipsum::random_DT(nrow = 10,ncol = 10)
+    #   DT::datatable(local$dt)
+    #   # skim(local$dt)
+    #   
+    # })
+    
+    output$print1 <- renderPrint({
       
-      # req(local$dt1)
-      shinipsum::random_DT(nrow = 10,ncol = 10)
-      # DT::datatable(local$dt1)
+      skim(local$dt)
       
     })
     
