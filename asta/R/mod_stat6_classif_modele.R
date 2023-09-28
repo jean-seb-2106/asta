@@ -30,26 +30,38 @@ mod_stat6_classif_modele_ui <- function(id){
                           wellPanel(
                             
                             tags$p("Descriptif du modèle", 
-                                           style = "font-size : 110%; font-weight : bold; text-decoration : underline;")),
-                          
-                          
-                          wellPanel(
-                            
-                            tags$p("Hyper-paramètres", 
-                                   style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                            selectInput(ns("select2"),
-                                        "Quel hyper-paramètres voulez-vous modifier ? :",
-                                        choices = NULL),
-                            sliderInput(ns("slide1"),label = textOutput(ns("text1")),min = 1,max = 10,step = 1,value = 5),
-                            actionButton(ns("go2"),"Mettre à jour le modèle")
+                                           style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                            textOutput(ns("text1"))
                             
                             
                             )
                           
+                          
+                          # wellPanel(
+                          #   
+                          #   tags$p("Hyper-paramètres", 
+                          #          style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                          #   selectInput(ns("select2"),
+                          #               "Quel hyper-paramètres voulez-vous modifier ? :",
+                          #               choices = NULL),
+                          #   sliderInput(ns("slide1"),label = textOutput(ns("text2")),min = 1,max = 10,step = 1,value = 5),
+                          #   actionButton(ns("go2"),"Mettre à jour le modèle")
+                          #   
+                          #   
+                          #   )
+                          
                           ),column(9,
                                    
-                                   wellPanel( tags$p("Résultats du modèle", 
-                                                     style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),verbatimTextOutput(ns("text2")))
+                                   fluidRow(column(6,wellPanel( tags$p("Résultats du modèle", 
+                                                                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                                                                verbatimTextOutput(ns("print1"))
+                                                                
+                                                                
+                                   )),column(6,wellPanel(tags$p("Prévisions", 
+                                                                style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                                                         DTOutput(ns("dt1")))))
+                                   
+                                   
                                    
                                   
                                    
@@ -69,10 +81,28 @@ mod_stat6_classif_modele_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    
     output$text1 <- renderText({
       
-      "?"
+      shinipsum::random_text(nwords = 100)
+      
+    })
+    
+    # output$text2 <- renderText({
+    #   
+    #   "?"
+    #   
+    # })
+    # 
+    
+    output$print1 <- renderPrint({
+      
+      shinipsum::random_print(type = "model")
+      
+    })
+    
+    
+    output$dt1 <- renderDT({
+      shinipsum::random_DT(nrow = 10,ncol = 4)
       
     })
     
