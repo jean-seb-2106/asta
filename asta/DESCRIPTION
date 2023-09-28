@@ -23,6 +23,7 @@ Imports:
     plotly,
     questionr,
     rAmCharts,
+    recipes,
     rsample,
     sampling,
     shinipsum,

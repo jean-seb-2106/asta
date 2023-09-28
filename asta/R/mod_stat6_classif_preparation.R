@@ -8,6 +8,7 @@
 #'
 #' @importFrom shiny NS tagList 
 #' @importFrom rsample initial_validation_split training testing validation
+#' @importFrom recipes recipe bake prep step_normalize step_dummy all_numeric_predictors all_nominal_predictors
 mod_stat6_classif_preparation_ui <- function(id){
   ns <- NS(id)
   
@@ -80,7 +81,8 @@ mod_stat6_classif_preparation_server <- function(id,global){
                             dt_train = NULL,
                             dt_valid = NULL,
                             dt_test = NULL,
-                            dt_train_valid = NULL)
+                            dt_train_valid = NULL,
+                            rec = NULL)
     
     observeEvent(input$go1,{
       
@@ -93,11 +95,29 @@ mod_stat6_classif_preparation_server <- function(id,global){
       local$dt_train_valid <- local$dt_train %>% bind_rows(local$dt_valid)
       local$dt_test <- testing(local$dt_split)
       global$dt_train_valid <- local$dt_train_valid
+      local$rec <- recipe(target~.,data=local$dt_train_valid)
+      global$rec <- local$rec
+      local$dt_train_valid_rec <- bake(prep(local$rec),new_data = NULL)
     })
     
     output$print1 <- renderPrint({
       req(local$dt)
-      skimr::skim(local$dt_train_valid)
+      skimr::skim(local$dt_train_valid_rec)
+    })
+    
+    observeEvent(input$go2,{
+      
+     
+      if (input$check1){
+        local$rec <- local$rec %>% step_normalize(all_numeric_predictors())
+      
+      }else if(input$check2){
+        local$rec <- local$rec %>%  step_dummy(all_nominal_predictors())
+      }
+      local$dt_train_valid_rec <- bake(prep(local$rec),new_data = NULL)
+      global$rec <- local$rec
+      
+      
     })
  
   })
