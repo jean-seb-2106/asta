@@ -23,6 +23,7 @@ Imports:
     plotly,
     questionr,
     rAmCharts,
+    rsample,
     sampling,
     shinipsum,
     shiny (>= 1.7.1),

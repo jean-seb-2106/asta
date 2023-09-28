@@ -85,6 +85,9 @@ mod_stat6_classif_donnees_server <- function(id,global){
     
     local <- reactiveValues(dt = NULL)
     
+    #Quand je clique sur le bouton, la base de données remonte
+    #au niveau global. Elle pourra ensuite être utilisée dans les autres 
+    #modules
     observeEvent(input$go1,{
       local$dt <- eval(parse(text = input$select1))
       
@@ -113,6 +116,8 @@ mod_stat6_classif_donnees_server <- function(id,global){
     # })
     
     output$print1 <- renderPrint({
+      
+      req(local$dt)
       
       skim(local$dt)
       

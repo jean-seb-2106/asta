@@ -7,6 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+#' @importFrom rsample initial_validation_split training testing validation
 mod_stat6_classif_preparation_ui <- function(id){
   ns <- NS(id)
   
@@ -74,16 +75,29 @@ mod_stat6_classif_preparation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    local <- reactiveValues(dt1 = NULL)
+    local <- reactiveValues(dt = NULL,
+                            dt_split =NULL,
+                            dt_train = NULL,
+                            dt_valid = NULL,
+                            dt_test = NULL,
+                            dt_train_valid = NULL)
     
     observeEvent(input$go1,{
       
-      local$dt1 <- global$dt1
+      local$dt <- global$dt
+      local$dt_split <- initial_validation_split(local$dt,
+                                                 strata=target,
+                                                 prop = c(input$slide1/100*0.75,input$slide1/100*0.25))
+      local$dt_train <- training(local$dt_split)
+      local$dt_valid <- validation(local$dt_split)
+      local$dt_train_valid <- local$dt_train %>% bind_rows(local$dt_valid)
+      local$dt_test <- testing(local$dt_split)
+      global$dt_train_valid <- local$dt_train_valid
     })
     
     output$print1 <- renderPrint({
-      # req(local$dt1)
-      skimr::skim(vins)
+      req(local$dt)
+      skimr::skim(local$dt_train_valid)
     })
  
   })
