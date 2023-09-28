@@ -20,6 +20,7 @@ Imports:
     ggplot2,
     ggthemes,
     golem (>= 0.3.1),
+    parsnip,
     plotly,
     questionr,
     rAmCharts,
@@ -33,7 +34,8 @@ Imports:
     skimr,
     stats,
     stringr,
-    tidyr
+    tidyr,
+    workflows
 Suggests: 
     datasets,
     kableExtra,
