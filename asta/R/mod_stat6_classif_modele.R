@@ -89,17 +89,20 @@ mod_stat6_classif_modele_server <- function(id,global){
                             mod = NULL,
                             wflow = NULL)
     
-    observeEvent("go1",{
+    # local$rec <- global$rec
+    
+    
+    observeEvent(input$go1,{
       local$dt <- global$dt_train_valid
       local$rec <- global$rec #importation de la recette de l'étape précédente
       if(input$select1 == "Régression Logistique"){
         local$mod <- logistic_reg() %>% 
           set_engine("glm")
       }
-      # local$wflow <- workflow() %>% 
-      #   add_model(local$mod) %>% 
-      #   add_recipe(local$rec)
-      # local$fit <- local$wflow %>% fit(local$dt)
+      local$wflow <- workflow() %>%
+        add_model(local$mod) %>%
+        add_recipe(local$rec)
+      local$fit <- local$wflow %>% fit(local$dt)
     })
     
     output$text1 <- renderText({
