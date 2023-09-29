@@ -180,6 +180,7 @@ mod_rf <-
 #3-3 l'arbre de décision
 
 mod_tree <- 
+  mod_tree <- 
   decision_tree(
     cost_complexity = 0.001,
     tree_depth = 7,
@@ -236,7 +237,7 @@ mod_svm <- svm_rbf(mode = "classification",
   set_engine("kernlab")
 
 #On choisit la recette
-mod <- mod_lasso #paramètre à changer pour changer de modèle
+mod <- mod_tree #paramètre à changer pour changer de modèle
 
 rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 ```

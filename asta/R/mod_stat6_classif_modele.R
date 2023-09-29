@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-#' @importFrom parsnip set_engine logistic_reg fit
+#' @importFrom parsnip set_engine augment logistic_reg fit decision_tree set_mode nearest_neighbor rand_forest
 #' @importFrom workflows workflow add_model add_recipe
 mod_stat6_classif_modele_ui <- function(id){
   ns <- NS(id)
@@ -87,7 +87,9 @@ mod_stat6_classif_modele_server <- function(id,global){
     local <- reactiveValues(dt = NULL,
                             rec=NULL,
                             mod = NULL,
-                            wflow = NULL)
+                            wflow = NULL,
+                            fit = NULL,
+                            pred = NULL)
     
     # local$rec <- global$rec
     
@@ -98,11 +100,37 @@ mod_stat6_classif_modele_server <- function(id,global){
       if(input$select1 == "Régression Logistique"){
         local$mod <- logistic_reg() %>% 
           set_engine("glm")
+      }else if(input$select1 == "Arbre"){
+        local$mod <- decision_tree(
+            # cost_complexity = 0.001,
+            # tree_depth = 7,
+            # min_n = NULL
+          ) %>%
+          set_engine("rpart") %>%
+          set_mode("classification")
+      }else if(input$select1 == "KNN"){
+        local$mod <- nearest_neighbor(
+            # neighbors = 3
+          ) %>% 
+          set_engine("kknn") %>% 
+          set_mode("classification")
+      }else if(input$select1 == "Forêt aléatoire"){
+        local$mod <- 
+          rand_forest(
+            # trees = 1000,
+            #           mtry = 3,
+            #           min_n = NULL
+            ) %>% 
+          set_engine("ranger") %>% 
+          set_mode("classification")
       }
       local$wflow <- workflow() %>%
         add_model(local$mod) %>%
         add_recipe(local$rec)
+      global$wflow <- local$wflow
       local$fit <- local$wflow %>% fit(local$dt)
+      local$pred <- augment(local$fit,local$dt)
+      
     })
     
     output$text1 <- renderText({
@@ -130,7 +158,10 @@ mod_stat6_classif_modele_server <- function(id,global){
     
     
     output$dt1 <- renderDT({
-      shinipsum::random_DT(nrow = 10,ncol = 4)
+      # shinipsum::random_DT(nrow = 10,ncol = 4)
+      req(local$dt)
+      ncol <- length(local$pred)
+      datatable(local$pred[,(ncol-3):ncol])#4 dernières colonnes
       
     })
     
