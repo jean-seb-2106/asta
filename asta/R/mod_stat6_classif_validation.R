@@ -7,6 +7,9 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+#' @importFrom rsample vfold_cv
+#' @importFrom tune control_resamples conf_mat_resampled autoplot fit_resamples
+#' @importFrom yardstick metric_set
 mod_stat6_classif_validation_ui <- function(id){
   ns <- NS(id)
   
@@ -128,9 +131,25 @@ mod_stat6_classif_validation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    local <- reactiveValues(dt=NULL,folds=NULL,wflow=NULL,metrics=NULL,fit=NULL)
+    
+    observeEvent(input$go1,{
+      local$dt <- global$dt_train_valid
+      local$folds <- vfold_cv(local$dt,
+                              v = input$slide1)
+      local$wflow <- global$wflow
+      # local$metrics <- metric_set(accuracy,recall, precision,roc_auc,sensitivity, specificity)
+      local$fit <- local$wflow %>% fit_resamples(local$folds,
+                                           # metrics = local$metrics,
+                                           control = control_resamples(save_pred = TRUE))
+    })
+    
     output$plot1 <- renderPlot({
       
-      shinipsum::random_ggplot()
+      req(local$dt)
+      # shinipsum::random_ggplot()
+      conf_mat_resampled(local$fit, tidy = FALSE) %>%
+        autoplot(type = "heatmap")
       
     })
     

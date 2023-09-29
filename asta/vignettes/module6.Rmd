@@ -276,7 +276,7 @@ folds <- vfold_cv(train_valid_data,
 # Evaluation du modèle avec la validation croisée
 metrics <- metric_set(accuracy,recall, precision,roc_auc,sensitivity, specificity)
 fit_rs <- wflow %>% fit_resamples(folds,
-                                  metrics = metrics,
+                                  # metrics = metrics,
                                   control = control_resamples(save_pred = TRUE))
 
 nb_rs_metrics <- collect_metrics(fit_rs)
