@@ -29,7 +29,7 @@ mod_stat6_classif_validation_ui <- function(id){
               tags$p("Paramètres", 
                      style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
               
-              sliderInput(ns("slide1"),"Validation croisée : nombre de folds",min=5,max=10,step=1,value = 10),
+              sliderInput(ns("slide1"),"Validation croisée : nombre de folds",min=5,max=10,step=5,value = 10),
               actionButton(ns("go1"),"Evaluer les performances du modèle")
               
               
@@ -62,7 +62,7 @@ mod_stat6_classif_validation_ui <- function(id){
                                      
                                      wellPanel(tags$p("Table de confusion", 
                                                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                                       tableOutput(ns("tab1"))),
+                                       plotOutput(ns("plot1"))),
                                      infoBox(
                                        title = tags$p("Accuracy", style = "font-size : 80%;"),
                                        value = textOutput(ns("accuracy")),
@@ -92,7 +92,7 @@ mod_stat6_classif_validation_ui <- function(id){
                             
                             wellPanel(tags$p("Courbe ROC", 
                                              style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                       plotOutput(ns("plot1"))
+                       plotOutput(ns("plot2"))
                        
                        
                        ),
@@ -154,9 +154,12 @@ mod_stat6_classif_validation_server <- function(id,global){
     })
     
     
-    output$tab1 <- renderTable({
+    output$plot2 <- renderPlot({
       
-      shinipsum::random_table(nrow = 4,ncol = 4)
+      # req(local$dt)
+      shinipsum::random_ggplot()
+    
+      
     })
     
     output$txt1 <- renderText({
