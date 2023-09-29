@@ -9,7 +9,7 @@
 #' @importFrom shiny NS tagList 
 #' @importFrom rsample vfold_cv
 #' @importFrom tune control_resamples conf_mat_resampled autoplot fit_resamples
-#' @importFrom yardstick metric_set
+#' @importFrom yardstick metric_set accuracy roc_auc sensitivity specificity
 mod_stat6_classif_validation_ui <- function(id){
   ns <- NS(id)
   
@@ -138,9 +138,9 @@ mod_stat6_classif_validation_server <- function(id,global){
       local$folds <- vfold_cv(local$dt,
                               v = input$slide1)
       local$wflow <- global$wflow
-      # local$metrics <- metric_set(accuracy,recall, precision,roc_auc,sensitivity, specificity)
+      local$metrics <- metric_set(accuracy,roc_auc,sensitivity, specificity)
       local$fit <- local$wflow %>% fit_resamples(local$folds,
-                                           # metrics = local$metrics,
+                                           metrics = local$metrics,
                                            control = control_resamples(save_pred = TRUE))
     })
     

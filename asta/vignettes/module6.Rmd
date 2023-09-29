@@ -276,16 +276,27 @@ folds <- vfold_cv(train_valid_data,
 # Evaluation du modèle avec la validation croisée
 metrics <- metric_set(accuracy,recall, precision,roc_auc,sensitivity, specificity)
 fit_rs <- wflow %>% fit_resamples(folds,
-                                  # metrics = metrics,
+                                  metrics = metrics,
                                   control = control_resamples(save_pred = TRUE))
 
 nb_rs_metrics <- collect_metrics(fit_rs)
 nb_rs_predictions <- collect_predictions(fit_rs)
 
+#Dans les infoBoxs
+accuracy <- nb_rs_metrics[nb_rs_metrics$.metric=="accuracy","mean"] %>% as.character()
+sensitivity <- nb_rs_metrics[nb_rs_metrics$.metric=="sensitivity","mean"] %>% as.character()
+specificity <- nb_rs_metrics[nb_rs_metrics$.metric=="sensitivity","mean"] %>% as.character()
+roc_auc <- nb_rs_metrics[nb_rs_metrics$.metric=="roc_auc","mean"] %>% as.character()
+
+##dans le premier renderPlot
 fit_rs %>% collect_metrics()
 conf_mat_resampled(fit_rs, tidy = FALSE) %>%
   autoplot(type = "heatmap")
-  
+
+##dans le deuxième renderPlot
+nb_rs_predictions %>% 
+  roc_curve(truth = target, .pred_bon) %>% 
+  autoplot()
 
 ```
 
