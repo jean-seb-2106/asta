@@ -9,7 +9,7 @@
 #' @importFrom shiny NS tagList 
 #' @importFrom rsample vfold_cv
 #' @importFrom tune control_resamples conf_mat_resampled autoplot fit_resamples collect_predictions
-#' @importFrom yardstick metric_set accuracy roc_auc sensitivity specificity
+#' @importFrom yardstick metric_set accuracy roc_auc sensitivity specificity roc_curve
 mod_stat6_classif_validation_ui <- function(id){
   ns <- NS(id)
   
@@ -161,9 +161,11 @@ mod_stat6_classif_validation_server <- function(id,global){
     
     output$plot2 <- renderPlot({
       
-      # req(local$dt)
-      shinipsum::random_ggplot()
-    
+      req(local$dt)
+      # shinipsum::random_ggplot()
+      local$pred %>% 
+        roc_curve(truth = target, .data[[names(local$pred)[4]]]) %>% 
+        autoplot()
       
     })
     
@@ -178,8 +180,8 @@ mod_stat6_classif_validation_server <- function(id,global){
       local$pred %>% 
         accuracy(truth = target, .pred_class) %>% 
         select(.estimate) %>% 
-        round(2) %>% 
-        as.character()
+        as.numeric() %>% 
+        format_box()
     })
     
     output$spec <- renderText({
@@ -189,8 +191,8 @@ mod_stat6_classif_validation_server <- function(id,global){
       local$pred %>% 
         specificity(truth = target, .pred_class) %>% 
         select(.estimate) %>% 
-        round(2) %>% 
-        as.character()
+        as.numeric() %>% 
+        format_box()
     })
     
     output$sens <- renderText({
@@ -199,9 +201,18 @@ mod_stat6_classif_validation_server <- function(id,global){
       
       local$pred %>% 
         sensitivity(truth = target, .pred_class) %>% 
-        select(.estimate) %>% 
-        round(2) %>% 
-        as.character()
+        select(.estimate) %>% as.numeric() %>% 
+        format_box()
+    })
+    
+    output$AUC <- renderText({
+      
+      req(local$dt)
+      
+      local$pred %>% 
+        roc_auc(truth = target, .data[[names(local$pred)[4]]]) %>% 
+        select(.estimate) %>% as.numeric() %>% 
+        format_box()
     })
     
  
