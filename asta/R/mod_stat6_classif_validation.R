@@ -8,7 +8,7 @@
 #'
 #' @importFrom shiny NS tagList 
 #' @importFrom rsample vfold_cv
-#' @importFrom tune control_resamples conf_mat_resampled autoplot fit_resamples
+#' @importFrom tune control_resamples conf_mat_resampled autoplot fit_resamples collect_predictions
 #' @importFrom yardstick metric_set accuracy roc_auc sensitivity specificity
 mod_stat6_classif_validation_ui <- function(id){
   ns <- NS(id)
@@ -131,7 +131,11 @@ mod_stat6_classif_validation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    local <- reactiveValues(dt=NULL,folds=NULL,wflow=NULL,metrics=NULL,fit=NULL)
+    local <- reactiveValues(dt=NULL,
+                            folds=NULL,
+                            wflow=NULL,
+                            metrics=NULL,
+                            fit=NULL)
     
     observeEvent(input$go1,{
       local$dt <- global$dt_train_valid
@@ -142,6 +146,7 @@ mod_stat6_classif_validation_server <- function(id,global){
       local$fit <- local$wflow %>% fit_resamples(local$folds,
                                            metrics = local$metrics,
                                            control = control_resamples(save_pred = TRUE))
+      local$pred <- collect_predictions(local$fit)
     })
     
     output$plot1 <- renderPlot({
@@ -164,6 +169,39 @@ mod_stat6_classif_validation_server <- function(id,global){
     
     output$txt1 <- renderText({
       shinipsum::random_text(nwords = 100)
+    })
+    
+    output$accuracy <- renderText({
+      
+ req(local$dt)
+      
+      local$pred %>% 
+        accuracy(truth = target, .pred_class) %>% 
+        select(.estimate) %>% 
+        round(2) %>% 
+        as.character()
+    })
+    
+    output$spec <- renderText({
+      
+      req(local$dt)
+      
+      local$pred %>% 
+        specificity(truth = target, .pred_class) %>% 
+        select(.estimate) %>% 
+        round(2) %>% 
+        as.character()
+    })
+    
+    output$sens <- renderText({
+      
+      req(local$dt)
+      
+      local$pred %>% 
+        sensitivity(truth = target, .pred_class) %>% 
+        select(.estimate) %>% 
+        round(2) %>% 
+        as.character()
     })
     
  

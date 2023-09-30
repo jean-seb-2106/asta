@@ -282,10 +282,14 @@ fit_rs <- wflow %>% fit_resamples(folds,
 nb_rs_metrics <- collect_metrics(fit_rs)
 nb_rs_predictions <- collect_predictions(fit_rs)
 
+nb_rs_predictions %>% 
+  accuracy(truth = target, .pred_class)
+
 #Dans les infoBoxs
-accuracy <- nb_rs_metrics[nb_rs_metrics$.metric=="accuracy","mean"] %>% as.character()
-sensitivity <- nb_rs_metrics[nb_rs_metrics$.metric=="sensitivity","mean"] %>% as.character()
-specificity <- nb_rs_metrics[nb_rs_metrics$.metric=="sensitivity","mean"] %>% as.character()
+accuracy <- nb_rs_predictions %>% accuracy(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
+sensitivity <- nb_rs_predictions %>% sensitivity(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
+specificity <- nb_rs_predictions %>% specificity(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
+
 roc_auc <- nb_rs_metrics[nb_rs_metrics$.metric=="roc_auc","mean"] %>% as.character()
 
 ##dans le premier renderPlot
