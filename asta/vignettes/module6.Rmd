@@ -20,6 +20,7 @@ library(asta)
 library(skimr)
 library(tidymodels)
 library(ggthemes)
+library(ranger)
 ```
 
 
@@ -314,13 +315,13 @@ predict(fit,new_data = valid_data)
 pred_valid <- augment(fit, valid_data)
 
 roc_plot_valid <- pred_valid %>% 
-  roc_curve(truth = target, .pred_1) %>% 
+  roc_curve(truth = target, .pred_bon) %>% 
   autoplot()
 roc_plot_valid
 
 #Aire sous la courbe
 pred_valid %>% 
-  roc_auc(truth = target, .pred_1)
+  roc_auc(truth = target, .pred_bon)
 
 #Accuracy : pourcentage de biens classés
 pred_valid %>% 

@@ -1,10 +1,10 @@
 * using log directory ‘/home/onyxia/work/asta/asta.Rcheck’
-* using R version 4.3.1 (2023-06-16)
+* using R version 4.3.2 (2023-10-31)
 * using platform: x86_64-pc-linux-gnu (64-bit)
 * R was compiled by
     gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
     GNU Fortran (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0
-* running under: Ubuntu 22.04.3 LTS
+* running under: Ubuntu 22.04.4 LTS
 * using session charset: UTF-8
 * using options ‘--no-manual --as-cran’
 * checking for file ‘asta/DESCRIPTION’ ... OK
@@ -12,7 +12,7 @@
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
-Imports includes 22 non-default packages.
+Imports includes 29 non-default packages.
 Importing from so many packages makes the package vulnerable to any of
 them becoming unavailable.  Move as many as possible to Suggests and
 use conditionally.
@@ -23,15 +23,15 @@ use conditionally.
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
 * checking serialization versions ... OK
-* checking whether package ‘asta’ can be installed ... [36s/33s] WARNING
+* checking whether package ‘asta’ can be installed ... [52s/46s] WARNING
 Found the following significant warnings:
   Warning: replacing previous import ‘dplyr::filter’ by ‘stats::filter’ when loading ‘asta’
 See ‘/home/onyxia/work/asta/asta.Rcheck/00install.out’ for details.
 * checking installed package size ... NOTE
-  installed size is  9.4Mb
+  installed size is  9.6Mb
   sub-directories of 1Mb or more:
     app   2.6Mb
-    doc   6.1Mb
+    doc   6.3Mb
 * checking package directory ... OK
 * checking for future file timestamps ... OK
 * checking ‘build’ directory ... OK
@@ -57,13 +57,18 @@ Found the following files with non-ASCII characters:
   mod_stat4.R
   mod_stat5_desaisonnalisation_mm.R
   mod_stat5_desaisonnalisation_regression.R
+  mod_stat6_classif_donnees.R
+  mod_stat6_classif_generalisation.R
+  mod_stat6_classif_modele.R
+  mod_stat6_classif_preparation.R
+  mod_stat6_classif_validation.R
   mod_stat6.R
 Portable packages must use only ASCII characters in their R code,
 except perhaps in comments.
 Use \uxxxx escapes for other characters.
 * checking R files for syntax errors ... OK
 * checking whether the package can be loaded ... OK
-* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be loaded with stated dependencies ... [13s/10s] OK
 * checking whether the package can be unloaded cleanly ... OK
 * checking whether the namespace can be loaded with stated dependencies ... OK
 * checking whether the namespace can be unloaded cleanly ... OK
@@ -72,7 +77,23 @@ Use \uxxxx escapes for other characters.
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
-* checking R code for possible problems ... [58s/49s] OK
+* checking R code for possible problems ... [92s/67s] NOTE
+mod_stat6_classif_donnees_server : <anonymous>: no visible binding for
+  global variable ‘quality’
+mod_stat6_classif_donnees_server : <anonymous>: no visible binding for
+  global variable ‘IDENT’
+mod_stat6_classif_donnees_server : <anonymous>: no visible binding for
+  global variable ‘target’
+mod_stat6_classif_preparation_server : <anonymous>: no visible binding
+  for global variable ‘target’
+mod_stat6_classif_validation_server : <anonymous>: no visible binding
+  for global variable ‘target’
+mod_stat6_classif_validation_server : <anonymous>: no visible binding
+  for global variable ‘.pred_class’
+mod_stat6_classif_validation_server : <anonymous>: no visible binding
+  for global variable ‘.estimate’
+Undefined global functions or variables:
+  .estimate .pred_class IDENT quality target
 * checking Rd files ... OK
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
@@ -109,18 +130,47 @@ Use \uxxxx escapes for other characters.
   'La R<c3><a9>union' in object 'departements'
 * checking LazyData ... OK
 * checking data for ASCII and uncompressed saves ... OK
+ WARNING
+‘qpdf’ is needed for checks on size reduction of PDFs
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... [62s/59s] OK
+* checking examples ... [50s/36s] OK
 Examples with CPU (user + system) or elapsed time > 5s
-                            user system elapsed
-histoplotly_simul         13.726  0.256  14.450
-simul_moyenne             13.338  0.256  13.628
-graphggplotly_qualiquanti  2.703  2.946   2.873
-* checking for unstated dependencies in vignettes ... OK
+                           user system elapsed
+graphggplotly_qualiquanti 3.404  6.822   1.457
+histoplotly_simul         4.993  0.158   5.151
+* checking for unstated dependencies in vignettes ... NOTE
+'library' or 'require' call not declared from: ‘ranger’
 * checking package vignettes in ‘inst/doc’ ... OK
-* checking re-building of vignette outputs ... [133s/124s] OK
+* checking re-building of vignette outputs ... [130s/106s] ERROR
+Error(s) in re-building vignettes:
+  ...
+--- re-building ‘module1.Rmd’ using rmarkdown
+--- finished re-building ‘module1.Rmd’
+
+--- re-building ‘module3.Rmd’ using rmarkdown
+--- finished re-building ‘module3.Rmd’
+
+--- re-building ‘module4.Rmd’ using rmarkdown
+--- finished re-building ‘module4.Rmd’
+
+--- re-building ‘module5.Rmd’ using rmarkdown
+--- finished re-building ‘module5.Rmd’
+
+--- re-building ‘module6.Rmd’ using rmarkdown
+
+Quitting from lines 19-24 [setup] (module6.Rmd)
+Error: processing vignette 'module6.Rmd' failed with diagnostics:
+there is no package called 'ranger'
+--- failed re-building ‘module6.Rmd’
+
+SUMMARY: processing the following file failed:
+  ‘module6.Rmd’
+
+Error: Vignette re-building failed.
+Execution halted
+
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE
-Status: 4 WARNINGs, 2 NOTEs
+Status: 1 ERROR, 5 WARNINGs, 4 NOTEs
