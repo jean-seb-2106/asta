@@ -83,7 +83,7 @@ mod_stat6_classif_donnees_server <- function(id,global){
     
     ns <- session$ns
     
-    local <- reactiveValues(dt = NULL)
+    local <- reactiveValues(dt = NULL, descriptif = NULL)
     
     #Quand je clique sur le bouton, la base de données remonte
     #au niveau global. Elle pourra ensuite être utilisée dans les autres 
@@ -93,6 +93,8 @@ mod_stat6_classif_donnees_server <- function(id,global){
       
       if (input$select1 == "vins"){
         local$dt <- local$dt %>% rename(target=quality)
+        local$descriptif <- "Le jeu de données vins (Wine Quality Data Set) recense les composants chimiques de vins ainsi que la note d’experts. A partir d'une certaine note, on considère que le vin est bon. En dessous de cette note, le vin est classé comme mauvais.
+        Peut-on prédire si le vin est bon ou mauvais à partir des composants chimiques du vin ?"
         
       }else if(input$select1 == "grandile"){
         local$dt <- local$dt %>% 
@@ -100,6 +102,8 @@ mod_stat6_classif_donnees_server <- function(id,global){
           select(-starts_with("LIB")) %>% 
           select(-IDENT) %>% 
           mutate(target = as.factor(target))
+        
+        local$descriptif <- "Le jeu de données Grandile est constitué de ménages habitant à Grandile. Peut-on prédire si un ménage est pauvre à partir de ses caractéristiques socio-économiques ?"
         
       }
       global$dt <- local$dt
@@ -123,10 +127,13 @@ mod_stat6_classif_donnees_server <- function(id,global){
       
     })
     
-    output$txt1 <- renderText(
+    output$txt1 <- renderText({
       
-      shinipsum::random_text(nwords = 100)
-    )
+      req(local$dt)
+      local$descriptif
+      
+      # shinipsum::random_text(nwords = 100)
+    })
  
   })
 }
