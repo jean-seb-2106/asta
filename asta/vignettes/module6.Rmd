@@ -328,9 +328,9 @@ nb_rs_predictions %>%
 ```{r}
 #############validation simple##############
 
-fit <- wflow %>% fit(train_data)
+fit <- wflow %>% fit(train_valid_data)
 
-predict(fit,new_data = valid_data)
+predict(fit,new_data = test_data)
 pred_valid <- augment(fit, valid_data)
 
 roc_plot_valid <- pred_valid %>% 
