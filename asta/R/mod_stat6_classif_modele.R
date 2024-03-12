@@ -8,7 +8,8 @@
 #'
 #' @importFrom shiny NS tagList 
 #' @importFrom parsnip set_engine augment logistic_reg fit decision_tree set_mode nearest_neighbor rand_forest
-#' @importFrom workflows workflow add_model add_recipe
+#' @importFrom workflows workflow add_model add_recipe extract_fit_parsnip
+#' @import kknn
 mod_stat6_classif_modele_ui <- function(id){
   ns <- NS(id)
   
@@ -150,7 +151,7 @@ mod_stat6_classif_modele_server <- function(id,global){
       
       req(local$dt)
       
-      local$fit
+      extract_fit_parsnip(local$fit)
       
       # shinipsum::random_print(type = "model")
       

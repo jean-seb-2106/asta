@@ -21,6 +21,7 @@ library(skimr)
 library(tidymodels)
 library(ggthemes)
 library(ranger)
+library(kknn)
 ```
 
 
@@ -65,15 +66,16 @@ var_strata <- "target" #variable de stratification : souvent la variable target
 # data_split <- rsample::initial_split(data,
                                      # strata = .data[[var_strata]],
                                      # prop = part_training)
-data_split <- initial_validation_split(data,strata = .data[[var_strata]]) 
+data_split <- initial_validation_split(data,strata = .data[[var_strata]])
+# data_split <- initial_validation_split(data,strata = all_of(var_strata))
 
 train_data <- training(data_split) #le fichier d'entraînement
 test_data <- testing(data_split) #le fichier de test
 valid_data <- validation(data_split)
 train_valid_data <- train_data %>% bind_rows(valid_data)
 
-skim(train_valid_data)
-skim(test_data)
+# skim(train_valid_data)
+# skim(test_data)
 
 ```
 
@@ -123,7 +125,7 @@ rec3 <-
 # %>% step_impute_mean() #imputation des valeurs manquates avec la moyenne
 # %>% step_clean_names #nettoyer le nom des variables
 
-#Recette pour grandile
+#Recette pour grandile (vin n'a pas de qualitatives)
 rec4 <- 
   recipe(target ~ ., data = train_valid_data) %>%
   # step_rm(all_nominal_predictors())   %>% 
@@ -144,8 +146,8 @@ data_rec <- bake(prep(rec),new_data = NULL)
 skim(data_rec)
 ```
 
+## menuSubItem : Choix du modèle/algo
 
-### Choix du modèle
 
 Paramètre algo : 
 Une autre fenêtre avec le choix de l'algorithme : 
@@ -238,7 +240,7 @@ mod_svm <- svm_rbf(mode = "classification",
   set_engine("kernlab")
 
 #On choisit la recette
-mod <- mod_tree #paramètre à changer pour changer de modèle
+mod <- mod_lr #paramètre à changer pour changer de modèle
 
 rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 ```
@@ -250,10 +252,27 @@ rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 
 #Workflow sans tuning
 wflow <-  workflow() %>% 
-  add_model(mod) %>% #ajout de la regression logistique
-  add_recipe(rec)
+  add_model(mod) %>% #ajout du modèle
+  add_recipe(rec) #ajout de la recette (transfo de la base initiale)
 mod
 wflow
+```
+
+```{r}
+#Affichage du résultat du modèle
+
+fit <- wflow %>% fit(data=train_valid_data)
+
+fit %>% 
+ extract_fit_parsnip()
+
+```
+
+```{r}
+#prédiction sur la base d'entraînement
+
+augment(fit,test_data) %>% select(target,starts_with(".pred"))
+
 ```
 
 ### Validation
