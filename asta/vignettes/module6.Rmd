@@ -254,7 +254,6 @@ rm(mod_lr,mod_ridge,mod_lasso,mod_rf,mod_tree,mod_knn,mod_svm)
 wflow <-  workflow() %>% 
   add_model(mod) %>% #ajout du modèle
   add_recipe(rec) #ajout de la recette (transfo de la base initiale)
-mod
 wflow
 ```
 
@@ -331,16 +330,17 @@ nb_rs_predictions %>%
 fit <- wflow %>% fit(train_valid_data)
 
 predict(fit,new_data = test_data)
-pred_valid <- augment(fit, valid_data)
+pred_valid <- augment(fit, valid_data) %>% select(target,starts_with(".pred"))
+pred1 <- names(pred_valid)[3]
 
 roc_plot_valid <- pred_valid %>% 
-  roc_curve(truth = target, .pred_bon) %>% 
+  roc_curve(truth = target, .data[[pred1]]) %>% 
   autoplot()
 roc_plot_valid
 
 #Aire sous la courbe
 pred_valid %>% 
-  roc_auc(truth = target, .pred_bon)
+  roc_auc(truth = target, .data[[pred1]])
 
 #Accuracy : pourcentage de biens classés
 pred_valid %>% 
