@@ -28,11 +28,12 @@ mod_stat6_classif_preparation_ui <- function(id){
                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                
                sliderInput(ns("slide1"),
-                           label = "Quel part de la base voulez-vous conserver pour l'apprentissage  ?",
+                           label = "Quel part de la base voulez-vous conserver pour l'entraînement  ?",
                            min = 70,
-                           max = 99,
+                           max = 90,
                            value = 80,
                            step = 5),
+               
                actionButton(ns("go1"),label = "Explorer la base d'entraînement")
                
               
@@ -89,14 +90,16 @@ mod_stat6_classif_preparation_server <- function(id,global){
       local$dt <- global$dt
       local$dt_split <- initial_validation_split(local$dt,
                                                  strata=target,
-                                                 prop = c(input$slide1/100*0.75,input$slide1/100*0.25))
+                                                 prop = c(input$slide1/100,(1-input$slide1/100)/2))
       local$dt_train <- training(local$dt_split)
+      global$dt_train <- local$dt_train
       local$dt_valid <- validation(local$dt_split)
+      global$dt_valid <- local$dt_valid
       local$dt_train_valid <- local$dt_train %>% bind_rows(local$dt_valid)
       global$dt_train_valid <- local$dt_train_valid
       local$dt_test <- testing(local$dt_split)
       global$dt_test <- local$dt_test
-      local$rec <- recipe(target~ .,data=local$dt_train_valid)
+      local$rec <- recipe(target~ .,data=local$dt_train)
       global$rec <- local$rec
       local$dt_train_valid_rec <- bake(prep(local$rec),new_data = NULL)
     })

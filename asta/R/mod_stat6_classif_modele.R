@@ -60,7 +60,7 @@ mod_stat6_classif_modele_ui <- function(id){
                                                                 verbatimTextOutput(ns("print1"))
                                                                 
                                                                 
-                                   )),column(6,wellPanel(tags$p("Prévisions", 
+                                   )),column(6,wellPanel(tags$p("Estimations", 
                                                                 style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                                                          DTOutput(ns("dt1")))))
                                    
@@ -96,7 +96,7 @@ mod_stat6_classif_modele_server <- function(id,global){
     
     
     observeEvent(input$go1,{
-      local$dt <- global$dt_train_valid
+      local$dt <- global$dt_train
       local$rec <- global$rec #importation de la recette de l'étape précédente
       if(input$select1 == "Régression Logistique"){
         local$mod <- logistic_reg() %>% 
@@ -161,8 +161,9 @@ mod_stat6_classif_modele_server <- function(id,global){
     output$dt1 <- renderDT({
       # shinipsum::random_DT(nrow = 10,ncol = 4)
       req(local$dt)
-      ncol <- length(local$pred)
-      datatable(local$pred[,(ncol-3):ncol])#4 dernières colonnes
+      # ncol <- length(local$pred)
+      # datatable(local$pred[,(ncol-3):ncol])#4 dernières colonnes
+      local$pred %>% select(target,starts_with(".pred"))
       
     })
     

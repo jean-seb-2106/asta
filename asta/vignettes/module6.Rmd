@@ -57,16 +57,16 @@ transmises aux sous-modules suivants.
 
 
 
-part_training <- 3/4 #proportion du découpage aléatoire en training et test
+part_training <- 0.6 #proportion du découpage aléatoire en training et test
+part_validation <- 0.2
 var_strata <- "target" #variable de stratification : souvent la variable target
-# nb_folds <-10 #nombre de classes pour la validation croisée
 
 # set.seed(123)
 #Découpage en training et en test (ancien découpage)
 # data_split <- rsample::initial_split(data,
                                      # strata = .data[[var_strata]],
                                      # prop = part_training)
-data_split <- initial_validation_split(data,strata = .data[[var_strata]])
+data_split <- initial_validation_split(data,strata = .data[[var_strata]],prop = c(part_training,part_validation))
 # data_split <- initial_validation_split(data,strata = all_of(var_strata))
 
 train_data <- training(data_split) #le fichier d'entraînement
@@ -258,7 +258,7 @@ wflow
 ```
 
 ```{r}
-#Affichage du résultat du modèle
+#Ajustement et affichage du résultat du modèle
 
 fit <- wflow %>% fit(data=train_valid_data)
 
@@ -268,9 +268,9 @@ fit %>%
 ```
 
 ```{r}
-#prédiction sur la base d'entraînement
+#estimations sur la base d'entraînement
 
-augment(fit,test_data) %>% select(target,starts_with(".pred"))
+augment(fit,train_data) %>% select(target,starts_with(".pred"))
 
 ```
 
@@ -327,11 +327,11 @@ nb_rs_predictions %>%
 ```{r}
 #############validation simple##############
 
-fit <- wflow %>% fit(train_valid_data)
+fit <- wflow %>% fit(train_data)
 
-predict(fit,new_data = test_data)
+predict(fit,new_data = valid_data)
 pred_valid <- augment(fit, valid_data) %>% select(target,starts_with(".pred"))
-pred1 <- names(pred_valid)[3]
+pred1 <- names(pred_valid)[3] #récupération du nom de la variable qui donne la première proba 
 
 roc_plot_valid <- pred_valid %>% 
   roc_curve(truth = target, .data[[pred1]]) %>% 
