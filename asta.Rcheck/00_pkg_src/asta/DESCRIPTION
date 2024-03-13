@@ -8,17 +8,17 @@ License: MIT + file LICENSE
 Depends: R (>= 2.10)
 Imports: config (>= 0.3.1), dashboardthemes, data.table, dplyr, DT,
         dygraphs, factoextra, FactoMineR, GGally, ggplot2, ggthemes,
-        golem (>= 0.3.1), parsnip, plotly, questionr, rAmCharts,
+        golem (>= 0.3.1), kknn, parsnip, plotly, questionr, rAmCharts,
         recipes, rsample, sampling, shinipsum, shiny (>= 1.7.1),
         shinydashboard, shinythemes, skimr, stats, stringr, tidyr,
         tune, workflows, yardstick
-Suggests: datasets, kableExtra, knitr, lubridate, purrr, rmarkdown,
-        tidymodels
+Suggests: datasets, kableExtra, knitr, lubridate, purrr, ranger,
+        rmarkdown, tidymodels
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.1
 NeedsCompilation: no
-Packaged: 2024-03-01 14:51:29 UTC; onyxia
+Packaged: 2024-03-13 15:14:24 UTC; onyxia
 Author: Jean Sebban [cre, aut]
 Maintainer: Jean Sebban <jean.sebban@insee.fr>
