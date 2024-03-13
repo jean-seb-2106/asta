@@ -101,12 +101,12 @@ mod_stat6_classif_preparation_server <- function(id,global){
       global$dt_test <- local$dt_test
       local$rec <- recipe(target~ .,data=local$dt_train)
       global$rec <- local$rec
-      local$dt_train_valid_rec <- bake(prep(local$rec),new_data = NULL)
+      local$dt_train_rec <- bake(prep(local$rec),new_data = NULL)
     })
     
     output$print1 <- renderPrint({
       req(local$dt)
-      skim(local$dt_train_valid_rec)
+      skim(local$dt_train_rec)
     })
     
     observeEvent(input$go2,{
@@ -118,7 +118,7 @@ mod_stat6_classif_preparation_server <- function(id,global){
       }else if(input$check2){
         local$rec <- local$rec %>%  step_dummy(all_nominal_predictors())
       }
-      local$dt_train_valid_rec <- bake(prep(local$rec),new_data = NULL)
+      local$dt_train_rec <- bake(prep(local$rec),new_data = NULL)
       global$rec <- local$rec
       
       

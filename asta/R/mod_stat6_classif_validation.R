@@ -63,6 +63,7 @@ mod_stat6_classif_validation_ui <- function(id){
                                      wellPanel(tags$p("Table de confusion", 
                                                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                                        plotOutput(ns("plot1"))),
+                            
                                      infoBox(
                                        title = tags$p("Accuracy", style = "font-size : 80%;"),
                                        value = textOutput(ns("accuracy")),
@@ -70,15 +71,9 @@ mod_stat6_classif_validation_ui <- function(id){
                                        color="blue",
                                        width = NULL
                                      ),
+                                    
                                      infoBox(
-                                       title = tags$p("Specificity", style = "font-size : 80%;"),
-                                       value = textOutput(ns("spec")),
-                                       icon = icon("chart-line"),
-                                       color="blue",
-                                       width = NULL
-                                     ),
-                                     infoBox(
-                                       title = tags$p("Sensibility", style = "font-size : 80%;"),
+                                       title = tags$p("Sensitivity", style = "font-size : 80%;"),
                                        value = textOutput(ns("sens")),
                                        icon = icon("chart-line"),
                                        color="blue",
@@ -100,6 +95,14 @@ mod_stat6_classif_validation_ui <- function(id){
                        infoBox(
                          title = tags$p("Aire sous la courbe", style = "font-size : 80%;"),
                          value = textOutput(ns("AUC")),
+                         icon = icon("chart-line"),
+                         color="blue",
+                         width = NULL
+                       ),
+                      
+                       infoBox(
+                         title = tags$p("Specificity", style = "font-size : 80%;"),
+                         value = textOutput(ns("spec")),
                          icon = icon("chart-line"),
                          color="blue",
                          width = NULL
@@ -202,36 +205,36 @@ mod_stat6_classif_validation_server <- function(id,global){
       
       req(local$dt)
       
-      shinipsum::random_text(nwords = 2)
+      # shinipsum::random_text(nwords = 2)
       
-      # local$pred %>% 
-      #   specificity(truth = target, .pred_class) %>% 
-      #   select(.estimate) %>% 
-      #   as.numeric() %>% 
-      #   format_box()
+      local$pred %>%
+        specificity(truth = target, .pred_class) %>%
+        select(.estimate) %>%
+        as.numeric() %>%
+        format_box()
     })
     
     output$sens <- renderText({
       
       req(local$dt)
       
-      shinipsum::random_text(nwords = 2)
-      # local$pred %>% 
-      #   sensitivity(truth = target, .pred_class) %>% 
-      #   select(.estimate) %>% as.numeric() %>% 
-      #   format_box()
+      # shinipsum::random_text(nwords = 2)
+      local$pred %>%
+        sensitivity(truth = target, .pred_class) %>%
+        select(.estimate) %>% as.numeric() %>%
+        format_box()
     })
     
     output$AUC <- renderText({
       
       req(local$dt)
       
-      shinipsum::random_text(nwords = 2)
+      # shinipsum::random_text(nwords = 2)
       
-      # local$pred %>% 
-      #   roc_auc(truth = target, .data[[names(local$pred)[4]]]) %>% 
-      #   select(.estimate) %>% as.numeric() %>% 
-      #   format_box()
+      local$pred %>%
+        roc_auc(truth = target, .data[[names(local$pred)[4]]]) %>%
+        select(.estimate) %>% as.numeric() %>%
+        format_box()
     })
     
  

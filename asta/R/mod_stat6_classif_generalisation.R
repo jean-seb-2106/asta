@@ -20,7 +20,7 @@ mod_stat6_classif_generalisation_ui <- function(id){
                     wellPanel(
                       tags$p("Paramètres",
                              style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                      actionButton(ns("go1"), "Vérifier les performances du modèle")
+                      actionButton(ns("go1"), "Ajuster le modèle retenu")
                       
                     ),
                     wellPanel(
@@ -38,9 +38,9 @@ mod_stat6_classif_generalisation_ui <- function(id){
                       
                       column(6,
                              
-                             wellPanel(tags$p("Table de confusion", 
+                             wellPanel(tags$p("Résultats du modèle", 
                                               style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                                       tableOutput(ns("tab1"))),
+                                       verbatimTextOutput(ns("print1"))),
                              infoBox(
                                title = tags$p("Accuracy", style = "font-size : 80%;"),
                                value = textOutput(ns("accuracy")),
@@ -68,9 +68,9 @@ mod_stat6_classif_generalisation_ui <- function(id){
                       
                       column(6,
                              
-                             wellPanel(tags$p("Courbe ROC", 
+                             wellPanel(tags$p("Prévisions", 
                                               style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
-                                       plotOutput(ns("plot1"))
+                                       DTOutput(ns("dt1"))
                                        
                                        
                              ),
@@ -112,16 +112,39 @@ mod_stat6_classif_generalisation_server <- function(id,global){
     ns <- session$ns
     
     
-    output$plot1 <- renderPlot({
+    local <- reactiveValues(dt=NULL,
+                            wflow=NULL,
+                            fit_final=NULL,
+                            pred=NULL)
+    
+    observeEvent(input$go1,{
+      local$dt <- global$dt_train_valid
+      local$wflow <- global$wflow
+      local$fit_final <- local$wflow %>% fit(local$dt)
+      # local$metrics <- metric_set(accuracy,roc_auc,sensitivity, specificity)
+      # local$fit <- local$wflow %>% fit_resamples(local$folds,
+      #                                      metrics = local$metrics,
+      #                                      control = control_resamples(save_pred = TRUE))
+      # local$pred <- collect_predictions(local$fit)
+      local$pred <- augment(local$fit_final,global$dt_test) %>% select(target,starts_with(".pred"))
+    })
+    
+    output$print1 <- renderPrint({
       
-      shinipsum::random_ggplot()
+      req(local$dt)
+
+      extract_fit_parsnip(local$fit_final)
+      
+      # shinipsum::random_print(type = "model")
       
     })
     
     
-    output$tab1 <- renderTable({
+    output$dt1 <- renderDT({
       
-      shinipsum::random_table(nrow = 5,ncol = 5)
+      # shinipsum::random_DT(nrow = 5,ncol = 5)
+      req(local$dt)
+      local$pred
     })
     
     output$text1 <- renderText({
