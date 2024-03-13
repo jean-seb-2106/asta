@@ -130,7 +130,10 @@ mod_stat6_classif_modele_server <- function(id,global){
         add_recipe(local$rec)
       global$wflow <- local$wflow
       local$fit <- local$wflow %>% fit(local$dt)
+      global$fit <- local$fit
       local$pred <- augment(local$fit,local$dt)
+      global$pred <- local$pred
+      
       
     })
     

@@ -9,7 +9,7 @@
 #' @importFrom shiny NS tagList 
 #' @importFrom rsample vfold_cv
 #' @importFrom tune control_resamples conf_mat_resampled autoplot fit_resamples collect_predictions
-#' @importFrom yardstick metric_set accuracy roc_auc sensitivity specificity roc_curve
+#' @importFrom yardstick metric_set accuracy roc_auc sensitivity specificity roc_curve conf_mat
 mod_stat6_classif_validation_ui <- function(id){
   ns <- NS(id)
   
@@ -29,7 +29,7 @@ mod_stat6_classif_validation_ui <- function(id){
               tags$p("Paramètres", 
                      style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
               
-              sliderInput(ns("slide1"),"Validation croisée : nombre de folds",min=5,max=10,step=5,value = 10),
+              # sliderInput(ns("slide1"),"Validation croisée : nombre de folds",min=5,max=10,step=5,value = 10),
               actionButton(ns("go1"),"Evaluer les performances du modèle")
               
               
@@ -138,23 +138,30 @@ mod_stat6_classif_validation_server <- function(id,global){
                             fit=NULL)
     
     observeEvent(input$go1,{
-      local$dt <- global$dt_train_valid
-      local$folds <- vfold_cv(local$dt,
-                              v = input$slide1)
-      local$wflow <- global$wflow
-      local$metrics <- metric_set(accuracy,roc_auc,sensitivity, specificity)
-      local$fit <- local$wflow %>% fit_resamples(local$folds,
-                                           metrics = local$metrics,
-                                           control = control_resamples(save_pred = TRUE))
-      local$pred <- collect_predictions(local$fit)
+      # local$dt <- global$dt_train_valid
+      local$dt <- global$dt_train
+      # local$folds <- vfold_cv(local$dt,
+      #                         v = input$slide1)
+      # local$wflow <- global$wflow
+      local$fit <- global$fit
+      # local$metrics <- metric_set(accuracy,roc_auc,sensitivity, specificity)
+      # local$fit <- local$wflow %>% fit_resamples(local$folds,
+      #                                      metrics = local$metrics,
+      #                                      control = control_resamples(save_pred = TRUE))
+      # local$pred <- collect_predictions(local$fit)
+      local$pred <- augment(local$fit,global$dt_valid) %>% select(target,starts_with(".pred"))
     })
     
     output$plot1 <- renderPlot({
       
       req(local$dt)
       # shinipsum::random_ggplot()
-      conf_mat_resampled(local$fit, tidy = FALSE) %>%
-        autoplot(type = "heatmap")
+      # conf_mat_resampled(local$fit, tidy = FALSE) %>%
+      #   autoplot(type = "heatmap")
+
+      local$pred %>%
+        conf_mat(target, .pred_class) %>%
+        autoplot(type="heatmap")
       
     })
     
@@ -163,9 +170,14 @@ mod_stat6_classif_validation_server <- function(id,global){
       
       req(local$dt)
       # shinipsum::random_ggplot()
-      local$pred %>% 
-        roc_curve(truth = target, .data[[names(local$pred)[4]]]) %>% 
+      # local$pred %>% 
+      #   roc_curve(truth = target, .data[[names(local$pred)[4]]]) %>% 
+      #   autoplot()
+      pred1 <- names(local$pred)[3]
+      roc_plot_valid <- local$pred %>% 
+        roc_curve(truth = target, .data[[pred1]]) %>% 
         autoplot()
+      roc_plot_valid
       
     })
     
@@ -176,11 +188,13 @@ mod_stat6_classif_validation_server <- function(id,global){
     output$accuracy <- renderText({
       
  req(local$dt)
-      
-      local$pred %>% 
-        accuracy(truth = target, .pred_class) %>% 
-        select(.estimate) %>% 
-        as.numeric() %>% 
+
+      # shinipsum::random_text(nwords = 2)
+            
+      local$pred %>%
+        accuracy(truth = target, .pred_class) %>%
+        select(.estimate) %>%
+        as.numeric() %>%
         format_box()
     })
     
@@ -188,31 +202,36 @@ mod_stat6_classif_validation_server <- function(id,global){
       
       req(local$dt)
       
-      local$pred %>% 
-        specificity(truth = target, .pred_class) %>% 
-        select(.estimate) %>% 
-        as.numeric() %>% 
-        format_box()
+      shinipsum::random_text(nwords = 2)
+      
+      # local$pred %>% 
+      #   specificity(truth = target, .pred_class) %>% 
+      #   select(.estimate) %>% 
+      #   as.numeric() %>% 
+      #   format_box()
     })
     
     output$sens <- renderText({
       
       req(local$dt)
       
-      local$pred %>% 
-        sensitivity(truth = target, .pred_class) %>% 
-        select(.estimate) %>% as.numeric() %>% 
-        format_box()
+      shinipsum::random_text(nwords = 2)
+      # local$pred %>% 
+      #   sensitivity(truth = target, .pred_class) %>% 
+      #   select(.estimate) %>% as.numeric() %>% 
+      #   format_box()
     })
     
     output$AUC <- renderText({
       
       req(local$dt)
       
-      local$pred %>% 
-        roc_auc(truth = target, .data[[names(local$pred)[4]]]) %>% 
-        select(.estimate) %>% as.numeric() %>% 
-        format_box()
+      shinipsum::random_text(nwords = 2)
+      
+      # local$pred %>% 
+      #   roc_auc(truth = target, .data[[names(local$pred)[4]]]) %>% 
+      #   select(.estimate) %>% as.numeric() %>% 
+      #   format_box()
     })
     
  
