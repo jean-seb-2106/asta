@@ -430,11 +430,21 @@ On fait apparaître le tableau de truc + courve AUC + Accuracy (pour voir le tau
 
 ## Données
 
+L'utilisateur choisit la base entre ozone et grandile. 
 
 ```{r}
-data <- departements %>% rename(target = nb_habitants) 
 
-# data <- mtcars %>% rename(target = mpg)
+data <- ozone %>% 
+  mutate(target = maxO3)
+
+
+# data <- grandile  %>%
+#   select(-starts_with("LIB")) %>%
+#   mutate(target = REV_DISPONIBLE) %>% 
+#   select(-IDENT,-REV_DISPONIBLE)
+
+
+
 ```
 
 Séparation de la base
@@ -448,8 +458,7 @@ test_data <- testing(data_split) #le fichier de test
 valid_data <- validation(data_split)
 train_valid_data <- train_data %>% bind_rows(valid_data)
 
-skim(train_valid_data)
-skim(test_data) 
+skim(train)
 ```
 
 

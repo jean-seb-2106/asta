@@ -15,7 +15,62 @@ mod_stat6_reg_donnees_ui <- function(id){
     
     
     tabName = "subitem__6",
-          h2("Les données")
+          h2("Les données"),
+    
+    fluidRow(
+      
+      
+      
+      
+      
+      column(3,
+             
+             wellPanel(
+               
+               tags$p("Paramètres", 
+                      style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+               
+               selectInput(inputId = ns("select1"),
+                           label = "Choississez une base de données",
+                           choices = c("ozone","grandile")),
+               
+               actionButton(ns("go1"),label = "Affichez la base")
+               
+             ),
+             
+             
+             
+             
+             wellPanel(
+               
+               tags$p("Description de la base de données", 
+                      style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+               
+               textOutput(ns("txt1"))
+               
+             )
+             
+             
+             
+      ),
+      
+      column(9, 
+             
+             wellPanel(
+               
+               tags$p("Exploration de la base", 
+                      style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+               
+               verbatimTextOutput(ns("print1"))
+               
+             ) 
+             
+      )
+      
+      
+      
+      
+    )
     
           
           
