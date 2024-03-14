@@ -90,7 +90,10 @@ mod_stat6_ui <- function(id){
                  mod_stat6_classif_validation_ui(ns("stat6_classif_validation")),
                  mod_stat6_classif_generalisation_ui(ns("stat6_classif_generalisation")),
                  mod_stat6_reg_donnees_ui(ns("stat6_reg_donnees")),
-                 mod_stat6_reg_preparation_ui(ns("stat6_reg_preparation"))
+                 mod_stat6_reg_preparation_ui(ns("stat6_reg_preparation")),
+                 mod_stat6_reg_modele_ui(ns("stat6_reg_modele")),
+                 mod_stat6_reg_validation_ui(ns("stat6_reg_validation")),
+                 mod_stat6_reg_generalisation_ui(ns("stat6_reg_generalisation"))
              
              
              
@@ -127,6 +130,9 @@ mod_stat6_server <- function(id,global){
     mod_stat6_classif_generalisation_server("stat6_classif_generalisation",global=global)
     mod_stat6_reg_donnees_server("stat6_reg_donnees",global=global)
     mod_stat6_reg_preparation_server("stat6_reg_preparation",global=global)
+    mod_stat6_reg_modele_server("stat6_reg_modele",global=global)
+    mod_stat6_reg_validation_server("stat6_reg_validation",global=global)
+    mod_stat6_reg_generalisation_server("stat6_reg_generalisation",global=global)
  
   })
 }
