@@ -474,7 +474,6 @@ test_data <- testing(data_split) #le fichier de test
 valid_data <- validation(data_split)
 train_valid_data <- train_data %>% bind_rows(valid_data)
 
-skim(train_data)
 ```
 
 Ces 4 dataframe sont enregistrés comme des variables globales et pourront ainsi être utilisés dans les autres modules.
@@ -484,17 +483,27 @@ Ces 4 dataframe sont enregistrés comme des variables globales et pourront ainsi
 Choix des tranformations à apporter à la base brute
 
 ```{r}
+
+#Aucune transformation
 rec1 <- 
   recipe(target ~ ., data = train_data)
 
-rec <- rec1
-rm(rec1)
+#Centrage réduction de toutes les variables quantitatives
+rec2 <- rec1 %>%
+  step_normalize(all_numeric_predictors()) 
+
+#Imputation des valeurs manquantes avec la moyenne
+rec3 <- rec1 %>% 
+  step_impute_mean(all_numeric_predictors()) #fonction à ajouter
+
+rec <- rec3
+rm(rec1,rec2,rec3)
 ```
 
 ```{r}
 prep <- prep(rec)
 bake <- bake(prep, new_data = NULL)
-bake
+skim(bake)
 ```
 
 
