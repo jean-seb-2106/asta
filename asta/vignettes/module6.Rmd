@@ -430,7 +430,7 @@ On fait apparaître le tableau de truc + courve AUC + Accuracy (pour voir le tau
 
 ## Données
 
-L'utilisateur choisit la base entre ozone et grandile. 
+L'utilisateur choisit la base entre ozone et grandile dans le menu déroulant. 
 
 ```{r}
 
@@ -438,38 +438,57 @@ data <- ozone %>%
   mutate(target = maxO3)
 
 
-# data <- grandile  %>%
+  # data <- grandile  %>%
 #   select(-starts_with("LIB")) %>%
-#   mutate(target = REV_DISPONIBLE) %>% 
+#   mutate(target = REV_DISPONIBLE) %>%
 #   select(-IDENT,-REV_DISPONIBLE)
 
 
 
 ```
 
-Séparation de la base
+
+L'utilisateur peut ensuite explorer la base  brute dans l'output avec la fonction skim.
+
+```{r}
+skim(data)
+```
+
+
+## Préparation
+
+### Partition de la base en 3
+
+L'utilisateur choisit la part de la base brute qu'il conserve pour l'entraînement. 
+Le reste de la base se séparera équitablement entre la base servant à la validation et celle servant au test. 
 
 ```{r}
 
-data_split <- initial_validation_split(data) 
+part_training <- 0.8
+part_validation <- (1-part_training)/2
+
+data_split <- initial_validation_split(data,prop = c(part_training,part_validation)) 
 
 train_data <- training(data_split) #le fichier d'entraînement
 test_data <- testing(data_split) #le fichier de test
 valid_data <- validation(data_split)
 train_valid_data <- train_data %>% bind_rows(valid_data)
 
-skim(train)
+skim(train_data)
 ```
 
+Ces 4 dataframe sont enregistrés comme des variables globales et pourront ainsi être utilisés dans les autres modules.
 
-## Préparation
+### Preprocessing : transformation de la base d'entraînement
+
+Choix des tranformations à apporter à la base brute
 
 ```{r}
 rec1 <- 
-  recipe(target ~ ., data = train_valid_data) %>% 
-  step_dummy(GR_REG)
+  recipe(target ~ ., data = train_data)
 
 rec <- rec1
+rm(rec1)
 ```
 
 ```{r}
