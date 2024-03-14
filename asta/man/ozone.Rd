@@ -5,7 +5,7 @@
 \alias{ozone}
 \title{ozone}
 \format{
-ozone est un data.frame constitué de 1366 relevés (rows) et de 13 variables (col).
+ozone est un data.frame constitué de 1366 observations (rows) et de 13 variables (col).
 }
 \source{
 \url{https://cefil.org/} {Site du Cefil}
@@ -14,7 +14,8 @@ ozone est un data.frame constitué de 1366 relevés (rows) et de 13 variables (c
 ozone
 }
 \description{
-Le fichier ozone est constitué de 1366 relevés journaliers effectués à Rennes entre 1994 et 2001, pour mesurer la polution de l'air.
+Le fichier ozone est constitué de 1366 relevés journaliers effectués à Rennes entre 1994 et 2001, 
+pour mesurer la polution de l'air.
 }
 \author{
 Jean \email{jean.sebban@insee.fr}
