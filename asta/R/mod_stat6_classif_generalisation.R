@@ -77,7 +77,7 @@ mod_stat6_classif_generalisation_ui <- function(id){
                              
                              infoBox(
                                title = tags$p("Aire sous la courbe", style = "font-size : 80%;"),
-                               value = textOutput(ns("AUC")),
+                               value = textOutput(ns("auc")),
                                icon = icon("chart-line"),
                                color="blue",
                                width = NULL
@@ -150,6 +150,57 @@ mod_stat6_classif_generalisation_server <- function(id,global){
     output$text1 <- renderText({
       shinipsum::random_text(nwords = 100)
     })
+    
+    
+    output$accuracy <- renderText({
+      
+      req(local$dt)
+      
+      # shinipsum::random_text(nwords = 2)
+      
+      local$pred %>%
+        accuracy(truth = target, .pred_class) %>%
+        select(.estimate) %>%
+        as.numeric() %>%
+        format_box()
+    })
+    
+    output$spec <- renderText({
+      
+      req(local$dt)
+      
+      # shinipsum::random_text(nwords = 2)
+      
+      local$pred %>%
+        specificity(truth = target, .pred_class) %>%
+        select(.estimate) %>%
+        as.numeric() %>%
+        format_box()
+    })
+    
+    output$sens <- renderText({
+      
+      req(local$dt)
+      
+      # shinipsum::random_text(nwords = 2)
+      local$pred %>%
+        sensitivity(truth = target, .pred_class) %>%
+        select(.estimate) %>% as.numeric() %>%
+        format_box()
+    })
+    
+    output$auc <- renderText({
+      
+      req(local$dt)
+      
+      # shinipsum::random_text(nwords = 2)
+      
+      local$pred %>%
+        roc_auc(truth = target, .data[[names(local$pred)[4]]]) %>%
+        select(.estimate) %>% as.numeric() %>%
+        format_box()
+    })
+    
     
     
  
