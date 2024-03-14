@@ -90,7 +90,8 @@ mod_stat6_classif_modele_server <- function(id,global){
                             mod = NULL,
                             wflow = NULL,
                             fit = NULL,
-                            pred = NULL)
+                            pred = NULL,
+                            descriptif = NULL)
     
     # local$rec <- global$rec
     
@@ -101,6 +102,9 @@ mod_stat6_classif_modele_server <- function(id,global){
       if(input$select1 == "Régression Logistique"){
         local$mod <- logistic_reg() %>% 
           set_engine("glm")
+        local$descriptif <- "La regression logistique a pour objectif d'expliquer 
+        et de prédire les valeurs d'une variable qualitative, le plus souvent binaire, 
+        à partir de variables qualitatives et quantitatives."
       }else if(input$select1 == "Arbre"){
         local$mod <- decision_tree(
             # cost_complexity = 0.001,
@@ -109,12 +113,24 @@ mod_stat6_classif_modele_server <- function(id,global){
           ) %>%
           set_engine("rpart") %>%
           set_mode("classification")
+        local$descriptif <- "Les arbres de classification sont des outils 
+        d'exploration des données et d'aide 
+        à la décision qui permettent d'expliquer 
+        et de prédire une variable qualitative à partir de variables explicatives 
+        quantitatives et/ou qualitatives. Dans cet exemple, les arbres sont construits avec 
+        l'algorithme CART qui permet d'obtenir des classes d'individus le 
+        plus homogène possible, selon la variable d'intérêt (target)."
       }else if(input$select1 == "KNN"){
         local$mod <- nearest_neighbor(
             # neighbors = 3
           ) %>% 
           set_engine("kknn") %>% 
           set_mode("classification")
+        local$descriptif <- "L'algorithme des k plus proches voisins consiste à prédire l'étiquette d'un individu 
+        en faisant un vote à la majorité parmi les étiquettes des k plus proches voisins. 
+        L'étiquette va bien entendu dépendre du choix de K. 
+        S'il est trop grand, il aura tendance à toujours prédire le groupe majoritaire. 
+        Si il est trop petit, il y a un risque de sur-apprentissage."
       }else if(input$select1 == "Forêt aléatoire"){
         local$mod <- 
           rand_forest(
@@ -124,6 +140,13 @@ mod_stat6_classif_modele_server <- function(id,global){
             ) %>% 
           set_engine("ranger") %>% 
           set_mode("classification")
+        local$descriptif <- "Les forêts aléatoires permettent de prédire une variable qualitative (ou quantitative)
+        à partir de variables quantitatives et/ou qualitatives. 
+        Cette famille d'algorithme permet de pallier le manque de stabilité des arbres. 
+        Elle consiste à agréger un grand nombre d'arbres (500 par défaut), 
+        construits sur des échantillons bootstrap. Pour la construction des arbres, 
+        à chaque noeud, seul un sous-ensemble de variables (3 par défaut) est sélectionné aléatoirement 
+        pour choisir la coupure. "
       }
       local$wflow <- workflow() %>%
         add_model(local$mod) %>%
@@ -139,16 +162,11 @@ mod_stat6_classif_modele_server <- function(id,global){
     
     output$text1 <- renderText({
       
-      shinipsum::random_text(nwords = 100)
+      # shinipsum::random_text(nwords = 100)
+      local$descriptif
       
     })
     
-    # output$text2 <- renderText({
-    #   
-    #   "?"
-    #   
-    # })
-    # 
     
     output$print1 <- renderPrint({
       
