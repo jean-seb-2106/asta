@@ -15,7 +15,7 @@ mod_stat6_reg_donnees_ui <- function(id){
     
     
     tabName = "subitem__6",
-          h2("Les données"),
+          h2("Les données")
     
           
           

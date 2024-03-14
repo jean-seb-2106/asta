@@ -82,6 +82,10 @@ golem::add_module(name = "stat6_classif_validation")
 golem::add_module(name = "stat6_classif_generalisation")
 #Regressions
 golem::add_module(name = "stat6_reg_donnees")
+golem::add_module(name = "stat6_reg_preparation")
+golem::add_module(name = "stat6_reg_modele")
+golem::add_module(name = "stat6_reg_validation")
+golem::add_module(name = "stat6_reg_generalisation")
 
 ## Add helper functions ----
 ## Creates fct_* and utils_*
