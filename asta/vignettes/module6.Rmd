@@ -430,7 +430,7 @@ On fait apparaître le tableau de truc + courve AUC + Accuracy (pour voir le tau
 
 # II - menuItem : Regression
 
-## menuSubitem : données
+## II - 1 menuSubitem : données
 
 L'utilisateur choisit la base entre ozone et grandile dans le menu déroulant. 
 
@@ -458,7 +458,7 @@ skim(data)
 ```
 
 
-## menusubitelm : Préparation
+## II - 2 menusubItem : Préparation
 
 ### Partition de la base en 3
 
@@ -536,7 +536,7 @@ rec
 ```
 
 
-## Menusubitem : Modèles
+## II - 3 Menusubitem : Modèles
 
 Pendant cette phase, on choisit le modèle appliqué à la base.
 
@@ -561,7 +561,7 @@ mod <- mod_rf
 rm(mod_lr,mod_rf,mod_svm)
 ```
 
-#Création du workflow incluant les modifications apportées dans la phase précédente
+### Création du workflow incluant les modifications apportées dans la phase précédente
 
 ```{r}
 wflow <- workflow() %>% 
@@ -570,7 +570,7 @@ wflow <- workflow() %>%
 wflow
 ```
 
-#Ajustement du modèle sur la base d'entraînement
+### Ajustement du modèle sur la base d'entraînement
 
 Attention : la random forest ne marche pas si il y a des valeurs manquantes
 
@@ -589,7 +589,7 @@ pred_train
 ```
 
 
-## menuSubitem : Validation
+## II - 4 menuSubitem : Validation
 
 ### Validation simple
 
@@ -666,7 +666,7 @@ nb_rs_metrics
 ```
 
 
-## menuSubitem : Généralisation
+## II - 5 menuSubitem : Généralisation
 
 ### Ajustement du modèle retenu sur la base d'entraînement et de validation
 

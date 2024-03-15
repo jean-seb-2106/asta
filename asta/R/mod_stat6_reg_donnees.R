@@ -92,7 +92,24 @@ mod_stat6_reg_donnees_server <- function(id,global){
     ns <- session$ns
  
     
+    output$print1 <- renderPrint({
+
+      shinipsum::random_print(type = "table")
+            
+      # req(local$dt)
+      # 
+      # skim(local$dt)
+      
+    })
     
+    
+    output$txt1 <- renderText({
+      
+      # req(local$dt)
+      # local$descriptif
+      
+      shinipsum::random_text(nwords = 100)
+    })
     
     
     
