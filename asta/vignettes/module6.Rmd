@@ -260,7 +260,7 @@ wflow
 ```{r}
 #Ajustement et affichage du résultat du modèle
 
-fit <- wflow %>% fit(data=train_valid_data)
+fit <- wflow %>% fit(data=train_data)
 
 fit %>% 
  extract_fit_parsnip()
@@ -288,51 +288,11 @@ On ne fait que la validation croisée sur les données d'entraînement. On peut 
 On choisit un workflow dans la liste (avec une recette et un modèle) et on affiche les résultats.
 ça peut prendre plus ou moins de temps selon l'alogorithme choisi. 
 
-```{r}
-##############Validation croisée##################
-# set.seed(345)
-nb_folds <- 5
-folds <- vfold_cv(train_valid_data,
-                  v = nb_folds)#paramétrage de la validation croisée
-# 
-# Evaluation du modèle avec la validation croisée
-metrics <- metric_set(accuracy,recall, precision,roc_auc,sensitivity, specificity)
-fit_rs <- wflow %>% fit_resamples(folds,
-                                  metrics = metrics,
-                                  control = control_resamples(save_pred = TRUE))
 
-nb_rs_metrics <- collect_metrics(fit_rs)
-nb_rs_predictions <- collect_predictions(fit_rs)
-
-nb_rs_predictions %>% 
-  accuracy(truth = target, .pred_class)
-
-#Dans les infoBoxs
-accuracy <- nb_rs_predictions %>% accuracy(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
-sensitivity <- nb_rs_predictions %>% sensitivity(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
-specificity <- nb_rs_predictions %>% specificity(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
-
-roc_auc <- nb_rs_metrics[nb_rs_metrics$.metric=="roc_auc","mean"] %>% as.character()
-
-##dans le premier renderPlot
-fit_rs %>% collect_metrics()
-conf_mat_resampled(fit_rs, tidy = FALSE) %>%
-  autoplot(type = "heatmap")
-
-##dans le deuxième renderPlot
-nb_rs_predictions %>% 
-  roc_curve(truth = target, .pred_bon) %>% 
-  autoplot()
-
-```
 
 ### Validation simple
 
 ```{r}
-#############validation simple##############
-
-fit <- wflow %>% fit(train_data)
-
 predict(fit,new_data = valid_data)
 pred_valid <- augment(fit, valid_data) %>% select(target,starts_with(".pred"))
 pred1 <- names(pred_valid)[3] #récupération du nom de la variable qui donne la première proba 
@@ -372,6 +332,44 @@ pred_valid %>%
   # theme_hc() + scale_colour_hc()
 ```
 
+
+```{r}
+##############Validation croisée##################
+# set.seed(345)
+nb_folds <- 5
+folds <- vfold_cv(train_valid_data,
+                  v = nb_folds)#paramétrage de la validation croisée
+# 
+# Evaluation du modèle avec la validation croisée
+metrics <- metric_set(accuracy,recall, precision,roc_auc,sensitivity, specificity)
+fit_rs <- wflow %>% fit_resamples(folds,
+                                  metrics = metrics,
+                                  control = control_resamples(save_pred = TRUE))
+
+nb_rs_metrics <- collect_metrics(fit_rs)
+nb_rs_predictions <- collect_predictions(fit_rs)
+
+nb_rs_predictions %>% 
+  accuracy(truth = target, .pred_class)
+
+#Dans les infoBoxs
+accuracy <- nb_rs_predictions %>% accuracy(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
+sensitivity <- nb_rs_predictions %>% sensitivity(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
+specificity <- nb_rs_predictions %>% specificity(truth = target, .pred_class) %>% select(.estimate) %>% round(2) %>% as.character()
+
+roc_auc <- nb_rs_metrics[nb_rs_metrics$.metric=="roc_auc","mean"] %>% as.character()
+
+##dans le premier renderPlot
+fit_rs %>% collect_metrics()
+conf_mat_resampled(fit_rs, tidy = FALSE) %>%
+  autoplot(type = "heatmap")
+
+##dans le deuxième renderPlot
+nb_rs_predictions %>% 
+  roc_curve(truth = target, .pred_bon) %>% 
+  autoplot()
+
+```
 
 A la fin de cette étape, on a choisi un modèle : on prend le meilleur au vu des résultats et on clique sur OK. 
 c'est ce modèle qui sera utilisé pour la généralisation sur la phase de test. 
@@ -668,14 +666,61 @@ nb_rs_metrics
 ```
 
 
-## Généralisation
+## menuSubitem : Généralisation
 
 ### Ajustement du modèle retenu sur la base d'entraînement et de validation
 
+Quand l'utilisateur clique sur le bouton, le modèle retenu à l'étape précédente
+s'ajuste sur la base d'entraînement et de validation. 
+
 ```{r}
+fit_final <- 
+  wflow %>% 
+  fit(train_valid_data)
+
 
 ```
 
+### Affichage du tableau de prédiction sur la base de test
 
+```{r}
+pred_testing <- augment(fit_final, test_data) %>% select(target,.pred)
+pred_testing
+```
+
+### Calcul des indicateurs sur la base de test
+
+```{r}
+rss <- sum((pred_valid$.pred - pred_valid$target)^2)
+mse <- rss/nrow(pred_valid)
+# RSME : racine carré de la MSE, pour se ramener à l'unité de la variable
+rmse <- sqrt(mse)
+rmse(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric() %>% round(2)
+
+#LRMSE : log de tout ça pour enlever les effets des ordres de grandeur
+rmsle <- sqrt(
+  (sum(
+    (log(pred_valid$.pred +1) - log(pred_valid$target + 1))^2))/(nrow(pred_valid)
+                                                                 )
+  )
+
+
+#Coefficient de détermination
+rsq <- rsq(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
+
+#Coefficient de corrélation linéaire
+cor(pred_valid$.pred,pred_valid$target)
+
+
+#Erreur carré relative
+rse <- 1-rsq
+
+
+
+tibble(rss,mse,rmse,rmsle,rse,rsq)
+rm(rss,mse,rmse,rmsle,rse,rsq)
+# mae(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
+# mape(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
+```
 
 
