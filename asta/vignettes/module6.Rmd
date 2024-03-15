@@ -693,31 +693,18 @@ pred_testing
 ```{r}
 rss <- sum((pred_valid$.pred - pred_valid$target)^2)
 mse <- rss/nrow(pred_valid)
-# RSME : racine carré de la MSE, pour se ramener à l'unité de la variable
 rmse <- sqrt(mse)
-rmse(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric() %>% round(2)
-
-#LRMSE : log de tout ça pour enlever les effets des ordres de grandeur
-rmsle <- sqrt(
+rmlse <- sqrt(
   (sum(
     (log(pred_valid$.pred +1) - log(pred_valid$target + 1))^2))/(nrow(pred_valid)
                                                                  )
   )
-
-
-#Coefficient de détermination
 rsq <- rsq(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
-
-#Coefficient de corrélation linéaire
-cor(pred_valid$.pred,pred_valid$target)
-
-
-#Erreur carré relative
 rse <- 1-rsq
 
 
 
-tibble(rss,mse,rmse,rmsle,rse,rsq)
+tibble(rss,mse,rmse,rmlse,rse,rsq)
 rm(rss,mse,rmse,rmsle,rse,rsq)
 # mae(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
 # mape(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
