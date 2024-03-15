@@ -26,9 +26,9 @@ library(kknn)
 
 
 
-# menuItem 1 : Classification supervisée
+# I - menuItem : Classification supervisée
 
-## menuSubItem : données
+## I - 1 menuSubItem : données
 
 Choisir la base de données et le pourcentage de test :
 
@@ -81,7 +81,7 @@ train_valid_data <- train_data %>% bind_rows(valid_data)
 
 
 
-## menuSubItem : preparation de la base
+## I - 2 menuSubItem : preparation de la base
 
 On part du fichier d'entraînement qui est une variable globale du module précédent.
 
@@ -146,7 +146,7 @@ data_rec <- bake(prep(rec),new_data = NULL)
 skim(data_rec)
 ```
 
-## menuSubItem : Choix du modèle/algo
+## I - 3 menuSubItem : Choix du modèle/algo
 
 
 Paramètre algo : 
@@ -274,7 +274,10 @@ augment(fit,train_data) %>% select(target,starts_with(".pred"))
 
 ```
 
-### Validation
+## I-4 menu Subitem : Validation
+
+
+### Validation croisée
 
 On joint la recette et le modèle pour arriver à un workflow, qui est la 
 variable globale de ce module qu'on va utiliser dans le sous-module suivant. 
@@ -323,6 +326,7 @@ nb_rs_predictions %>%
 
 ```
 
+### Validation simple
 
 ```{r}
 #############validation simple##############
@@ -372,7 +376,7 @@ pred_valid %>%
 A la fin de cette étape, on a choisi un modèle : on prend le meilleur au vu des résultats et on clique sur OK. 
 c'est ce modèle qui sera utilisé pour la généralisation sur la phase de test. 
 
-## menuSubItem : généralisation
+## I -4 menuSubItem : généralisation
 
 En entrée, on a le modèle qui a été sélectionné.
 
@@ -426,19 +430,20 @@ pred_testing %>%
 On a sélectionné le meilleur modèle et on teste ses performances sur des données qu'il n'a jamais vu. 
 On fait apparaître le tableau de truc + courve AUC + Accuracy (pour voir le taux de biens classés par exemple).
 
-# menuItem 2 : Regression
+# II - menuItem : Regression
 
-## Données
+## menuSubitem : données
 
 L'utilisateur choisit la base entre ozone et grandile dans le menu déroulant. 
 
 ```{r}
 
-data <- ozone %>% 
-  mutate(target = maxO3)
+data <- ozone %>%
+  mutate(target = maxO3) %>% 
+  select(-maxO3)
 
 
-  # data <- grandile  %>%
+# data <- grandile  %>%
 #   select(-starts_with("LIB")) %>%
 #   mutate(target = REV_DISPONIBLE) %>%
 #   select(-IDENT,-REV_DISPONIBLE)
@@ -455,7 +460,7 @@ skim(data)
 ```
 
 
-## Préparation
+## menusubitelm : Préparation
 
 ### Partition de la base en 3
 
@@ -484,9 +489,11 @@ Choix des tranformations à apporter à la base brute
 
 ```{r}
 
-#Aucune transformation
+####Aucune transformation
 rec1 <- 
   recipe(target ~ ., data = train_data)
+
+######1seule transfo
 
 #Centrage réduction de toutes les variables quantitatives
 rec2 <- rec1 %>%
@@ -494,41 +501,69 @@ rec2 <- rec1 %>%
 
 #Imputation des valeurs manquantes avec la moyenne
 rec3 <- rec1 %>% 
-  step_impute_mean(all_numeric_predictors()) #fonction à ajouter
+  step_impute_mean(Ne18) 
 
-rec <- rec3
-rm(rec1,rec2,rec3)
+#enlever des variables (choisir les variables)
+rec4 <- rec1 %>% 
+  step_rm(T6)
+
+######2transfos (l'ordre importe)
+
+#Imputation des valeurs manquantes PUIS Centrage réduction de toutes les variables 
+rec23 <- rec3 %>% 
+  step_normalize(all_numeric_predictors())
+
+#centrage réduction de toutes les numériques PUIS imputation des valeurs manquantes
+rec32 <- rec2 %>% 
+  step_impute_mean(Ne18)
+
+rec <- rec23
+rm(rec1,rec2,rec3,rec4,rec23,rec32)
 ```
+
+Après chaque transformation, l'affichage de la base d'entraînement se met à jour. 
+On affiche aussi l'ordre des transformations
+Prévoir un bouton pour revenir à la base brute.
 
 ```{r}
 prep <- prep(rec)
 bake <- bake(prep, new_data = NULL)
 skim(bake)
+
+```
+On affiche les recettes appliquées à la base brute
+
+```{r}
+rec
 ```
 
 
-## Modèles
+## Menusubitem : Modèles
+
+Pendant cette phase, on choisit le modèle appliqué à la base.
 
 ```{r}
+
+#modèle de regression linéaire
+mod_lr <- linear_reg() %>% 
+  set_engine("lm") 
+
+#random forest
+mod_rf <- rand_forest() %>%
+  set_engine("ranger") %>%
+  set_mode("regression")
 
 #modèle SVM
 mod_svm <- svm_linear() %>%
   set_mode("regression") %>%
   set_engine("LiblineaR")
 
-#random forest
-mod_rf <- rand_forest(trees = 1000) %>%
-  set_engine("ranger") %>%
-  set_mode("regression")
-
-mod_lr <- linear_reg() %>% 
-  set_engine("lm") 
-
 
 mod <- mod_rf
 rm(mod_lr,mod_rf,mod_svm)
 ```
 
+#Création du workflow incluant les modifications apportées dans la phase précédente
 
 ```{r}
 wflow <- workflow() %>% 
@@ -537,7 +572,78 @@ wflow <- workflow() %>%
 wflow
 ```
 
-## Validation
+#Ajustement du modèle sur la base d'entraînement
+
+Attention : la random forest ne marche pas si il y a des valeurs manquantes
+
+```{r}
+fit <- wflow %>% fit(data=train_data)
+
+fit %>% 
+ extract_fit_parsnip()
+
+```
+### Affichage des estimations
+
+```{r}
+pred_train <- augment(fit,train_data) %>% select(target,.pred) %>% round(1)
+pred_train
+```
+
+
+## menuSubitem : Validation
+
+### Validation simple
+
+Affichage des prédictions sur la base de validation
+
+```{r}
+pred_valid <- augment(fit,valid_data) %>% select(target,.pred) %>% round(1)
+pred_valid
+```
+
+### Calcul des indicateurs
+
+```{r}
+#Somme des carrés des résidus (RSS : residual sum of squares)
+rss <- sum((pred_valid$.pred - pred_valid$target)^2)
+
+
+#MSE : erreur quadratique moyenne (mean squared error)
+#pour enlever l'effet taille (plus la base est grande, plus le rss est grand)
+mse <- rss/nrow(pred_valid)
+
+
+# RSME : racine carré de la MSE, pour se ramener à l'unité de la variable
+rmse <- sqrt(mse)
+rmse(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric() %>% round(2)
+
+#LRMSE : log de tout ça pour enlever les effets des ordres de grandeur
+rmsle <- sqrt(
+  (sum(
+    (log(pred_valid$.pred +1) - log(pred_valid$target + 1))^2))/(nrow(pred_valid)
+                                                                 )
+  )
+
+
+#Coefficient de détermination
+rsq <- rsq(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
+
+#Coefficient de corrélation linéaire
+cor(pred_valid$.pred,pred_valid$target)
+
+
+#Erreur carré relative
+rse <- 1-rsq
+
+
+
+tibble(rss,mse,rmse,rmsle,rse,rsq)
+rm(rss,mse,rmse,rmsle,rse,rsq)
+# mae(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
+# mape(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
+```
+
 
 ### Validation croisée
 
@@ -561,6 +667,15 @@ nb_rs_metrics
 
 ```
 
-### Validation simple
 
 ## Généralisation
+
+### Ajustement du modèle retenu sur la base d'entraînement et de validation
+
+```{r}
+
+```
+
+
+
+
