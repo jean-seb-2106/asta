@@ -499,7 +499,7 @@ rec2 <- rec1 %>%
 
 #Imputation des valeurs manquantes avec la moyenne
 rec3 <- rec1 %>% 
-  step_impute_mean(Ne18) 
+  step_impute_mean(c(Ne18,Ne15)) 
 
 #enlever des variables (choisir les variables)
 rec4 <- rec1 %>% 
@@ -515,7 +515,7 @@ rec23 <- rec3 %>%
 rec32 <- rec2 %>% 
   step_impute_mean(Ne18)
 
-rec <- rec23
+rec <- rec2
 rm(rec1,rec2,rec3,rec4,rec23,rec32)
 ```
 

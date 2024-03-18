@@ -7,6 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
+#' @importFrom recipes step_impute_mean
 mod_stat6_reg_preparation_ui <- function(id){
   ns <- NS(id)
   
@@ -50,7 +51,7 @@ mod_stat6_reg_preparation_ui <- function(id){
                selectInput(ns("select1"),
                            label = "Quelle transformation voulez-vous appliquer ?",
                            choices = c("Centrer-réduire","Imputation avec moyenne","Retirer des variables"),
-                           multiple = TRUE
+                           multiple = FALSE
                            ),
                selectInput(ns("select2"),
                            label = "Sur quelles variables ?",
@@ -122,24 +123,80 @@ mod_stat6_reg_preparation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    
+    
+    local <- reactiveValues(dt = NULL,
+                            dt_split =NULL,
+                            dt_train = NULL,
+                            dt_valid = NULL,
+                            dt_test = NULL,
+                            dt_train_valid = NULL,
+                            rec = NULL,
+                            dt_train_rec = NULL)
+    
+    
+    observeEvent(input$go1,{
+      
+      local$dt <- global$dt
+      local$dt_split <- initial_validation_split(local$dt,
+                                                 prop = c(input$slide1/100,(1-input$slide1/100)/2))
+      local$dt_train <- training(local$dt_split)
+      global$dt_train <- local$dt_train
+      local$dt_valid <- validation(local$dt_split)
+      global$dt_valid <- local$dt_valid
+      local$dt_train_valid <- local$dt_train %>% bind_rows(local$dt_valid)
+      global$dt_train_valid <- local$dt_train_valid
+      local$dt_test <- testing(local$dt_split)
+      global$dt_test <- local$dt_test
+      local$rec <- recipe(target~ .,data=local$dt_train)
+      global$rec <- local$rec
+      local$dt_train_rec <- bake(prep(local$rec),new_data = NULL)
+    })
+    
+    
+    
+    
+    observeEvent(input$go2,{
+      
+      
+      if (input$select1 == "Centrer-réduire"){
+        
+        local$rec <- local$rec %>% step_normalize(all_numeric_predictors())
+        
+      }else if(input$select1 == "Imputation avec moyenne"){
+        
+        local$rec <- local$rec %>%  step_impute_mean(all_numeric_predictors())
+        
+      }else if(input$select1 == "Retirer des variables"){
+        
+        local$rec <- local$rec %>%  step_rm(all_numeric_predictors())
+      }
+      local$dt_train_rec <- bake(prep(local$rec),new_data = NULL)
+      global$rec <- local$rec
+      
+      
+    })
+    
+    
+    
     output$print1 <- renderPrint({
       
-      shinipsum::random_print(type = "table")
+      # shinipsum::random_print(type = "table")
       
-      # req(local$dt)
-      # 
-      # skim(local$dt)
+      req(local$dt)
+
+      skim(local$dt_train_rec)
       
     })
     
     output$print2 <- renderPrint({
       
-      shinipsum::random_print(type = "numeric")
+      # shinipsum::random_print(type = "numeric")
       
-      # req(local$dt)
-      # 
-      # skim(local$dt)
-      
+      req(local$dt)
+
+    prep(local$rec)
+    #   
     })
     
  
