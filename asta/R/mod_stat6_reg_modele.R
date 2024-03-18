@@ -65,7 +65,7 @@ mod_stat6_reg_modele_ui <- function(id){
                            wellPanel(
                              
                              
-                             tags$p("Estimations", 
+                             tags$p("Estimations sur la base d'entraînement", 
                                     style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                              DTOutput(ns("dt1"))
                              
