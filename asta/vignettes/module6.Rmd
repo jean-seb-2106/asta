@@ -557,7 +557,7 @@ mod_svm <- svm_linear() %>%
   set_engine("LiblineaR")
 
 
-mod <- mod_rf
+mod <- mod_lr
 rm(mod_lr,mod_rf,mod_svm)
 ```
 
