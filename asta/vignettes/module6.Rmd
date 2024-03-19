@@ -436,15 +436,15 @@ L'utilisateur choisit la base entre ozone et grandile dans le menu déroulant.
 
 ```{r}
 
-data <- ozone %>%
-  mutate(target = maxO3) %>% 
-  select(-maxO3)
+# data <- ozone %>%
+#   mutate(target = maxO3) %>% 
+#   select(-maxO3)
 
 
-# data <- grandile  %>%
-#   select(-starts_with("LIB")) %>%
-#   mutate(target = REV_DISPONIBLE) %>%
-#   select(-IDENT,-REV_DISPONIBLE)
+data <- grandile  %>%
+  select(-starts_with("LIB")) %>%
+  mutate(target = REV_DISPONIBLE) %>%
+  select(-IDENT,-REV_DISPONIBLE)
 
 
 
@@ -483,6 +483,29 @@ Ces 4 dataframe sont enregistrés comme des variables globales et pourront ainsi
 
 ### Preprocessing : transformation de la base d'entraînement
 
+
+
+
+```{r}
+
+#Sélection des variables quantis (numériques et integer)
+select_class_df <- function(df,type){
+
+    names(df[, map_chr(.x = df,.f = class)%in% type])
+
+    }
+
+#selection des variables quanti, c'est à dire integer et numeric
+quantis <- select_class_df(data %>% select(-target),c("integer","numeric"))
+
+
+#Sélection des variables qualis
+qualis <- select_class_df(data %>% select(-target),c("character"))
+
+quantis_qualis <- names(data %>% select(-target))
+
+```
+
 Choix des tranformations à apporter à la base brute
 
 ```{r}
@@ -518,6 +541,9 @@ rec32 <- rec2 %>%
 rec <- rec2
 rm(rec1,rec2,rec3,rec4,rec23,rec32)
 ```
+
+
+
 
 Après chaque transformation, l'affichage de la base d'entraînement se met à jour. 
 On affiche aussi l'ordre des transformations
