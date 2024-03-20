@@ -130,6 +130,17 @@ mod_stat6_reg_validation_server <- function(id,global){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    local <- reactiveValues(dt=NULL,
+                            fit=NULL,
+                            pred=NULL)
+    
+    observeEvent(input$go1,{
+      local$dt <- global$dt_train
+      local$fit <- global$fit
+      local$pred <- augment(local$fit,global$dt_valid) %>% select(target,starts_with(".pred"))
+    })
+    
+    
     
     output$txt1 <- renderText({
       shinipsum::random_text(nwords = 100)
@@ -138,7 +149,9 @@ mod_stat6_reg_validation_server <- function(id,global){
     
     
     output$rss <- renderText({
-      shinipsum::random_text(nwords = 2)
+      # shinipsum::random_text(nwords = 2)
+      req(local$dt)
+      sum((local$pred[,".pred"] - local$pred[,"target"])^2)
     })
     
     output$mse <- renderText({
