@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-#' @importFrom recipes step_impute_mean
+#' @importFrom recipes step_impute_mean step_rm
 mod_stat6_reg_preparation_ui <- function(id){
   ns <- NS(id)
   
@@ -176,6 +176,7 @@ mod_stat6_reg_preparation_server <- function(id,global){
       
       
     })
+    
     
     
     
