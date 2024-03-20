@@ -88,10 +88,33 @@ mod_stat6_reg_preparation_ui <- function(id){
                     
                     wellPanel(
                       
-                      tags$p("Liste des transformations", 
+                      tags$p("Partitionnement de la base brute", 
                              style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                       
-                      verbatimTextOutput(ns("print2"))) 
+                      infoBox(
+                        title = tags$p("Base d'entraînement", style = "font-size : 80%;"),
+                        value = textOutput(ns("entrainement")),
+                        icon = icon("chart-line"),
+                        color="blue",
+                        width = NULL
+                      ),
+                      
+                      infoBox(
+                        title = tags$p("Base de validation", style = "font-size : 80%;"),
+                        value = textOutput(ns("validation")),
+                        icon = icon("chart-line"),
+                        color="blue",
+                        width = NULL
+                      ),
+                      
+                      infoBox(
+                        title = tags$p("Base de test", style = "font-size : 80%;"),
+                        value = textOutput(ns("test")),
+                        icon = icon("chart-line"),
+                        color="blue",
+                        width = NULL
+                      )
+                      ) 
                     
                     
                     )
@@ -130,6 +153,9 @@ mod_stat6_reg_preparation_server <- function(id,global){
                             dt_train = NULL,
                             dt_valid = NULL,
                             dt_test = NULL,
+                            part_train = NULL,
+                            part_valid = NULL,
+                            part_test = NULL,
                             dt_train_valid = NULL,
                             rec = NULL,
                             dt_train_rec = NULL)
@@ -140,6 +166,9 @@ mod_stat6_reg_preparation_server <- function(id,global){
       local$dt <- global$dt
       local$dt_split <- initial_validation_split(local$dt,
                                                  prop = c(input$slide1/100,(1-input$slide1/100)/2))
+      local$part_train <- input$slide1
+      local$part_valid <- (100-input$slide1)/2
+      local$part_test <- local$part_valid
       local$dt_train <- training(local$dt_split)
       global$dt_train <- local$dt_train
       local$dt_valid <- validation(local$dt_split)
@@ -193,14 +222,23 @@ mod_stat6_reg_preparation_server <- function(id,global){
       
     })
     
-    output$print2 <- renderPrint({
-      
-      # shinipsum::random_print(type = "numeric")
-      
+    output$entrainement <- renderText({
+      # shinipsum::random_text(nwords = 2)
       req(local$dt)
-
-    prep(local$rec)
-    #   
+      local$part_train
+      #   format_box()
+    })
+    
+    output$validation <- renderText({
+      # shinipsum::random_text(nwords = 2)
+      req(local$dt)
+      local$part_valid
+    })
+    
+    output$test <- renderText({
+      # shinipsum::random_text(nwords = 2)
+      req(local$dt)
+      local$part_test
     })
     
  
