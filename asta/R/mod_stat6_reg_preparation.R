@@ -225,20 +225,20 @@ mod_stat6_reg_preparation_server <- function(id,global){
     output$entrainement <- renderText({
       # shinipsum::random_text(nwords = 2)
       req(local$dt)
-      local$part_train
+      paste(format(local$part_train,digits=1),"%")
       #   format_box()
     })
     
     output$validation <- renderText({
       # shinipsum::random_text(nwords = 2)
       req(local$dt)
-      local$part_valid
+      paste(format(local$part_valid,digits=1),"%")
     })
     
     output$test <- renderText({
       # shinipsum::random_text(nwords = 2)
       req(local$dt)
-      local$part_test
+      paste(format(local$part_test,digits=1),"%")
     })
     
  
