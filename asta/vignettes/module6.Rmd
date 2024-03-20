@@ -436,15 +436,15 @@ L'utilisateur choisit la base entre ozone et grandile dans le menu déroulant.
 
 ```{r}
 
-# data <- ozone %>%
-#   mutate(target = maxO3) %>% 
-#   select(-maxO3)
+data <- ozone %>%
+  mutate(target = maxO3) %>%
+  select(-maxO3)
 
 
-data <- grandile  %>%
-  select(-starts_with("LIB")) %>%
-  mutate(target = REV_DISPONIBLE) %>%
-  select(-IDENT,-REV_DISPONIBLE)
+# data <- grandile  %>%
+#   select(-starts_with("LIB")) %>%
+#   mutate(target = REV_DISPONIBLE) %>%
+#   select(-IDENT,-REV_DISPONIBLE)
 
 
 
@@ -482,7 +482,6 @@ train_valid_data <- train_data %>% bind_rows(valid_data)
 Ces 4 dataframe sont enregistrés comme des variables globales et pourront ainsi être utilisés dans les autres modules.
 
 ### Preprocessing : transformation de la base d'entraînement
-
 
 
 

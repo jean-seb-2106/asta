@@ -50,14 +50,14 @@ mod_stat6_reg_preparation_ui <- function(id){
                
                selectInput(ns("select1"),
                            label = "Quelle transformation voulez-vous appliquer ?",
-                           choices = c("Centrer-réduire","Imputation avec moyenne","Retirer des variables"),
+                           choices = c("Centrer-réduire","Imputation avec moyenne"),
                            multiple = FALSE
                            ),
-               selectInput(ns("select2"),
-                           label = "Sur quelles variables ?",
-                           choices = c("VAR1","VAR2","VAR3"),
-                           multiple = TRUE
-               ),
+               # selectInput(ns("select2"),
+               #             label = "Sur quelles variables ?",
+               #             choices = c("VAR1","VAR2","VAR3"),
+               #             multiple = TRUE
+               # ),
                actionButton(ns("go2"),label = "Cliquer pour ajouter une transformation")
                
                
@@ -167,10 +167,13 @@ mod_stat6_reg_preparation_server <- function(id,global){
         
         local$rec <- local$rec %>%  step_impute_mean(all_numeric_predictors())
         
-      }else if(input$select1 == "Retirer des variables"){
-        
-        local$rec <- local$rec %>%  step_rm(all_numeric_predictors())
       }
+      
+      # else if(input$select1 == "Retirer des variables"){
+      #   
+      #   local$rec <- local$rec %>%  step_rm(all_numeric_predictors())
+      # }
+      
       local$dt_train_rec <- bake(prep(local$rec),new_data = NULL)
       global$rec <- local$rec
       
