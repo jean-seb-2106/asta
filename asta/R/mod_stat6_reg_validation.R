@@ -159,14 +159,14 @@ mod_stat6_reg_validation_server <- function(id,global){
       # shinipsum::random_text(nwords = 2)
       req(local$dt)
       
-      local$rss %>% round()
+      local$rss %>% round() %>% format(big.mark = " ", scientific = FALSE)
     })
     
     output$mse <- renderText({
       # shinipsum::random_text(nwords = 2)
       req(local$dt)
       
-      local$mse %>% round()
+      local$mse %>% round()  %>% format(big.mark = " ", scientific = FALSE)
     })
     
     output$rmse <- renderText({
@@ -174,7 +174,7 @@ mod_stat6_reg_validation_server <- function(id,global){
       
       req(local$dt)
       
-      local$rmse %>% round(1)
+      local$rmse %>% round(1) %>% format(big.mark = " ", scientific = FALSE, decimal.mark = ",")
       
     })
     
@@ -183,7 +183,7 @@ mod_stat6_reg_validation_server <- function(id,global){
       
       req(local$dt)
       
-      local$rsq %>% round(2)
+      local$rsq %>% round(2) %>% format(big.mark = " ", scientific = FALSE, decimal.mark = ",")
     })
   
     

@@ -39,7 +39,7 @@ mod_stat6_ui <- function(id){
                                     
                                     menuItem(tabName = "regression",
                                              
-                                             "R\u00e9gression",
+                                             "R\u00e9gression supervis\u00e9e",
                                              menuSubItem("Donn\u00e9es", tabName = "subitem__6"),
                                              menuSubItem("Pr\u00e9paration", tabName = "subitem__7"),
                                              menuSubItem("Modèle", tabName = "subitem__8"),
