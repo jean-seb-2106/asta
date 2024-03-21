@@ -12,7 +12,7 @@
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... NOTE
-Imports includes 30 non-default packages.
+Imports includes 31 non-default packages.
 Importing from so many packages makes the package vulnerable to any of
 them becoming unavailable.  Move as many as possible to Suggests and
 use conditionally.
@@ -23,7 +23,7 @@ use conditionally.
 * checking for portable file names ... OK
 * checking for sufficient/correct file permissions ... OK
 * checking serialization versions ... OK
-* checking whether package ‘asta’ can be installed ... [50s/24s] WARNING
+* checking whether package ‘asta’ can be installed ... [42s/19s] WARNING
 Found the following significant warnings:
   Warning: replacing previous import ‘dplyr::filter’ by ‘stats::filter’ when loading ‘asta’
 See ‘/home/onyxia/work/asta/asta.Rcheck/00install.out’ for details.
@@ -31,7 +31,7 @@ See ‘/home/onyxia/work/asta/asta.Rcheck/00install.out’ for details.
   installed size is  9.7Mb
   sub-directories of 1Mb or more:
     app   2.6Mb
-    doc   6.3Mb
+    doc   6.4Mb
 * checking package directory ... OK
 * checking for future file timestamps ... OK
 * checking ‘build’ directory ... OK
@@ -62,6 +62,11 @@ Found the following files with non-ASCII characters:
   mod_stat6_classif_modele.R
   mod_stat6_classif_preparation.R
   mod_stat6_classif_validation.R
+  mod_stat6_reg_donnees.R
+  mod_stat6_reg_generalisation.R
+  mod_stat6_reg_modele.R
+  mod_stat6_reg_preparation.R
+  mod_stat6_reg_validation.R
   mod_stat6.R
 Portable packages must use only ASCII characters in their R code,
 except perhaps in comments.
@@ -77,7 +82,7 @@ Use \uxxxx escapes for other characters.
 * checking S3 generic/method consistency ... OK
 * checking replacement functions ... OK
 * checking foreign function calls ... OK
-* checking R code for possible problems ... [90s/35s] NOTE
+* checking R code for possible problems ... [87s/25s] NOTE
 mod_stat6_classif_donnees_server : <anonymous>: no visible binding for
   global variable ‘quality’
 mod_stat6_classif_donnees_server : <anonymous>: no visible binding for
@@ -100,8 +105,26 @@ mod_stat6_classif_validation_server : <anonymous>: no visible binding
   for global variable ‘.pred_class’
 mod_stat6_classif_validation_server : <anonymous>: no visible binding
   for global variable ‘.estimate’
+mod_stat6_reg_donnees_server : <anonymous>: no visible binding for
+  global variable ‘maxO3’
+mod_stat6_reg_donnees_server : <anonymous>: no visible binding for
+  global variable ‘IDENT’
+mod_stat6_reg_generalisation_server : <anonymous>: no visible binding
+  for global variable ‘target’
+mod_stat6_reg_generalisation_server : <anonymous>: no visible binding
+  for global variable ‘.pred’
+mod_stat6_reg_generalisation_server : <anonymous>: no visible binding
+  for global variable ‘.estimate’
+mod_stat6_reg_modele_server : <anonymous>: no visible binding for
+  global variable ‘target’
+mod_stat6_reg_validation_server : <anonymous>: no visible binding for
+  global variable ‘target’
+mod_stat6_reg_validation_server : <anonymous>: no visible binding for
+  global variable ‘.pred’
+mod_stat6_reg_validation_server : <anonymous>: no visible binding for
+  global variable ‘.estimate’
 Undefined global functions or variables:
-  .estimate .pred_class IDENT quality target
+  .estimate .pred .pred_class IDENT maxO3 quality target
 * checking Rd files ... OK
 * checking Rd metadata ... OK
 * checking Rd line widths ... OK
@@ -142,14 +165,13 @@ Undefined global functions or variables:
 ‘qpdf’ is needed for checks on size reduction of PDFs
 * checking installed files from ‘inst/doc’ ... OK
 * checking files in ‘vignettes’ ... OK
-* checking examples ... [46s/36s] OK
+* checking examples ... [44s/22s] OK
 Examples with CPU (user + system) or elapsed time > 5s
                            user system elapsed
-graphggplotly_qualiquanti 2.641  4.921   0.992
-graphggplotly_diagbarre   1.782  3.458   4.951
+graphggplotly_qualiquanti 5.337 10.052   0.868
 * checking for unstated dependencies in vignettes ... OK
 * checking package vignettes in ‘inst/doc’ ... OK
-* checking re-building of vignette outputs ... [184s/64s] OK
+* checking re-building of vignette outputs ... [198s/51s] OK
 * checking for non-standard things in the check directory ... OK
 * checking for detritus in the temp directory ... OK
 * DONE

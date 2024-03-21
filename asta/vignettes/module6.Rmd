@@ -661,7 +661,7 @@ rmsle <- sqrt(
 
 
 #Coefficient de détermination
-rsq <- rsq(pred_valid,pred_valid[,"target"],.pred) %>% select(.estimate) %>% as.numeric()
+rsq <- rsq(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
 
 #Coefficient de corrélation linéaire
 cor(pred_valid$.pred,pred_valid$target)
