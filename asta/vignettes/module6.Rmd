@@ -487,21 +487,21 @@ Ces 4 dataframe sont enregistrés comme des variables globales et pourront ainsi
 
 ```{r}
 
-#Sélection des variables quantis (numériques et integer)
-select_class_df <- function(df,type){
-
-    names(df[, map_chr(.x = df,.f = class)%in% type])
-
-    }
-
-#selection des variables quanti, c'est à dire integer et numeric
-quantis <- select_class_df(data %>% select(-target),c("integer","numeric"))
-
-
-#Sélection des variables qualis
-qualis <- select_class_df(data %>% select(-target),c("character"))
-
-quantis_qualis <- names(data %>% select(-target))
+# #Sélection des variables quantis (numériques et integer)
+# select_class_df <- function(df,type){
+# 
+#     names(df[, map_chr(.x = df,.f = class)%in% type])
+# 
+#     }
+# 
+# #selection des variables quanti, c'est à dire integer et numeric
+# quantis <- select_class_df(data %>% select(-target),c("integer","numeric"))
+# 
+# 
+# #Sélection des variables qualis
+# qualis <- select_class_df(data %>% select(-target),c("character"))
+# 
+# quantis_qualis <- names(data %>% select(-target))
 
 ```
 
@@ -537,7 +537,7 @@ rec23 <- rec3 %>%
 rec32 <- rec2 %>% 
   step_impute_mean(Ne18)
 
-rec <- rec2
+rec <- rec3
 rm(rec1,rec2,rec3,rec4,rec23,rec32)
 ```
 
@@ -661,7 +661,7 @@ rmsle <- sqrt(
 
 
 #Coefficient de détermination
-rsq <- rsq(pred_valid,target,.pred) %>% select(.estimate) %>% as.numeric()
+rsq <- rsq(pred_valid,pred_valid[,"target"],.pred) %>% select(.estimate) %>% as.numeric()
 
 #Coefficient de corrélation linéaire
 cor(pred_valid$.pred,pred_valid$target)

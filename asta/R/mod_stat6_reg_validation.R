@@ -6,7 +6,8 @@
 #'
 #' @noRd 
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
+#' @importFrom yardstick rsq 
 mod_stat6_reg_validation_ui <- function(id){
   ns <- NS(id)
   
@@ -16,6 +17,7 @@ mod_stat6_reg_validation_ui <- function(id){
     
     tabName = "subitem__9",
     h2("Validation du modèle"), 
+    
     
     fluidRow(
       
@@ -138,12 +140,17 @@ mod_stat6_reg_validation_server <- function(id,global){
       local$dt <- global$dt_train
       local$fit <- global$fit
       local$pred <- augment(local$fit,global$dt_valid) %>% select(target,starts_with(".pred"))
+      local$rss <- sum((local$pred[,".pred"] - local$pred[,"target"])^2)
+      local$mse <- local$rss/nrow(local$pred)
+      local$rmse <- sqrt(local$mse)
+      local$rsq <- rsq(local$pred,target,.pred) %>% select(.estimate) %>% as.numeric()
     })
     
     
     
     output$txt1 <- renderText({
-      shinipsum::random_text(nwords = 100)
+      # shinipsum::random_text(nwords = 100)
+      "Les performances des modèles de régression supervisée sont évaluées avec des indicateurs qui mesurent globalement les écarts entre la valeur à prédire (target) et la prédiction (.pred) effectuée sur la base de validation."
     })
     
     
@@ -151,24 +158,39 @@ mod_stat6_reg_validation_server <- function(id,global){
     output$rss <- renderText({
       # shinipsum::random_text(nwords = 2)
       req(local$dt)
-      sum((local$pred[,".pred"] - local$pred[,"target"])^2)
+      
+      local$rss %>% round()
     })
     
     output$mse <- renderText({
-      shinipsum::random_text(nwords = 2)
+      # shinipsum::random_text(nwords = 2)
+      req(local$dt)
+      
+      local$mse %>% round()
     })
     
     output$rmse <- renderText({
-      shinipsum::random_text(nwords = 2)
+      # shinipsum::random_text(nwords = 2)
+      
+      req(local$dt)
+      
+      local$rmse %>% round(1)
+      
     })
     
     output$rsq <- renderText({
-      shinipsum::random_text(nwords = 2)
+      # shinipsum::random_text(nwords = 2)
+      
+      req(local$dt)
+      
+      local$rsq %>% round(2)
     })
   
     
     output$dt1 <- renderDT({
-      shinipsum::random_DT(nrow=10,ncol=4)
+      # shinipsum::random_DT(nrow=10,ncol=4)
+      req(local$dt)
+      local$pred %>% select(target,starts_with(".pred")) %>% round(1)
     })  
     
  

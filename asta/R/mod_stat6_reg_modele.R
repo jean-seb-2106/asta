@@ -52,7 +52,7 @@ mod_stat6_reg_modele_ui <- function(id){
                              
                              
                              
-                             tags$p("Résultats du modèle sur la base d'entraînement", 
+                             tags$p("Modèle entraîné sur la base d'entraînement", 
                                     style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                              verbatimTextOutput(ns("print1"))
                              
