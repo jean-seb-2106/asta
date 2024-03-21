@@ -141,7 +141,7 @@ mod_stat6_reg_modele_server <- function(id,global){
           ) %>% 
           set_engine("ranger") %>% 
           set_mode("regression")
-        local$descriptif <- "Les forêts aléatoires permettent de prédire une variable quantitative (ou qualitative)
+        local$descriptif <- "Les forêts aléatoires en regression supervisée permettent de prédire une variable quantitative
         à partir de variables quantitatives et/ou qualitatives. 
         Cette famille d'algorithme permet de pallier le manque de stabilité des arbres. 
         Elle consiste à agréger un grand nombre d'arbres (500 par défaut), 
@@ -153,7 +153,10 @@ mod_stat6_reg_modele_server <- function(id,global){
           svm_linear() %>%
           set_mode("regression") %>%
           set_engine("LiblineaR")
-        local$descriptif <- "les SVM"
+        local$descriptif <- "Un SVM (Support Vector Machine) en régression supervisée cherche à minimiser l'erreur de prédiction 
+        en ajustant un hyperplan de manière à ce qu'il maximise la marge entre les données d'entraînement 
+        et la fonction de régression. 
+        La marge représente la distance entre les points les plus proches de l'hyperplan, appelés vecteurs de support."
       }
       
       
