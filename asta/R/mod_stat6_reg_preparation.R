@@ -172,6 +172,7 @@ mod_stat6_reg_preparation_server <- function(id,global){
     observeEvent(input$go1,{
       
       local$dt <- global$dt
+      set.seed(1234)
       local$dt_split <- initial_validation_split(local$dt,
                                                  prop = c(input$slide1/100,(1-input$slide1/100)/2))
       local$part_train <- input$slide1
@@ -188,6 +189,7 @@ mod_stat6_reg_preparation_server <- function(id,global){
       local$rec <- recipe(target~ .,data=local$dt_train)
       global$rec <- local$rec
       local$dt_train_rec <- bake(prep(local$rec),new_data = NULL)
+      local$rec_chr <- "Aucune transformation"
     })
     
     
@@ -213,6 +215,7 @@ mod_stat6_reg_preparation_server <- function(id,global){
       
       local$dt_train_rec <- bake(prep(local$rec),new_data = NULL)
       global$rec <- local$rec
+      local$rec_chr <- local$rec$steps %>% purrr::map_chr(~ attributes(.x)$class[1])
       
       
     })
@@ -234,10 +237,11 @@ mod_stat6_reg_preparation_server <- function(id,global){
       
       # shinipsum::random_print(type = "table")
       
-      req(global$rec)
+      req(local$dt)
       
       # skim(local$dt_train_rec)
-      local$rec$steps %>% purrr::map_chr(~ attributes(.x)$class[1])
+      # local$rec$steps %>% purrr::map_chr(~ attributes(.x)$class[1])
+      local$rec_chr
     })
     
     output$entrainement <- renderText({
