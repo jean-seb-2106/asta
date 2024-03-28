@@ -537,11 +537,16 @@ rec23 <- rec3 %>%
 rec32 <- rec2 %>% 
   step_impute_mean(Ne18)
 
-rec <- rec3
+rec <- rec32
 rm(rec1,rec2,rec3,rec4,rec23,rec32)
 ```
 
 
+```{r}
+#Récupération de la liste des recettes appliquées à la base
+rec$steps %>% purrr::map_chr(~ attributes(.x)$class[1])
+prep(rec)
+```
 
 
 Après chaque transformation, l'affichage de la base d'entraînement se met à jour. 

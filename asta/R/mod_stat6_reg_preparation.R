@@ -114,7 +114,15 @@ mod_stat6_reg_preparation_ui <- function(id){
                         color="blue",
                         width = NULL
                       )
-                      ) 
+                      ) ,
+                    
+                    wellPanel(
+                      tags$p("Recettes appliquées sur la base", 
+                             style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
+                      
+                      
+                      textOutput(ns("text1"))
+                    )
                     
                     
                     )
@@ -220,6 +228,16 @@ mod_stat6_reg_preparation_server <- function(id,global){
 
       skim(local$dt_train_rec)
       
+    })
+    
+    output$text1 <- renderPrint({
+      
+      # shinipsum::random_print(type = "table")
+      
+      req(global$rec)
+      
+      # skim(local$dt_train_rec)
+      local$rec$steps %>% purrr::map_chr(~ attributes(.x)$class[1])
     })
     
     output$entrainement <- renderText({
