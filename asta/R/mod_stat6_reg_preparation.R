@@ -29,7 +29,7 @@ mod_stat6_reg_preparation_ui <- function(id){
                
                sliderInput(ns("slide1"),
                            label = "Quel part de la base voulez-vous conserver pour l'entraînement  ?",
-                           min = 70,
+                           min = 60,
                            max = 90,
                            value = 80,
                            step = 5),
@@ -49,7 +49,7 @@ mod_stat6_reg_preparation_ui <- function(id){
                
                
                selectInput(ns("select1"),
-                           label = "Quelle transformation voulez-vous appliquer ?",
+                           label = "Quelle recette voulez-vous appliquer ?",
                            choices = c("Centrer-réduire","Imputation avec moyenne"),
                            multiple = FALSE
                            ),
@@ -58,7 +58,7 @@ mod_stat6_reg_preparation_ui <- function(id){
                #             choices = c("VAR1","VAR2","VAR3"),
                #             multiple = TRUE
                # ),
-               actionButton(ns("go2"),label = "Cliquer pour ajouter une transformation")
+               actionButton(ns("go2"),label = "Cliquer pour appliquer une recette")
                
                
                

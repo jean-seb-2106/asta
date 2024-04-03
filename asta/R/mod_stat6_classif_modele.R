@@ -55,12 +55,12 @@ mod_stat6_classif_modele_ui <- function(id){
                           
                           ),column(9,
                                    
-                                   fluidRow(column(6,wellPanel( tags$p("Résultats du modèle", 
+                                   fluidRow(column(6,wellPanel( tags$p("Modèle entraîné sur la base d'entraînement", 
                                                                        style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                                                                 verbatimTextOutput(ns("print1"))
                                                                 
                                                                 
-                                   )),column(6,wellPanel(tags$p("Estimations", 
+                                   )),column(6,wellPanel(tags$p("Estimations sur la base d'entraînement", 
                                                                 style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                                                          DTOutput(ns("dt1")))))
                                    
@@ -172,7 +172,7 @@ mod_stat6_classif_modele_server <- function(id,global){
       
       req(local$dt)
       
-      extract_fit_parsnip(local$fit)
+    local$fit
       
       # shinipsum::random_print(type = "model")
       

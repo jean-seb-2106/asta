@@ -31,10 +31,10 @@ mod_stat6_reg_donnees_ui <- function(id){
                       style = "font-size : 110%; font-weight : bold; text-decoration : underline;"),
                
                selectInput(inputId = ns("select1"),
-                           label = "Choississez une base de données",
+                           label = "Choississez une base de données :",
                            choices = c("ozone","grandile")),
                
-               actionButton(ns("go1"),label = "Affichez la base")
+               actionButton(ns("go1"),label = "Explorer la base")
                
              ),
              
