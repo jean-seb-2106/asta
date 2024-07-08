@@ -246,7 +246,7 @@ mod_stat6_classif_modele_server <- function(id,global){
           set_engine("rpart") %>%
           set_mode("classification")
       
-      }else if(input$select2 == "Nombre d'individus min"){
+      }else if(input$select1 == "Arbre" & input$select2 == "Nombre d'individus min"){
         local$mod <- decision_tree(
           # cost_complexity = 0.001,
           # tree_depth = input$slide1,
@@ -290,6 +290,16 @@ mod_stat6_classif_modele_server <- function(id,global){
             # trees = input$slide1,
                       mtry = input$slide1,
             #           min_n = NULL
+          ) %>% 
+          set_engine("ranger") %>% 
+          set_mode("classification")
+        
+      }else if(input$select1 == "Forêt aléatoire" & input$select2 == "Nombre d'individus min"){
+        local$mod <- 
+          rand_forest(
+            # trees = input$slide1,
+            # mtry = input$slide1,
+              min_n = input$slide1
           ) %>% 
           set_engine("ranger") %>% 
           set_mode("classification")
