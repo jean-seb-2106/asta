@@ -112,9 +112,9 @@ mod_stat6_classif_modele_server <- function(id,global){
         à partir de variables qualitatives et quantitatives."
       }else if(input$select1 == "Arbre"){
         local$mod <- decision_tree(
-            # cost_complexity = 0.001,
-            # tree_depth = 7,
-            # min_n = NULL
+            cost_complexity = 0.01,
+            tree_depth = 5,
+            min_n = 100
           ) %>%
           set_engine("rpart") %>%
           set_mode("classification")
@@ -190,7 +190,7 @@ mod_stat6_classif_modele_server <- function(id,global){
        local$min <- 1
        local$max <- nrow(local$dt)
        local$step <- 10
-       local$value <- 5
+       local$value <- 100
        
      }else if(input$select2 == "Complexité"){
        
