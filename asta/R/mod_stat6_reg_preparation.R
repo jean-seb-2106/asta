@@ -172,7 +172,7 @@ mod_stat6_reg_preparation_server <- function(id,global){
     observeEvent(input$go1,{
       
       local$dt <- global$dt
-      set.seed(1234)
+      set.seed(1235)
       local$dt_split <- initial_validation_split(local$dt,
                                                  prop = c(input$slide1/100,(1-input$slide1/100)/2))
       local$part_train <- input$slide1

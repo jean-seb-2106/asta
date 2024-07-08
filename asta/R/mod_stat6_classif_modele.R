@@ -194,7 +194,7 @@ mod_stat6_classif_modele_server <- function(id,global){
        
      }else if(input$select2 == "Complexité"){
        
-       local$min <- 0.001
+       local$min <- 0.00001
        local$max <- 0.1
        local$step <- 0.001
        local$value <- 0.01
@@ -202,7 +202,7 @@ mod_stat6_classif_modele_server <- function(id,global){
      }else if(input$select2 == "Nombre de voisins"){
        
        local$min <- 1
-       local$max <- 100
+       local$max <- 500
        local$step <- 1
        local$value <- 5
        
